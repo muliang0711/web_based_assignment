@@ -52,8 +52,15 @@ p{
 }
 
 .col-2 img{
-  height: 100%;
+  position:right;
+  height: 95%;
   width: 100%;
   max-width: 100%;
   padding: 50px 0;
+}
+
+.racket{
+  height: auto;
+  width:100px;
+  align-items: left;
 }
