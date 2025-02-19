@@ -2,8 +2,15 @@ h1{
     text-align : center;
     background-color: green;
     color:white;
+    margin: 0;
+    padding: 5px 10px;
 }
 
+#blueheading h1{
+  text-align: center;
+  background-color: #0B50A1;
+  color: white;
+}
 
 .menu{
   display: flex;
@@ -13,7 +20,7 @@ h1{
 
 nav{
   flex: 1;
-  navulext-align: right;
+  
 }
 
 nav ul{
@@ -59,8 +66,37 @@ p{
   padding: 50px 0;
 }
 
-.racket{
-  height: auto;
-  width:10px;
-  align-items: left;
+
+.list{
+    display: flex; /* Makes images appear in a row */
+    justify-content: space-around; /* Adds spacing between images */
+    gap: 20px; /* Adds spacing between items */
 }
+.item img {
+  width: 50%;
+  height: 80%;
+  border: 5px black;
+  border-radius: 50%;
+  display:inline-block;
+}
+
+.item p{
+  text-align: center;
+}
+
+.image-box {
+  width: 100%;  /* Adjust width */
+  height: 300px; /* Adjust height */
+  border: 2px solid black; /* Keep the border if needed */
+  display: flex; /* Center image inside */
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; /* Prevents overflow */
+}
+
+.image-box img {
+  width: 100%; /* Ensures it fills the box */
+  height: auto; /* Keeps aspect ratio */
+  object-fit: cover; /* Crops to fit if necessary */
+}
+
