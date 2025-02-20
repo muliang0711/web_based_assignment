@@ -1,3 +1,7 @@
+* {
+    box-sizing: border-box;
+}
+
 .display_topleft {
     position: absolute;
     left: 10px;
@@ -13,7 +17,7 @@
     background-color: whitesmoke;
     color: black;
     text-align: center;
-    border: 1px;
+    border: none;
     padding: 10px 15px;
     cursor: pointer;
     font-size: 10px;
@@ -30,6 +34,7 @@
 .side-container {
     position: fixed;
     padding: 0 15px;
+    width: 150px; /* 這個要跟 .main 的 margin-left 一樣 */
     height: 100vh;
     /* top: 50%; */
     /* left: 0; */
@@ -49,6 +54,7 @@ p{
 body{
     margin: 0;
     font-family: "Times New Roman";
+    display: flex;
 }
 
 
@@ -59,21 +65,24 @@ body{
   }
 
 .main{
-  flex: 70%;
-  right:0;
-  background-color: white;
-  padding: 0 20px;
-  overflow: hidden;  /* 直接隐藏所有溢出内容 */
+    /* flex: 70%; */
+    flex-grow: 1; 
+    margin-left: 150px; /* 這個要跟 .side-container 的 width 一樣 */
+    /* right:0; */
+    background-color: white;
+    padding: 0 20px;
+    overflow: hidden; /* 直接隐藏所有溢出内容 */
 }
 
 #container {
-    right:0;
+    /* right:0; */
     width: 90%;
     height: 100vh;  /* 让 iframe 适应视口高度 */
     margin: auto;
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
 }
 
 iframe {
