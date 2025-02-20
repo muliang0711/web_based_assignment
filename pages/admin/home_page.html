@@ -2,23 +2,32 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <meta name="Home Page" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Home Page</title>
     <link rel="stylesheet" href="display.css">
-  </head>
+    <link rel="stylesheet" href="product.html">
+
+</head>
 
 <body>
-  
-    <div class="side-container">
-    <p class="display_topleft"><b><i>Admin</i></b></p>
-        <button class="button">Home</button>
-        <button class="button">Order</button>
+    <div class="side-container row">
+        <p class="display_topleft"><b><i>Admin</i></b></p>
+        <button onclick="loadIframe('product.html')" class="button">Home</button>
+        <button onclick="loadIframe('productlist.html')" class="button">Order</button>
         <button class="button">Product</button>
-        <button class="button">Purchase Order</button>
         <button class="button">Customer</button>
         <button class="button">Discount/Voucher</button>
         <button class="button">Analysis</button>
-        <button class="display_bottomleft"><img src="admin_image/signout.jpg" width="20px"></button>
+        <button class="display_bottomleft">
+            <img src="admin_image/signout.jpg" width="20px">
+        </button>
     </div>
- </body>
+
+    <div class="main">
+        <div id="container"></div>
+            <script src="openframe.js"></script>
+    </div>
+
+
+</body>
 </html>
