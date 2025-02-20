@@ -1,105 +1,49 @@
 .display_topleft {
     position: absolute;
-    left: 0;
-    top: 0;
-}
-
-.display_topright {
-    position: absolute;
-    right: 0;
-    top: 0;
+    left: 10px;
+    top: 10px;
 }
 
 .display_bottomleft {
     position: absolute;
-    left: 0;
-    bottom: 0;
+    left: 50px;
+    bottom: 10px;
 }
-
-.display_bottomright {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-}
-
-.display_middle {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-}
-
-.display_left {
-    top: 50%;
-    left: 0;
-    transform: translate(0, -50%);
-    -ms-transform: translate(0, -50%);
-}
-
-.display_right {
-    top: 50%;
-    right: 0;
-    transform: translate(0, -50%);
-    -ms-transform: translate(0, -50%);
-}
-
-.display_topmiddle {
-    position: absolute;
-    left: 50%;
-    top: 0;
-    transform: translate(-50%, 0);
-    -ms-transform: translate(-50%, 0);
-}
-
-.display_bottommiddle {
-    position: absolute;
-    left: 50%;
-    bottom: 0;
-    transform: translate(-50%, 0);
-    -ms-transform: translate(-50%, 0);
-}
-
-.left{
-    float:left!important
-}
-
-.right{
-    float:right!important
-}
-
 .button{
-    background-color: white;
+    background-color: whitesmoke;
     color: black;
     border: none;
-    padding: 20px 30px;
-    margin: 5px;
+    padding: 10px 15px;
     cursor: pointer;
     font-size: 10px;
     transition: background-color 0.3s, transform 0.2s;
-    margin: 5px 0;
+    margin: 2px 0;
 }
 
 .button:hover {
     background-color: #2d4ce7;
-    transform: scale(1.05);
+    transform: scale(1.10);
     color:white;
 }
 
-.button-container {
-    position: fixed; /* 固定在左侧 */
+.side-container {
+    position: fixed;
+    padding: 200px 15px;
     left: 0;
     top: 50%;
-    transform: translateY(-50%); /* 垂直居中 */
+    transform: translateY(-50%);
     display: flex;
-    flex-direction: column; /* 让按钮纵向排列 */
-    background:white; /* 添加背景色，看起来更清晰 */
+    flex-direction: column; 
+    background:whitesmoke;
+    z-index: 1;
 }
 
-span{
+p{
     font-size: 20px;
     font-family: "Times New Roman";
+    float:left;
 }
 body{
 font-family: "Times New Roman";
 }
+
