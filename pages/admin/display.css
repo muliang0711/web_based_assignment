@@ -28,12 +28,14 @@
 
 .side-container {
     position: fixed;
-    padding: 200px 15px;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
+    padding: 0 15px;
+    height: 100vh;
+    /* top: 50%; */
+    /* left: 0; */
+    /* transform: translateY(-50%); */
     display: flex;
     flex-direction: column; 
+    justify-content: center;
     background:whitesmoke;
     z-index: 1;
 }
@@ -44,6 +46,7 @@ p{
     float:left;
 }
 body{
-font-family: "Times New Roman";
+    margin: 0;
+    font-family: "Times New Roman";
 }
 
