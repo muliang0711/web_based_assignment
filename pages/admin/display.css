@@ -12,7 +12,8 @@
 .button{
     background-color: whitesmoke;
     color: black;
-    border: none;
+    text-align: center;
+    border: 1px;
     padding: 10px 15px;
     cursor: pointer;
     font-size: 10px;
