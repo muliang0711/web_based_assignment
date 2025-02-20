@@ -2,6 +2,10 @@
     box-sizing: border-box;
 }
 
+:root {
+    --side-container-width: 150px;
+}
+
 .display_topleft {
     position: absolute;
     left: 10px;
@@ -34,13 +38,15 @@
 .side-container {
     position: fixed;
     padding: 0 15px;
-    width: 150px; /* 這個要跟 .main 的 margin-left 一樣 */
+    width: var(--side-container-width); /* 注意！這個要跟 .main 的 margin-left 一樣 */
     height: 100vh;
+    /* border: 1px solid blue; */
     /* top: 50%; */
     /* left: 0; */
     /* transform: translateY(-50%); */
     display: flex;
     flex-direction: column; 
+    flex-wrap: wrap;
     justify-content: center;
     background:whitesmoke;
     z-index: 1;
@@ -51,32 +57,25 @@ p{
     font-family: "Times New Roman";
     float:left;
 }
+
 body{
     margin: 0;
     font-family: "Times New Roman";
-    display: flex;
 }
 
 
-
-.row {  
-    display: flex;
-    flex-wrap: wrap;
-  }
-
 .main{
-    /* flex: 70%; */
-    flex-grow: 1; 
-    margin-left: 150px; /* 這個要跟 .side-container 的 width 一樣 */
-    /* right:0; */
+    margin-left: var(--side-container-width); /* 注意！這個要跟 .side-container 的 width 一樣 */
+    width: calc(100vw - var(--side-container-width));
+    /* border: 1px solid red; */
     background-color: white;
-    padding: 0 20px;
+    padding: 0 0px;
     overflow: hidden; /* 直接隐藏所有溢出内容 */
 }
 
 #container {
     /* right:0; */
-    width: 90%;
+    width: 100%;
     height: 100vh;  /* 让 iframe 适应视口高度 */
     margin: auto;
     display: flex;
@@ -86,8 +85,9 @@ body{
 }
 
 iframe {
-    width: 100%;
-    height: 100%;
+    /* Reminder: 据观察，CSS file 里面的 width 和 height 会 override JavaScript 里面给 iframe set 的 width 和 height （如 iframe.width）但 JS 里面 set 的 border 会 override CSS file 里面的 border。*/
+    /* width: 100%;
+    height: 100%; */
     border: none;
 }
 

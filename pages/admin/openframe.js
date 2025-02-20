@@ -64,6 +64,9 @@ function loadIframe(url) {
     iframe.height = "100%";
     iframe.style.border = "none";
 
+    // Hide scrollbar in iframe
+    // iframe.setAttribute("scrolling", "no");
+
     // 插入到容器中
     container.appendChild(iframe);
 }
