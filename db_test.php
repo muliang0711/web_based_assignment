@@ -3,9 +3,14 @@
 
 class testDb {
     private $conn; 
+    private $servername = "localhost";
+    private $username = "root";
+    private $password = "";
+
     // fucntion to make a object of database and connect it auto
-    public function __construct($host , $user ,$password , $dbName){
-        $this->conn = new mysqli($host , $user , $password , $dbName);
+    public function __construct($dbName){
+        $this->conn = new mysqli($this->servername , $this->username , $this->password , $dbName);
+        // check connection
         if($this->conn->connect_error){
             die("connection failed".$this->conn->connect_error);
         }
