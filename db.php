@@ -44,5 +44,4 @@ class Database {
 // 3. create a connection variable : $conn = Databse::getConnection();
 // 4. check it scuess or not : echo $conn ? "db Connected" : "Failed to connect";
 // 5. at the end of the program you can $conn->closeConnection to close the link manually or you can let it closed auto 
-
 ?>
