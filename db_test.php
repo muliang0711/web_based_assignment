@@ -29,7 +29,7 @@ class testDb {
 }
 // 1. go to the file you want to connect with databse 
 // 2. apply this file into it : require_once 'db_test.php'; depends where you import you need to consider use ../ absulote locate 
-// 3. create a database object : $db = new Database(pass the variable inside: "localhost","root","","yourtestdbname")
+// 3. create a database object : $db = new Database(pass the variable inside: "yourtestdbname")
 // 4. use the object function to make connection variable : $db->getConnection()
 // 5. check it scuess or not : echo $conn ? "db Connected" : "Failed to connect";
 // 6. at the end of the program you can $conn->closeConnection to close the link manually or you can let it closed auto 
