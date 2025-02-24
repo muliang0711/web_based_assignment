@@ -6,7 +6,7 @@
     <title>Document</title>
 </head>
 <body>
-<h2>Product List</h2>
+<h2>Product List --- the ui is massive i know but it work</h2>
 
 <!-- Add Product Form -->
 <form action="http://myproject.local/mvc_demo/controller/product_controller.php?action=add" method="POST">
