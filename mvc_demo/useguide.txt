@@ -14,3 +14,5 @@ before start the product_list server pleass ensure that you alredy :
 ('Nike Shoes', 'High-quality sports shoes', 99.99, 'nike.jpg', 3),
 ('Adidas Sneakers', 'Comfortable sneakers', 89.99, 'adidas.jpg', 2);
 
+4. make sure your project is under the xampp/htdocs foler when open 
+5. open with xampp way / if use the vscode php server run it cant link to the database 
