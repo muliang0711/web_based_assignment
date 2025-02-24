@@ -1,0 +1,16 @@
+before start the product_list server pleass ensure that you alredy :
+1. crteate a db call mvc_demo 
+2. create a table call products
+ CREATE TABLE products (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    description TEXT NOT NULL,
+    price DECIMAL(10,2) NOT NULL,
+    image VARCHAR(255) NOT NULL,
+    stock INT NOT NULL
+);
+3. create two record inside the table :
+    INSERT INTO products (name, description, price, image, stock) VALUES
+('Nike Shoes', 'High-quality sports shoes', 99.99, 'nike.jpg', 3),
+('Adidas Sneakers', 'Comfortable sneakers', 89.99, 'adidas.jpg', 2);
+
