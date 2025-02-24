@@ -1,4 +1,4 @@
-before start the product_list server pleass ensure that you alredy :
+before start the index.php server pleass ensure that you alredy :
 1. crteate a db call mvc_demo 
 2. create a table call products
  CREATE TABLE products (
@@ -16,3 +16,8 @@ before start the product_list server pleass ensure that you alredy :
 
 4. make sure your project is under the xampp/htdocs foler when open 
 5. open with xampp way / if use the vscode php server run it cant link to the database 
+6. final open the ----index.php------ file but not product_list file 
+// in the mvc_demo :
+db_module is Handles ALL database interactions (Insert, Fetch, Update, Delete)
+controller Processes requests, calls the Model, and sends data to the View 
+View only display data 
