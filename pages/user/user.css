@@ -1,0 +1,137 @@
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --brand-color: hsl(206 100% 25%);
+}
+
+body {
+    margin: 0;
+    /* width: calc(100vw + 600px);
+    height: calc(100vh + 600px);
+    transform: translateX(-300px);
+    overflow-x: hidden; */
+    /* background-color: #eee; */
+    background-image: 
+        url('data:image/svg+xml,%3Csvg fill="%23aaa" viewBox="0 -10 144 134" width="24" height="24" xmlns="http://www.w3.org/2000/svg"%3E%3Cg id="SVGRepo_bgCarrier" stroke-width="0"%3E%3C/g%3E%3Cg id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"%3E%3C/g%3E%3Cg id="SVGRepo_iconCarrier" transform="rotate%2845, 20, 20%29"%3E%3Cpath d="M18.034,1a3.964,3.964,0,0,0-2.975,1.349c-.007-.008-.011-.017-.018-.025A3.984,3.984,0,0,0,12.071,1h-.142a3.984,3.984,0,0,0-2.97,1.324c-.007.008-.011.017-.018.025a3.974,3.974,0,0,0-6.208.3,3.854,3.854,0,0,0-.524,3.52L6.01,17.2a5.993,5.993,0,0,0,11.98,0l3.8-11.031a3.851,3.851,0,0,0-.526-3.514A3.986,3.986,0,0,0,18.034,1ZM10.451,3.657a2.143,2.143,0,0,1,3.1,0,1.868,1.868,0,0,1,.473,1.474L13.1,13.352,12.8,16H11.2l-.3-2.648L9.978,5.131A1.868,1.868,0,0,1,10.451,3.657ZM7.713,16,4.1,5.524a1.87,1.87,0,0,1,.256-1.707,1.976,1.976,0,0,1,3.559.894L9.19,16ZM12,21a4.008,4.008,0,0,1-3.874-3h7.748A4.008,4.008,0,0,1,12,21ZM19.9,5.519,16.287,16H14.81L16.083,4.711a1.976,1.976,0,0,1,3.559-.894A1.869,1.869,0,0,1,19.9,5.519Z"%3E%3C/path%3E%3C/g%3E%3C/svg%3E'),
+        url('data:image/svg+xml,%3Csvg fill="%23aaa" viewBox="0 -10 144 134" width="24" height="24" id="badminton-racket" data-name="Line Color" xmlns="http://www.w3.org/2000/svg" class="icon line-color"%3E%3Cg id="SVGRepo_bgCarrier" stroke-width="0"%3E%3C/g%3E%3Cg id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"%3E%3C/g%3E%3Cg id="SVGRepo_iconCarrier"%3E%3Cpath id="primary" d="M11.27,12.73l-4,4M19.73,4.27C17.78,2.33,14.31,2.65,12,5s-2.65,5.8-.71,7.75S16.69,14.35,19,12,21.67,6.22,19.73,4.27Z" style="fill: none; stroke: %23aaa; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;"%3E%3C/path%3E%3Crect id="secondary" x="2.97" y="17.53" width="5" height="2" transform="translate%28-11.5 9.3%29 rotate%28-45%29" style="fill: none; stroke: %23aaa; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;"%3E%3C/rect%3E%3C/g%3E%3C/svg%3E')
+    ;
+    background-repeat: repeat, repeat;
+    background-position: 0 0, 150px 150px;
+    background-size: 300px, 300px;
+    background-color: #eee;
+    animation: bg-animation 15s linear infinite ;
+}
+
+@keyframes bg-animation {
+    0% {
+        background-position: 0 0, 150px 150px;
+    }
+    100% {
+        background-position: -300px 300px, -150px 450px;
+    }
+}
+
+body, input, button {
+    font-family: system-ui;
+}
+
+.main {
+    background-color:#fff;
+    /* color: #fff; */
+    width: 400px;
+    border: 1px solid;
+    border-radius: 15px;
+    box-shadow: 0 0 1 1 #aaa;
+    margin: 100px auto;
+    padding: 20px;
+    box-shadow: 10px 10px 0 0 rgb(0,0,0,0.6);
+    transition: all 0.2s;
+}
+.main:hover {
+    /* border: 1px solid var(--brand-color);
+    box-shadow: 10px 10px 0 0 var(--brand-color); */
+}
+
+.store-name {
+    color: #aaa;
+}
+.welcome {
+    margin-bottom: 10px;
+}
+.instruction {
+    /* margin-bottom: 25px; */
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+
+.form-item {
+    /* margin: 1px 0;
+    border: 1px solid; */
+}
+.form-item > * {
+    margin: 4px 0;
+}
+.form-item input[type="text"], .form-item input[type="password"] {
+    width: 100%;
+    height: 40px;
+    border-radius: 10px;
+    border: 2px solid #bbb;
+    padding: 0 10px;
+    font-size: 18px;
+}
+
+.form-item:has(#email) {
+    margin-top: 25px;
+}
+.form-item:has(#password) {
+    margin-bottom: 20px;
+}
+
+.password-input-box {
+    position: relative;
+}
+.visibility-toggle-icon {
+    position: absolute;
+    height: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 10px;
+}
+
+.form-item:has(#remember-me) {
+    /* margin-top: 10px; */
+}
+
+.forgot-pw {
+    /* margin: 10px 0; */
+    align-self: flex-start;
+    text-decoration: none;
+    color: rgb(69, 69, 69);
+}
+.forgot-pw:hover {
+    text-decoration: underline;
+}
+
+.login-btn {
+    margin-top: 10px;
+    height: 40px;
+    border-radius: 10px;
+    border: none;
+    font-size: 20px;
+    background-color: var(--brand-color);
+    /* opacity: 0.9; */
+    color: white;
+}
+.login-btn:hover {
+    opacity: 0.8;
+}
+.login-btn:active {
+    opacity: 1;
+}
