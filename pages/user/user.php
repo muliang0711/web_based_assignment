@@ -11,7 +11,7 @@
     <div class="main">
         <h2 class="store-name">
             The Shuttle Store
-            <img src="/assets/img/shuttlecock.svg" style="height:1em;transform:rotate(45deg);color:inherit;"/>
+            <img src="../../assets/img/shuttlecock.svg" style="height:1em;transform:rotate(45deg);color:inherit;"/>
         </h2>
         <h1 class="welcome">Welcome</h1>
         <div class="instruction">Please login to your account</div>
@@ -28,7 +28,7 @@
                 <br>
                 <div class="password-input-box">
                     <input type="password" id="password"/>
-                    <img class="visibility-toggle-icon" src="/assets/img/visibility-off.svg" alt="Visibility toggle icon"/>
+                    <img class="visibility-toggle-icon" src="../../assets/img/visibility-off.svg" alt="Visibility toggle icon"/>
                 </div>
             </div>
 

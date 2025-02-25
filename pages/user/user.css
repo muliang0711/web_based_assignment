@@ -21,7 +21,7 @@ body {
     background-position: 0 0, 150px 150px;
     background-size: 300px, 300px;
     background-color: #eee;
-    animation: bg-animation 15s linear infinite ;
+    animation: bg-animation 20s linear infinite ;
 }
 
 @keyframes bg-animation {
