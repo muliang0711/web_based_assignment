@@ -1,4 +1,67 @@
-h1{
-    background-color: black;
-    color: white;
+body{
+    background-image: url(https://wallpapercat.com/w/full/6/0/7/299415-3840x2160-desktop-4k-badminton-background-image.jpg);
+    background-size: 1500px 800px;
+}
+
+.top-sideMenu{
+    position: fixed;
+    top: -20px;
+      width: 100%;
+      left:0px;
+      background-color: #333; 
+      z-index: 1000; /* Ensure it stays above other elements */
+    }
+    
+    .top-sideMenu a{
+      color: white;
+    }
+    
+    .logo img{
+      display:flex;
+      width: 200px;
+      height: 50px;
+    }
+
+    nav{
+        flex: 1;
+        
+      }
+      
+      nav ul{
+        display: inline-block;
+        list-style-type: none;
+      }
+      
+      nav ul li{
+        display: inline-block;
+        padding: 20px;
+      }
+      
+.Introduction h1{
+    background-color: #333;
+    color:white;
+    text-align: center;
+    border: 5px solid #646363;
+    margin-top: 120px;
+    padding: 5px;
+}
+
+.Introduction p{
+    background-color: #333;
+    text-align: left;
+    color:white;
+    border: 5px dotted green;
+    margin-left: 700px;
+    padding: 10px;
+    margin-right: 100px;
+    margin-top: 45px;
+}
+
+
+.Introduction img{
+    width: 40%;
+    height: 50%;
+    position: fixed;
+    left: 2%;
+    padding:20px;
 }
