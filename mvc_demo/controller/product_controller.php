@@ -36,7 +36,7 @@ class ProductController {
         if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id'])) {
             $id = $_POST['id'];
             $this->productModel->deleteProduct($id);
-            header("Location: index.php");
+            header("Location: ../products");
             exit();
         }else{
             echo "invalid request" ;
