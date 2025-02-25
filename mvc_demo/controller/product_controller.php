@@ -42,6 +42,7 @@ class ProductController {
             exit();
         }
     }
+    // in the future you can add anything new related fucntion inside 
 }
 
 // Handle actions from forms

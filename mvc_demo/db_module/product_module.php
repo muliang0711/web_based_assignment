@@ -30,9 +30,5 @@ class ProductModel {
         return $stmt->execute([':id' => $id]);
     }
 }
-// for example please insert teo record to your db (before you start the server ): 
-//    INSERT INTO products (name, description, price, image, stock) VALUES
-//('Nike Shoes', 'High-quality sports shoes', 99.99, 'nike.jpg', 3),
-//('Adidas Sneakers', 'Comfortable sneakers', 89.99, 'adidas.jpg', 2);
 
 ?>
