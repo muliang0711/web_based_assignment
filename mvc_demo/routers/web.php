@@ -10,11 +10,11 @@ if ($_SERVER['REQUEST_URI'] == '/mvc_demo/products' && $_SERVER['REQUEST_METHOD'
     $controller->listProducts();
 }
 
-if ($_SERVER['REQUEST_URI'] == '/product/add' && $_SERVER['REQUEST_METHOD'] == 'POST') {
-    $controller->addProduct();
-}
+// if ($_SERVER['REQUEST_URI'] == '/product/add' && $_SERVER['REQUEST_METHOD'] == 'POST') {
+//     $controller->addProduct();
+// }
 
-if ($_SERVER['REQUEST_URI'] == '/product/delete' && $_SERVER['REQUEST_METHOD'] == 'POST') {
-    $controller->deleteProduct();
-}
+// if ($_SERVER['REQUEST_URI'] == '/product/delete' && $_SERVER['REQUEST_METHOD'] == 'POST') {
+//     $controller->deleteProduct();
+// }
 ?>
