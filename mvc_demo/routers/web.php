@@ -4,7 +4,9 @@ require_once __DIR__ . '/../controller/product_controller.php';
 
 $controller = new ProductController();
 
-if ($_SERVER['REQUEST_URI'] == '/products' && $_SERVER['REQUEST_METHOD'] == 'GET') {
+echo 'This line is for debugging purposes. $_SERVER[\'REQUEST_URI\']: ' . $_SERVER['REQUEST_URI'];
+
+if ($_SERVER['REQUEST_URI'] == '/mvc_demo/products' && $_SERVER['REQUEST_METHOD'] == 'GET') {
     $controller->listProducts();
 }
 

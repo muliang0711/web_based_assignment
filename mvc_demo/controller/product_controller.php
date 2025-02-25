@@ -13,6 +13,7 @@ class ProductController {
     public function listProducts() {
         $products = $this->productModel->getAllProducts();
         require __DIR__ . '/../views/product_pages/product_list.php';
+        echo "listProducts() called.\n";
     }
 
     // Add a new product
@@ -25,7 +26,7 @@ class ProductController {
             $stock = $_POST['stock'];
 
             $this->productModel->addProduct($name, $desc, $price, $image, $stock);
-            header("Location: index.php");
+            header("Location: ../products");
             exit();
         }
     }
