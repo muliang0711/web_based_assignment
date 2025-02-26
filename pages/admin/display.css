@@ -70,7 +70,7 @@ body{
     /* border: 1px solid red; */
     background-color: white;
     padding: 0 0px;
-    overflow: hidden; /* 直接隐藏所有溢出内容 */
+   /* overflow: hidden;  直接隐藏所有溢出内容 */
 }
 
 #container {
@@ -81,7 +81,7 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 
 

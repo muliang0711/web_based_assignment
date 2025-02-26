@@ -4,12 +4,17 @@ $_title='Product';
 include 'admin_head.php';
 ?>
 
-<button data-get="/">Index</button>
-<button data-get="/page/demo1.php">Demo 1</button>
-<button data-get="demo1.php">Demo 1</button>
-<button data-get>Reload</button>
-<span data-get="https://www.tarc.edu.my",_blank>TAR UMT</span>
+<?php
+for ($i = 1; $i <= 3000; $i++) {
+    echo "<div>123456789 x $i time(s)</div>";
+}
+?>
 
+
+    <div class="main">
+        <div id="container">
+            
+        </div>
 
 <?php 
 include 'admin_foot.php';
