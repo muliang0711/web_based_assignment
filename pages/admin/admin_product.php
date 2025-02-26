@@ -11,11 +11,6 @@ for ($i = 1; $i <= 3000; $i++) {
 ?>
 
 
-    <div class="main">
-        <div id="container">
-            
-        </div>
-
 <?php 
 include 'admin_foot.php';
 ?>
