@@ -1,7 +1,4 @@
-body{
-    background-image: url(https://wallpapercat.com/w/full/6/0/7/299415-3840x2160-desktop-4k-badminton-background-image.jpg);
-    background-size: 1500px 800px;
-}
+
 
 .top-sideMenu{
     position: fixed;
@@ -60,7 +57,7 @@ body{
 
 .Introduction img{
     width: 40%;
-    height: 50%;
+    height: 60%;
     position: fixed;
     left: 2%;
     padding:20px;
