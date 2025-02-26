@@ -4,12 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= $title ?? 'Untitled' ?></title>
-    <link rel="stylesheet" href="css/app.css" />
+    <link rel="stylesheet" href="/css/app.css" />
+    <?= link_stylesheet($stylesheets ?? ''); ?>
 </head>
 <body>
     <header>
         <a href="/" class="logo"><img alt="(Store logo)" /></a>
         <nav>
+            <a href="/pages/example/example1.php">(temp) Example 1</a>
+            <a href="/pages/example/example2.php">(temp) Example 2</a>
             <a href="#">Shop</a>
             <a href="#">About us</a>
             <a href="#">Account</a>

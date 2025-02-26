@@ -1,4 +1,6 @@
 <?php
+require '_base.php';
+
 $title = 'Home';
 
 include '_head.php';
@@ -12,6 +14,7 @@ include '_head.php';
     </div>
 </section>
 <section class="main-section">
+    <h1>Here's some random text for scrolling lol</h1>
     Lorem ipsum, dolor sit amet consectetur adipisicing elit. Architecto animi a esse minima dolores temporibus saepe nihil, vitae distinctio aut. Ea neque voluptatum quo incidunt porro eos minus, veniam necessitatibus?
     Officiis commodi repellendus in. Sequi, architecto distinctio eligendi debitis quam voluptatibus assumenda voluptates, qui libero nulla dicta dolorem modi. Autem incidunt eum accusamus eveniet. Aperiam eaque reiciendis officia iusto velit.
     Laudantium, architecto tempora mollitia molestias eaque nemo obcaecati debitis voluptatem quam, veniam asperiores? Eaque libero dicta ut eligendi. Dolorem exercitationem odio ratione? Voluptatibus saepe, ipsum dolorum id minima omnis harum!
