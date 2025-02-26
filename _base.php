@@ -1,15 +1,25 @@
 <?php
 
-function link_stylesheet($stylesheets) {
-    if (!$stylesheets) {
+function link_stylesheet($stylesheetArray) {
+    if (!$stylesheetArray) {
         return;
     }
     
-    if (is_array($stylesheets)) {
-        foreach ($stylesheets as $stylesheet) {
-            echo "<link rel='stylesheet' href='$stylesheet' />";
+    if (is_array($stylesheetArray)) {
+        foreach ($stylesheetArray as $stylesheet) {
+            return "<link rel='stylesheet' href='$stylesheet' />";
         }
-    } else {
-        echo "<link rel='stylesheet' href='$stylesheets' />";
+    } 
+}
+
+function link_script($scriptArray) {
+    if (!$scriptArray) {
+        return;
+    }
+    
+    if (is_array($scriptArray)) {
+        foreach ($scriptArray as $script) {
+            return "<script src='$script'></script>";
+        }
     }
 }

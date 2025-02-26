@@ -2,7 +2,7 @@
 require '../../_base.php';
 
 $title = 'Example Page 1';
-$stylesheets = 'style1.css';
+$stylesheetArray = ['style1.css'];
 
 include '../../_head.php';
 ?>

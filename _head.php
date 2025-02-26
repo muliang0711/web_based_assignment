@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= $title ?? 'Untitled' ?></title>
     <link rel="stylesheet" href="/css/app.css" />
-    <?= link_stylesheet($stylesheets ?? ''); ?>
+    <?= link_stylesheet($stylesheetArray ?? ''); ?>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
     <header>
