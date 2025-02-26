@@ -49,18 +49,19 @@ header nav a {
 header nav a::after {
     content: "";
     position: absolute;
-    left: 0;
+    left: 50%;
+    transform: translateX(-50%);
     bottom: 0;
-    width: 100%;
+    width: 0%;
     height: 5px;
     background-color: hsl(206, 100%, 89%);
-    opacity: 0;
+    transition: width 0.4s;
 }
 header nav a:hover {
     background-color: hsla(203, 100%, 91%, 0.289);
 }
 header nav a:hover::after {
-    opacity: 1;
+    width: 100%;
 }
 
 main {
@@ -78,7 +79,7 @@ footer {
 
 
 
-/* Landing page-specific styling */
+/* The following CSS only applies to index.php */
 
 .slideshow {
     position: relative;
