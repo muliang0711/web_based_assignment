@@ -6,7 +6,7 @@
 $servername = "localhost"; // Your database server (for XAMPP, it's usually localhost)
 $username = "root"; // Your MySQL username (default for XAMPP is root)
 $password = ""; // Your MySQL password (default for XAMPP is empty)
-$dbname = "test"; // Replace with the name of your database
+$dbname = "mvc_demo"; // Replace with the name of your database
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
