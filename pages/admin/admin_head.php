@@ -23,9 +23,5 @@
 
     <div class="main">
         <div id="container"></div>
-        <script src="openframe.js"></script>
-    </div>
 
-
-</body>
-</html>
+    <main>

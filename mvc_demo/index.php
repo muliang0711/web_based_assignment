@@ -4,3 +4,5 @@ require_once __DIR__ . '/routers/web.php';
 // Get the requested URL
 
 ?>
+
+<h1>Hello!!!</h1>
