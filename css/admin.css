@@ -22,27 +22,49 @@
 
 .button{
     background-color: hsl(206 100% 25%);
+    width: 100%;
     color: white;
     text-align: center;
     border: none;
-    padding: 10px 15px;
+    padding: 25px 15px;
     cursor: pointer;
-    font-size: 10px;
+    font-size: 13px;
     transition: background-color 0.3s, transform 0.2s;
     margin: 2px 0;
     text-decoration: none;
+    display: inline-block;
+    position: relative;
+    transition: background-color 0.2s ease;
 }
 
 .button:hover {
     background-color: hsl(206 100% 75%);
-    transform: scale(1.10);
+    /*transform: scale(1.10);*/
     color:white;
     
 }
 
+
+/* The horizontal bar that appears on the bottom of an <a> when it is hovered over */
+.button::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right:0;
+    transform: translateY(-50%);
+
+    width: 5px;
+    height:0;
+    background-color: hsl(206, 100%, 89%);
+    transition: height 0.4s;
+}
+
+.button:hover::after {
+    height: 100%;
+}
+
 .side-container {
     position: fixed;
-    padding: 0 15px;
     width: var(--side-container-width); /* 注意！這個要跟 .main 的 margin-left 一樣 */
     height: 100vh;
     /* border: 1px solid blue; */
@@ -58,7 +80,7 @@
 }
 
 .adminHeader{
-    font-size: 20px;
+    font-size: 25px;
     padding: 0 15px;
     font-family: "Times New Roman";
     color:white;
@@ -76,7 +98,6 @@ body{
     width: calc(100vw - var(--side-container-width));
     /* border: 1px solid red; */
     background-color: white;
-    padding: 30px 50px;
    /* overflow: hidden;  直接隐藏所有溢出内容 */
 }
 
@@ -97,4 +118,13 @@ body{
         height: 100vh;
         width: 50%;  /* 在小屏幕上减小高度 */
     }
+}
+header{
+    /* border: 1px solid red; */
+   background-color: hsl(206 100% 30%);
+   padding: 20px 30px;
+   text-align: left;
+   font:50%;
+   color:white;
+   font-weight: bold;
 }

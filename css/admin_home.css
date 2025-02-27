@@ -1,0 +1,32 @@
+table {
+    padding: 20px 50px;
+    margin: 20px;
+    height: 20vh;
+    width: 25vw;
+    border: none;
+    color: hsl(206, 100%, 30%);
+    text-align: center;
+    text-shadow:5px 1px 3px rgba(0, 0, 0, 0.2);
+    border: 2px solid white;
+    border-radius: 50px 20px;
+    box-shadow: 5px 5px rgba(0, 0, 0, 0.2);
+
+    position: relative;
+    cursor: pointer;
+    background-size: 300% 300%;
+    background-image: linear-gradient(120deg, hsl(206, 100%, 95%), hsl(206, 100%, 90%), hsl(206, 100%, 70%), hsl(206, 100%, 60%));
+    transition: color 0.3s ease-in-out;
+}
+
+/* 添加动画 */
+table:hover {
+    animation: slideGradient 3s linear infinite;
+}
+
+/* 背景渐变滑动 */
+@keyframes slideGradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
