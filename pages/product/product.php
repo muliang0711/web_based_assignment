@@ -34,11 +34,11 @@ function link_stylesheet($stylesheetArray) {
           <div class="logo">
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Logo-Yonex.svg/2560px-Logo-Yonex.svg.png" width="125px">
             </div>
-            <li><a onlick ="onClick()" href="../product/product.php"><strong>Home</strong></a></li>
-          <li><a onlick ="onClick()" href="../product/productlist.php"><strong>Products</strong></a></li>
-          <li><a onlick ="onClick()" href="../about/about.php"><strong>About</strong></a></li>
-          <li><a href=""><strong>Contact</strong></a></li>
-          <li><a href=""><strong>Account</strong></a></li>
+            <li><a onlick ="onClick()" href="http://localhost:8000/pages/product/product.html"><strong>Home</strong></a></li>
+            <li><a onlick ="onClick()" href="http://localhost:8000/pages/product/productlist.html"><strong>Products</strong></a></li>
+            <li><a onlick ="onClick()" href="http://localhost:8000/pages/About/about.html"><strong>About</strong></a></li>
+            <li><a href=""><strong>Contact</strong></a></li>
+            <li><a href=""><strong>Account</strong></a></li>
         </ul>
       </div>
       </nav>

@@ -1,119 +1,62 @@
-/* This CSS applies to all pages except admin pages */
-
-* {
-    box-sizing: border-box;
-}
-
-body {
-    margin: 0;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    font-family: system-ui;
-}
-
-header, main, footer {
-    padding-left: 100px;
-    padding-right: 100px;
-}
-
-a {
-    text-decoration: none;
-    color: inherit;
-}
-
-header {
-    /* Make header stick to the top */
-    position: sticky;
-    top: 0;
-    z-index: 999;
-
-    width: 100vw;
-    background-color: black;
-    color: white;
-
-    /* border-bottom: 2px solid rgb(106, 190, 255); */
-
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-}
-
-header nav a {
-    display: inline-block; /* Allows vertical paddings to work */
-    padding: 30px 30px;
-    position: relative;
-    transition: background-color 0.2s ease;
-}
-/* The horizontal bar that appears on the bottom of an <a> when it is hovered over */
-header nav a::after {
-    content: "";
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    bottom: 0;
-    width: 0%;
-    height: 5px;
-    background-color: hsl(206, 100%, 89%);
-    transition: width 0.4s;
-}
-header nav a:hover {
-    background-color: hsla(203, 100%, 91%, 0.289);
-}
-header nav a:hover::after {
+.top-sideMenu{
+    position: fixed;
+    top: -20px;
     width: 100%;
+    left:0px;
+    background-color: #333; 
+    z-index: 1000; /* Ensure it stays above other elements */
+}
+    
+.top-sideMenu a {
+    color: white;
 }
 
-main {
-    flex-grow: 1;
-    background-color: #eee;
+.logo img {
+    display:flex;
+    width: 200px;
+    height: 50px;
 }
 
-footer {
-    padding-top: 30px;
-    padding-bottom: 30px;
-    width: 100vw;
-    background-color: #000;
-    color: #ddd;
+nav{
+    flex: 1;
+    
+}
+    
+nav ul{
+    display: inline-block;
+    list-style-type: none;
+}
+    
+nav ul li{
+    display: inline-block;
+    padding: 20px;
+}
+    
+.Introduction h1{
+    background-color: #333;
+    color:white;
+    text-align: center;
+    border: 5px solid #646363;
+    margin-top: 120px;
+    padding: 5px;
+}
+
+.Introduction p{
+    background-color: #333;
+    text-align: left;
+    color:white;
+    border: 5px dotted green;
+    margin-left: 700px;
+    padding: 10px;
+    margin-right: 100px;
+    margin-top: 45px;
 }
 
 
-
-/* The following CSS only applies to index.php */
-
-.slideshow {
-    position: relative;
-    margin: 0 -100px;
-    /* width: 100vw;
-    height: 80vh; */
-    /* border: 1px solid; */
-    background-color: #fff;
-    background-image: url("../assets/img/badminton-player.jpg");
-    width: 100vw;
-    height: 80vh;
-    background-size: 100%;
-    background-position: 0 -200px;
-    background-repeat: no-repeat;
-    /* object-position: 50% 50%; */
-}
-.slideshow img {
-    width: 100vw;
-    height: 80vh;
-    object-fit: contain;
-    object-position: 50% 50%;
-    /* border: 1px solid; */
-}
-.caption {
-    position: absolute;
-    bottom: 50px;
-    left: 100px;
-}
-.caption h1 {
-    font-size: xx-large;
-    color: hsl(206 100% 25%);
-}
-
-.main-section {
-    padding: 50px 0;
+.Introduction img{
+    width: 40%;
+    height: 60%;
+    position: fixed;
+    left: 2%;
+    padding:20px;
 }
