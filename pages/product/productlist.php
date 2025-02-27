@@ -46,14 +46,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="logo">
               <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Logo-Yonex.svg/2560px-Logo-Yonex.svg.png" width="125px">
               </div>
-          <li><a onlick ="onClick()" href="../product/product.php"><strong>Home</strong></a></li>
-          <li><a onlick ="onClick()" href="../product/productlist.php"><strong>Products</strong></a></li>
-          <li><a onlick ="onClick()" href="../about/about.php"><strong>About</strong></a></li>
+          <li><a onclick ="onClick()" href="../product/product.php"><strong>Home</strong></a></li>
+          <li><a onclick ="onClick()" href="../product/productlist.php"><strong>Products</strong></a></li>
+          <li><a onclick ="onClick()" href="../about/about.php"><strong>About</strong></a></li>
             <li><a href=""><strong>Contact</strong></a></li>
             <li><a href=""><strong>Account</strong></a></li>
+            <li><a href="#popup"><div id="cart"><img id="open-popup" src="illustration-shopping-online.png" alt="Cart" width="50" style="cursor: pointer;"></div></a></li>
           </ul>
         </div>
         </nav>
+    
       </div>
       <div class="image-box">
         <img src="https://www.yonex.com/media/scandiweb/slider/n/a/nanoflare1000pc.png" alt="Nanoflare 700 RISING">
@@ -107,5 +109,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 </script>
 
+<div id="popup" class="popup">
+    <div class="popup-content">
+        <a href="#" class="close">&times;</a>
+        <h2>Shopping Cart</h2>
+        <p>Your cart is empty.</p>
+    </div>
+</div>
 
-</body>
+</body> 
