@@ -2,11 +2,27 @@
 <html lang="en">
 </html>
 
+<?php
+$stylesheetArray = ['product.css'];
+
+function link_stylesheet($stylesheetArray) {
+  if (!$stylesheetArray) {
+      return;
+  }
+}
+  $time = time(); // Force browser to reload css instead of loading old css from cache
+  
+  if (is_array($stylesheetArray)) {
+      foreach ($stylesheetArray as $stylesheet) {
+          echo "<link rel='stylesheet' href='$stylesheet?v=$time' />";
+      }
+  } 
+?>
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Products Home Page</title>
-    <link href="product.css" rel="stylesheet"/>
   </head>
 
 <div class="container">
@@ -18,9 +34,9 @@
           <div class="logo">
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Logo-Yonex.svg/2560px-Logo-Yonex.svg.png" width="125px">
             </div>
-          <li><a onlick ="onClick()" href="product.html"><strong>Home</strong></a></li>
-          <li><a onlick ="onClick()" href="productlist.html"><strong>Products</strong></a></li>
-          <li><a onlick ="onClick()" href="about.html"><strong>About</strong></a></li>
+            <li><a onlick ="onClick()" href="../product/product.php"><strong>Home</strong></a></li>
+          <li><a onlick ="onClick()" href="../product/productlist.php"><strong>Products</strong></a></li>
+          <li><a onlick ="onClick()" href="../about/about.php"><strong>About</strong></a></li>
           <li><a href=""><strong>Contact</strong></a></li>
           <li><a href=""><strong>Account</strong></a></li>
         </ul>

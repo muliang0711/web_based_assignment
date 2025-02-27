@@ -16,9 +16,9 @@
         </div>
         <nav>
           <ul>
-            <li><a onlick ="onClick()" href="product.html">Home</a></li>
-            <li><a onlick ="onClick()" href="productlist.html">Products</a></li>
-            <li><a onlick ="onClick()" href="about.html">About</a></li>
+          <li><a onlick ="onClick()" href="../product/product.php"><strong>Home</strong></a></li>
+          <li><a onlick ="onClick()" href="../product/productlist.php"><strong>Products</strong></a></li>
+          <li><a onlick ="onClick()" href="../about/about.php"><strong>About</strong></a></li>
             <li><a href="">Contact</a></li>
             <li><a href="">Account</a></li>
           </ul>
