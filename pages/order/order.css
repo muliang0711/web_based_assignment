@@ -23,11 +23,11 @@
     overflow: hidden;
     padding-left: 7px;
     display: grid;
-    grid-template-columns: 0.4fr 1fr 0.5fr 0.2fr;
+    grid-template-columns: 0.4fr 0.7fr 0.5fr 0.3fr 0.2fr;
     align-items: center;
 }
 
-.order span, .order-header span {
+.order span, .order-header span{
     align-content: center;
     overflow: hidden;
     height: 40px;
@@ -35,21 +35,46 @@
     padding: 0px 35px;
 }
 
+.dropdown {
+    height: 100%;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    padding-top: 10px;
+}
+
+.rotate svg {
+    transform: rotate(90deg);
+}
+
+.order svg{
+    width: 20px;
+    height: 20px;
+    margin: 0 auto;
+    fill: var(--lessImportant);
+    transition: 0.5s ease;
+}
+
 .orderID {
     font-weight: 700;
 }
 
-.orderDate {
+.orderDate, .orderStatus {
     font-weight: 700;
     font-size: small;
 }
 
+.orderAddress {
+    font-size: 14px;
+}
+
+
 .order {
+    z-index: 1;
+    position: relative;
     border-radius: 10px;
     height: 50px;
     background-color: white;
-
-
     transition: 0.5s ease;
 }
 
@@ -77,6 +102,10 @@
     animation: extendBar 0.6s ease forwards;
 }
 
+.order.noanimation::after {
+    animation: retractBar 0.4s ease forwards;
+}
+
 @keyframes extendBar {
     0% {
         opacity: 1;
@@ -89,4 +118,35 @@
         left: 0%;
         right: 0%;
     }
+}
+
+@keyframes retractBar {
+    0% {
+        opacity: 1;
+        left: 0%;
+        right: 0%;
+    }
+
+    100% {
+        opacity: 1;
+        left: 50%;
+        right: 50%;
+    }
+}
+
+.orderDetailed {
+    display: block;
+    position: relative;
+    height: 0px;
+    width: 100%;
+    margin-top: -20px;
+    background-color: white;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    transition: 0.5s ease;
+}
+
+.orderDetailed.show {
+    height: 300px;
+    padding: 5px;
 }

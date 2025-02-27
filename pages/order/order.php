@@ -17,17 +17,23 @@
         <span>Order ID</span>
         <span>Address</span>
         <span>Ordered Date</span>
+        <span>Status</span>
     </div>
     <div class="order">
         <span class="orderID">#12345</span>
         <span class="orderAddress">PV18 RESIDENCES Kuala  Jalan Langkawi LUMPUR</span>
         <span class="orderDate">27/2/2025</span>
+        <span class="orderStatus">Pending</span>
+        <button class="dropdown">
+        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z"/></svg>
+        </button>
     </div>
+    <div class="orderDetailed"></div>
     <div class="order"></div>
     <div class="order"></div>
 </div>
 
 <?php 
-$scripts = ['order.js'];
+$scriptArray = ["order.js"];
 include '../../_foot.php'; 
 ?>

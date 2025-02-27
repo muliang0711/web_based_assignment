@@ -1,12 +1,14 @@
 <?php
 
+$time = time(); //get current time to append to file address
+
 // Dynamically add stylesheet links to a page
 function link_stylesheet($stylesheetArray) {
+    global $time;
     if (!$stylesheetArray) {
         return;
     }
 
-    $time = time(); // Force browser to reload css instead of loading old css from cache
     
     if (is_array($stylesheetArray)) {
         foreach ($stylesheetArray as $stylesheet) {
@@ -17,13 +19,16 @@ function link_stylesheet($stylesheetArray) {
 
 // Dynamically embed scripts into a page
 function link_script($scriptArray) {
+    global $time;
     if (!$scriptArray) {
         return;
     }
     
     if (is_array($scriptArray)) {
         foreach ($scriptArray as $script) {
-            echo "<script src='$script'></script>";
+            echo "<script src='$script?v=$time'></script>";
         }
     }
 }
+
+?>
