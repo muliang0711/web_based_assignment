@@ -70,7 +70,7 @@ body{
     /* border: 1px solid red; */
     background-color: white;
     padding: 0 0px;
-    overflow: hidden; /* 直接隐藏所有溢出内容 */
+   /* overflow: hidden;  直接隐藏所有溢出内容 */
 }
 
 #container {
@@ -81,15 +81,9 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 
-iframe {
-    /* Reminder: 据观察，CSS file 里面的 width 和 height 会 override JavaScript 里面给 iframe set 的 width 和 height （如 iframe.width）但 JS 里面 set 的 border 会 override CSS file 里面的 border。*/
-    /* width: 100%;
-    height: 100%; */
-    border: none;
-}
 
 @media (max-width: 768px) { 
     #container {
