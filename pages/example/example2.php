@@ -3,6 +3,7 @@ require '../../_base.php';
 
 $title = 'Example Page 2';
 $stylesheetArray = ['style1.css', 'style2.css'];
+$scriptArray = ['product.js'];
 
 include '../../_head.php';
 ?>

@@ -6,8 +6,30 @@
     --brand-color: hsl(206 100% 25%);
 }
 
+.popup {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    top: 100px;
+    left: 100px;
+    background-color: red;
+    opacity: 1;
+    transition: all 0.4s;
+}
+.close-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    color: white;
+    cursor: pointer;
+}
+.popup.closed {
+    opacity: 0;
+}
+
 body {
     margin: 0;
+    position: relative;
     /* width: calc(100vw + 600px);
     height: calc(100vh + 600px);
     transform: translateX(-300px);
@@ -21,10 +43,10 @@ body {
     background-position: 0 0, 150px 150px;
     background-size: 300px, 300px;
     background-color: #eee;
-    animation: bg-animation 20s linear infinite ;
+    animation: bg-scroll 20s linear infinite ;
 }
 
-@keyframes bg-animation {
+@keyframes bg-scroll {
     0% {
         background-position: 0 0, 150px 150px;
     }

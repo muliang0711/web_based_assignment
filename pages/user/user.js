@@ -12,4 +12,9 @@ $(() => {
         var input = document.getElementById("password");
         input.type = (input.type === "password") ? "text" : "password";
     })
+
+    // close popup
+    $('.close-btn').on('click', e => {
+        $('.popup').addClass('closed');
+    });
 });
