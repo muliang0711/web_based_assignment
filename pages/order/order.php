@@ -1,12 +1,20 @@
 <?php 
     require "../../_base.php";
     $title = 'Order | Page';
-    $stylesheetArray  = ["order.css"];
-
+    $time = time();
+    $stylesheetArray  = ["order.css?v={$time}"];
     include "../../_head.php";
 ?>
 
 
-<h1>ORDER PAGE COMING SOON</h1>
+<h1>My orders</h1>
+<div class="orders-container">
+    <div class="order"></div>
+    <div class="order"></div>
+    <div class="order"></div>
+</div>
 
-<?php include '../../_foot.php'; ?>
+<?php 
+$scripts = ['order.js'];
+include '../../_foot.php'; 
+?>

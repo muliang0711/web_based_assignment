@@ -1,0 +1,28 @@
+:root {
+
+}
+
+.orders-container {
+    display: flex;
+    flex-direction: column;
+    border: 2px solid dimgray;
+    border-radius: 10px;
+    height: 60vh;
+    width: 80vw;
+    
+}
+
+.order {
+    height: 8%;
+    background-color: inherit;
+}
+
+.order:first-child {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.order:hover {
+    background-color: greenyellow;
+    opacity: 0.5;
+}
