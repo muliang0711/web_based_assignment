@@ -6,7 +6,7 @@
     --brand-color: hsl(206 100% 25%);
 }
 
-.popup {
+/* .popup {
     position: absolute;
     width: 200px;
     height: 200px;
@@ -25,10 +25,22 @@
 }
 .popup.closed {
     opacity: 0;
+} */
+
+/* Override /css/app.css */
+header {
+    background-color: rgb(0,0,0,0);
+    color: black;
+    transition: all 0.2s;
+}
+header.hovered {
+    background-color: rgb(0,0,0,0.5);
+    color: white;
 }
 
 body {
-    margin: 0;
+    /* margin: 0 -100px; */
+    /* height: 100%; */
     position: relative;
     /* width: calc(100vw + 600px);
     height: calc(100vh + 600px);
@@ -46,6 +58,11 @@ body {
     animation: bg-scroll 20s linear infinite ;
 }
 
+/* Override /css/app.css */
+main {
+    background-color: rgb(0,0,0,0);
+}
+
 @keyframes bg-scroll {
     0% {
         background-position: 0 0, 150px 150px;
@@ -59,7 +76,7 @@ body, input, button {
     font-family: system-ui;
 }
 
-.main {
+.container {
     background-color:#fff;
     /* color: #fff; */
     width: 400px;
@@ -71,7 +88,7 @@ body, input, button {
     box-shadow: 10px 10px 0 0 rgb(0,0,0,0.6);
     transition: all 0.2s;
 }
-.main:hover {
+.container:hover {
     /* border: 1px solid var(--brand-color);
     box-shadow: 10px 10px 0 0 var(--brand-color); */
 }
