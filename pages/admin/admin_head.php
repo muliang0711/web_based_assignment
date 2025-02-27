@@ -5,11 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Home Page</title>
     <link rel="stylesheet" href="display.css">
+
 </head>
 
 <body>
     <div class="side-container">
-        <p class="display_topleft"><b><i>Admin</i></b></p>
+        <p class="display_topleft adminHeader"><b><i>Admin</i></b></p>
         <a onclick="loadIframe('/pages/product/product.html')" class="button">Home</a>
         <a onclick="loadIframe('/pages/product/productlist.html')" class="button">Order</a>
         <a class="button">Product</a>

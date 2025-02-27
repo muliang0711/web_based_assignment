@@ -18,8 +18,8 @@
     bottom: 10px;
 }
 .button{
-    background-color: whitesmoke;
-    color: black;
+    background-color: hsl(206 100% 25%);
+    color: white;
     text-align: center;
     border: none;
     padding: 10px 15px;
@@ -30,7 +30,7 @@
 }
 
 .button:hover {
-    background-color: #2d4ce7;
+    background-color: hsl(206 100% 75%);
     transform: scale(1.10);
     color:white;
 }
@@ -48,13 +48,14 @@
     flex-direction: column; 
     flex-wrap: wrap;
     justify-content: center;
-    background:whitesmoke;
+    background:hsl(206 100% 25%);
     z-index: 1;
 }
 
-p{
+.adminHeader{
     font-size: 20px;
     font-family: "Times New Roman";
+    color:white;
     float:left;
 }
 
