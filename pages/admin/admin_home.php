@@ -1,0 +1,55 @@
+<?php
+require '../../_base.php';
+
+$title='Home Page';
+$stylesheetArray = ['/css/admin_home.css'];   // 注意：这边只放特定于此页面的 .css file(s)。所有 admin 页面都会用到的 .css files 应放在 /css/admin.css
+// $scriptArray = [];       // 注意：这边只放特定于此页面的 .js file(s)。所有 admin 页面都会用到的 .js files 应放在 /js/admin.js
+
+include '../../admin_head.php';
+?>
+
+<?php
+try {
+    $_db = new PDO('mysql:dbname=web_based_assignment;host=localhost', 'root', '', [
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION  // Enable error reporting
+    ]);
+
+    // Query to count products
+    $stm = $_db->prepare("SELECT COUNT(*) AS TotalProducts FROM Product");
+    $stm->execute();  
+    $result = $stm->fetch();
+} catch (PDOException $e) {
+    die("Database error: " . $e->getMessage());  // Handle connection errors
+}
+?>
+<table>
+<div class="block">
+    <tr>
+        <th>Total Product</th>
+    </tr>
+    <tr>
+        <td><?= htmlspecialchars($result->TotalProducts) ?></td>
+    </tr>
+</div>
+</table>
+<table>
+<div class="block">
+    <tr>
+        <th>Total Product</th>
+    </tr>
+    <tr>
+        <td><?= htmlspecialchars($result->TotalProducts) ?></td>
+    </tr>
+</div>
+
+
+</table>
+
+
+</div>
+
+<?php 
+include '../../admin_foot.php';
+?>
+

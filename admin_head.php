@@ -19,9 +19,12 @@
         <a class="button">Discount/Voucher</a>
         <a class="button">Analysis</a>
         <a class="display_bottomleft">
-            <img src="../admin_image/signout.jpg" width="20px">
+            <img src="/assets/img/signout.jpg" width="20px">
         </a>
     </div>
 
     <div class="main">
+         <div>
+            <header><?= $title ?? 'Untitled' ?></header>
+        </div>
         <!-- <div id="container"> -->
