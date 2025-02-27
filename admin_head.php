@@ -3,9 +3,10 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Home Page</title>
-    <link rel="stylesheet" href="../display.css">
-
+    <title><?= $title ?? 'Untitled' ?></title>
+    <link rel="stylesheet" href="/css/admin.css">
+    <?= link_stylesheet($stylesheetArray ?? ''); ?>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 
 <body>
@@ -23,8 +24,4 @@
     </div>
 
     <div class="main">
-        <div id="container">
-            
-    
-
-    <main>
+        <!-- <div id="container"> -->
