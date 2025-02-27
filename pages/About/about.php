@@ -8,25 +8,24 @@
   <link href="about.css" rel="stylesheet"/>
 </head>
 
-<body>
-  <div class="menu">
-    <div class="logo">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Logo-Yonex.svg/2560px-Logo-Yonex.svg.png" width="125px">
+<div class="container">
+  <body>
+    <div class="menu">
+      <nav>
+        <div class="top-sideMenu">
+        <ul>
+          <div class="logo">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Logo-Yonex.svg/2560px-Logo-Yonex.svg.png" width="125px">
+            </div>
+            <li><a onclick ="onClick()" href="../product/product.php"><strong>Home</strong></a></li>
+          <li><a onclick ="onClick()" href="../product/productlist.php"><strong>Products</strong></a></li>
+          <li><a onclick ="onClick()" href="../about/about.php"><strong>About</strong></a></li>
+            <li><a href=""><strong>Contact</strong></a></li>
+            <li><a href=""><strong>Account</strong></a></li>
+        </ul>
+      </div>
+      </nav>
     </div>
-    <nav>
-      <ul>
-        <div class="logo">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Logo-Yonex.svg/2560px-Logo-Yonex.svg.png" width="125px">
-        </div>
-        <li><a onlick ="onClick()" href="http://localhost:8000/pages/product/product.html"><strong>Home</strong></a></li>
-        <li><a onlick ="onClick()" href="http://localhost:8000/pages/product/productlist.html"><strong>Products</strong></a></li>
-        <li><a onlick ="onClick()" href="http://localhost:8000/pages/About/about.html"><strong>About</strong></a></li>
-        <li><a href=""><strong>Contact</strong></a></li>
-        <li><a href=""><strong>Account</strong></a></li>
-      </ul>
-    </nav>
-  </div>
-
   <div class="Introduction">
     <h1><strong>About Us</strong></h1>
     <img src="https://www.yonex.com/media/wysiwyg/about-us/world-map-desktop.png">
