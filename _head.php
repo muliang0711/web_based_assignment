@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= $title ?? 'Untitled' ?></title>
+    <link rel="icon" type="image/svg+xml" href="/assets/img/shuttlecock.svg">
     <link rel="stylesheet" href="/css/app.css" />
     <?= link_stylesheet($stylesheetArray ?? ''); ?>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
