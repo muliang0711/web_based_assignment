@@ -44,6 +44,7 @@ header nav a {
     display: inline-block; /* Allows vertical paddings to work */
     padding: 30px 30px;
     position: relative;
+    transition: background-color 0.2s ease;
 }
 /* The horizontal bar that appears on the bottom of an <a> when it is hovered over */
 header nav a::after {
