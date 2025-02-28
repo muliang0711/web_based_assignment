@@ -1,3 +1,12 @@
+---------- Delete  tables ----------
+
+DROP TABLE series;
+DROP TABLE product;
+DROP TABLE productSize;
+
+
+--------- Create tables ----------
+
 CREATE TABLE series(
     seriesID VARCHAR(3) PRIMARY KEY NOT NULL,
     seriesName VARCHAR(15)
@@ -21,7 +30,9 @@ CREATE TABLE productSize(
     FOREIGN KEY (productID) REFERENCES product(productID)
 );
     
--- 
+
+--------- Insert records ----------
+
 INSERT INTO series values ("AST", "Astrox");
 INSERT INTO series values ("NAN", "Nanoflare");
 INSERT INTO series values ("ARC", "Arcsaber");
