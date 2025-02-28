@@ -14,9 +14,11 @@
         <a href="/" class="logo"><img alt="(Store logo)" /></a>
         <nav>
             <a href="/pages/template/template.php">(dev only) Template page</a>
+            <a href="/">Home</a>
             <a href="/pages/product/productlist.php">Shop</a>
             <a href="/pages/About/about.html">About us</a>
-            <a href="/pages/user/user-login.php">Account</a>
+            <a href="/pages/user/user-signup.php">Sign up</a>
+            <a href="/pages/user/user-login.php">Sign in</a>
         </nav>
     </header>
     <main>

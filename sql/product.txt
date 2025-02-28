@@ -1,0 +1,24 @@
+CREATE TABLE series(
+    seriesID VARCHAR(3) PRIMARY KEY NOT NULL,
+    seriesName VARCHAR(15)
+);
+
+-- Example: Yonex A60, Adidas B60
+CREATE TABLE product(
+    productID VARCHAR(5) PRIMARY KEY NOT NULL,
+    productName VARCHAR(100) NOT NULL,
+    productDescription VARCHAR(200),
+    price FLOAT(6,2) NOT NULL,
+    seriesID VARCHAR(3),
+    FOREIGN KEY(seriesID) REFERENCES series(seriesID)
+);
+
+-- Example: Yonex A60 (3UG5), Yonex A60 (4UG5), Adidas B60 (3UG5), Adidas B60 (4UG5)
+CREATE TABLE productSize(
+    productID VARCHAR(5) NOT NULL,
+    sizeID VARCHAR(4) NOT NULL,
+    quantity INT NOT NULL,
+    PRIMARY KEY (productID, sizeID),
+    FOREIGN KEY (productID) REFERENCES product(productID)
+);
+    
