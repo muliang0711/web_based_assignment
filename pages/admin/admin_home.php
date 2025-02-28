@@ -23,31 +23,39 @@ try {
     die("Database error: " . $e->getMessage());  // Handle connection errors
 }
 ?>
-<table>
-<div class="block">
-    <tr>
-        <th>Total Product</th>
-    </tr>
-    <tr>
-        <td><?= htmlspecialchars($result->TotalProducts) ?></td>
-    </tr>
+<div class="container">
+    <table>
+        <div class="block">
+            <tr>
+                <th>Total Product</th>
+            </tr>
+            <tr>
+                <th><?= htmlspecialchars($result->TotalProducts) ?></th>
+            </tr>
+        </div>
+    </table>
+    <table>
+        <div class="block">
+            <tr>
+                <th>Total Product</th>
+            </tr>
+            <tr>
+                <td><?= htmlspecialchars($result->TotalProducts) ?></td>
+            </tr>
+        </div>
+    </table>
+    <table>
+        <div class="block">
+            <tr>
+                <th>Total Product</th>
+            </tr>
+            <tr>
+                <td><?= htmlspecialchars($result->TotalProducts) ?></td>
+            </tr>
+        </div>
+    </table>
 </div>
-</table>
-<table>
-<div class="block">
-    <tr>
-        <th>Total Product</th>
-    </tr>
-    <tr>
-        <td><?= htmlspecialchars($result->TotalProducts) ?></td>
-    </tr>
-</div>
 
-
-</table>
-
-
-</div>
 
 <?php 
 include '../../admin_foot.php';

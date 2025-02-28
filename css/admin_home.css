@@ -23,6 +23,11 @@ table:hover {
     animation: slideGradient 3s linear infinite;
 }
 
+.container {
+    display: flex;
+
+}
+
 /* 背景渐变滑动 */
 @keyframes slideGradient {
     0% { background-position: 0% 50%; }
