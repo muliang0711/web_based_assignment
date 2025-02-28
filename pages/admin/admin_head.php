@@ -23,10 +23,8 @@
     </div>
 
     <div class="main">
-        <div id="container"></div>
-        <script src="openframe.js"></script>
-    </div>
+        <div id="container">
+            
+    
 
-
-</body>
-</html>
+    <main>
