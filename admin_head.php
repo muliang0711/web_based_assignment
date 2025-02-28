@@ -12,7 +12,7 @@
 <body>
     <div class="side-container">
         <p class="display_topleft adminHeader"><b><i>Admin</i></b></p>
-        <a href="/pages/admin/function_page/admin_product.php" class="button">Home</a>
+        <a href="/pages/admin/admin_home.php" class="button">Home</a>
         <a href="/pages/product/productlist.php" class="button">Order</a>
         <a class="button">Product</a>
         <a class="button">Customer</a>

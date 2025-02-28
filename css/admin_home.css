@@ -1,7 +1,7 @@
 .block {
     padding: 20px 50px;
     margin: 20px;
-    height: 20vh;
+    height: 10vh;
     width: 25vw;
     border: none;
     color: hsl(206, 100%, 30%);
@@ -34,3 +34,10 @@
     100% { background-position: 0% 50%; }
 }
 
+.title{
+    font-weight:bold;
+    font-size: 30px;
+    font:blue;
+    padding:20px 50px;
+    text-decoration: underline;
+}
