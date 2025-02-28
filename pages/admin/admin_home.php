@@ -16,46 +16,54 @@ try {
     ]);
 
     // Query to count products
-    $stm = $_db->prepare("SELECT COUNT(*) AS TotalProducts FROM Product");
-    $stm->execute();  
-    $result = $stm->fetch();
+    $stmA = $_db->prepare("SELECT COUNT(*) AS TotalProducts FROM Product");
+    $stmA->execute();  
+    $resultA = $stmA->fetch();
+
+    $stmB = $_db->prepare("SELECT ProductID,ProductName FROM Product");
+    $stmB->execute();  
+    $resultB = $stmB->fetchAll();
+
 } catch (PDOException $e) {
     die("Database error: " . $e->getMessage());  // Handle connection errors
 }
 ?>
+
 <div class="container">
-    <table>
-        <div class="block">
-            <tr>
-                <th>Total Product</th>
-            </tr>
-            <tr>
-                <th><?= htmlspecialchars($result->TotalProducts) ?></th>
-            </tr>
-        </div>
+    <table class="block">
+        <tr>
+            <th>Total Product</th>
+        </tr>
+        <tr>
+            <th><?= htmlspecialchars($resultA->TotalProducts) ?></th>
+        </tr>
     </table>
-    <table>
-        <div class="block">
-            <tr>
-                <th>Total Product</th>
-            </tr>
-            <tr>
-                <td><?= htmlspecialchars($result->TotalProducts) ?></td>
-            </tr>
-        </div>
+    <table class="block">
+        <tr>
+            <th>Total Product</th>
+        </tr>
+        <tr>
+            <td><?= htmlspecialchars($resultA->TotalProducts) ?></td>
+        </tr>
     </table>
-    <table>
-        <div class="block">
-            <tr>
-                <th>Total Product</th>
-            </tr>
-            <tr>
-                <td><?= htmlspecialchars($result->TotalProducts) ?></td>
-            </tr>
-        </div>
+    <table class="block">
+        <tr>
+            <th>Total Product</th>
+        </tr>
+        <tr>
+            <td><?= htmlspecialchars($resultA->TotalProducts) ?></td>
+        </tr>
     </table>
 </div>
 
+<table>
+<?php foreach ($resultB as $s): ?>
+    <tr>
+        <td><?= $s->ProductID ?></td>
+        <td><?= $s->ProductName ?></td>
+    </tr>
+    <?php endforeach ?>
+</table>
 
 <?php 
 include '../../admin_foot.php';
