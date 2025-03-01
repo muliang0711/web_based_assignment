@@ -37,7 +37,7 @@ header.hovered {
     /* background-color: rgb(0,0,0,0.2); */
     color: black;
 }
-header a::after, header a:hover::after {
+header nav a::after, header nav a:hover::after {
     background-color: var(--brand-darkblue);
 }
 
