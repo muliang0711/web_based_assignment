@@ -1,7 +1,27 @@
 :root {
  --lessImportant : rgb(90, 90, 90);
- --barColor : rgb(88, 160, 255);
+ --barColor : rgb(85, 221, 255);
  --hoverColor : rgba(243, 243, 243, 0.699);
+}
+
+
+::-webkit-scrollbar {
+    width:  10px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #46464611; /* Darker thumb */
+    border-radius: 50px;
+    opacity: 0.3;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    opacity: 1;
+    background: #3d3d3d75; /* Darker on hover */
 }
 
 .orders-container {
@@ -11,13 +31,14 @@
     height: 60vh;
     width: 85vw;
     max-width: 1000px;
-    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
     gap: 15px;
-    
+    padding-right: 10px;
 }
 
+
 .order-header, .order {
-    width: inherit;
     max-width: 1000px;
     min-width: 500px;
     overflow: hidden;
@@ -25,6 +46,7 @@
     display: grid;
     grid-template-columns: 0.4fr 0.7fr 0.5fr 0.4fr 0.2fr;
     align-items: center;
+    flex-shrink: 0;
 }
 
 .order span, .order-header span{
@@ -139,7 +161,6 @@
     display: block;
     position: relative;
     height: 0px;
-    width: 100%;
     margin-top: -20px;
     background-color: white;
     border-bottom-left-radius: 10px;
@@ -148,6 +169,38 @@
 }
 
 .orderDetailed.show {
-    height: 300px;
+    height: 600px;
     padding: 5px;
 }
+
+.order-details-wrapper {
+    height: 0px;
+    width: 0px;
+    transition: 0.2s ease;
+    overflow: hidden;
+}
+
+.order-details-wrapper.show {
+    height: 100%;
+    width: 100%;
+}
+
+.orderProgress {
+    background-color: red;
+    height: 15%;
+    width: 100%;
+}
+
+.order-items-container {
+    background-color: blue;
+    height: 70%;
+    width: 100%;
+    overflow-y: auto;
+}
+
+.order-total-container {
+    background-color: green;
+    height: 15%;
+    width: 100%;
+}
+

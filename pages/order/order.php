@@ -19,6 +19,7 @@
         <span>Ordered Date</span>
         <span>Status</span>
     </div>
+    
     <div class="order">
         <span class="orderID">#12345</span>
         <span class="orderAddress">PV18 RESIDENCES Kuala  Jalan Langkawi LUMPUR</span>
@@ -28,7 +29,16 @@
         <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z"/></svg>
         </button>
     </div>
-    <div class="orderDetailed"></div>
+
+    <div class="orderDetailed">
+            <div class="order-details-wrapper">
+                <div class="orderProgress"></div>
+                <div class="order-items-container"></div>
+                <div class="order-total-container"></div>
+            </div>
+    </div>
+
+    
     <div class="order">
         <span class="orderID">#55125</span>
         <span class="orderAddress">jalan ujong Pasir melaka 707070 malaysia</span>
@@ -39,6 +49,7 @@
         </button>
     </div>
     <div class="orderDetailed"></div>
+    
     <div class="order">
         <span class="orderID">#66125</span>
         <span class="orderAddress">PV18 RESIDENCES Kuala  Jalan Langkawi LUMPUR</span>
