@@ -84,7 +84,7 @@ $_errors = [];
 function error($key){
     global $_errors;
     if ($_errors[$key] ?? false) { // if $_errors[$key] is null, jump to else block. The "?? false" part prevents PHP from throwing a warning.
-        echo "<span class='error'>$_errors[key]</span>";
+        echo "<span class='error'>$_errors[$key]</span>";
     }
     else {
         echo '<span></span>';
