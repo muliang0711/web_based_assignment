@@ -6,11 +6,32 @@ $stylesheetArray = ['user.css']; // Put CSS files that are specific to this page
 $scriptArray = ['user.js'];      // Put JS files that are specific to this page here. If you want to change the JavaScript for the header and the footer, go to /js/app.js
 
 
-/********* You can add other PHP code here (e.g. handle POST or GET requests) *********/
+if (is_post()) {
+    $username = post('username');
+    $password = post('password');
 
-// other php code
+    if (!$username) {
+        $_errors['username'] = 'Required';
+    }
 
-/**************************************************************************************/
+    if (!$password) {
+        $_errors['password'] = 'Required';
+    }
+
+    if (!$_errors) {
+        $stm = $_db->prepare('INSERT INTO user (username, email, password, memberStatus) VALUES(:username, :email, :password, :memberStatus)');
+        $stm->execute([
+            ':username' => $username,
+            ':email' => $email,
+            ':password' => $password,
+            ':memberStatus' => 'Inactive',
+        ]);
+
+        redirect('/');
+    }
+
+
+}
 
 include '../../_head.php';
 ?>
@@ -27,9 +48,9 @@ include '../../_head.php';
 
     <form class="form">
         <div class="form-item">
-            <label for="email">Email Address</label>
+            <label for="username">Username</label>
             <br>
-            <input type="text" name="username" id="email" required/>
+            <input type="text" name="username" id="username" required/>
         </div>
         
         <div class="form-item">

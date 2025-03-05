@@ -116,3 +116,18 @@ catch (PDOException $e) {
     die("Database error: " . $e->getMessage());  
 }
 
+// Is unique?
+function is_unique($value, $table, $field) {
+    global $_db;
+    $stm = $_db->prepare("SELECT COUNT(*) FROM $table WHERE $field = :value");
+    $stm->execute([':value' => $value]);
+    return $stm->fetchColumn() == 0;
+}
+
+// Does it exist?
+function exists_in_db($value, $table, $field) {
+    global $_db;
+    $select_stm = $_db->prepare("SELECT COUNT(*) FROM $table WHERE $field = :value");
+    $select_stm->execute([':value' => $value]);
+    return $select_stm->fetchColumn() > 0;
+}
