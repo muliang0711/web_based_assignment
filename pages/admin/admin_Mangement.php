@@ -31,7 +31,7 @@ try {
 ?>
 
 <?php
-if(isPost()){
+if(is_post()){
     $id         =req('id');
     $name       =req('name');
     $password   =req('password');
