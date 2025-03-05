@@ -81,6 +81,28 @@ function redirect($url = null) {
 
 
 // ============================================================================
+// HTML Helpers
+// ============================================================================
+
+// Encode HTML special characters
+function encode($value) {
+    return htmlentities($value);
+}
+
+// Generate <input type='text'>
+function input_text($key, $attr = '') {
+    $value = encode($GLOBALS[$key] ?? '');
+    echo "<input type='text' id='$key' name='$key' value='$value' $attr>";
+}
+
+// Generate <input type='password'>
+function input_password($key, $attr = '') {
+    $value = encode($GLOBALS[$key] ?? '');
+    echo "<input type='password' id='$key' name='$key' value='$value' $attr>";
+}
+
+
+// ============================================================================
 // Error handling
 // ============================================================================
 
