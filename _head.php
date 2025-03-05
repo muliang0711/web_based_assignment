@@ -17,8 +17,8 @@
             <a href="/">Home</a>
             <a href="/pages/product/productlist.php">Shop</a>
             <a href="/pages/About/about.html">About us</a>
-            <a href="/pages/user/user-signup.php">Sign up</a>
             <a href="/pages/user/user-login.php">Sign in</a>
+            <a class="signup" href="/pages/user/user-signup.php">Sign up</a>
         </nav>
     </header>
     <main>

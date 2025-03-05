@@ -67,7 +67,7 @@ header nav a::after {
     width: 0%;
     height: 5px;
     background-color: var(--brand-lightblue);
-    transition: width 0.4s;
+    transition: all 0.4s;
 }
 header nav a:hover {
     opacity: 1;
@@ -75,6 +75,27 @@ header nav a:hover {
 }
 header nav a:hover::after {
     width: 100%;
+}
+
+/* Special style for signup button */
+header nav a.signup {
+    color: var(--brand-lightblue);
+}
+
+header nav a.signup:hover, header nav a.signup::after {
+    background: linear-gradient(45deg,  var(--brand-lightblue), #23d5ab);
+    background-size: 200% 200%;
+    animation: gradient 5s ease infinite;
+}
+header nav a.signup:hover {
+    background-clip: text; 
+    color: transparent;
+}
+
+@keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
 main {
