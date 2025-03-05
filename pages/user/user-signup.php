@@ -36,12 +36,12 @@ if (is_post()) {
 
     // THIS IS A JOKE. I REPEAT, THIS IS A JOKE.
     // REMOVE THIS BEFORE TURNING IN THE ASSIGNMENT.
-    if (exists_in_db($password, 'user', 'password')) {
-        $stm = $_db->prepare('SELECT username FROM user WHERE password = :password');
-        $stm->execute([':password' => $password]);
-        $u = $stm->fetchColumn();
-        $_errors['password'] = "This password has been chosen by $u";
-    }
+    // if (exists_in_db($password, 'user', 'password')) {
+    //     $stm = $_db->prepare('SELECT username FROM user WHERE password = :password');
+    //     $stm->execute([':password' => $password]);
+    //     $u = $stm->fetchColumn();
+    //     $_errors['password'] = "This password has been chosen by $u";
+    // }
 
     if (!$_errors) {
         $stm = $_db->prepare('INSERT INTO user (username, email, password, memberStatus) VALUES(:username, :email, :password, :memberStatus)');
