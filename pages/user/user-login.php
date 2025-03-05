@@ -7,6 +7,8 @@ $scriptArray = ['user.js'];      // Put JS files that are specific to this page 
 
 
 if (is_post()) {
+    var_dump($_errors);
+
     $username = post('username');
     $password = post('password');
 
@@ -18,19 +20,26 @@ if (is_post()) {
         $_errors['password'] = 'Required';
     }
 
+
     if (!$_errors) {
-        $stm = $_db->prepare('INSERT INTO user (username, email, password, memberStatus) VALUES(:username, :email, :password, :memberStatus)');
+        $stm = $_db->prepare('SELECT * FROM user WHERE username = :username');
         $stm->execute([
             ':username' => $username,
-            ':email' => $email,
-            ':password' => $password,
-            ':memberStatus' => 'Inactive',
         ]);
+        $u = $stm->fetch();
 
-        redirect('/');
+        // If username exists, and password is correct
+        if ($u && $password == $u->password) {
+            // Create a session variable to store user object
+            $_SESSION['user_obj'] = $u;
+            // var_dump($_SESSION['user_obj']);s
+            redirect('./test.php');
+        }
+
+        // var_dump($u);
+        $_errors['username'] = ' '; // This serves no functional purpose other than to force autofocus to focus on username (bc it selects the first input that is a sibling of .error). The value has to be ' ' (a space), not '' (empty string), because an empty string evaluates to false, so the error() function always executed the else block, which prints a <span> without a class. Somehow an empty string produces a <span> with no class. 
+        $_errors['password'] = 'Wrong username or password';
     }
-
-
 }
 
 include '../../_head.php';
@@ -46,20 +55,22 @@ include '../../_head.php';
     <div class="instruction">Please login to your account</div>
     <a class="to-signup" href="/pages/user/user-signup.php">Don't have an account? Sign up</a>
 
-    <form class="form">
+    <form class="form" method="post">
         <div class="form-item">
             <label for="username">Username</label>
             <br>
-            <input type="text" name="username" id="username" required/>
+            <input type="text" name="username" id="username" value="<?= $username ?? '' ?>"/>
+            <?php error("username"); ?>
         </div>
         
         <div class="form-item">
             <label for="password">Password</label>
             <br>
             <div class="password-input-box">
-                <input type="password" name="password" id="password" required/>
+                <input type="password" name="password" id="password" value="<?= $password ?? '' ?>"/>
                 <img class="visibility-toggle-icon" src="../../assets/img/visibility-off.svg" alt="Visibility toggle icon"/>
             </div>
+            <?php error("password"); ?>
         </div>
 
         <div class="form-item">

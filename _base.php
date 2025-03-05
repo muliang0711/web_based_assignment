@@ -124,7 +124,7 @@ function is_unique($value, $table, $field) {
     return $stm->fetchColumn() == 0;
 }
 
-// Does it exist?
+// Does it already exist in database?
 function exists_in_db($value, $table, $field) {
     global $_db;
     $select_stm = $_db->prepare("SELECT COUNT(*) FROM $table WHERE $field = :value");

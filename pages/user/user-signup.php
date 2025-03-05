@@ -15,6 +15,9 @@ if (is_post()) {
     if (!$username) {
         $_errors['username'] = 'Required';
     }
+    if (exists_in_db($username, 'user', 'username')) {
+        $_errors['username'] = 'Sorry! Username is taken.';
+    }
 
     if (!$email) {
         $_errors['email'] = 'Required';
@@ -49,7 +52,7 @@ if (is_post()) {
             ':memberStatus' => 'Inactive',
         ]);
 
-        redirect('/');
+        redirect('./user-login.php');
     }
 
 
