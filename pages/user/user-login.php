@@ -23,30 +23,31 @@ include '../../_head.php';
     </h2>
     <h1 class="welcome">Welcome</h1>
     <div class="instruction">Please login to your account</div>
+    <a class="to-signup" href="/pages/user/user-signup.php">Don't have an account? Sign up</a>
 
-    <form class="login-form">
+    <form class="form">
         <div class="form-item">
             <label for="email">Email Address</label>
             <br>
-            <input type="text" id="email"/>
+            <input type="text" name="username" id="email" required/>
         </div>
         
         <div class="form-item">
             <label for="password">Password</label>
             <br>
             <div class="password-input-box">
-                <input type="password" id="password"/>
+                <input type="password" name="password" id="password" required/>
                 <img class="visibility-toggle-icon" src="../../assets/img/visibility-off.svg" alt="Visibility toggle icon"/>
             </div>
         </div>
 
         <div class="form-item">
-            <input type="checkbox" id="remember-me"/>
+            <input type="checkbox" name="remember-me" value="yes" id="remember-me" />
             <label for="remember-me">Remember me</label>
         </div>
 
         <a href="#" class="forgot-pw">Forgot password?</a>
-        <input class="login-btn" type="submit" value="Login"/>            
+        <button class="submit-btn" type="submit">Login</button>            
     </form>
 </div>
 

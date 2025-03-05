@@ -111,6 +111,11 @@ footer {
     color: #ddd;
 }
 
+/* Error text */
+.error {
+    color: darkred;
+}
+
 
 
 /* The following CSS only applies to index.php */
