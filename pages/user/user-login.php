@@ -20,7 +20,13 @@ if (is_post()) {
         $_errors['password'] = 'Required';
     }
 
+    $stm = $_db->prepare('SELECT * FROM user WHERE username = :username');
+    $stm->execute([
+        ':username' => $username,
+    ]);
+    $u = $stm->fetch();
 
+    // If inputs are valid, authenticate user
     if (!$_errors) {
         $stm = $_db->prepare('SELECT * FROM user WHERE username = :username');
         $stm->execute([
@@ -32,11 +38,9 @@ if (is_post()) {
         if ($u && $password == $u->password) {
             // Create a session variable to store user object
             $_SESSION['user_obj'] = $u;
-            // var_dump($_SESSION['user_obj']);s
             redirect('./test.php');
         }
 
-        // var_dump($u);
         $_errors['username'] = ' '; // This serves no functional purpose other than to force autofocus to focus on username (bc it selects the first input that is a sibling of .error). The value has to be ' ' (a space), not '' (empty string), because an empty string evaluates to false, so the error() function always executed the else block, which prints a <span> without a class. Somehow an empty string produces a <span> with no class. 
         $_errors['password'] = 'Wrong username or password';
     }
@@ -59,7 +63,7 @@ include '../../_head.php';
         <div class="form-item">
             <label for="username">Username</label>
             <br>
-            <input type="text" name="username" id="username" value="<?= $username ?? '' ?>"/>
+            <?php input_text('username') ?>
             <?php error("username"); ?>
         </div>
         
@@ -67,7 +71,7 @@ include '../../_head.php';
             <label for="password">Password</label>
             <br>
             <div class="password-input-box">
-                <input type="password" name="password" id="password" value="<?= $password ?? '' ?>"/>
+                <?php input_password('password') ?>
                 <img class="visibility-toggle-icon" src="../../assets/img/visibility-off.svg" alt="Visibility toggle icon"/>
             </div>
             <?php error("password"); ?>

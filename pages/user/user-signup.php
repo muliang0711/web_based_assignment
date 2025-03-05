@@ -10,7 +10,7 @@ if (is_post()) {
     $username = post('username');
     $email = post('email');
     $password = post('password');
-    $cfmPassword = post('cfm-password');
+    $cfm_password = post('cfm_password');
 
     if (!$username) {
         $_errors['username'] = 'Required';
@@ -27,11 +27,11 @@ if (is_post()) {
         $_errors['password'] = 'Required';
     }
 
-    if (!$cfmPassword) {
-        $_errors['cfmPassword'] = 'Please confirm your password';
+    if (!$cfm_password) {
+        $_errors['cfm_password'] = 'Please confirm your password';
     }
-    else if ($cfmPassword != $password) {
-        $_errors['cfmPassword'] = 'Confirmed password must match with password';
+    else if ($cfm_password != $password) {
+        $_errors['cfm_password'] = 'Confirmed password must match with password';
     }
 
     // THIS IS A JOKE. I REPEAT, THIS IS A JOKE.
@@ -77,14 +77,14 @@ include '../../_head.php';
         <div class="form-item">
             <label for="username">Username</label>
             <br>
-            <input type="text" name="username" id="username" value="<?= $username ?? '' ?>" />
+            <?php input_text('username') ?>
             <?php error("username"); ?>
         </div>
 
         <div class="form-item">
             <label for="email">Email Address</label>
             <br>
-            <input type="text" name="email" id="email" value="<?= $email ?? '' ?>" />
+            <?php input_text('email') ?>
             <?php error("email"); ?>
         </div>
         
@@ -92,17 +92,18 @@ include '../../_head.php';
             <label for="password">Password</label>
             <br>
             <div class="password-input-box">
-                <input type="password" name="password" id="password" value="<?= $password ?? '' ?>" />
+                <?php input_password('password') ?>
                 <img class="visibility-toggle-icon" src="../../assets/img/visibility-off.svg" alt="Visibility toggle icon"/>
             </div>
             <?php error("password"); ?>
         </div>
 
         <div class="form-item">
-            <label for="cfm-password">Confirm password</label>
+            <label for="cfm_password">Confirm password</label>
             <br>
-            <input type="password" name="cfm-password" id="cfm-password" value="<?= $cfmPassword ?? '' ?>" />
-            <?php error("cfmPassword"); ?>
+            <?php input_password('cfm_password') ?>
+            <!-- <input type="password" name="cfm-password" id="cfm-password" value="<?= $cfm_password ?? '' ?>" /> -->
+            <?php error("cfm_password"); ?>
         </div>
 
         <!-- <div class="form-item">
