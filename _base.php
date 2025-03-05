@@ -72,6 +72,13 @@ function req($key, $value=null){
     return is_array($value) ? array_map('trim',$value) : trim($value);
 }
 
+// Redirect to URL
+function redirect($url = null) {
+    $url ??= $_SERVER['REQUEST_URI'];
+    header("Location: $url");
+    exit();
+}
+
 
 // ============================================================================
 // Error handling
