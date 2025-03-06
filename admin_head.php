@@ -5,11 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><?= $title ?? 'Untitled' ?></title>
     <link rel="stylesheet" href="/css/admin.css">
+    <!-- <link rel="stylesheet" href="/css/flash_msg.css"> -->
     <?= link_stylesheet($stylesheetArray ?? ''); ?>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 
 <body>
+    <!-- Flash message -->
+    <div id="info">
+        <div id="progress-bar"></div>
+        <span id="info-text"><?= temp('info') ?></span>
+    </div>
+
     <div class="side-container">
         <p class="display_topleft adminHeader"><b><i>Admin</i></b></p>
         <a href="/pages/admin/admin_home.php" class="button">Home</a>

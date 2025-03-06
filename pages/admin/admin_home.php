@@ -5,6 +5,8 @@ $title='Home Page';
 $stylesheetArray = ['/css/admin_home.css'];   // 注意：这边只放特定于此页面的 .css file(s)。所有 admin 页面都会用到的 .css files 应放在 /css/admin.css
 // $scriptArray = [];       // 注意：这边只放特定于此页面的 .js file(s)。所有 admin 页面都会用到的 .js files 应放在 /js/admin.js
 
+temp('info', 'Testing');
+
 include '../../admin_head.php';
 ?>
 
