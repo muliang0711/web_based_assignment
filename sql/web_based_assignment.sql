@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 05, 2025 at 03:53 PM
+-- Generation Time: Mar 06, 2025 at 04:28 PM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- PHP Version: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -22,6 +22,35 @@ SET time_zone = "+00:00";
 --
 CREATE DATABASE IF NOT EXISTS `web_based_assignment` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 USE `web_based_assignment`;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `orders`
+--
+
+DROP TABLE IF EXISTS `orders`;
+CREATE TABLE `orders` (
+  `orderId` int(5) NOT NULL,
+  `userId` int(11) NOT NULL,
+  `orderDate` date NOT NULL,
+  `total_price` decimal(10,2) NOT NULL,
+  `status` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `order_items`
+--
+
+DROP TABLE IF EXISTS `order_items`;
+CREATE TABLE `order_items` (
+  `orderId` int(5) NOT NULL,
+  `productId` varchar(5) NOT NULL,
+  `quantity` int(10) DEFAULT NULL,
+  `subtotal` decimal(10,2) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -45,14 +74,6 @@ INSERT INTO `product` (`productID`, `productName`, `price`, `seriesID`) VALUES
 ('R0001', 'Yonex Arcsaber 11 Pro', 849.00, 'ARC'),
 ('R0002', 'Yonex Nanoflare 1000z', 799.00, 'NAN'),
 ('R0003', 'Yonex Astrox 88D Pro', 899.00, 'AST');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `productsize`
---
--- Error reading structure for table web_based_assignment.productsize: #1932 - Table &#039;web_based_assignment.productsize&#039; doesn&#039;t exist in engine
--- Error reading data for table web_based_assignment.productsize: #1064 - You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near &#039;FROM `web_based_assignment`.`productsize`&#039; at line 1
 
 -- --------------------------------------------------------
 
@@ -106,6 +127,20 @@ INSERT INTO `user` (`userID`, `username`, `password`, `address`, `dob`, `email`,
 --
 
 --
+-- Indexes for table `orders`
+--
+ALTER TABLE `orders`
+  ADD PRIMARY KEY (`orderId`),
+  ADD KEY `userId` (`userId`);
+
+--
+-- Indexes for table `order_items`
+--
+ALTER TABLE `order_items`
+  ADD PRIMARY KEY (`orderId`,`productId`),
+  ADD KEY `productId` (`productId`);
+
+--
 -- Indexes for table `product`
 --
 ALTER TABLE `product`
@@ -139,6 +174,19 @@ ALTER TABLE `user`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `orders`
+--
+ALTER TABLE `orders`
+  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `user` (`userID`);
+
+--
+-- Constraints for table `order_items`
+--
+ALTER TABLE `order_items`
+  ADD CONSTRAINT `order_items_ibfk_1` FOREIGN KEY (`orderId`) REFERENCES `orders` (`orderId`),
+  ADD CONSTRAINT `order_items_ibfk_2` FOREIGN KEY (`productId`) REFERENCES `product` (`productID`);
 
 --
 -- Constraints for table `product`
