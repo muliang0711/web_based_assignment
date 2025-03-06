@@ -163,3 +163,23 @@ function exists_in_db($value, $table, $field) {
     $select_stm->execute([':value' => $value]);
     return $select_stm->fetchColumn() > 0;
 }
+
+// ============================================================================
+// Authentication functions
+// ============================================================================
+
+// Is logged in?
+function is_logged_in() {
+    return isset($_SESSION['userID']);
+}
+
+// Obtain user object. Returns false if not logged in.
+function get_user_obj() {
+    if (!is_logged_in()) {
+        return false;
+    }
+
+    global $_db;
+    $u = $_db->query("SELECT * FROM user WHERE userID = {$_SESSION['userID']}")->fetch();
+    return $u;
+}

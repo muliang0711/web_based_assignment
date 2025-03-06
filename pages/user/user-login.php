@@ -37,7 +37,9 @@ if (is_post()) {
         // If username exists, and password is correct
         if ($u && $password == $u->password) {
             // Create a session variable to store user object
-            $_SESSION['user_obj'] = $u;
+            $_SESSION['userID'] = $u->userID;
+            
+            temp('info', "Logged in as $u->username");
             redirect('./test.php');
         }
 

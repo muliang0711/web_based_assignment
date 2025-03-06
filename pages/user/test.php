@@ -7,20 +7,21 @@ if (is_post()) {
     if (isset($_POST['logout'])) {
 
         // Destory user object session variable
-        unset($_SESSION['user_obj']);
+        unset($_SESSION['userID']);
 
+        temp('info', 'Successfully logged out');
         // Reload page
         redirect();
     }
 }
 
-$title = 'Login Success';
+$title = 'Login test';
 include '../../_head.php';
 ?>
 
-<?php if ($_SESSION['user_obj'] ?? false): ?>
+<?php if (is_logged_in()): ?>
 
-<h1>Welcome, <?= $_SESSION['user_obj']->username ?>!</h1>
+<h1>Welcome, <?= get_user_obj()->username ?>!</h1>
 <form method="post">
     <input type="hidden" name="logout" />
     <button>Logout</button>
