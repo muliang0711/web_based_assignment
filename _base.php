@@ -91,6 +91,22 @@ function error($key){
     }
 }
 
+// Redirect to URL
+function redirect($url = null) {
+    $url ??= $_SERVER['REQUEST_URI'];
+    header("Location: $url");
+    exit();
+}
+function temp($key, $value = null) {
+    if ($value !== null) {
+        $_SESSION["temp_$key"] = $value;
+    }
+    else {
+        $value = $_SESSION["temp_$key"] ?? null;
+        unset($_SESSION["temp_$key"]);
+        return $value;
+    }
+}
 
 // ============================================================================
 // Database Setups and Functions
@@ -109,3 +125,18 @@ catch (PDOException $e) {
     die("Database error: " . $e->getMessage());  
 }
 
+// Is unique?
+function is_unique($value, $table, $field) {
+    global $_db;
+    $stm = $_db->prepare("SELECT COUNT(*) FROM $table WHERE $field = ?");
+    $stm->execute([$value]);
+    return $stm->fetchColumn() == 0;
+}
+
+// Is exists?
+function is_exists($value, $table, $field) {
+    global $_db;
+    $stm = $_db->prepare("SELECT COUNT(*) FROM $table WHERE $field = ?");
+    $stm->execute([$value]);
+    return $stm->fetchColumn() > 0;
+}

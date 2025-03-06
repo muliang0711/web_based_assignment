@@ -1,0 +1,34 @@
+.admin_container {
+    display: flex;
+
+}
+.admin_table{
+    margin:20px 20px;
+    height: 15vh;
+    /* width: 80vw; */
+    padding: 10px;
+   
+    text-align:center;
+}
+.content{
+    background-color: rgb(209, 227, 252);
+    width: 80vw;
+}
+
+ .searchBar{
+height: 30px;
+/* width: 100%; */
+ margin:5px 5px;
+ text-align: end;
+    } 
+
+.add{
+    width: 20%;
+    height:35px;
+    background-color:whitesmoke;
+    border: none;
+    text-align: center;
+}
+.add:hover{
+    transform: scale(1.10);
+}
