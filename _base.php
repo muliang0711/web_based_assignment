@@ -120,12 +120,6 @@ function error($key){
     }
 }
 
-// Redirect to URL
-function redirect($url = null) {
-    $url ??= $_SERVER['REQUEST_URI'];
-    header("Location: $url");
-    exit();
-}
 function temp($key, $value = null) {
     if ($value !== null) {
         $_SESSION["temp_$key"] = $value;
