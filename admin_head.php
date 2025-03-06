@@ -18,7 +18,7 @@
         <a class="button">Customer</a>
         <a class="button">Discount/Voucher</a>
         <a class="button">Analysis</a>
-        <a href="/pages/admin/admin_Mangement.php" class="button">Admin Management</a>
+        <a href="/pages/admin/admin_Management.php" class="button">Admin Management</a>
         <a class="display_bottomleft">
             <img src="/assets/img/signout.jpg" width="20px">
         </a>
