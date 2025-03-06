@@ -1,17 +1,50 @@
 <?php
 require '../../_base.php';
 
-/********* You can change these to suit the specific needs of your page *********/
 $title = 'Login';
 $stylesheetArray = ['user.css']; // Put CSS files that are specific to this page here. If you want to change the styling of the header and the footer, go to /css/app.cs
 $scriptArray = ['user.js'];      // Put JS files that are specific to this page here. If you want to change the JavaScript for the header and the footer, go to /js/app.js
 
 
-/********* You can add other PHP code here (e.g. handle POST or GET requests) *********/
+if (is_post()) {
+    var_dump($_errors);
 
-// other php code
+    $username = post('username');
+    $password = post('password');
 
-/**************************************************************************************/
+    if (!$username) {
+        $_errors['username'] = 'Required';
+    }
+
+    if (!$password) {
+        $_errors['password'] = 'Required';
+    }
+
+    $stm = $_db->prepare('SELECT * FROM user WHERE username = :username');
+    $stm->execute([
+        ':username' => $username,
+    ]);
+    $u = $stm->fetch();
+
+    // If inputs are valid, authenticate user
+    if (!$_errors) {
+        $stm = $_db->prepare('SELECT * FROM user WHERE username = :username');
+        $stm->execute([
+            ':username' => $username,
+        ]);
+        $u = $stm->fetch();
+
+        // If username exists, and password is correct
+        if ($u && $password == $u->password) {
+            // Create a session variable to store user object
+            $_SESSION['user_obj'] = $u;
+            redirect('./test.php');
+        }
+
+        $_errors['username'] = ' '; // This serves no functional purpose other than to force autofocus to focus on username (bc it selects the first input that is a sibling of .error). The value has to be ' ' (a space), not '' (empty string), because an empty string evaluates to false, so the error() function always executed the else block, which prints a <span> without a class. Somehow an empty string produces a <span> with no class. 
+        $_errors['password'] = 'Wrong username or password';
+    }
+}
 
 include '../../_head.php';
 ?>
@@ -24,30 +57,33 @@ include '../../_head.php';
     </h2>
     <h1 class="welcome">Welcome</h1>
     <div class="instruction">Please login to your account</div>
+    <a class="to-signup" href="/pages/user/user-signup.php">Don't have an account? Sign up</a>
 
-    <form class="login-form">
+    <form class="form" method="post">
         <div class="form-item">
-            <label for="email">Email Address</label>
+            <label for="username">Username</label>
             <br>
-            <input type="text" id="email"/>
+            <?php input_text('username') ?>
+            <?php error("username"); ?>
         </div>
         
         <div class="form-item">
             <label for="password">Password</label>
             <br>
             <div class="password-input-box">
-                <input type="password" id="password"/>
+                <?php input_password('password') ?>
                 <img class="visibility-toggle-icon" src="../../assets/img/visibility-off.svg" alt="Visibility toggle icon"/>
             </div>
+            <?php error("password"); ?>
         </div>
 
         <div class="form-item">
-            <input type="checkbox" id="remember-me"/>
+            <input type="checkbox" name="remember-me" value="yes" id="remember-me" />
             <label for="remember-me">Remember me</label>
         </div>
 
         <a href="#" class="forgot-pw">Forgot password?</a>
-        <input class="login-btn" type="submit" value="Login"/>            
+        <button class="submit-btn" type="submit">Login</button>            
     </form>
 </div>
 

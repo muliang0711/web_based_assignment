@@ -29,6 +29,7 @@ try {
 }
 ?>
 
+<div class="title">Today Sales</div>
 <div class="container">
     <table class="block">
         <tr>

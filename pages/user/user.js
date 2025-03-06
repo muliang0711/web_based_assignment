@@ -23,6 +23,10 @@ $(() => {
             $(this).removeClass('hovered');
         }
     );
+
+    // Autofocus
+    $('.form :input:not(button):first').focus();
+    $('.form-item:has(.error) :input:not(button):first').focus();
     
 
     // close popup
