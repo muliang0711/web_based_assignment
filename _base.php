@@ -72,6 +72,35 @@ function req($key, $value=null){
     return is_array($value) ? array_map('trim',$value) : trim($value);
 }
 
+// Redirect to URL
+function redirect($url = null) {
+    $url ??= $_SERVER['REQUEST_URI'];
+    header("Location: $url");
+    exit();
+}
+
+
+// ============================================================================
+// HTML Helpers
+// ============================================================================
+
+// Encode HTML special characters
+function encode($value) {
+    return htmlentities($value);
+}
+
+// Generate <input type='text'>
+function input_text($key, $attr = '') {
+    $value = encode($GLOBALS[$key] ?? '');
+    echo "<input type='text' id='$key' name='$key' value='$value' $attr>";
+}
+
+// Generate <input type='password'>
+function input_password($key, $attr = '') {
+    $value = encode($GLOBALS[$key] ?? '');
+    echo "<input type='password' id='$key' name='$key' value='$value' $attr>";
+}
+
 
 // ============================================================================
 // Error handling
@@ -84,7 +113,7 @@ $_errors = [];
 function error($key){
     global $_errors;
     if ($_errors[$key] ?? false) { // if $_errors[$key] is null, jump to else block. The "?? false" part prevents PHP from throwing a warning.
-        echo "<span class='error'>$_errors[key]</span>";
+        echo "<span class='error'>$_errors[$key]</span>";
     }
     else {
         echo '<span></span>';
@@ -128,15 +157,15 @@ catch (PDOException $e) {
 // Is unique?
 function is_unique($value, $table, $field) {
     global $_db;
-    $stm = $_db->prepare("SELECT COUNT(*) FROM $table WHERE $field = ?");
-    $stm->execute([$value]);
+    $stm = $_db->prepare("SELECT COUNT(*) FROM $table WHERE $field = :value");
+    $stm->execute([':value' => $value]);
     return $stm->fetchColumn() == 0;
 }
 
-// Is exists?
-function is_exists($value, $table, $field) {
+// Does it already exist in database?
+function exists_in_db($value, $table, $field) {
     global $_db;
-    $stm = $_db->prepare("SELECT COUNT(*) FROM $table WHERE $field = ?");
-    $stm->execute([$value]);
-    return $stm->fetchColumn() > 0;
+    $select_stm = $_db->prepare("SELECT COUNT(*) FROM $table WHERE $field = :value");
+    $select_stm->execute([':value' => $value]);
+    return $select_stm->fetchColumn() > 0;
 }
