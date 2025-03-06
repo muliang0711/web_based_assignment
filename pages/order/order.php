@@ -7,13 +7,57 @@
 
     
     $orders = [
-        [
-            "orderID" => "12345",
-            "orderDate" => "27/2/2025",
-            "status" => "pending",
-
+        (object) [
+            "orderId" => "12345",
+            "userId" => "12345678911",
+            "orderDate" => "2024-10-25",
+            "total_price" => "245.00",
+            "status" => "Pending",
+        ],
+        (object) [
+            "orderId" => "12346",
+            "userId" => "98765432100",
+            "orderDate" => "2024-09-15",
+            "total_price" => "150.75",
+            "status" => "In Transit",
+        ],
+        (object) [
+            "orderId" => "12347",
+            "userId" => "55566778899",
+            "orderDate" => "2024-08-05",
+            "total_price" => "89.99",
+            "status" => "Delivered",
+        ],
+        (object) [
+            "orderId" => "12348",
+            "userId" => "11223344556",
+            "orderDate" => "2024-07-20",
+            "total_price" => "320.50",
+            "status" => "Pending",
+        ],
+        (object) [
+            "orderId" => "12349",
+            "userId" => "22334455667",
+            "orderDate" => "2024-06-10",
+            "total_price" => "560.00",
+            "status" => "Delivered",
+        ],
+        (object) [
+            "orderId" => "12350",
+            "userId" => "99887766554",
+            "orderDate" => "2024-05-30",
+            "total_price" => "42.25",
+            "status" => "In Transit",
         ]
     ];
+
+    foreach($orders as $o){
+        echo "<pre>";
+        $dates = $o->orderDate;
+        $dates_formatted = substr($dates,8,2) . "/" . substr($dates,5,2) . "/" . substr($dates,0,4);
+        echo "$dates_formatted <br>";
+        echo "</pre>";
+    }
 ?>
 
 
