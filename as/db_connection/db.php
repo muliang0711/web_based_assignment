@@ -5,7 +5,7 @@ class Database {
     private $servername = "localhost";
     private $username = "root";
     private $password = "";
-    private $dbname = "web_db";
+    private $dbname = "web_based_assignment";
     private $conn;
 
     // __construct function : special function that gets automatically executed when an object of a class is created. 

@@ -1,21 +1,37 @@
 <?php
-require '../../_base.php';
+// Include necessary files
+include "../../db_connection.php";
+include "../../pages/admin/service/productService.php";
 
-$title='Product';
-// $stylesheetArray = [];   // 注意：这边只放特定于此页面的 .css file(s)。所有 admin 页面都会用到的 .css files 应放在 /css/admin.css
-// $scriptArray = [];       // 注意：这边只放特定于此页面的 .js file(s)。所有 admin 页面都会用到的 .js files 应放在 /js/admin.js
+// Create productService instance
+$productService = new productService($_db);
 
-include '../../admin_head.php';
+// Fetch all products
+$products = $productService->showAllProduct();
 ?>
 
-<?php
-for ($i = 1; $i <= 3000; $i++) {
-    echo "<div>$i time(s)</div>";
-}
-?>
-
-
-<?php 
-include '../../admin_foot.php';
-?>
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product List</title>
+</head>
+<body>
+    <h2>Product List</h2>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Price</th>
+        </tr>
+        <?php foreach ($products as $product) : ?>
+            <tr>
+                <td><?php echo htmlspecialchars($product['id']); ?></td>
+                <td><?php echo htmlspecialchars($product['name']); ?></td>
+                <td><?php echo htmlspecialchars($product['price']); ?></td>
+            </tr>
+        <?php endforeach; ?>
+    </table>
+</body>
+</html>
