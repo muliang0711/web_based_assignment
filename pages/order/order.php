@@ -162,7 +162,7 @@
                 <div class="order-items-container"></div>
 
                 <div class="order-total-container">
-                    <button class="cancel-order">Cancel Order</button>
+                    <?= $index===0? '<button class="cancel-order">Cancel Order</button>' : "" ?>
                     <div class="total-text">Total: RM <?= $o->total_price ?></div>
                 </div> 
 
