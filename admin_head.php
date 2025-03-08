@@ -21,7 +21,7 @@
         <p class="display_topleft adminHeader"><b><i>Admin</i></b></p>
         <a href="/pages/admin/admin_home.php" class="button">Home</a>
         <a href="/pages/product/productlist.php" class="button">Order</a>
-        <a class="button">Product</a>
+        <a class="button" href="/pages/admin/admin_product.php">Product</a>
         <a class="button">Customer</a>
         <a class="button">Discount/Voucher</a>
         <a class="button">Analysis</a>
