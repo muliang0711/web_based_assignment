@@ -10,7 +10,7 @@ function link_stylesheet($stylesheetArray) {
       return;
   }
 }
-  $time = time(); // Force browser to reload css instead of loading old css from cache
+  $time = time();
   
   if (is_array($stylesheetArray)) {
       foreach ($stylesheetArray as $stylesheet) {
