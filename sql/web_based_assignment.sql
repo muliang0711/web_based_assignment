@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 06, 2025 at 04:28 PM
+-- Generation Time: Mar 08, 2025 at 01:17 PM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.0.30
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -74,6 +74,31 @@ INSERT INTO `product` (`productID`, `productName`, `price`, `seriesID`) VALUES
 ('R0001', 'Yonex Arcsaber 11 Pro', 849.00, 'ARC'),
 ('R0002', 'Yonex Nanoflare 1000z', 799.00, 'NAN'),
 ('R0003', 'Yonex Astrox 88D Pro', 899.00, 'AST');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `productsize`
+--
+
+DROP TABLE IF EXISTS `productsize`;
+CREATE TABLE `productsize` (
+  `productID` varchar(5) NOT NULL,
+  `sizeID` varchar(4) NOT NULL,
+  `quantity` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `productsize`
+--
+
+INSERT INTO `productsize` (`productID`, `sizeID`, `quantity`) VALUES
+('R0001', '3UG5', 4),
+('R0001', '4UG5', 5),
+('R0002', '3UG5', 5),
+('R0002', '4UG5', 6),
+('R0003', '3UG5', 2),
+('R0003', '4UG5', 3);
 
 -- --------------------------------------------------------
 
@@ -148,6 +173,12 @@ ALTER TABLE `product`
   ADD KEY `seriesID` (`seriesID`);
 
 --
+-- Indexes for table `productsize`
+--
+ALTER TABLE `productsize`
+  ADD PRIMARY KEY (`productID`,`sizeID`);
+
+--
 -- Indexes for table `series`
 --
 ALTER TABLE `series`
@@ -158,8 +189,10 @@ ALTER TABLE `series`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`userID`),
-  ADD UNIQUE KEY `UserEmail` (`email`),
-  ADD KEY `email_2` (`email`);
+  ADD UNIQUE KEY `email_unique` (`email`),
+  ADD UNIQUE KEY `username_unique` (`username`),
+  ADD KEY `email` (`email`),
+  ADD KEY `username` (`username`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -169,7 +202,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables
@@ -193,6 +226,12 @@ ALTER TABLE `order_items`
 --
 ALTER TABLE `product`
   ADD CONSTRAINT `product_ibfk_1` FOREIGN KEY (`seriesID`) REFERENCES `series` (`seriesID`);
+
+--
+-- Constraints for table `productsize`
+--
+ALTER TABLE `productsize`
+  ADD CONSTRAINT `productSize_ibfk_1` FOREIGN KEY (`productID`) REFERENCES `product` (`productID`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
