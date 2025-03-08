@@ -183,3 +183,4 @@ function get_user_obj() {
     $u = $_db->query("SELECT * FROM user WHERE userID = {$_SESSION['userID']}")->fetch();
     return $u;
 }
+

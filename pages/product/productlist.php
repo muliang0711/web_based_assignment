@@ -48,16 +48,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               </div>
           <li><a onclick ="onClick()" href="../product/product.php"><strong>Home</strong></a></li>
           <li><a onclick ="onClick()" href="../product/productlist.php"><strong>Products</strong></a></li>
-          <li><a onclick ="onClick()" href="../about/about.php"><strong>About</strong></a></li>
-            <li><a href=""><strong>Contact</strong></a></li>
-            <li><a href=""><strong>Account</strong></a></li>
             <li><a href="#popup"><div id="cart"><img id="open-popup" src="illustration-shopping-online.png" alt="Cart" width="50" style="cursor: pointer;"></div></a></li>
           </ul>
         </div>
+        <div id="popup" class="popup">
+         <div class="popup-content">
+          <a href="#" class="close">&times;</a>
+          <h2>Shopping Cart</h2>
+          <p>Your cart is empty.</p>
+        </div>
+        </div>
         </nav>
-    
       </div>
-      <div class="image-box">
+      
+    <div class="image-box">
         <img src="https://www.yonex.com/media/scandiweb/slider/n/a/nanoflare1000pc.png" alt="Nanoflare 700 RISING">
     </div>
     
@@ -73,22 +77,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </select>
 </form>
 
+<a onclick = "onclick()" href = "../product/productDetail.php">
 <div class="list" id="productList">
-    <div class="item" data-series="Arc">
+     <div class="item" data-series="Arc">
         <img src="https://www.yonex.com/media/catalog/product/a/r/arc11-p.png?quality=80&fit=bounds&height=819&width=600&canvas=600:819" alt="Yonex Arcsaber 11 Pro">
         <p>Yonex Arcsaber 11 Pro</p>
-    </div>
+     </div>
 
-    <div class="item" data-series="Nnf">
+     <div class="item" data-series="Nnf">
         <img src="https://www.yonex.com/media/catalog/product/n/a/nanoflare_1000_z.png?quality=80&fit=bounds&height=819&width=600&canvas=600:819" alt="Yonex Nanoflare 1000z">
         <p>Yonex Nanoflare 1000z</p>
-    </div>
+      </div>
 
-    <div class="item" data-series="Ast">
+     <div class="item" data-series="Ast">
         <img src="https://www.yonex.com/media/catalog/product/3/a/3ax88d-p_076-1_02.png?quality=80&fit=bounds&height=819&width=600&canvas=600:819" alt="Yonex Astrox 88D Pro">
         <p>Yonex Astrox 88D Pro</p>
-    </div>
+      </div>
 </div>
+</a>
 
 <script>
     function filterProducts() {
@@ -108,13 +114,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         });
     }
 </script>
-
-<div id="popup" class="popup">
-    <div class="popup-content">
-        <a href="#" class="close">&times;</a>
-        <h2>Shopping Cart</h2>
-        <p>Your cart is empty.</p>
-    </div>
-</div>
-
 </body> 
