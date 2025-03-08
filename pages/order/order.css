@@ -41,6 +41,7 @@
 }
 
 
+
 .order-header, .order {
     max-width: 1000px;
     min-width: 500px;
@@ -52,8 +53,17 @@
     flex-shrink: 0;
 }
 
+.order-header {
+    position: relative;
+    top: 35px;
+    width: 85vw;
+    padding-right: 10px;
+    padding-left: 0px;
+    max-width: 1000px;
+    grid-template-columns: 0.37fr 0.63fr 0.44fr 0.36fr 0.20fr;
+}
+
 .order span, .order-header span{
-    
     align-content: center;
     overflow: hidden;
     height: 40px;
@@ -169,10 +179,11 @@
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
     transition: 0.5s ease;
+    flex-shrink: 0;
 }
 
 .orderDetailed.show {
-    height: 600px;
+    height: 400px;
     padding: 5px;
 }
 
@@ -259,7 +270,6 @@
     right: 0;
     top: 35%;
     transform: translateX(50%);
-    background: var(--statusNotDone);
     /* background: linear-gradient(90deg, rgba(29,204,29,1) 0%, rgba(255,177,0,1) 77%); */
 }
 
