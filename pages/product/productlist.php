@@ -39,13 +39,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   </head>
 
     <body>
+      <!-- TopSide Menu -->
       <div class="menu">
         <nav>
           <div class="top-sideMenu">
           <ul>
+            <!-- store logo -->
             <div class="logo">
               <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Logo-Yonex.svg/2560px-Logo-Yonex.svg.png" width="125px">
               </div>
+          <!-- Menu button -->
           <li><a onclick ="onClick()" href="../product/product.php"><strong>Home</strong></a></li>
           <li><a onclick ="onClick()" href="../product/productlist.php"><strong>Products</strong></a></li>
             <li><a href="#popup"><div id="cart"><img id="open-popup" src="illustration-shopping-online.png" alt="Cart" width="50" style="cursor: pointer;"></div></a></li>
@@ -60,13 +63,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
         </nav>
       </div>
-      
+      <!-- Nanoflare 1000z image -->
     <div class="image-box">
         <img src="https://www.yonex.com/media/scandiweb/slider/n/a/nanoflare1000pc.png" alt="Nanoflare 700 RISING">
     </div>
     
     <hr>
-
+<!-- label filter value -->
 <form>
     <label for="series">Choose a series:</label>
     <select id="series" name="series" onchange="filterProducts()">
@@ -76,25 +79,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <option value="Arc">Arcsaber</option>
     </select>
 </form>
-
-<a onclick = "onclick()" href = "../product/productDetail.php">
-<div class="list" id="productList">
-     <div class="item" data-series="Arc">
-        <img src="https://www.yonex.com/media/catalog/product/a/r/arc11-p.png?quality=80&fit=bounds&height=819&width=600&canvas=600:819" alt="Yonex Arcsaber 11 Pro">
-        <p>Yonex Arcsaber 11 Pro</p>
-     </div>
-
-     <div class="item" data-series="Nnf">
-        <img src="https://www.yonex.com/media/catalog/product/n/a/nanoflare_1000_z.png?quality=80&fit=bounds&height=819&width=600&canvas=600:819" alt="Yonex Nanoflare 1000z">
-        <p>Yonex Nanoflare 1000z</p>
-      </div>
-
-     <div class="item" data-series="Ast">
-        <img src="https://www.yonex.com/media/catalog/product/3/a/3ax88d-p_076-1_02.png?quality=80&fit=bounds&height=819&width=600&canvas=600:819" alt="Yonex Astrox 88D Pro">
-        <p>Yonex Astrox 88D Pro</p>
-      </div>
-</div>
-</a>
 
 <script>
     function filterProducts() {
@@ -114,4 +98,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         });
     }
 </script>
+
+<a onclick = "onclick()" href = "../product/productDetail.php">
+<!-- product Image -->
+<div class="list" id="productList">
+     <div class="item" data-series="Arc">
+        <img src="https://www.yonex.com/media/catalog/product/a/r/arc11-p.png?quality=80&fit=bounds&height=819&width=600&canvas=600:819" alt="Yonex Arcsaber 11 Pro">
+        <p>Yonex Arcsaber 11 Pro</p>
+     </div>
+
+     <div class="item" data-series="Nnf">
+        <img src="https://www.yonex.com/media/catalog/product/n/a/nanoflare_1000_z.png?quality=80&fit=bounds&height=819&width=600&canvas=600:819" alt="Yonex Nanoflare 1000z">
+        <p>Yonex Nanoflare 1000z</p>
+      </div>
+
+     <div class="item" data-series="Ast">
+        <img src="https://www.yonex.com/media/catalog/product/3/a/3ax88d-p_076-1_02.png?quality=80&fit=bounds&height=819&width=600&canvas=600:819" alt="Yonex Astrox 88D Pro">
+        <p>Yonex Astrox 88D Pro</p>
+      </div>
+</div>
+</a>
+
+
 </body> 
