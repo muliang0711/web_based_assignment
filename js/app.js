@@ -55,4 +55,21 @@ $(() => {
         e.target.setSelectionRange(a, b);
     });
 
+    // Show dropdown when a dropdown label is clicked
+    $('.dropdown-label').on('click', function(e) {
+        e.stopPropagation(); // Stop the click event from bubbling to the document click event handler.
+        $(this).toggleClass("active");
+        $(this).siblings(".dropdown-content").toggleClass("active");
+    });
+
+    // Hide dropdown menu when anywhere other than the menu is clicked
+    $(document).on('click', e => {
+        console.log("document click event triggered");
+
+        if (!$(e.target).closest(".dropdown-content").length) {
+            $(".dropdown-label").removeClass("active");
+            $(".dropdown-content").removeClass("active");
+        }
+    });
+
 });

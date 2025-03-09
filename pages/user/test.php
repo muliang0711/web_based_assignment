@@ -7,7 +7,7 @@ if (is_post()) {
     if (isset($_POST['logout'])) {
 
         // Destory user object session variable
-        unset($_SESSION['userID']);
+        logout();
 
         temp('info', 'Successfully logged out');
         // Reload page
@@ -21,7 +21,7 @@ include '../../_head.php';
 
 <?php if (is_logged_in()): ?>
 
-<h1>Welcome, <?= get_user_obj()->username ?>!</h1>
+<h1>Welcome, <?= $_user->username ?>!</h1>
 <form method="post">
     <input type="hidden" name="logout" />
     <button>Logout</button>
