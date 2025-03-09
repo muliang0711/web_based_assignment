@@ -56,9 +56,4 @@ function link_stylesheet($stylesheetArray) {
     </div>
     <div class="col-2"><img src="https://ih1.redbubble.net/image.1156440417.8811/flat,750x,075,f-pad,750x1000,f8f8f8.jpg" ></div>
    </div>
-
-   
-   <div class="product">
-
-   </div>
   </body>
