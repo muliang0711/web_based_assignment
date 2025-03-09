@@ -99,24 +99,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 </script>
 
-<a onclick = "onclick()" href = "../product/productDetail.php">
+
 <!-- product Image -->
     <div class="list" id="productList">
-      <div class="item" data-series="Arc">
+      <div class="item" series="Arc">
+        <a onclick = "onclick()" href = "../product/productDetail.php?racket=R0001">
         <img src="https://www.yonex.com/media/catalog/product/a/r/arc11-p.png?quality=80&fit=bounds&height=819&width=600&canvas=600:819" alt="Yonex Arcsaber 11 Pro">
-        <p>Yonex Arcsaber 11 Pro</p>
+       <p>Yonex Arcsaber 11 Pro</p>
+        </a>
       </div>
 
-      <div class="item" data-series="Nnf">
+      <div class="item" series="Nnf">
+        <a onclick = "onclick()" href = "../product/productDetail.php?racket=R0002">
         <img src="https://www.yonex.com/media/catalog/product/n/a/nanoflare_1000_z.png?quality=80&fit=bounds&height=819&width=600&canvas=600:819" alt="Yonex Nanoflare 1000z">
         <p>Yonex Nanoflare 1000z</p>
+        </a>
       </div>
 
-      <div class="item" data-series="Ast">
+      <div class="item" series="Ast">
+        <a onclick = "onclick()" href = "../product/productDetail.php?racket=R0003">
         <img src="https://www.yonex.com/media/catalog/product/3/a/3ax88d-p_076-1_02.png?quality=80&fit=bounds&height=819&width=600&canvas=600:819" alt="Yonex Astrox 88D Pro">
         <p>Yonex Astrox 88D Pro</p>
+        </a>
       </div>
     </div>
-</a>
 
 </body> 
