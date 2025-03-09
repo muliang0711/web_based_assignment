@@ -98,9 +98,9 @@
 
     $colorArr = [
         //colors for pending
-        [$colorStatusDone, $colorStatusBar, $colorStatusPending, $colorStatusDefault, $colorStatusDefault],
+        [$colorStatusDone, $colorStatusBar, $colorStatusDefault, $colorStatusDefault, $colorStatusDefault],
         //colors for in transit
-        [$colorStatusDone,$colorStatusDone,$colorStatusDone,$colorStatusBar,$colorStatusPending],
+        [$colorStatusDone,$colorStatusDone,$colorStatusDone,$colorStatusBar,$colorStatusDefault],
         //colors for delivered
         [$colorStatusDone,$colorStatusDone,$colorStatusDone,$colorStatusDone,$colorStatusDone]
     ];
@@ -108,7 +108,7 @@
 ?>
 
 
-<h1>My orders</h1>
+<h1>My Order</h1>
 <div class="order-header">
         <span>Order ID</span>
         <span>Address</span>
@@ -159,7 +159,57 @@
                     </div>
                 </div>
 
-                <div class="order-items-container"></div>
+                <div class="order-items-container">
+                    <div class='items-container'>
+                        <img alt="Item Name" src="https://www.yonex.com/media/catalog/product/b/4/b4000g_2023_2.png?quality=80&fit=bounds&height=819&width=600&canvas=600:819"></img>
+                        <span class="item-name">Yonex z1000RR</span>
+                        <span class="item-series">black grip</span>
+                        <span class="item-quantity">x 25</span>
+                        <span class="item-subtotal">RM 180.70</span>
+                    </div>
+                    <div class='items-container'>
+                        <img alt="Item Name" src="https://www.yonex.com/media/catalog/product/b/4/b4000g_2023_2.png?quality=80&fit=bounds&height=819&width=600&canvas=600:819"></img>
+                        <span class="item-name">Yonex z1000RR</span>
+                        <span class="item-series">yellow grip</span>
+                        <span class="item-quantity">x 2</span>
+                        <span class="item-subtotal">RM 99.70</span>
+                    </div>
+                    <div class='items-container'>
+                        <img alt="Item Name" src="https://www.yonex.com/media/catalog/product/b/4/b4000g_2023_2.png?quality=80&fit=bounds&height=819&width=600&canvas=600:819"></img>
+                        <span class="item-name">Yonex z1000RR</span>
+                        <span class="item-series">green grip</span>
+                        <span class="item-quantity">x 3</span>
+                        <span class="item-subtotal">RM 124.70</span>
+                    </div>
+                    <div class='items-container'>
+                        <img alt="Item Name" src="https://www.yonex.com/media/catalog/product/b/4/b4000g_2023_2.png?quality=80&fit=bounds&height=819&width=600&canvas=600:819"></img>
+                        <span class="item-name">Yonex z1000RR</span>
+                        <span class="item-series">green grip</span>
+                        <span class="item-quantity">x 3</span>
+                        <span class="item-subtotal">RM 124.70</span>
+                    </div>
+                    <div class='items-container'>
+                        <img alt="Item Name" src="https://www.yonex.com/media/catalog/product/b/4/b4000g_2023_2.png?quality=80&fit=bounds&height=819&width=600&canvas=600:819"></img>
+                        <span class="item-name">Yonex z1000RR</span>
+                        <span class="item-series">green grip</span>
+                        <span class="item-quantity">x 3</span>
+                        <span class="item-subtotal">RM 124.70</span>
+                    </div>
+                    <div class='items-container'>
+                        <img alt="Item Name" src="https://www.yonex.com/media/catalog/product/b/4/b4000g_2023_2.png?quality=80&fit=bounds&height=819&width=600&canvas=600:819"></img>
+                        <span class="item-name">Yonex z1000RR</span>
+                        <span class="item-series">green grip</span>
+                        <span class="item-quantity">x 3</span>
+                        <span class="item-subtotal">RM 124.70</span>
+                    </div>
+                    <div class='items-container'>
+                        <img alt="Item Name" src="https://www.yonex.com/media/catalog/product/b/4/b4000g_2023_2.png?quality=80&fit=bounds&height=819&width=600&canvas=600:819"></img>
+                        <span class="item-name">Yonex z1000RR</span>
+                        <span class="item-series">green grip</span>
+                        <span class="item-quantity">x 3</span>
+                        <span class="item-subtotal">RM 124.70</span>
+                    </div>
+                </div>
 
                 <div class="order-total-container">
                     <?= $index===0? '<button class="cancel-order">Cancel Order</button>' : "" ?>
