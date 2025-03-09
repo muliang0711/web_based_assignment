@@ -25,12 +25,14 @@ function link_stylesheet($stylesheetArray) {
     <title>Products Home Page</title>
   </head>
 
-<div class="container">
+<div class="container">.
   <body>
     <div class="menu">
       <nav>
+        <!-- TopSide Menu -->
         <div class="top-sideMenu">
         <ul>
+          <!-- store logo -->
           <div class="logo">
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Logo-Yonex.svg/2560px-Logo-Yonex.svg.png" width="125px">
             </div>
