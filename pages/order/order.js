@@ -20,13 +20,7 @@ $(() => {
         $(this).closest(".order").next("div").toggleClass("show");
         $(this).closest(".order").next("div").children(".order-details-wrapper").toggleClass("show");
         $(this).closest(".order").toggleClass("noanimation");
-
-        /*await wait(300);
-        //scrolling into view
-        let elementToScrollInto = $(this).parent("div");
-        $(".orders-container").animate({
-            scrollTop: elementToScrollInto.position().top - ($(".orders-container").height() / 2)
-        }, 500);*/
+    
 
     })
 

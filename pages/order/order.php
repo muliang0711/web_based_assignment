@@ -89,7 +89,219 @@
         ]
     ];
     
+    $order_items = [
+        // Order 12345 - 2 Products
+        (object)[
+            "orderId" => "12345",
+            "productId" => "1001",
+            "seriesName" => "black grip",
+            "quantity" => "1",
+            "subtotal" => "15.99",
+            "productName" => "Yonex Astrix 100 ZR"
+        ],
+        (object)[
+            "orderId" => "12345",
+            "productId" => "1002",
+            "seriesName" => "white strings",
+            "quantity" => "1",
+            "subtotal" => "9.99",
+            "productName" => "Yonex Nanoray 7000"
+        ],
+    
+        // Order 12346 - 3 Products
+        (object)[
+            "orderId" => "12346",
+            "productId" => "1003",
+            "seriesName" => "red grip",
+            "quantity" => "2",
+            "subtotal" => "31.98",
+            "productName" => "Victor Brave Sword 12"
+        ],
+        (object)[
+            "orderId" => "12346",
+            "productId" => "1004",
+            "seriesName" => "black case",
+            "quantity" => "1",
+            "subtotal" => "25.00",
+            "productName" => "Li-Ning Turbo X 50"
+        ],
+        (object)[
+            "orderId" => "12346",
+            "productId" => "1001",
+            "seriesName" => "blue grip",
+            "quantity" => "1",
+            "subtotal" => "15.99",
+            "productName" => "Yonex Astrix 100 ZR"
+        ],
+    
+        // Order 12347 - 1 Product
+        (object)[
+            "orderId" => "12347",
+            "productId" => "1005",
+            "seriesName" => "yellow grip",
+            "quantity" => "1",
+            "subtotal" => "16.50",
+            "productName" => "Yonex Voltric Z-Force II"
+        ],
+    
+        // Order 12348 - 4 Products
+        (object)[
+            "orderId" => "12348",
+            "productId" => "1006",
+            "seriesName" => "green grip",
+            "quantity" => "2",
+            "subtotal" => "32.00",
+            "productName" => "Apacs Ziggler Pro"
+        ],
+        (object)[
+            "orderId" => "12348",
+            "productId" => "1007",
+            "seriesName" => "black strings",
+            "quantity" => "1",
+            "subtotal" => "10.00",
+            "productName" => "BG66 Ultimax"
+        ],
+        (object)[
+            "orderId" => "12348",
+            "productId" => "1003",
+            "seriesName" => "red grip",
+            "quantity" => "1",
+            "subtotal" => "15.99",
+            "productName" => "Victor Brave Sword 12"
+        ],
+        (object)[
+            "orderId" => "12348",
+            "productId" => "1004",
+            "seriesName" => "white case",
+            "quantity" => "1",
+            "subtotal" => "25.00",
+            "productName" => "Li-Ning Turbo X 50"
+        ],
+    
+        // Order 12349 - 2 Products
+        (object)[
+            "orderId" => "12349",
+            "productId" => "1008",
+            "seriesName" => "black grip",
+            "quantity" => "1",
+            "subtotal" => "12.99",
+            "productName" => "Yonex ArcSaber 11 Pro"
+        ],
+        (object)[
+            "orderId" => "12349",
+            "productId" => "1002",
+            "seriesName" => "yellow strings",
+            "quantity" => "2",
+            "subtotal" => "19.98",
+            "productName" => "Yonex Nanoray 7000"
+        ],
+    
+        // Order 12350 - 1 Product
+        (object)[
+            "orderId" => "12350",
+            "productId" => "1009",
+            "seriesName" => "blue grip",
+            "quantity" => "1",
+            "subtotal" => "13.99",
+            "productName" => "Yonex Duora 10"
+        ],
+    
+        // Order 12351 - 3 Products
+        (object)[
+            "orderId" => "12351",
+            "productId" => "1010",
+            "seriesName" => "orange grip",
+            "quantity" => "2",
+            "subtotal" => "28.00",
+            "productName" => "Carlton Powerblade 9902"
+        ],
+        (object)[
+            "orderId" => "12351",
+            "productId" => "1005",
+            "seriesName" => "white grip",
+            "quantity" => "1",
+            "subtotal" => "16.50",
+            "productName" => "Yonex Voltric Z-Force II"
+        ],
+        (object)[
+            "orderId" => "12351",
+            "productId" => "1001",
+            "seriesName" => "black grip",
+            "quantity" => "1",
+            "subtotal" => "15.99",
+            "productName" => "Yonex Astrix 100 ZR"
+        ],
+    
+        // Order 12352 - 4 Products
+        (object)[
+            "orderId" => "12352",
+            "productId" => "1011",
+            "seriesName" => "red case",
+            "quantity" => "1",
+            "subtotal" => "30.00",
+            "productName" => "Li-Ning Windstorm 72"
+        ],
+        (object)[
+            "orderId" => "12352",
+            "productId" => "1003",
+            "seriesName" => "black grip",
+            "quantity" => "1",
+            "subtotal" => "15.99",
+            "productName" => "Victor Brave Sword 12"
+        ],
+        (object)[
+            "orderId" => "12352",
+            "productId" => "1006",
+            "seriesName" => "green grip",
+            "quantity" => "2",
+            "subtotal" => "32.00",
+            "productName" => "Apacs Ziggler Pro"
+        ],
+        (object)[
+            "orderId" => "12352",
+            "productId" => "1004",
+            "seriesName" => "black case",
+            "quantity" => "1",
+            "subtotal" => "25.00",
+            "productName" => "Li-Ning Turbo X 50"
+        ],
+    
+        // Order 12353 - 2 Products
+        (object)[
+            "orderId" => "12353",
+            "productId" => "1012",
+            "seriesName" => "blue grip",
+            "quantity" => "1",
+            "subtotal" => "14.99",
+            "productName" => "Victor Thruster K Falcon"
+        ],
+        (object)[
+            "orderId" => "12353",
+            "productId" => "1008",
+            "seriesName" => "black grip",
+            "quantity" => "2",
+            "subtotal" => "25.98",
+            "productName" => "Yonex ArcSaber 11 Pro"
+        ],
+    
+        // Order 12354 - 1 Product
+        (object)[
+            "orderId" => "12354",
+            "productId" => "1013",
+            "seriesName" => "black grip",
+            "quantity" => "1",
+            "subtotal" => "15.99",
+            "productName" => "Yonex Nanoflare 800"
+        ]
+    ];
+    
 
+    /*  NOTES UPDATE DB, CALCULATE TOTALPRICE INSTEAD OF INSERTING
+        SELECT o.orderId, SUM(oi.subtotal) AS totalPrice
+        FROM Order o
+        JOIN Order_Item oi ON o.orderId = oi.orderId
+        GROUP BY o.orderId;
+    */
 
     $colorStatusBar = "linear-gradient(90deg, rgba(29,204,29,1) 0%, rgba(255,177,0,1) 77%)";
     $colorStatusDefault = "rgba(221, 214, 214, 0.514)";
@@ -160,55 +372,17 @@
                 </div>
 
                 <div class="order-items-container">
+                    <?php foreach($order_items as $oi):?>
+                        <?php if($o->orderId === $oi->orderId):?>
                     <div class='items-container'>
-                        <img alt="Item Name" src="https://www.yonex.com/media/catalog/product/b/4/b4000g_2023_2.png?quality=80&fit=bounds&height=819&width=600&canvas=600:819"></img>
-                        <span class="item-name">Yonex z1000RR</span>
-                        <span class="item-series">black grip</span>
-                        <span class="item-quantity">x 25</span>
-                        <span class="item-subtotal">RM 180.70</span>
+                        <img alt="Item Image" src="https://www.yonex.com/media/catalog/product/b/4/b4000g_2023_2.png?quality=80&fit=bounds&height=819&width=600&canvas=600:819"></img>
+                        <span class="item-name"><?= $oi->productName ?></span>
+                        <span class="item-series"><?= $oi->seriesName ?></span>
+                        <span class="item-quantity">x <?= $oi->quantity ?></span>
+                        <span class="item-subtotal">RM <?= $oi->subtotal ?></span>
                     </div>
-                    <div class='items-container'>
-                        <img alt="Item Name" src="https://www.yonex.com/media/catalog/product/b/4/b4000g_2023_2.png?quality=80&fit=bounds&height=819&width=600&canvas=600:819"></img>
-                        <span class="item-name">Yonex z1000RR</span>
-                        <span class="item-series">yellow grip</span>
-                        <span class="item-quantity">x 2</span>
-                        <span class="item-subtotal">RM 99.70</span>
-                    </div>
-                    <div class='items-container'>
-                        <img alt="Item Name" src="https://www.yonex.com/media/catalog/product/b/4/b4000g_2023_2.png?quality=80&fit=bounds&height=819&width=600&canvas=600:819"></img>
-                        <span class="item-name">Yonex z1000RR</span>
-                        <span class="item-series">green grip</span>
-                        <span class="item-quantity">x 3</span>
-                        <span class="item-subtotal">RM 124.70</span>
-                    </div>
-                    <div class='items-container'>
-                        <img alt="Item Name" src="https://www.yonex.com/media/catalog/product/b/4/b4000g_2023_2.png?quality=80&fit=bounds&height=819&width=600&canvas=600:819"></img>
-                        <span class="item-name">Yonex z1000RR</span>
-                        <span class="item-series">green grip</span>
-                        <span class="item-quantity">x 3</span>
-                        <span class="item-subtotal">RM 124.70</span>
-                    </div>
-                    <div class='items-container'>
-                        <img alt="Item Name" src="https://www.yonex.com/media/catalog/product/b/4/b4000g_2023_2.png?quality=80&fit=bounds&height=819&width=600&canvas=600:819"></img>
-                        <span class="item-name">Yonex z1000RR</span>
-                        <span class="item-series">green grip</span>
-                        <span class="item-quantity">x 3</span>
-                        <span class="item-subtotal">RM 124.70</span>
-                    </div>
-                    <div class='items-container'>
-                        <img alt="Item Name" src="https://www.yonex.com/media/catalog/product/b/4/b4000g_2023_2.png?quality=80&fit=bounds&height=819&width=600&canvas=600:819"></img>
-                        <span class="item-name">Yonex z1000RR</span>
-                        <span class="item-series">green grip</span>
-                        <span class="item-quantity">x 3</span>
-                        <span class="item-subtotal">RM 124.70</span>
-                    </div>
-                    <div class='items-container'>
-                        <img alt="Item Name" src="https://www.yonex.com/media/catalog/product/b/4/b4000g_2023_2.png?quality=80&fit=bounds&height=819&width=600&canvas=600:819"></img>
-                        <span class="item-name">Yonex z1000RR</span>
-                        <span class="item-series">green grip</span>
-                        <span class="item-quantity">x 3</span>
-                        <span class="item-subtotal">RM 124.70</span>
-                    </div>
+                        <?php endif ?>
+                    <?php endforeach ?>
                 </div>
 
                 <div class="order-total-container">
