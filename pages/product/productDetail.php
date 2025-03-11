@@ -95,13 +95,25 @@ if($productID == "R0003"){
 ?>
   </div>
 </div>
+<div class="addtoCart"><button>Add to Cart<span class="shadow"></span></button></div>
 <hr>
+
 <div class="playerPhoto"> 
-  <div class= "HeadingIntro">
+  <div class= "HeadingIntro"> 
 <?php echo "The player who is using this racket" ?></div><br>
 <?php if($productID == "R0001"){
   echo "Aaron Chia Teng Fong is a Malaysian badminton player.A world champion and a double bronze medalist at the Olympic Games, he and his partner Soh Wooi Yik became the first ever world badminton champions from Malaysia after winning the men's doubles title at the 2022 World Championships.Together, they also won a gold medal at the 2019 SEA Games, a silver medal at the 2022 Asian Championships,as well as bronze medals at the 2020 Summer Olympics,2022 Commonwealth Games,2023 World Championships,2022 Asian Games,2024 Asian Championships,and 2024 Summer Olympics.They are also the first Malaysian men’s doubles pair to win consecutive medals at the Olympic Games.";
   echo "<img src='https://www.yonex.com/media/wysiwyg/Athletes/Badminton/810x540_aaron-chia.jpg' alt='Yonex Arcsaber 11 Pro Player' width='300'>";
+}
+?>
+<?php if($productID == "R0002"){
+  echo "Chen Tang Jie is a Malaysian badminton player. He was part of the Malaysian 2016 Asian Junior Championships and 2016 BWF World Junior Championships team, and helped Malaysia to clinch a silver medal in the World Junior mixed team before being defeated by China.";
+  echo "<img src='https://www.badmintonplanet.com/wp-content/uploads/2023/06/06-25-2023-badminton-news-chen-tang-jie-toh-ee-wei-taipei-open.jpg'>";
+}
+?>
+<?php if($productID == "R0003"){
+  echo "Kunlavut Vitidsarn is a Thai badminton player. He is the current men's singles World Champion as he won the gold medal at the 2023 World Championships, and a silver medalist at the 2024 Olympic Games. He was also three-times World Junior champion, winning in 2017, 2018 and 2019. He is nicknamed the 'Three-Game God' because his playing style requires him to play three games long and always win in the end.";
+  echo "<img src='https://www.pattayamail.com/wp-content/uploads/2024/08/t-09-Kunlavut-Vitidsarn-makes-history-as-first-Thai-shuttler-to-reach-Olympic-badminton-final.jpg' alt='Yonex Arcsaber 11 Pro Player' width='300'>";
 }
 ?>
 </div>
