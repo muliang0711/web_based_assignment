@@ -241,3 +241,27 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+--admin table
+DROP TABLE IF EXISTS `admin`;
+CREATE TABLE admin (
+    id VARCHAR(10) PRIMARY KEY,
+    position VARCHAR(20) NOT NULL,
+    password VARCHAR(15) NOT NULL,
+    adminLevel VARCHAR(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+--insert data of admin
+INSERT INTO your_table_name (id, position, password, adminLevel)  
+VALUES  
+('1', 'Manager', 'pass123', '5'),  
+('2', 'Employee', 'pass234', '2'),  
+('3', 'Supervisor', 'pass345', '4'),  
+('4', 'Clerk', 'pass456', '1'),  
+('5', 'Technician', 'pass567', '3'),  
+('6', 'Director', 'pass678', '5'),  
+('7', 'Intern', 'pass789', '0'),  
+('8', 'HR', 'pass890', '3'),  
+('9', 'Accountant', 'pass901', '2'),  
+('10', 'CEO', 'admin000', '5');
