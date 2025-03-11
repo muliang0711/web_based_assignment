@@ -26,33 +26,6 @@ USE `web_based_assignment`;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `orders`
---
-
-DROP TABLE IF EXISTS `orders`;
-CREATE TABLE `orders` (
-  `orderId` int(5) NOT NULL,
-  `userId` int(11) NOT NULL,
-  `orderDate` date NOT NULL,
-  `status` varchar(10) NOT NULL,
-  `orderAddress` varchar(150) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `orders`
---
-
-INSERT INTO `orders` (`orderId`, `userId`, `orderDate`, `status`, `orderAddress`) VALUES
-(12345, 1, '2024-10-25', 'Pending', '2 Jalan Port Dickson Langkawi, 72010, Kuala Lumpur'),
-(12346, 2, '2024-11-02', 'In Transit', '88, Lorong Bukit Jaya, 43000, Selangor'),
-(12347, 1, '2024-09-15', 'Delivered', '16, Jalan Taman Utama, 80000, Johor Bahru'),
-(12348, 2, '2024-08-30', 'Pending', '7, Jalan Ampang, 50450, Kuala Lumpur'),
-(12349, 1, '2024-12-10', 'In Transit', '22, Jalan Sutera Indah, 81100, Johor'),
-(12350, 2, '2024-07-20', 'Delivered', '5, Lorong Melati, 10460, Penang');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `order_items`
 --
 
@@ -82,6 +55,34 @@ INSERT INTO `order_items` (`orderId`, `productId`, `quantity`, `subtotal`, `grip
 (12349, 'R0002', 1, 12.99, 'G4'),
 (12349, 'R0003', 2, 19.98, 'G6'),
 (12350, 'R0001', 1, 13.99, 'G5');
+
+-- --------------------------------------------------------
+
+
+--
+-- Table structure for table `orders`
+--
+
+DROP TABLE IF EXISTS `orders`;
+CREATE TABLE `orders` (
+  `orderId` int(5) NOT NULL,
+  `userId` int(11) NOT NULL,
+  `orderDate` date NOT NULL,
+  `status` varchar(10) NOT NULL,
+  `orderAddress` varchar(150) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`orderId`, `userId`, `orderDate`, `status`, `orderAddress`) VALUES
+(12345, 1, '2024-10-25', 'Pending', '2 Jalan Port Dickson Langkawi, 72010, Kuala Lumpur'),
+(12346, 2, '2024-11-02', 'In Transit', '88, Lorong Bukit Jaya, 43000, Selangor'),
+(12347, 1, '2024-09-15', 'Delivered', '16, Jalan Taman Utama, 80000, Johor Bahru'),
+(12348, 2, '2024-08-30', 'Pending', '7, Jalan Ampang, 50450, Kuala Lumpur'),
+(12349, 1, '2024-12-10', 'In Transit', '22, Jalan Sutera Indah, 81100, Johor'),
+(12350, 2, '2024-07-20', 'Delivered', '5, Lorong Melati, 10460, Penang');
 
 -- --------------------------------------------------------
 
