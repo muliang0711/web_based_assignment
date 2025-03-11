@@ -84,11 +84,17 @@ unset($_SESSION['add_results']);
             
         <input type="hidden" name="action" id="action" value="addProduct">
 
-            <input type="text" name="productName" placeholder="productname"> 
+            <input type="text" name="productName" placeholder="productname">
+            <input type="text" name="productId" placeholder="productId">
+
+            <input type="text" name="seriesName" placeholder="seriesName">
             <input type="text" name="seriesId" placeholder="seriesid">
+
+            <input type="text" name="sizeId" placeholder="sizeId">
+
             <input type="text" name='price' placeholder="price">
             <input type="text" name='stock' placeholder="stock">
-            <input type="text" name="seriesName" placeholder="seriesName">
+
         <button type="submit">submit</button>
     </form>
    
@@ -112,10 +118,7 @@ unset($_SESSION['add_results']);
 </div>    
 <!--ADD product result -->
 <div class="add">
- <?php foreach($addProduct as $product){
-    echo ($product) ;
- }
-    ?>
+
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>

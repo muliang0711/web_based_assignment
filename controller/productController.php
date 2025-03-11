@@ -60,15 +60,17 @@ if (is_post()) {
     // 2. Add Product
     if ($action === "addProduct") {
         $productInformation = [
-            'productId' => $_POST['productId'],
+            'productId' => $_POST['productId'] ?? null , 
             'productName' => $_POST['productName'] ?? null,
-            'price' => $_POST['price'] ?? null,
+
             'seriesId' => $_POST['seriesId'] ?? null, 
+            'seriesName' => $_POST['seriesName'] ?? null,
+
+            'sizeId' => $_POST['sizeId'] ?? null , 
             'stock' => $_POST['stock'] ?? null,
-            //need to add on one : seriesName 
-            'seriesName' => $_POST['seriesName'] ?? null
-            
+            'price' => $_POST['price'] ?? null,
         ];
+
 
         // store the result
         $result1 = $productService->addProduct($productInformation);

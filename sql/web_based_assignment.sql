@@ -75,6 +75,7 @@ INSERT INTO `product` (`productID`, `productName`, `price`, `seriesID`) VALUES
 ('R0002', 'Yonex Nanoflare 1000z', 799.00, 'NAN'),
 ('R0003', 'Yonex Astrox 88D Pro', 899.00, 'AST');
 
+
 -- --------------------------------------------------------
 
 --

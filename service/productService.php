@@ -46,6 +46,11 @@ class productService{
             $errors[] = "Series ID cannot be null!";
         // need to add on validation number cannot more than 3
         }
+        //need to add on one : seriesName 
+        if (empty($productInformation['seriesName'])) {
+        $errors[] = "SeriesName cannot be null!";
+        // need to add on validation number cannot more than 15 
+        }
     
         // Validate price
         if (!isset($productInformation['price']) || $productInformation['price'] === '') {
@@ -60,19 +65,24 @@ class productService{
         } elseif (!is_numeric($productInformation['stock'])) {
             $errors[] = "Stock must be a number!";
         }
-        //need to add on one : seriesName 
-        if (empty($productInformation['seriesName'])) {
-            $errors[] = "SeriesName cannot be null!";
-        // need to add on validation number cannot more than 15 
+
+        // Validate size ID
+        if (empty($productInformation['sizeId'])) {
+           $errors[] = " sizeID cannot be null!";
+        // need to add on validation number cannot more than 3
         }
         // If there are validation errors, return them
         if (!empty($errors)) {
             return $errors;
         }
-    
+        
+        // we need a validation to check if the insert data already existing in db than return error 
+        // valdation to check is the productid and sizeid are same already if yes return false ；
+        $product = $this->showAllProduct();
         // No errors, proceed with product addition
         $this->productDb->addProduct($productInformation);
-    
+        
+        
         return "Successful adding a product: " .json_encode($productInformation);
     }
     

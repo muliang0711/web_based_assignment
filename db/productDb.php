@@ -69,74 +69,76 @@ class productDb{
             // 1 start Transaction : 
             $this->pdo->beginTransaction();
             // 1.1 fetch data : 
-            // productId 
-            // sizeID 
-            $productName = $productInformation['prductName'];
+            $productID = $productInformation['productId'];
+            $sizeID = $productInformation['sizeId'];
+            $productName = $productInformation['productName'];
             $seriesID = $productInformation['seriesId'];
             $seriesName = $productInformation['seriesName'];
             $price = $productInformation['price'];
-            $quantity = $productInformation['stock'];    
-        // 2. insert data into table series : 
+            $quantity = $productInformation['stock'];
+            // 2. insert data into table series : 
             // 2.1 validate does the series already existing or not 
 
-            // 2.1.1  write a sql to check with select limit 1 : 
-            $checkSql = "SELECT seriesName FROM series WHERE seriesName = ? AND seriesID = ? LIMIT 1";
-            $check_series_stmt = $this->pdo->prepare($checkSql);
-            $check_series_stmt->execute($seriesName , $seriesID);
-            // already exist add one , not yet craete one ; 
-            if($check_series_stmt->fetch()){
-                echo "Data exists. Proceeding with product insertion.";
-                // pass to next program
-                // this table is to make a real and one entity 
-                if (insertProduct($productID, $productName, $price, $seriesID)) {
-                    echo "Product successfully inserted.";
-                    insertProductSize($productID, $sizeID, $quantity);
-                } else {
-                    throw new Exception("Error inserting product.");
-                }
-            }else{
-                echo "data does not exist";
-                // 2.2 generate the sql and insert 
-                $seriesSql = "INSERT INTO series (seriesID , seriesName) VALUES (? , ?)";
-                $insert_series_stmt = $this->pdo->prepare($seriesSql);
-                $insert_series_stmt->execute([$seriesID,$seriesName]);
-                echo "Sucess insert record into series" ; 
-                // done and call out next program : 
-                if (insertProduct($productID, $productName, $price, $seriesID)) {
-                    echo "Product successfully inserted.";
-                    // If insert is successful, call insertProductSize function
-                    insertProductSize($productID, $sizeID, $quantity);
-                } else {
-                    throw new Exception("Error inserting product.");
-                }
-            }
+            // 2. Insert into series table
+            $this->insertSeries($seriesID, $seriesName);
 
-        // 3. insert data into table product : 
-        function insertProduct($productID , $productName , $price , $seriesID){
-            // 3.1 sql to insert the product 
-            try {
-                // Prepare the SQL statement
-                $sql = "INSERT INTO product (productID, productName, price, seriesID) VALUES (?, ?, ?, ?)";
-                $stmt = $this->pdo->prepare($sql);
-                return true ; 
-            } catch (Exception $e) {
-                // Log or display the error message
-                error_log("Error inserting product: " . $e->getMessage());
-        
-                return false; // Return false on failure
-            }
+            // 3. Insert into product table
+            $this->insertProduct($productID, $productName, $price, $seriesID);
+  
+            // 4. Insert into product size table
+            $this->insertProductSize($productID, $sizeID, $quantity);
+
+                          // 5. Commit transaction
+            $this->pdo->commit();
+
+  
+        }catch(Exception $e){
+        // Rollback transaction if any error occurs
+            $this->pdo->rollBack();
+            error_log("Transaction failed: " . $e->getMessage());
+            return false;
+            
+        }           
+                                                                      
+    }
+    
+    private function insertSeries($seriesID, $seriesName) {
+        // Check if the series exists
+        $checkSql = "SELECT seriesName FROM series WHERE seriesName = ? AND seriesID = ? LIMIT 1";
+        $check_series_stmt = $this->pdo->prepare($checkSql);
+        $check_series_stmt->execute([$seriesName, $seriesID]);
+
+        // If not exists, insert it
+        if (!$check_series_stmt->fetch()) {
+            $seriesSql = "INSERT INTO series (seriesID, seriesName) VALUES (?, ?)";
+            $insert_series_stmt = $this->pdo->prepare($seriesSql);
+            $insert_series_stmt->execute([$seriesID, $seriesName]);
         }
-        // this table is to add up the entity (calculate the stock)
-        // 4. insert data into table product size:
-        // 4.1 we just need to this fucntion 
-        function insertProductSize($productID , $sizeID , $quantity){   
+    }
 
+    private function insertProduct($productID, $productName, $price, $seriesID) {
+        try {
+            $sql = "INSERT INTO product (productID, productName, price, seriesID) VALUES (?, ?, ?, ?)";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute([$productID, $productName, $price, $seriesID]);
+        } catch (Exception $e) {
+            throw new Exception("Error inserting product: " . $e->getMessage());
         }
-        
+    }
 
+    private function insertProductSize($productID, $sizeID, $quantity) {
+        // at this phase the one product id can have two sizeID   
+        try {
+            // since we already check before so here we just need to insert 
+            $sql = "INSERT INTO productsize (productID, sizeID, quantity) VALUES (?, ?, ?)";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute([$productID, $sizeID, $quantity]);
+        } catch (Exception $e) {
+            throw new Exception("Error inserting product size: " . $e->getMessage());
         }
     }
 }
+
 
 // future update : using try catch to handle the error ; show user with understanding error not directly system error 
 // future uipdate : lets program insert into series table first after that we make execute the funciton reduce cost 
