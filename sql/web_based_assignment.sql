@@ -63,17 +63,21 @@ CREATE TABLE `product` (
   `productID` varchar(5) NOT NULL,
   `productName` varchar(100) NOT NULL,
   `price` float(6,2) NOT NULL,
-  `seriesID` varchar(3) DEFAULT NULL
+  `seriesID` varchar(3) DEFAULT NULL,
+  `productImg` varchar(1000) NOT NULL,
+  `introduction` varchar(1000) NOT NULL,
+  `playerInfo` varchar(300) NOT NULL,
+  `playerImage` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `product`
 --
 
-INSERT INTO `product` (`productID`, `productName`, `price`, `seriesID`) VALUES
-('R0001', 'Yonex Arcsaber 11 Pro', 849.00, 'ARC'),
-('R0002', 'Yonex Nanoflare 1000z', 799.00, 'NAN'),
-('R0003', 'Yonex Astrox 88D Pro', 899.00, 'AST');
+INSERT INTO `product` (`productID`, `productName`, `price`, `seriesID`, `productImg`,`introduction`,`playerInfo`,`playerImage`) VALUES
+('R0001', 'Yonex Arcsaber 11 Pro', 849.00, 'ARC', 'https://www.yonex.com/media/catalog/product/a/r/arc11-p.png?', "The Arcsaber 11 Pro adopts the unique feel of impact and offers enhanced playability with an emphasis on shuttle pocketing for a controlled attack. Taking control of the court can take many forms, and for the Arcsaber it comes from the extra milliseconds of shuttle contact time.", "Aaron Chia Teng Fong is a Malaysian badminton player.A world champion and a double bronze medalist at the Olympic Games, he and his partner Soh Wooi Yik became the first ever world badminton champions from Malaysia after winning the men's doubles title at the 2022 World Championships.Together, they also won a gold medal at the 2019 SEA Games, a silver medal at the 2022 Asian Championships,as well as bronze medals at the 2020 Summer Olympics,2022 Commonwealth Games,2023 World Championships,2022 Asian Games,2024 Asian Championships,and 2024 Summer Olympics.They are also the first Malaysian men’s doubles pair to win consecutive medals at the Olympic Games.",'https://www.yonex.com/media/wysiwyg/Athletes/Badminton/810x540_aaron-chia.jpg'),
+('R0002', 'Yonex Nanoflare 1000z', 799.00, 'NAN', 'https://www.yonex.com/media/catalog/product/n/a/nanoflare_1000_z.png?', "The new NANOFLARE 1000 is being used on court now in the hands of Rio Olympic gold medalist, Carolina Marin (ESP), 2022 All England silver medalist, Lakshya Sen (IND), and 2022 French Open champion, He Bing Jiao (CHN). The racquets are scheduled for a global launch on June 16th, 2023, in four different models, Z, TOUR, GAME and PLAY – each developed with the same performance concept but with variations in materials used.", "Chen Tang Jie is a Malaysian badminton player. He was part of the Malaysian 2016 Asian Junior Championships and 2016 BWF World Junior Championships team, and helped Malaysia to clinch a silver medal in the World Junior mixed team before being defeated by China.", 'https://www.badmintonplanet.com/wp-content/uploads/2023/06/06-25-2023-badminton-news-chen-tang-jie-toh-ee-wei-taipei-open.jpg'),
+('R0003', 'Yonex Astrox 88D Pro', 899.00, 'AST', 'https://www.yonex.com/media/catalog/product/3/a/3ax88d-p_076-1_02.png?', "This brand new Astrox 88D Pro is designed for aggressive doubles players who are always ready to dominate from the back of the court. The POWER-ASSIST BUMPER has been newly added to the top of the frame, providing even more advancement for the Rotational Generator System.", "Kunlavut Vitidsarn is a Thai badminton player. He is the current men's singles World Champion as he won the gold medal at the 2023 World Championships, and a silver medalist at the 2024 Olympic Games. He was also three-times World Junior champion, winning in 2017, 2018 and 2019. He is nicknamed the 'Three-Game God' because his playing style requires him to play three games long and always win in the end.",'https://www.pattayamail.com/wp-content/uploads/2024/08/t-09-Kunlavut-Vitidsarn-makes-history-as-first-Thai-shuttler-to-reach-Olympic-badminton-final.jpg');
 
 
 -- --------------------------------------------------------
@@ -238,3 +242,27 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+--admin table
+DROP TABLE IF EXISTS `admin`;
+CREATE TABLE admin (
+    id VARCHAR(10) PRIMARY KEY,
+    position VARCHAR(20) NOT NULL,
+    password VARCHAR(15) NOT NULL,
+    adminLevel VARCHAR(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+--insert data of admin
+INSERT INTO admin (id, position, password, adminLevel)  
+VALUES  
+('1', 'Manager', 'pass123', '5'),  
+('2', 'Employee', 'pass234', '2'),  
+('3', 'Supervisor', 'pass345', '4'),  
+('4', 'Clerk', 'pass456', '1'),  
+('5', 'Technician', 'pass567', '3'),  
+('6', 'Director', 'pass678', '5'),  
+('7', 'Intern', 'pass789', '0'),  
+('8', 'HR', 'pass890', '3'),  
+('9', 'Accountant', 'pass901', '2'),  
+('10', 'CEO', 'admin000', '5');

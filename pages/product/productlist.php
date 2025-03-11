@@ -46,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <ul>
                 <!-- store logo -->
                  <div class="logo">
-                   <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Logo-Yonex.svg/2560px-Logo-Yonex.svg.png" width="125px">
+                   <img src="logo.jpg" width="125px">
                  </div>
                 <!-- Menu button -->
                  <li><a onclick ="onClick()" href="../product/product.php"><strong>Home</strong></a></li>

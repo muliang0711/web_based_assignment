@@ -1,71 +1,142 @@
 <?php
 require '../../_base.php';
-
-$title='Admin Management';
+require 'selection.php';
+$title='Add a new admin';
 $stylesheetArray = ['/css/admin_management.css'];   // 注意：这边只放特定于此页面的 .css file(s)。所有 admin 页面都会用到的 .css files 应放在 /css/admin.css
 $scriptArray = ['/js/app.js'];       // 注意：这边只放特定于此页面的 .js file(s)。所有 admin 页面都会用到的 .js files 应放在 /js/admin.js
 
 include '../../admin_head.php';
-?>
-<?php
+
+// Functions to generate random id and password
+function random_password() {
+    $n = rand(10,15);
+
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $randomPassword = '';
+
+    for ($i = 0; $i < $n; $i++) {
+        $index = random_int(0, strlen($characters) - 1);
+        $randomPassword .= $characters[$index];
+    }
+
+    return $randomPassword;
+}
+//echo random_password();
+function random_id() {
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $randomId = '';
+
+    for ($i = 0; $i < 6; $i++) {
+        $index = random_int(0, strlen($characters) - 1);
+        $randomId .= $characters[$index];
+    }
+
+    return $randomId;
+}
+
+// handle random id and password generation
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['generate'])) {
+    $_SESSION['id'] = random_id();
+    $_SESSION['password'] = random_password();
+    header("Location: " . $_SERVER['PHP_SELF']); // 刷新页面，避免重复提交
+    exit();
+}
+
+$id = $_SESSION['id'] ?? 'click to generate';
+$password = $_SESSION['password'] ?? 'click to generate';
+
 //  未完成
+// Handle POST request
 if(is_post()){
-    $id=req('id');
+    // $id=req('id'); // no need this, because this won't be submitted by the form. `$id = $_SESSION['id']` already store the id value.
     $position=req('position');
-    $password=req('password');
+    // $password=req('password'); // no need this, because this won't be submitted by the form. `$password = $_SESSION['password']` already store the password value.
     $level=req('level');
 
-     // Validate id
-    //  if ($id == '') {
-    //     $_err['id'] = 'Required';
-    // }
-    // else if (!preg_match('/^\d{2}[A-Z]{3}\d{5}$/', $id)) {
-    //     $_err['id'] = 'Invalid format';
-    // }
-    // else if (!is_unique($id, 'student', 'id')) {
-    //     $_err['id'] = 'Duplicated';
-    // }
-    // else {
+    // Validate id
+    if ($id == '') {
+        $_errors['id'] = 'Required';
+    }
+    else if (!is_unique($id, 'admin', 'id')) {
+        $_errors['id'] = 'Duplicated';
+    }
+    // NOTE BY COOKIE: no need for this else block; it does the same thing as the else if block.
+    // else { 
 
     //     $stm = $_db->prepare("SELECT COUNT(*) FROM admin WHERE id = ?");
     //     $stm->execute([$id]);
 
     //     if($stm->fetchColumn() > 0)
     //     {
-    //         $_err['id'] = 'Duplicated';
+    //         $_errors['id'] = 'Duplicated';
     //     }
     // }  
 
-    //   // Validate position
-    //   if ($position == '') {
-    //     $_err['position'] = 'Required';
-    // }
-    // else if (strlen($position) > 100) {
-    //     $_err['position'] = 'Maximum length 100';
-    // }
+    // Validate position
+    if ($position == '') {
+        $_errors['position'] = 'Required';
+    }
+    else if (strlen($position) > 20) {
+        $_errors['position'] = 'Maximum length 20';
+    }
 
     //   // Validate password
     //   if ($id == '') {
     //     $_err['id'] = 'Required';
     // }
-    // else if (!preg_match('/^\d{2}[A-Z]{3}\d{5}$/', $id)) {
-    //     $_err['id'] = 'Invalid format';
-    // }
+ 
+    // Validate level
+    if ($level == '') {
+        $_errors['level'] = 'Required';
+    }
+    var_dump($_errors);
+    var_dump($_POST);
 
-    //     // Validate level
-    //     if ($program_id == '') {
-    //         $_err['program_id'] = 'Required';
-    //     }
-    //     else if (!array_key_exists($program_id, $_programs)) {
-    //         $_err['program_id'] = 'Invalid value';
-    //     }
+    // If no error, insert data into db and reload page
+    if (!$_errors) {
+        echo "helloooo\n";
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+        $stm = $_db->prepare('INSERT INTO admin
+                            (id, position, password, adminLevel)
+                            VALUES(?, ?, ?, ?)');
+        $stm->execute([$id, $position, $password, $level]);
+        
+        // Destory id and password SESSION variables
+        unset($_SESSION['id']);
+        unset($_SESSION['password']);
 
-
-
-
+        temp('info', 'Record inserted');
+        redirect();
+    }
 }
 
 ?>
+
+<form method="post" class="insert_form">
+    <label for="position">Position</label>
+    <?= input_text('position', 'maxlength="20"') ?>
+    <?=error('position') ?>
+   
+    <br><br>
+    <label>Level</label>
+    <?= input_radios('level', $_level) ?>
+    <?= error('level') ?>
+
+    <!--  htmlspecialchars to prevent attack -->
+    <p>User ID: <?php echo htmlspecialchars($id); ?></p>   
+    <p>Password: <?php echo htmlspecialchars($password); ?></p>
+    <form method="POST">
+        <button type="submit" name="generate">Generate ID and Password</button>
+        <button>Submit</button>            
+    </form>
+
+    <section>
+
+    </section>
+</form>
+
+
+
 <?php
 require '../../admin_foot.php';
 ?>
