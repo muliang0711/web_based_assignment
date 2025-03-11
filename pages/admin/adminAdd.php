@@ -17,10 +17,10 @@ if(is_post()){
 
     // Validate id
      if ($id == '') {
-        $_err['id'] = 'Required';
+        $_error['id'] = 'Required';
     }
     else if (!is_unique($id, 'admin', 'id')) {
-        $_err['id'] = 'Duplicated';
+        $_error['id'] = 'Duplicated';
     }
     else {
 
@@ -29,16 +29,16 @@ if(is_post()){
 
         if($stm->fetchColumn() > 0)
         {
-            $_err['id'] = 'Duplicated';
+            $_error['id'] = 'Duplicated';
         }
     }  
 
       // Validate position
       if ($position == '') {
-        $_err['position'] = 'Required';
+        $_error['position'] = 'Required';
     }
     else if (strlen($position) > 20) {
-        $_err['position'] = 'Maximum length 20';
+        $_error['position'] = 'Maximum length 20';
     }
 
     //   // Validate password
@@ -48,14 +48,14 @@ if(is_post()){
  
         // Validate level
         if ($level == '') {
-            $_err['level'] = 'Required';
+            $_error['level'] = 'Required';
         }
 
 // Output
-if (!$_err) {
+if (!$_error) {
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
     $stm = $_db->prepare('INSERT INTO admin
-                          (id, position, password, level)
+                          (id, position, password, adminLevel)
                           VALUES(?, ?, ?, ?)');
     $stm->execute([$id, $position, $password, $level]);
     
