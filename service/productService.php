@@ -21,19 +21,6 @@ class productService{
     }
     //
     public function filterProduct($filters){
-        // 1. if minprice = maxprice return a warning message : 
-        // 2. turn the minPrice and maxPrice into int : 
-        //if($filters['minPrice'] && $filters['maxPrice'] && $filters['minPrice']==$filters['maxPrice']){
-        //    $errorMsg = "Error : minPrice can be same with maxPrice";
-        //    return $errorMsg;
-        //}
-        if($filters['minPrice']){
-            (float)$filters['minPrice'];
-        }
-        if($filters['maxPrice']){
-            (float)$filters['maxPrice'];
-        }
-
         return $this->productDb->filterProduct($filters);
     }
     //

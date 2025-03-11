@@ -5,7 +5,7 @@ require_once __DIR__ . "/../db_connection.php";
 
 $productService = new productService($_db);
 
-if (is_post()) { // Ensure it is a POST request
+if (is_post()) { 
     $action = $_POST['action'] ?? null;
 
     // 1. Search Products
@@ -16,8 +16,24 @@ if (is_post()) { // Ensure it is a POST request
             'priceMax' => $_POST['maxPrice'] ?? null,
             'seriesID' => $_POST['seriesID'] ?? null,
         ];
+         
+        /* when process the data send from frontend , data will loke likes this : associative array:
+        [
+            "productName" => "Gaming Laptop",
+            "priceMin" => "50",
+            "priceMax" => "500",
+            "seriesID" => "S01"
+        ]
 
-        // Convert to float correctly
+        we use filters['variavblename'] to get sepcific value ：gaming laptop 
+
+        when the value is a array ? "productName" => ["Gaming Laptop","xd"]        filters['productName'] :
+            foreach($productName as name){
+                echo($name) /
+            }
+        */
+
+        // Convert to float 
         if (!empty($filters['priceMin'])) {
             $filters['priceMin'] = (float) $filters['priceMin'];
         }
@@ -27,7 +43,16 @@ if (is_post()) { // Ensure it is a POST request
 
         $result = $productService->filterProduct($filters);
         $_SESSION['search_results'] = $result;
-
+        // what is the result look like ？ ： array of object 
+        // result = [ 
+        // (object) ["productName" => "Laptop", "price" => 1200] 
+        // (obkect) ["productName" => "gamming laptop , price => 100]
+        //  ]
+        // how we fetch data ?
+        // foreach($result as product ){
+        //  product->productName ; 
+        //  product->price ； 
+        //}
         header("Location: ../pages/admin/admin_product.php");
         exit();
     }
