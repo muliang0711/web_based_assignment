@@ -88,7 +88,7 @@ unset($_SESSION['add_results']);
             <input type="text" name="seriesId" placeholder="seriesid">
             <input type="text" name='price' placeholder="price">
             <input type="text" name='stock' placeholder="stock">
-
+            <input type="text" name="seriesName" placeholder="seriesName">
         <button type="submit">submit</button>
     </form>
    
