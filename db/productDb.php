@@ -20,41 +20,35 @@ class productDb{
     // 2. when detetect specific filter value turn it we appned to the base sql 
         // 2.1  since the variable is not fixed we use array:params to save the value 
 
-    public function getProduct($filters){
-        $sql = "SELECT * FROM WHERE 1=1 "; // base sql 
-        $params = [] ; // be a empty set to append value if have 
-        
-        // condition validate : 
-        // if $filters([value]) than append into baseSql , params
-
-        // 1. productID :
-        if($filters(['productId'])){
-            $sql .= "AND productID = ?";
-            $params[] = $filters['productId'];
-        }
-        // 2. productName 
-        if($filters(['productName'])){
-            $sql .= "AND productName = ?";
-            $params[] = $filters['productName'];
-        }
-        // 3. seriesID
-        if($filters(['seriesId'])){
-            $sql .= "AND seriesID = ? ";
-            $params[] = $filters['sericesId'];
-        }
-        // 4. price 
-        if($filters(['$priceMin']) && $filters(['priceMax'])){
-            $sql .= "AND price BETWEEN ? AND ?" ;
-            $params[] = $filters(['priceMin']);
-            $params[] = $filters(['priceMax']);
-        }
-        // ready to start : 
-        $stmt =  $this->pdo->prepare($sql);
-        $stmt->execute($params);
+    public function filterProduct($filters) {
+            $sql = "SELECT * FROM product WHERE 1=1"; 
+            $params = [];
+    
+            if (!empty($filters['productName'])) {
+                $sql .= " AND productName LIKE ?";
+                $params[] = "%" . $filters['productName'] . "%";
+            }
+            if (!empty($filters['seriesID'])) {
+                $sql .= " AND seriesID = ?";
+                $params[] = $filters['seriesID'];
+            }
+            if (!empty($filters['priceMin'])) {
+                $sql .= " AND price >= ?";
+                $params[] = $filters['priceMin']; 
+            }
+            if (!empty($filters['priceMax'])) {
+                $sql .= " AND price <= ?";
+                $params[] = $filters['priceMax']; 
+            }
+    
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute($params);
+            return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
-    // frontend guideline : 
-    // the frontend should get the user input value and save as object in filters array
-    //  
+    
+    public function addProduct($productInformation){
+
+    }
 }
 
 ?>

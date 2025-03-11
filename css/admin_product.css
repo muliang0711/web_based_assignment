@@ -1,0 +1,81 @@
+/* General Styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+}
+
+/* Search Button */
+#search {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+#search:hover {
+    background-color: #0056b3;
+}
+
+/* Filter Bar */
+.filter-bar {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    display: none; /* Hidden by default */
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+    width: 350px;
+}
+
+/* Form */
+.filter-bar form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Select Dropdowns */
+.filter-bar select {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+/* Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Show form with animation */
+.filter-bar.show {
+    display: flex;
+    animation: fadeIn 0.3s ease-in-out;
+}
+.filter-bar { display: none; }
+.filter-bar.show { display: block; }
+
+.add-form{ display: none; }
+.add-form.show { display: block; }

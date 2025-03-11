@@ -1,46 +1,62 @@
-
 <?php
-// what this file do ?
-// As : create a class module to handle all request and decide what service to call 
 require_once __DIR__ . "/../service/productService.php";
 require_once __DIR__ . "/../_base.php";
-require_once __DIR__ . "/../db_connection.php"; 
-// 1. create a service class to use it function 
+require_once __DIR__ . "/../db_connection.php";
+
 $productService = new productService($_db);
 
-
-// 2. if method post && action = search -> execute searchProduct();
-if (is_post()) {
+if (is_post()) { // Ensure it is a POST request
     $action = $_POST['action'] ?? null;
 
+    // 1. Search Products
     if ($action === "search") {
-        // Capture filters from the search form
         $filters = [
             'productName' => $_POST['productName'] ?? null,
-            'priceMin' => $_POST['priceMin'] ?? null,
-            'priceMax' => $_POST['priceMax'] ?? null,
+            'priceMin' => $_POST['minPrice'] ?? null,
+            'priceMax' => $_POST['maxPrice'] ?? null,
             'seriesID' => $_POST['seriesID'] ?? null,
         ];
 
-        // Fetch products
-        $result = $productService->searchProduct($filters);
-
-        if (isset($result['errors'])) {
-            $errors = $result['errors'];
-            $products = [];
-        } else {
-            $products = $result;
+        // Convert to float correctly
+        if (!empty($filters['priceMin'])) {
+            $filters['priceMin'] = (float) $filters['priceMin'];
         }
-    }
-    if ($action === "addProduct") {
+        if (!empty($filters['priceMax'])) {
+            $filters['priceMax'] = (float) $filters['priceMax'];
+        }
 
+        $result = $productService->filterProduct($filters);
+        $_SESSION['search_results'] = $result;
+
+        header("Location: ../pages/admin/admin_product.php");
+        exit();
     }
+
+    // 2. Add Product
+    if ($action === "addProduct") {
+        $productInformation = [
+            'productName' => $_POST['productName'] ?? null,
+            'price' => $_POST['price'] ?? null,
+            'seriesId' => $_POST['seriesId'] ?? null, 
+            'stock' => $_POST['stock'] ?? null
+        ];
+
+        // store the result
+        $result1 = $productService->addProduct($productInformation);
+        $_SESSION['add_results'] = $result1; 
+
+        header("Location: ../pages/admin/admin_product.php"); 
+        exit();
+    }
+
+    // 3. Update Product (To be implemented)
     if ($action === "updateProduct") {
 
     }
+
+    // 4. Delete Product (To be implemented)
     if ($action === "deleteProduct") {
 
     }
 }
-
 ?>

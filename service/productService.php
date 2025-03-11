@@ -20,17 +20,66 @@ class productService{
         return $this->productDb->getAllProducts();
     }
     //
-    public function searchProduct($filters){
-        return $this->productDb->getProduct($filters);
+    public function filterProduct($filters){
+        // 1. if minprice = maxprice return a warning message : 
+        // 2. turn the minPrice and maxPrice into int : 
+        //if($filters['minPrice'] && $filters['maxPrice'] && $filters['minPrice']==$filters['maxPrice']){
+        //    $errorMsg = "Error : minPrice can be same with maxPrice";
+        //    return $errorMsg;
+        //}
+        if($filters['minPrice']){
+            (float)$filters['minPrice'];
+        }
+        if($filters['maxPrice']){
+            (float)$filters['maxPrice'];
+        }
+
+        return $this->productDb->filterProduct($filters);
     }
     //
     public function deleteProduct(){
         return null ;
     }
     //
-    public function createProduct(){
-        return null;
+    public function addProduct($productInformation) {
+        // Initialize an empty error array
+        $errors = [];
+    
+        // Validate product name
+        if (empty($productInformation['productName'])) {
+            $errors[] = "Product name cannot be null!";
+        }
+    
+        // Validate series ID
+        if (empty($productInformation['seriesId'])) {
+            $errors[] = "Series ID cannot be null!";
+        }
+    
+        // Validate price
+        if (!isset($productInformation['price']) || $productInformation['price'] === '') {
+            $errors[] = "Price must have a value!";
+        } elseif (!is_numeric($productInformation['price'])) {
+            $errors[] = "Price must be a number!";
+        }
+    
+        // Validate stock
+        if (!isset($productInformation['stock']) || $productInformation['stock'] === '') {
+            $errors[] = "Stock must have a value!";
+        } elseif (!is_numeric($productInformation['stock'])) {
+            $errors[] = "Stock must be a number!";
+        }
+    
+        // If there are validation errors, return them
+        if (!empty($errors)) {
+            return $errors;
+        }
+    
+        // No errors, proceed with product addition
+        $this->productDb->addProduct($productInformation);
+    
+        return "Successful adding a product: " .json_encode($productInformation);
     }
+    
     // 
     public function updateProduct(){
         return null ; 
