@@ -253,7 +253,7 @@ CREATE TABLE admin (
 
 
 --insert data of admin
-INSERT INTO your_table_name (id, position, password, adminLevel)  
+INSERT INTO admin (id, position, password, adminLevel)  
 VALUES  
 ('1', 'Manager', 'pass123', '5'),  
 ('2', 'Employee', 'pass234', '2'),  
