@@ -20,17 +20,62 @@ class productService{
         return $this->productDb->getAllProducts();
     }
     //
-    public function searchProduct($filters){
-        return $this->productDb->getProduct($filters);
+    public function filterProduct($filters){
+        return $this->productDb->filterProduct($filters);
     }
     //
     public function deleteProduct(){
         return null ;
     }
     //
-    public function createProduct(){
-        return null;
+    public function addProduct($productInformation) {
+        // Initialize an empty error array
+        $errors = [];
+        // validate product id 
+        if (empty($productInformation['productId'])) {
+            $errors[] = "ProductId cannot be null!";
+            // need to add on validation number cannot more than 5
+        }
+        // Validate product name
+        if (empty($productInformation['productName'])) {
+            $errors[] = "Product name cannot be null!";
+        }
+    
+        // Validate series ID
+        if (empty($productInformation['seriesId'])) {
+            $errors[] = "Series ID cannot be null!";
+        // need to add on validation number cannot more than 3
+        }
+    
+        // Validate price
+        if (!isset($productInformation['price']) || $productInformation['price'] === '') {
+            $errors[] = "Price must have a value!";
+        } elseif (!is_numeric($productInformation['price'])) {
+            $errors[] = "Price must be a number!";
+        }
+    
+        // Validate stock
+        if (!isset($productInformation['stock']) || $productInformation['stock'] === '') {
+            $errors[] = "Stock must have a value!";
+        } elseif (!is_numeric($productInformation['stock'])) {
+            $errors[] = "Stock must be a number!";
+        }
+        //need to add on one : seriesName 
+        if (empty($productInformation['seriesName'])) {
+            $errors[] = "SeriesName cannot be null!";
+        // need to add on validation number cannot more than 15 
+        }
+        // If there are validation errors, return them
+        if (!empty($errors)) {
+            return $errors;
+        }
+    
+        // No errors, proceed with product addition
+        $this->productDb->addProduct($productInformation);
+    
+        return "Successful adding a product: " .json_encode($productInformation);
     }
+    
     // 
     public function updateProduct(){
         return null ; 
