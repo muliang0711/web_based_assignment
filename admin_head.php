@@ -25,7 +25,9 @@
         <a class="button">Customer</a>
         <a class="button">Discount/Voucher</a>
         <a class="button">Analysis</a>
+        <!-- <?php if (is_logged_in()): ?> -->
         <a href="/pages/admin/admin_Management.php" class="button">Admin Management</a>
+        <!-- <?php endif ?> -->
         <a class="display_bottomleft">
             <img src="/assets/img/signout.jpg" width="20px">
         </a>

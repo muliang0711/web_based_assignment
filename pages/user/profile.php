@@ -11,9 +11,16 @@ $scriptArray = [];      // Put JS files that are specific to this page here. If 
 include '../../_head.php';
 ?>
 
+<?php if (is_logged_in()): ?>
 
 <h1>Profile page</h1>
-<p>Under construction...</p>
+<p>Username: <?= $_user->username ?></p>
+
+<?php else: ?>
+
+<h1>You're not logged in!</h1>
+
+<?php endif ?>
 
 
 <?php

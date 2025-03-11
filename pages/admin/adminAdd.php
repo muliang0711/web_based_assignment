@@ -6,70 +6,8 @@ $stylesheetArray = ['/css/admin_management.css'];   // 注意：这边只放特�
 $scriptArray = ['/js/app.js'];       // 注意：这边只放特定于此页面的 .js file(s)。所有 admin 页面都会用到的 .js files 应放在 /js/admin.js
 
 include '../../admin_head.php';
-?>
-<?php
-//  未完成
-if(is_post()){
-    $id=req('id');
-    $position=req('position');
-    $password=req('password');
-    $level=req('level');
 
-    // Validate id
-     if ($id == '') {
-        $_error['id'] = 'Required';
-    }
-    else if (!is_unique($id, 'admin', 'id')) {
-        $_error['id'] = 'Duplicated';
-    }
-    else {
-
-        $stm = $_db->prepare("SELECT COUNT(*) FROM admin WHERE id = ?");
-        $stm->execute([$id]);
-
-        if($stm->fetchColumn() > 0)
-        {
-            $_error['id'] = 'Duplicated';
-        }
-    }  
-
-      // Validate position
-      if ($position == '') {
-        $_error['position'] = 'Required';
-    }
-    else if (strlen($position) > 20) {
-        $_error['position'] = 'Maximum length 20';
-    }
-
-    //   // Validate password
-    //   if ($id == '') {
-    //     $_err['id'] = 'Required';
-    // }
- 
-        // Validate level
-        if ($level == '') {
-            $_error['level'] = 'Required';
-        }
-
-// Output
-if (!$_error) {
-    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-    $stm = $_db->prepare('INSERT INTO admin
-                          (id, position, password, adminLevel)
-                          VALUES(?, ?, ?, ?)');
-    $stm->execute([$id, $position, $password, $level]);
-    
-    temp('info', 'Record inserted');
-    redirect('/');
-}
-
-
-}
-
-?>
-
-
-<?php
+// Functions to generate random id and password
 function random_password() {
     $n = rand(10,15);
 
@@ -96,9 +34,7 @@ function random_id() {
     return $randomId;
 }
 
-?>
-
-<?php
+// handle random id and password generation
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['generate'])) {
     $_SESSION['id'] = random_id();
     $_SESSION['password'] = random_password();
@@ -108,11 +44,73 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['generate'])) {
 
 $id = $_SESSION['id'] ?? 'click to generate';
 $password = $_SESSION['password'] ?? 'click to generate';
+
+//  未完成
+// Handle POST request
+if(is_post()){
+    // $id=req('id'); // no need this, because this won't be submitted by the form. `$id = $_SESSION['id']` already store the id value.
+    $position=req('position');
+    // $password=req('password'); // no need this, because this won't be submitted by the form. `$password = $_SESSION['password']` already store the password value.
+    $level=req('level');
+
+    // Validate id
+    if ($id == '') {
+        $_errors['id'] = 'Required';
+    }
+    else if (!is_unique($id, 'admin', 'id')) {
+        $_errors['id'] = 'Duplicated';
+    }
+    // NOTE BY COOKIE: no need for this else block; it does the same thing as the else if block.
+    // else { 
+
+    //     $stm = $_db->prepare("SELECT COUNT(*) FROM admin WHERE id = ?");
+    //     $stm->execute([$id]);
+
+    //     if($stm->fetchColumn() > 0)
+    //     {
+    //         $_errors['id'] = 'Duplicated';
+    //     }
+    // }  
+
+    // Validate position
+    if ($position == '') {
+        $_errors['position'] = 'Required';
+    }
+    else if (strlen($position) > 20) {
+        $_errors['position'] = 'Maximum length 20';
+    }
+
+    //   // Validate password
+    //   if ($id == '') {
+    //     $_err['id'] = 'Required';
+    // }
+ 
+    // Validate level
+    if ($level == '') {
+        $_errors['level'] = 'Required';
+    }
+    var_dump($_errors);
+    var_dump($_POST);
+
+    // If no error, insert data into db and reload page
+    if (!$_errors) {
+        echo "helloooo\n";
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+        $stm = $_db->prepare('INSERT INTO admin
+                            (id, position, password, adminLevel)
+                            VALUES(?, ?, ?, ?)');
+        $stm->execute([$id, $position, $password, $level]);
+        
+        // Destory id and password SESSION variables
+        unset($_SESSION['id']);
+        unset($_SESSION['password']);
+
+        temp('info', 'Record inserted');
+        redirect();
+    }
+}
+
 ?>
-
-
-
-
 
 <form method="post" class="insert_form">
     <label for="position">Position</label>
@@ -124,15 +122,15 @@ $password = $_SESSION['password'] ?? 'click to generate';
     <?= input_radios('level', $_level) ?>
     <?= error('level') ?>
 
-    <!--  htmlspecialchars to prevent attact -->
-    <p>User ID： <?php echo htmlspecialchars($id); ?></p>   
-    <p>Password:<?php echo htmlspecialchars($password); ?></p>
+    <!--  htmlspecialchars to prevent attack -->
+    <p>User ID: <?php echo htmlspecialchars($id); ?></p>   
+    <p>Password: <?php echo htmlspecialchars($password); ?></p>
     <form method="POST">
-            <button type="submit" name="generate">Generate ID and Password</button>
+        <button type="submit" name="generate">Generate ID and Password</button>
         <button>Submit</button>            
-        </form>
+    </form>
 
-        <section>
+    <section>
 
     </section>
 </form>
