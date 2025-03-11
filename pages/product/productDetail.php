@@ -34,7 +34,7 @@ function link_stylesheet($stylesheetArray) {
         <ul>
           <!-- store logo -->
           <div class="logo">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Logo-Yonex.svg/2560px-Logo-Yonex.svg.png" width="125px">
+            <img src="logo.jpg" width="125px">
             </div>
             <li><a onclick ="onClick()" href="../product/product.php"><strong>Home</strong></a></li>
           <li><a onclick ="onClick()" href="../product/productlist.php"><strong>Products</strong></a></li>
