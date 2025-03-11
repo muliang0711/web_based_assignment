@@ -185,11 +185,12 @@ to{
 }
 
 .product img{
-  width: 50%;
-  height: 30%;
+  width: 40%;
+  height: 20%;
   border-radius: 50%;
   display:inline-block;
   gap: 50px;
+  margin-top: 50px;
   margin-left: -100px;
 }
 
@@ -284,7 +285,7 @@ button:active {
   display: flex;
   position: absolute;
   right: 70px;
-  top:955px;
+  top:900px;
   width: 500px;
   padding: 20px;
 }
