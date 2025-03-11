@@ -243,7 +243,7 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 
---admin table
+-- admin table
 DROP TABLE IF EXISTS `admin`;
 CREATE TABLE admin (
     id VARCHAR(10) PRIMARY KEY,
@@ -253,7 +253,7 @@ CREATE TABLE admin (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
---insert data of admin
+-- insert data of admin
 INSERT INTO admin (id, position, password, adminLevel)  
 VALUES  
 ('1', 'Manager', 'pass123', '5'),  
