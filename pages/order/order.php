@@ -5,22 +5,8 @@
     $stylesheetArray  = ["order.css?"];
     include "../../_head.php";
 
-    
-    //fetching data
-    $orders = $_db->query("Select o.*, sum(oi.subtotal) as total_price from
-orders o JOIN order_items oi ON (o.orderId = oi.orderId) GROUP BY o.orderId;")->fetchAll();
-    
-    $order_items = $_db->query("Select oi.*, p.productName FROM order_items oi JOIN product p ON (oi.productId = p.productID);")->fetchAll();
-    
-    
 
-    /*  NOTES UPDATE DB, CALCULATE TOTALPRICE INSTEAD OF INSERTING
-        SELECT o.orderId, SUM(oi.subtotal) AS totalPrice
-        FROM Order o
-        JOIN Order_Item oi ON o.orderId = oi.orderId
-        GROUP BY o.orderId;
-    */
-
+    //defining some colors to be used to display the progress of delivery
     $colorStatusBar = "linear-gradient(90deg, rgba(29,204,29,1) 0%, rgba(255,177,0,1) 77%)";
     $colorStatusDefault = "rgba(221, 214, 214, 0.514)";
     $colorStatusDone = "rgb(29, 204, 29)";
@@ -35,6 +21,22 @@ orders o JOIN order_items oi ON (o.orderId = oi.orderId) GROUP BY o.orderId;")->
         [$colorStatusDone,$colorStatusDone,$colorStatusDone,$colorStatusDone,$colorStatusDone]
     ];
     $index = 0;
+
+    //setting the filter
+    //by default, show all status type and from newest order date to oldest
+    $showOnlyStatus = $_GET["stat"] ?? "";
+    $sort = $_GET["sort"] ?? "desc"; 
+    
+    //fetching data
+    try{
+        $orders = $_db->query("Select o.*, sum(oi.subtotal) as total_price from
+orders o JOIN order_items oi ON (o.orderId = oi.orderId) GROUP BY o.orderId ORDER BY o.orderDate $sort;")->fetchAll();
+    $order_items = $_db->query("Select oi.*, p.productName FROM order_items oi JOIN product p ON (oi.productId = p.productID);")->fetchAll();
+    }
+    catch (PDOException $e){
+        die(":( Couldn't Find What You're Looking For");
+    }
+
 ?>
 
 
@@ -51,18 +53,32 @@ orders o JOIN order_items oi ON (o.orderId = oi.orderId) GROUP BY o.orderId;")->
 
     <?php foreach($orders as $o): ?>
 
-        <?php 
-            if($o->status === "Pending")
+        <?php
+            if($o->status === "Pending"){
+                //if status parameter is set and if the parameter is not pending then skip
+                if(!empty($showOnlyStatus) and strtolower($showOnlyStatus) !== "pending")
+                    continue;
                 $index = 0;
-            else if ($o->status === "In Transit")
+            }
+                
+            else if ($o->status === "In Transit"){
+                //if status parameter is set and if the parameter is not intransit then skip
+                if(!empty($showOnlyStatus) and strtolower($showOnlyStatus)!== "intransit")
+                    continue;
                 $index = 1;
-            else $index = 2;
+            }
+            else {
+                //if status parameter is set and if the parameter is not delivered then skip
+                if(!empty($showOnlyStatus) and strtolower($showOnlyStatus)!== "delivered")
+                    continue;
+                $index = 2;
+            }
 
         ?>
     <div class="order">
         <span class="orderID">#<?=$o->orderId?></span>
         <span class="orderAddress"><?=$o->orderAddress?></span>
-        <span class="orderDate"><?=$o->orderDate?></span>
+        <span class="orderDate"><?=substr($o->orderDate,8,2) . '/' . substr($o->orderDate,5,2) . '/' . substr($o->orderDate,0,4) ?></span>
         <span class="orderStatus"><?=$o->status?></span>
         <button class="dropdown">
         <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z"/></svg>
