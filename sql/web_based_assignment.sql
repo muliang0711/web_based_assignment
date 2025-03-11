@@ -34,9 +34,21 @@ CREATE TABLE `orders` (
   `orderId` int(5) NOT NULL,
   `userId` int(11) NOT NULL,
   `orderDate` date NOT NULL,
-  `total_price` decimal(10,2) NOT NULL,
-  `status` varchar(10) NOT NULL
+  `status` varchar(10) NOT NULL,
+  `orderAddress` varchar(150) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`orderId`, `userId`, `orderDate`, `status`, `orderAddress`) VALUES
+(12345, 1, '2024-10-25', 'Pending', '2 Jalan Port Dickson Langkawi, 72010, Kuala Lumpur'),
+(12346, 2, '2024-11-02', 'In Transit', '88, Lorong Bukit Jaya, 43000, Selangor'),
+(12347, 1, '2024-09-15', 'Delivered', '16, Jalan Taman Utama, 80000, Johor Bahru'),
+(12348, 2, '2024-08-30', 'Pending', '7, Jalan Ampang, 50450, Kuala Lumpur'),
+(12349, 1, '2024-12-10', 'In Transit', '22, Jalan Sutera Indah, 81100, Johor'),
+(12350, 2, '2024-07-20', 'Delivered', '5, Lorong Melati, 10460, Penang');
 
 -- --------------------------------------------------------
 
@@ -49,8 +61,27 @@ CREATE TABLE `order_items` (
   `orderId` int(5) NOT NULL,
   `productId` varchar(5) NOT NULL,
   `quantity` int(10) DEFAULT NULL,
-  `subtotal` decimal(10,2) DEFAULT NULL
+  `subtotal` decimal(10,2) DEFAULT NULL,
+  `gripSize` char(2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `order_items`
+--
+
+INSERT INTO `order_items` (`orderId`, `productId`, `quantity`, `subtotal`, `gripSize`) VALUES
+(12345, 'R0001', 1, 15.99, 'G5'),
+(12345, 'R0002', 1, 9.99, 'G4'),
+(12346, 'R0001', 1, 25.00, 'G5'),
+(12346, 'R0002', 1, 15.99, 'G4'),
+(12346, 'R0003', 2, 31.98, 'G6'),
+(12347, 'R0003', 1, 16.50, 'G6'),
+(12348, 'R0001', 2, 32.00, 'G5'),
+(12348, 'R0002', 1, 10.00, 'G4'),
+(12348, 'R0003', 1, 15.99, 'G6'),
+(12349, 'R0002', 1, 12.99, 'G4'),
+(12349, 'R0003', 2, 19.98, 'G6'),
+(12350, 'R0001', 1, 13.99, 'G5');
 
 -- --------------------------------------------------------
 
