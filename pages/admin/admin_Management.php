@@ -11,7 +11,7 @@ include '../../admin_head.php';
 $arr = $_db->query('SELECT * FROM admin')->fetchAll();
 ?>
 <div class="searchBar">
-<button class="add">Add Admin</button>
+<a href="/pages/admin/adminAdd.php" class="add">Add Admin</a>
 </div>
 
 <div class="admin_container">

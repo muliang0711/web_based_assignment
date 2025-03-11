@@ -101,6 +101,38 @@ function input_password($key, $attr = '') {
     echo "<input type='password' id='$key' name='$key' value='$value' $attr>";
 }
 
+// Generate <input type='radio'> list
+function input_radios($key, $items, $br = false) {
+    $value = encode($GLOBALS[$key] ?? '');
+    echo '<div>';
+    foreach ($items as $id => $text) {
+        $state = $id == $value ? 'checked' : '';
+        echo "<label><input type='radio' id='{$key}_$id' name='$key' value='$id' $state>$text</label>";
+        if ($br) {
+            echo '<br>';
+        }
+    }
+    echo '</div>';
+}
+
+// Generate <select>
+function input_select($key, $items, $default = '- Select One -', $attr = '') {
+    $value = encode($GLOBALS[$key] ?? '');
+    echo "<select id='$key' name='$key' $attr>";
+    if ($default !== null) {
+        echo "<option value=''>$default</option>";
+    }
+    foreach ($items as $id => $text) {
+        $state = $id == $value ? 'selected' : '';
+        echo "<option value='$id' $state>$text</option>";
+    }
+    echo '</select>';
+}
+
+
+
+
+
 
 // ============================================================================
 // Error handling
