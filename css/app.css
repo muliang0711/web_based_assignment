@@ -9,6 +9,40 @@
     --brand-lightblue: hsl(206, 100%, 89%);
 }
 
+/* Styling for dropdown-able components */
+.dropdown-label {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    cursor: pointer;
+}
+.dropdown-label::after {
+    content: "";
+    mask-image: url("data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"20\" viewBox=\"0 0 20 20\" fill=\"%23000\"><path d=\"m17.5 4.75-7.5 7.5-7.5-7.5L1 6.25l9 9 9-9z\"/></svg>");
+    mask-position: center;
+    mask-repeat: no-repeat;
+    mask-size: 0.75rem;
+    background-color: white;
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    margin-left: 7px;
+    transition: all 0.2s;
+}
+.dropdown-label.active::after {
+    transform: rotate(180deg);
+    transform-origin: center;
+}
+.dropdown-content {
+    opacity: 0;
+    transform: translateY(-20%);
+    transition: all 0.2s;
+}
+.dropdown-content.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
 body {
     margin: 0;
     min-height: 100vh;
@@ -47,18 +81,19 @@ header {
 
 header nav {
     display: flex;
+    align-items: center;
     gap: 30px;
 }
 
-header nav a {
-    display: inline-block; /* Allows vertical paddings to work */
+header nav > a {
+    /*display: inline-block;  Allows vertical paddings to work */
     padding: 30px 0px;
     position: relative;
     opacity: 0.9;
     /* transition: background-color 0.2s ease; */
 }
 /* The horizontal bar that appears on the bottom of an <a> when it is hovered over */
-header nav a::after {
+header nav > a::after {
     content: "";
     position: absolute;
     left: 50%;
@@ -69,12 +104,80 @@ header nav a::after {
     background-color: var(--brand-lightblue);
     transition: all 0.4s;
 }
-header nav a:hover {
+header nav > a:hover {
     opacity: 1;
     /* background-color: hsla(203, 100%, 91%, 0.289); */
 }
-header nav a:hover::after {
+header nav > a:hover::after {
     width: 100%;
+}
+
+
+/* Styling for account button and dropdown. Only visible when signed in */
+
+.account {
+    position: relative;
+    padding: 5px;
+}
+
+.account-icon {
+    width: 40px;
+    height: 40px;
+}
+
+.account .dropdown-content {
+    position: absolute;
+    right: 0;  
+    top: 160%;
+    background-color: black;
+    border-radius: 5px;
+    /* background-color: #555; */
+    width: 300px;
+    padding: 10px;
+    display: block;
+}
+
+.account .dropdown-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.account .profile-pic {
+    width: 60px;
+    height: 60px;
+}
+.account .username {
+    font-size: 18px;
+    font-weight: bold;
+    min-width: 0; /* Overrides min-width: auto, a default behavior for a flex-item with flex-direction: row. By default, flex items cannot be smaller than its content size along the main axis. This means the following default properties are applied -- min-width: auto for row-direction flex items, and min-height: auto for column-direction flex items. */
+    overflow-wrap: break-word; /* For very long words, e.g. cookiesaresodeliciousomg, it will be broken at any point according to the defined width, e.g. cookiesa <br> resodeli <br> ciousomg. By default, overflow-wrap: normal, which means very long words will overflow even if it's longer than the containing element's width. This is not related to the normal breaking of words, as that is handled by the `word-wrap` property. */
+}
+
+.account .dropdown-main {
+    padding: 0 5px;
+}
+
+.account .dropdown-item {
+    padding: 4px 5px;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    /* Override default <button> styles */
+    /* background-color: none;
+    border: none;
+    color: inherit; */
+}
+.account .dropdown-item:hover {
+    background-color: rgb(255,255,255,0.2);
+}
+.account .dropdown-item span img {
+    width: 20px;
+    height: 20px;
+    vertical-align: text-bottom;
 }
 
 /* Special style for signup button */
@@ -98,10 +201,14 @@ header nav a.signup:hover {
     100% { background-position: 0% 50%; }
 }
 
+/* Main */
+
 main {
     flex-grow: 1;
     background-color: #eee;
 }
+
+/* Footer */
 
 footer {
     padding-top: 30px;
@@ -155,3 +262,4 @@ footer {
 .main-section {
     padding: 50px 0;
 }
+

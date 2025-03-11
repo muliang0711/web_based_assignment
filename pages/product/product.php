@@ -27,10 +27,12 @@ function link_stylesheet($stylesheetArray) {
 
 <div class="container">
   <body>
+    <!-- TopSide Menu -->
     <div class="menu">
       <nav>
         <div class="top-sideMenu">
         <ul>
+           <!-- store logo -->
           <div class="logo">
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Logo-Yonex.svg/2560px-Logo-Yonex.svg.png" width="125px">
             </div>
@@ -40,21 +42,18 @@ function link_stylesheet($stylesheetArray) {
       </div>
       </nav>
     </div>
+     <!-- nanoflare 800pro image -->
     <div class="image-box">
       <img src="https://www.yonex.com/media/scandiweb/slider/y/o/yonex.com_top_english_2880x1120.png" alt="Nanoflare 700 RISING">
   </div>
 <hr>
     <div class="row">
+       <!-- Slogan -->
       <div class="col-2"><div id="blueheading"><h1 style="font-size:300%;">Viktor Axelsen</h1></div> <h1 style="font-size:300%;">Built to win.</h1>
       <p>Bring the world together by deepening people's connection to sport and to each other.</p>
       </div>
     <div class="col-2"> 
     </div>
     <div class="col-2"><img src="https://ih1.redbubble.net/image.1156440417.8811/flat,750x,075,f-pad,750x1000,f8f8f8.jpg" ></div>
-   </div>
-
-   
-   <div class="product">
-
    </div>
   </body>

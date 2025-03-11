@@ -168,6 +168,18 @@ function exists_in_db($value, $table, $field) {
 // Authentication functions
 // ============================================================================
 
+// Log in with userID
+function login($userID) {
+    // Create a session variable to store user ID
+    $_SESSION['userID'] = $userID;
+}
+
+// Log out 
+function logout() {
+    // Destroy the `userID` session variable
+    unset($_SESSION['userID']);
+}
+
 // Is logged in?
 function is_logged_in() {
     return isset($_SESSION['userID']);
@@ -182,5 +194,15 @@ function get_user_obj() {
     global $_db;
     $u = $_db->query("SELECT * FROM user WHERE userID = {$_SESSION['userID']}")->fetch();
     return $u;
+}
+
+// global user object
+$_user;
+
+// If is logged in, fetch user object to a global variable
+if (is_logged_in()) {
+    global $_db;
+    global $_user;
+    $_user = $_db->query("SELECT * FROM user WHERE userID = {$_SESSION['userID']}")->fetch();
 }
 

@@ -2,7 +2,6 @@
 require '_base.php';
 
 $title = 'Home';
-
 include '_head.php';
 ?>
 
