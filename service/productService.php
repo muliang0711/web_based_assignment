@@ -31,7 +31,11 @@ class productService{
     public function addProduct($productInformation) {
         // Initialize an empty error array
         $errors = [];
-    
+        // validate product id 
+        if (empty($productInformation['productId'])) {
+            $errors[] = "ProductId cannot be null!";
+            // need to add on validation number cannot more than 5
+        }
         // Validate product name
         if (empty($productInformation['productName'])) {
             $errors[] = "Product name cannot be null!";
@@ -40,6 +44,7 @@ class productService{
         // Validate series ID
         if (empty($productInformation['seriesId'])) {
             $errors[] = "Series ID cannot be null!";
+        // need to add on validation number cannot more than 3
         }
     
         // Validate price
@@ -55,7 +60,11 @@ class productService{
         } elseif (!is_numeric($productInformation['stock'])) {
             $errors[] = "Stock must be a number!";
         }
-    
+        //need to add on one : seriesName 
+        if (empty($productInformation['seriesName'])) {
+            $errors[] = "SeriesName cannot be null!";
+        // need to add on validation number cannot more than 15 
+        }
         // If there are validation errors, return them
         if (!empty($errors)) {
             return $errors;

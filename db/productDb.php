@@ -19,18 +19,18 @@ class productDb{
         WHERE ps.quantity > 0
         GROUP BY p.productID, p.productName, p.price, p.seriesID";
 
-    $stmt = $this->pdo->prepare($sql);
-    $stmt->execute();
-    return $stmt->fetchAll();
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll();
 
     }
 
-    public function filterProduct($filters) {
-    // 2. get one product :
-    // logic :
-    // 1. we set a base sql sentences(it return everything) 
-    // 2. when detetect specific filter value turn it we appned to the base sql 
-        // 2.1  since the variable is not fixed we use array:params to save the value 
+    public function filterProduct($filters){
+        // 2. get one product :
+        // logic :
+        // 1. we set a base sql sentences(it return everything) 
+        // 2. when detetect specific filter value turn it we appned to the base sql 
+            // 2.1  since the variable is not fixed we use array:params to save the value 
             $sql = "SELECT * FROM product WHERE 1=1"; 
             $params = [];
     
@@ -53,7 +53,7 @@ class productDb{
     
             $stmt = $this->pdo->prepare($sql);
             $stmt->execute($params);
-            return $stmt->fetchAll(PDO::FETCH_OBJ);
+            return $stmt->fetchAll();
     }
     
     public function addProduct($productInformation){
@@ -65,21 +65,79 @@ class productDb{
         // with this it allow us track each insertion status if every insertion done than If all operations succeed, the transaction is committed (saved)
         // if one insertion is failed it rolled back 
         
-        
-        // 1. fetch data : 
-
+        try{
+            // 1 start Transaction : 
+            $this->pdo->beginTransaction();
+            // 1.1 fetch data : 
+            // productId 
+            // sizeID 
+            $productName = $productInformation['prductName'];
+            $seriesID = $productInformation['seriesId'];
+            $seriesName = $productInformation['seriesName'];
+            $price = $productInformation['price'];
+            $quantity = $productInformation['stock'];    
         // 2. insert data into table series : 
+            // 2.1 validate does the series already existing or not 
 
-        // 3. insert data into table product size:
+            // 2.1.1  write a sql to check with select limit 1 : 
+            $checkSql = "SELECT seriesName FROM series WHERE seriesName = ? AND seriesID = ? LIMIT 1";
+            $check_series_stmt = $this->pdo->prepare($checkSql);
+            $check_series_stmt->execute($seriesName , $seriesID);
+            // already exist add one , not yet craete one ; 
+            if($check_series_stmt->fetch()){
+                echo "Data exists. Proceeding with product insertion.";
+                // pass to next program
+                // this table is to make a real and one entity 
+                if (insertProduct($productID, $productName, $price, $seriesID)) {
+                    echo "Product successfully inserted.";
+                    insertProductSize($productID, $sizeID, $quantity);
+                } else {
+                    throw new Exception("Error inserting product.");
+                }
+            }else{
+                echo "data does not exist";
+                // 2.2 generate the sql and insert 
+                $seriesSql = "INSERT INTO series (seriesID , seriesName) VALUES (? , ?)";
+                $insert_series_stmt = $this->pdo->prepare($seriesSql);
+                $insert_series_stmt->execute([$seriesID,$seriesName]);
+                echo "Sucess insert record into series" ; 
+                // done and call out next program : 
+                if (insertProduct($productID, $productName, $price, $seriesID)) {
+                    echo "Product successfully inserted.";
+                    // If insert is successful, call insertProductSize function
+                    insertProductSize($productID, $sizeID, $quantity);
+                } else {
+                    throw new Exception("Error inserting product.");
+                }
+            }
+
+        // 3. insert data into table product : 
+        function insertProduct($productID , $productName , $price , $seriesID){
+            // 3.1 sql to insert the product 
+            try {
+                // Prepare the SQL statement
+                $sql = "INSERT INTO product (productID, productName, price, seriesID) VALUES (?, ?, ?, ?)";
+                $stmt = $this->pdo->prepare($sql);
+                return true ; 
+            } catch (Exception $e) {
+                // Log or display the error message
+                error_log("Error inserting product: " . $e->getMessage());
         
-        // 4. insert data intn table product : 
+                return false; // Return false on failure
+            }
+        }
+        // this table is to add up the entity (calculate the stock)
+        // 4. insert data into table product size:
+        // 4.1 we just need to this fucntion 
+        function insertProductSize($productID , $sizeID , $quantity){   
 
-
-
+        }
         
+
+        }
     }
 }
 
 // future update : using try catch to handle the error ; show user with understanding error not directly system error 
-
+// future uipdate : lets program insert into series table first after that we make execute the funciton reduce cost 
 ?>
