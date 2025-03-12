@@ -228,6 +228,17 @@ function get_user_obj() {
     return $u;
 }
 
+//password hashing
+function pwHash($pw){
+    return password_hash($pw, PASSWORD_DEFAULT);
+}
+
+
+//password matching
+function pwMatch($pw,$hashedpw){
+    return password_verify($pw,$hashedpw);
+}
+
 // global user object
 $_user;
 
