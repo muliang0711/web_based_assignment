@@ -104,7 +104,7 @@ function input_password($key, $attr = '') {
 // Generate <input type='radio'> list
 function input_radios($key, $items, $br = false) {
     $value = encode($GLOBALS[$key] ?? '');
-    echo '<div>';
+    echo '<span>';
     foreach ($items as $id => $text) {
         $state = $id == $value ? 'checked' : '';
         echo "<label><input type='radio' id='{$key}_$id' name='$key' value='$id' $state>$text</label>";
@@ -112,7 +112,7 @@ function input_radios($key, $items, $br = false) {
             echo '<br>';
         }
     }
-    echo '</div>';
+    echo '</span>';
 }
 
 // Generate <select>

@@ -22,7 +22,7 @@
         <a href="/pages/admin/admin_home.php" class="button">Home</a>
         <a href="" class="button">Order</a>
         <a class="button" href="/pages/admin/admin_product.php">Product</a>
-        <a class="button" herf="/pages/admin/view_customer.php">Customer</a>
+        <a class="button" href="/pages/admin/view_customer.php">Customer</a>
         <a class="button">Discount/Voucher</a>
         <a class="button">Analysis</a>
         <!-- ?php if (is_logged_in()): ?> -->

@@ -1,75 +1,137 @@
 <?php
 require '../../_base.php';
 
-$title='View Customer';
-$stylesheetArray = ['/css/admin_customer.css'];   // 注意：这边只放特定于此页面的 .css file(s)。所有 admin 页面都会用到的 .css files 应放在 /css/admin.css
-$scriptArray = ['/js/app.js'];       // 注意：这边只放特定于此页面的 .js file(s)。所有 admin 页面都会用到的 .js files 应放在 /js/admin.js
+$title = 'View Customer';
+$stylesheetArray = ['/css/admin_customer.css','../order/order.css'];
+$scriptArray = ['/js/app.js', '../order/order.js'];
 
 include '../../admin_head.php';
 ?>
 
 <?php
-$userID = req('userID');//得到id
+// 获取 userID
+$userId = req('userID');
+if (!$userId) {
+    die("Error: Missing userID");
+}
 
-$stm = $_db->prepare('SELECT * FROM user WHERE userID = ?');//!!!传来这里，来获得资料
-$stm->execute([$userID]);
-$s = $stm->fetch();
+// 处理排序方式
+$sort = isset($_GET['sort']) ? $_GET['sort'] : 'ASC'; // 默认为升序，可改为 DESC
 
-// if (!$s) {
-//     redirect('/');
-// }
+// 获取用户信息
+$stm = $_db->prepare('SELECT * FROM user WHERE userID = ?');
+$stm->execute([$userId]);
+$s = $stm->fetch(PDO::FETCH_OBJ);
 
-$_title = 'Customer Detail';
+// 获取订单信息
+$ordersStmt = $_db->prepare("SELECT o.*, SUM(oi.subtotal) AS total_price 
+FROM orders o 
+JOIN order_items oi ON (o.orderId = oi.orderId) 
+WHERE o.userId = ? 
+GROUP BY o.orderId 
+ORDER BY o.orderDate $sort;");
+$ordersStmt->execute([$userId]);
+$orders = $ordersStmt->fetchAll(PDO::FETCH_OBJ);
+
+// 获取订单商品信息
+$order_itemsStmt = $_db->prepare("SELECT * FROM order_items WHERE orderId IN (SELECT orderId FROM orders WHERE userId = ?)");
+$order_itemsStmt->execute([$userId]);
+$order_items = $order_itemsStmt->fetchAll(PDO::FETCH_OBJ);
+
+// 防止 foreach() 报错
+if (!isset($order_items) || !is_array($order_items)) {
+    $order_items = [];
+}
 ?>
+<button data-get="/" class="searchBar">Back</button>
 
-<table class="">
-    <tr>
-        <th>Picture</th>
-        <td><?= $s->profilePic ?></td>
-    </tr>
+<div class="whole_container">
+    <table class="customer_container customer_detail">
+        <tr>
+            <th>Picture</th>
+            <td><?= htmlspecialchars($s->profilePic) ?></td>
+        </tr>
+        <tr>
+            <th>User Id</th>
+            <td><?= htmlspecialchars($s->userID) ?></td>
+        </tr>
+        <tr>
+            <th>Customer Name</th>
+            <td><?= htmlspecialchars($s->username) ?></td>
+        </tr>
+        <tr>
+            <th>Address</th>
+            <td><?= htmlspecialchars($s->address) ?></td>
+        </tr>
+        <tr>
+            <th>Birthdate</th>
+            <td><?= htmlspecialchars($s->birthdate) ?></td>
+        </tr>
+        <tr>
+            <th>Email</th>
+            <td><?= htmlspecialchars($s->email) ?></td>
+        </tr>
+        <tr>
+            <th>Contact Number</th>
+            <td><?= htmlspecialchars($s->phoneNo) ?></td>
+        </tr>
+        <tr>
+            <th>Gender</th>
+            <td><?= htmlspecialchars($s->gender) ?></td>
+        </tr>
+        <tr>
+            <th>Member Status</th>
+            <td><?= htmlspecialchars($s->memberStatus) ?></td>
+        </tr>
+    </table>
 
-    <tr>
-        <th>User Id</th>
-        <td><?= $s->userID ?></td>
-    </tr>
-    <tr>
-        <th>Customer Name</th>
-        <td><?= $s->username ?></td>
-    </tr>
-    <tr>
-        <th>Address</th>
-        <td><?= $s->address ?></td>
-    </tr>
-    <tr>
-        <th>Birthdate</th>
-        <td><?= $s->birthdate ?></td>
-    </tr>
-    <tr>
-        <th>Email</th>
-        <td><?= $s->email ?></td>
-    </tr>
-    <tr>
-        <th>Contact Number</th>
-        <td><?= $s->phoneNo ?></td>
-    </tr>
-    <tr>
-        <th>Gender</th>
-        <td><?= $s->gender ?></td>
-    </tr>
-    <tr>
-        <th>Member Status</th>
-        <td><?= $s->memberStatus ?></td>
-    </tr>
+    <br>
+
+    <div>
+        <h1>Purchase history</h1>
+        <div class="order-header">
+            <span>Order ID</span>
+            <span>Address</span>
+            <span>Ordered Date</span>
+            <span>Status</span>
+            <span>Total</span>
+        </div>
+
+        <div>
+            <?php foreach ($orders as $o): ?>
+                <div class="order">
+                    <span class="orderID"><?= htmlspecialchars($o->orderId) ?></span>
+                    <span class="orderAddress"><?= htmlspecialchars($o->orderAddress) ?></span>
+                    <span class="orderDate"><?= date("d/m/Y", strtotime($o->orderDate)) ?></span>
+                    <span class="orderStatus"><?= htmlspecialchars($o->status) ?></span>
+                    <button class="dropdown">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
+                            <path d="m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="orderDetailed">
+                    <?php foreach ($order_items as $oi): ?>
+                        <?php if ($o->orderId === $oi->orderId): ?>
+                            <div class='items-container'>
+                                <span class="item-name"><?= htmlspecialchars($oi->productName) ?></span>
+                                <span class="item-series"><?= htmlspecialchars($oi->gripSize) ?></span>
+                                <span class="item-quantity">x <?= htmlspecialchars($oi->quantity) ?></span>
+                                <span class="item-subtotal">RM <?= htmlspecialchars($oi->subtotal) ?></span>
+                            </div>
+                        <?php endif ?>
+                    <?php endforeach ?>
+                <div class="order-total-container">
+                    <div class="total-text">Total: RM <?= htmlspecialchars($o->total_price) ?></div>
+                </div>                    
+                </div>
 
 
-
-
-</table>
-
-<br>
-
-<button data-get="/">Back</button>
-
+            <?php endforeach; ?>
+        </div>
+    </div>
+ </div>
 <?php
 require '../../admin_foot.php';
 ?>

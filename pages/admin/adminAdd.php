@@ -89,8 +89,8 @@ if(is_post()){
     if ($level == '') {
         $_errors['level'] = 'Required';
     }
-    var_dump($_errors);
-    var_dump($_POST);
+    // var_dump($_errors);
+    // var_dump($_POST);
 
     // If no error, insert data into db and reload page
     if (!$_errors) {
@@ -120,13 +120,14 @@ if(is_post()){
     <br><br>
     <label>Level</label>
     <?= input_radios('level', $_level) ?>
+    <!-- <span>Hello</span> -->
     <?= error('level') ?>
 
     <!--  htmlspecialchars to prevent attack -->
-    <p>User ID: <?php echo htmlspecialchars($id); ?></p>   
-    <?= error('id') ?>
-    <p>Password: <?php echo htmlspecialchars($password); ?></p>
-    <?= error('password') ?>
+    <p>User ID: <?php echo htmlspecialchars($id); ?><?= error('id') ?></p>   
+    
+    <p>Password: <?php echo htmlspecialchars($password); ?><?= error('password') ?></p>
+    
     <br>
     <form method="POST">
         <button class="subbutton" type="submit" name="generate">Generate ID and Password</button>
