@@ -20,14 +20,14 @@
     <div class="side-container">
         <p class="display_topleft adminHeader"><b><i>Admin</i></b></p>
         <a href="/pages/admin/admin_home.php" class="button">Home</a>
-        <a href="/pages/product/productlist.php" class="button">Order</a>
+        <a href="" class="button">Order</a>
         <a class="button" href="/pages/admin/admin_product.php">Product</a>
-        <a class="button">Customer</a>
+        <a class="button" herf="/pages/admin/view_customer.php">Customer</a>
         <a class="button">Discount/Voucher</a>
         <a class="button">Analysis</a>
-        <!-- <?php if (is_logged_in()): ?> -->
+        <!-- ?php if (is_logged_in()): ?> -->
         <a href="/pages/admin/admin_Management.php" class="button">Admin Management</a>
-        <!-- <?php endif ?> -->
+        <!-- ?php endif ?> -->
         <a class="display_bottomleft">
             <img src="/assets/img/signout.jpg" width="20px">
         </a>

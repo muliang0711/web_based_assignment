@@ -14,21 +14,57 @@
     background-color: rgb(209, 227, 252);
     width: 80vw;
 }
+.content:hover{
+    background-color:hsl(206 100% 25%);
+    color:white;
 
+}
  .searchBar{
 height: 30px;
 /* width: 100%; */
- margin:5px 5px;
+ margin:25px 5px;
  text-align: end;
     } 
 
 .add{
     width: 20%;
     height:35px;
-    background-color:whitesmoke;
+    margin: 5px 5px;
+    padding: 10px 15px;
+    background-color:aliceblue;
     border: none;
     text-align: center;
+    text-decoration: none;
+    color:black;
+    border-radius:20px;
 }
 .add:hover{
     transform: scale(1.10);
+    background-color:hsl(206 100% 25%);
+    color:white;
+    
+}
+
+.add_container{
+margin:50px 150px;
+font-size: 20px;
+text-align: center;
+}
+
+.error{
+color:red;
+font-size:15px;
+}
+
+.subbutton{
+    background-color: aliceblue;
+    padding:10px 20px;
+    border: none;
+        border-radius:20px;
+}
+
+.subbutton:hover{
+    background-color: hsl(206 100% 25%);
+    color:white;
+
 }

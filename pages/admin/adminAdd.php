@@ -21,7 +21,7 @@ function random_password() {
 
     return $randomPassword;
 }
-//echo random_password();
+
 function random_id() {
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     $randomId = '';
@@ -54,12 +54,10 @@ if(is_post()){
     $level=req('level');
 
     // Validate id
-    if ($id == '') {
+    if ($id == ''||$id=='click to generate') {
         $_errors['id'] = 'Required';
     }
-    else if (!is_unique($id, 'admin', 'id')) {
-        $_errors['id'] = 'Duplicated';
-    }
+
     // NOTE BY COOKIE: no need for this else block; it does the same thing as the else if block.
     // else { 
 
@@ -80,10 +78,12 @@ if(is_post()){
         $_errors['position'] = 'Maximum length 20';
     }
 
-    //   // Validate password
-    //   if ($id == '') {
-    //     $_err['id'] = 'Required';
-    // }
+      // Validate password
+      if ($password == ''||$password=='click to generate') {
+        $_errors['password'] = 'Required';
+    }
+
+
  
     // Validate level
     if ($level == '') {
@@ -105,14 +105,14 @@ if(is_post()){
         unset($_SESSION['id']);
         unset($_SESSION['password']);
 
-        temp('info', 'Record inserted');
-        redirect();
+        temp('info', 'User added successfully');
+        redirect("admin_Management.php");
     }
 }
 
 ?>
 
-<form method="post" class="insert_form">
+<form method="post" class="insert_form add_container">
     <label for="position">Position</label>
     <?= input_text('position', 'maxlength="20"') ?>
     <?=error('position') ?>
@@ -124,10 +124,13 @@ if(is_post()){
 
     <!--  htmlspecialchars to prevent attack -->
     <p>User ID: <?php echo htmlspecialchars($id); ?></p>   
+    <?= error('id') ?>
     <p>Password: <?php echo htmlspecialchars($password); ?></p>
+    <?= error('password') ?>
+    <br>
     <form method="POST">
-        <button type="submit" name="generate">Generate ID and Password</button>
-        <button>Submit</button>            
+        <button class="subbutton" type="submit" name="generate">Generate ID and Password</button>
+        <button class="subbutton" data-confirm="Are you sure you want to add a new admin?">Submit</button>            
     </form>
 
     <section>
@@ -135,8 +138,10 @@ if(is_post()){
     </section>
 </form>
 
+<!-- <div class="back">
+<a href="admin_Mnagement.php">Back</a>
 
-
+</div> -->
 <?php
 require '../../admin_foot.php';
 ?>
