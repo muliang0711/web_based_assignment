@@ -6,8 +6,6 @@
     include "../../_head.php";
 
     //getting session info;
-    //remove this later once log in is done and set userID at session
-    $_SESSION['userID'] = '2';
     $userId = $_SESSION['userID'] ?? '';
     
     //if userId not logged in then redirect to homepage
