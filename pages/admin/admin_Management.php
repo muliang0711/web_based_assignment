@@ -31,6 +31,9 @@ $arr = $_db->query('SELECT * FROM admin')->fetchAll();
 </table>
 
 
+
+
+
 </table>
 </div>
 

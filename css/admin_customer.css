@@ -1,0 +1,30 @@
+.customer_container {
+    display: flex;
+
+}
+.customer_table{
+    margin:20px 20px;
+    height: 15vh;
+    /* width: 80vw; */
+    padding: 10px;
+   
+    text-align:center;
+}
+.content{
+    
+    width: 80vw;
+}
+.row{
+background-color: rgb(209, 227, 252);
+}
+.row:hover{
+    background-color:hsl(206 100% 25%);
+    color:white;
+
+}
+ .searchBar{
+height: 30px;
+/* width: 100%; */
+ margin:25px 5px;
+ text-align: end;
+    } 
