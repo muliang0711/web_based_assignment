@@ -28,7 +28,7 @@ $arr = $_db->query('SELECT * FROM user')->fetchAll();
         <td class="content"><?= $c->username ?></td>
         <td class="content"><?= $c->phoneNo ?></td>
         <td class="content"><?= $c->memberStatus ?></td>
-        <td><button  data-get="customer_detail.php?id=<?=$c->userID?>">Detail</button></td>
+        <td><button  data-get="customer_detail.php?userID=<?=$c->userID?>">Detail</button></td>
         
     </tr>
     <?php endforeach ?>
