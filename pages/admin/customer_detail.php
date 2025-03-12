@@ -2,7 +2,7 @@
 require '../../_base.php';
 
 $title = 'View Customer';
-$stylesheetArray = ['/css/admin_customer.css','../order/order.css'];
+$stylesheetArray = ['../order/order.css', '/css/admin_customer.css'];
 $scriptArray = ['/js/app.js', '../order/order.js'];
 
 include '../../admin_head.php';
@@ -34,9 +34,14 @@ $ordersStmt->execute([$userId]);
 $orders = $ordersStmt->fetchAll(PDO::FETCH_OBJ);
 
 // 获取订单商品信息
-$order_itemsStmt = $_db->prepare("SELECT * FROM order_items WHERE orderId IN (SELECT orderId FROM orders WHERE userId = ?)");
+$order_itemsStmt = $_db->prepare("SELECT oi.*, p.productName 
+FROM order_items oi 
+JOIN product p ON (oi.productId = p.productID) 
+JOIN orders o ON (oi.orderId = o.orderId)
+WHERE o.userId = ?");
 $order_itemsStmt->execute([$userId]);
 $order_items = $order_itemsStmt->fetchAll(PDO::FETCH_OBJ);
+
 
 // 防止 foreach() 报错
 if (!isset($order_items) || !is_array($order_items)) {
@@ -97,7 +102,7 @@ if (!isset($order_items) || !is_array($order_items)) {
             <span>Total</span>
         </div>
 
-        <div>
+        <div class="orders-container">
             <?php foreach ($orders as $o): ?>
                 <div class="order">
                     <span class="orderID"><?= htmlspecialchars($o->orderId) ?></span>
@@ -112,19 +117,24 @@ if (!isset($order_items) || !is_array($order_items)) {
                 </div>
 
                 <div class="orderDetailed">
-                    <?php foreach ($order_items as $oi): ?>
-                        <?php if ($o->orderId === $oi->orderId): ?>
-                            <div class='items-container'>
-                                <span class="item-name"><?= htmlspecialchars($oi->productName) ?></span>
-                                <span class="item-series"><?= htmlspecialchars($oi->gripSize) ?></span>
-                                <span class="item-quantity">x <?= htmlspecialchars($oi->quantity) ?></span>
-                                <span class="item-subtotal">RM <?= htmlspecialchars($oi->subtotal) ?></span>
-                            </div>
-                        <?php endif ?>
-                    <?php endforeach ?>
-                <div class="order-total-container">
-                    <div class="total-text">Total: RM <?= htmlspecialchars($o->total_price) ?></div>
-                </div>                    
+                    <div class="order-details-wrapper">
+                        <div class="order-items-container">
+                            <?php foreach ($order_items as $oi): ?>
+                                <?php if ($o->orderId === $oi->orderId): ?>
+                                    <div class='items-container'>
+                                        <span class="item-name"><?= htmlspecialchars($oi->productName) ?></span>
+                                        <span class="item-series"><?= htmlspecialchars($oi->gripSize) ?></span>
+                                        <span class="item-quantity">x <?= htmlspecialchars($oi->quantity) ?></span>
+                                        <span class="item-subtotal">RM <?= htmlspecialchars($oi->subtotal) ?></span>
+                                    </div>
+                                <?php endif ?>
+                            <?php endforeach ?>
+                        </div>
+                        
+                        <div class="order-total-container">
+                            <div class="total-text">Total: RM <?= htmlspecialchars($o->total_price) ?></div>
+                        </div>
+                    </div>                  
                 </div>
 
 

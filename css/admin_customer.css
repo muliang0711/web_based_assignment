@@ -21,31 +21,32 @@ background-color: rgb(209, 227, 252);
     color:white;
 
 }
- .searchBar{
-height: 30px;
-/* width: 100%; */
- margin:25px 5px;
- text-align: end;
-    } 
+.searchBar{
+    height: 30px;
+    /* width: 100%; */
+    margin:25px 5px;
+    text-align: end;
+} 
 
 .customer_detail{
-        margin:20px 20px;
-        height: 15vh;
-        /* width: 80vw; */
-        padding: 10px 10px;
-       margin-left: 20px;
-        text-align:left;
-        border-collapse: collapse;
- }
-
- td,th{
-
+    margin:20px 20px;
+    height: 15vh;
+    /* width: 80vw; */
     padding: 10px 10px;
+    margin-left: 20px;
+    text-align:left;
+    border-collapse: collapse;
+}
 
- }
+td,th{
+    padding: 10px 10px;
+}
 
- .whole_container{
+.whole_container {
     display:flex;
+} 
 
-
-  } 
+/* Styling for purchase history （overriding /pages/order/order.css) */
+.order, .orderDetailed {
+    background-color: #eee;
+}
