@@ -21,7 +21,7 @@ if (is_post()) {
 </head>
 <body>
     <header>
-        <a href="/" class="logo"><img alt="(Store logo)" /></a>
+        <a href="/" class="logo"><img src="/assets/img/logo.jpg" class="top-nav-store-logo" alt="(Store logo)" /></a>
         <nav>
             <a href="/pages/template/template.php">(dev only) Template page</a>
             <a href="/">Home</a>
@@ -30,6 +30,10 @@ if (is_post()) {
 
             <?php if (is_logged_in()): ?>
 
+            <div class="cart-btn">
+                <img src="/assets/img/icon-cart.png" alt="Cart" title="Cart" />
+            </div>
+            
             <div class="account">
                 <div class="dropdown-label">
                     <img class="account-icon" src="/assets/img/profile-default-icon-dark.svg" alt="Account" title="Account"/>
@@ -49,6 +53,14 @@ if (is_post()) {
                             <div>Log out</div>
                         </a>
                     </div>
+                </div>
+            </div>
+
+            <div class="cart-popup">
+                <div class="content">
+                    <span class="close-popup">&times;</span>
+                    <h2>Shopping Cart</h2>
+                    <p>Your cart is empty.</p>
                 </div>
             </div>
 
