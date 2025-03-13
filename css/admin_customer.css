@@ -1,0 +1,107 @@
+.customer_container {
+    display: flex;
+
+}
+.customer_table{
+    margin:20px 20px;
+    height: 15vh;
+    /* width: 80vw; */
+    padding: 10px;
+    border-collapse: collapse;  
+    text-align:center;
+}
+.content{
+    width: 80vw;
+}
+.row{
+background-color: rgb(209, 227, 252);
+}
+.row:hover{
+    background-color:hsl(206 100% 25%);
+    color:white;
+
+}
+.searchBar{
+    height: 30px;
+    /* width: 100%; */
+    margin:25px 5px;
+    text-align: end;
+} 
+
+.customer_detail{
+    margin:20px 20px;
+    height: 15vh;
+    /* width: 80vw; */
+    padding: 10px 10px;
+    margin-left: 20px;
+    text-align:left;
+    border-collapse: collapse;
+}
+
+td,th{
+    padding: 10px 10px;
+}
+
+.whole_container {
+    display:flex;
+} 
+
+/* Styling for purchase history （overriding /pages/order/order.css) */
+.order, .orderDetailed {
+    background-color: #eee;
+}
+
+.purchase_container{
+    height: 80vh;
+    width: 50vw;
+    padding-right: 10px;
+padding-left: 20px;
+
+
+}
+
+.orders-container {
+    width: auto;
+}
+
+.order-header {
+    width: auto;
+}
+
+.order-header, .order {
+    grid-template-columns: 0.4fr 0.7fr 0.5fr 0.4fr 0.4fr 0.2fr;
+
+}
+
+.order {
+    height: auto;
+}
+
+.order span, .order-header span {
+    height: auto;
+}
+
+.order-details-wrapper.show {
+    height: 100px;
+    width: 100%;
+}
+.items-container {
+    height: auto;
+> .item-name {
+    overflow: initial;
+    grid-area: name;
+}}
+
+.order-items-container {
+    height: auto;}
+
+.orderDetailed.show {
+        height: auto;
+ }
+
+ .back{
+    text-align: right;
+    position: absolute;
+    right:0;
+
+ }

@@ -104,7 +104,7 @@ function input_password($key, $attr = '') {
 // Generate <input type='radio'> list
 function input_radios($key, $items, $br = false) {
     $value = encode($GLOBALS[$key] ?? '');
-    echo '<div>';
+    echo '<span>';
     foreach ($items as $id => $text) {
         $state = $id == $value ? 'checked' : '';
         echo "<label><input type='radio' id='{$key}_$id' name='$key' value='$id' $state>$text</label>";
@@ -112,7 +112,7 @@ function input_radios($key, $items, $br = false) {
             echo '<br>';
         }
     }
-    echo '</div>';
+    echo '</span>';
 }
 
 // Generate <select>
@@ -228,6 +228,17 @@ function get_user_obj() {
     return $u;
 }
 
+//password hashing
+function pwHash($pw){
+    return password_hash($pw, PASSWORD_DEFAULT);
+}
+
+
+//password matching
+function pwMatch($pw,$hashedpw){
+    return password_verify($pw,$hashedpw);
+}
+
 // global user object
 $_user;
 
@@ -238,3 +249,23 @@ if (is_logged_in()) {
     $_user = $_db->query("SELECT * FROM user WHERE userID = {$_SESSION['userID']}")->fetch();
 }
 
+
+// Generate <input type='search'>
+function html_search($key, $attr = '') {
+    $value = encode($GLOBALS[$key] ?? '');
+    echo "<input type='search' id='$key' name='$key' value='$value' $attr>";
+}
+
+// Generate <select>
+function html_select($key, $items, $default = '- Select One -', $attr = '') {
+    $value = encode($GLOBALS[$key] ?? '');
+    echo "<select id='$key' name='$key' $attr>";
+    if ($default !== null) {
+        echo "<option value=''>$default</option>";
+    }
+    foreach ($items as $id => $text) {
+        $state = $id == $value ? 'selected' : '';
+        echo "<option value='$id' $state>$text</option>";
+    }
+    echo '</select>';
+}

@@ -5,304 +5,14 @@
     $stylesheetArray  = ["order.css?"];
     include "../../_head.php";
 
+    //getting session info;
+    $userId = $_SESSION['userID'] ?? '';
     
-    $orders = [
-        (object) [
-            "orderId" => "12345",
-            "userId" => "12345678911",
-            "orderDate" => "2024-10-25",
-            "total_price" => "245.00",
-            "status" => "Pending",
-            "orderAddress" => "2 Jalan Port Dickson Langkawi, 72010, Kuala Lumpur"
-        ],
-        (object) [
-            "orderId" => "12346",
-            "userId" => "98765432122",
-            "orderDate" => "2024-11-02",
-            "total_price" => "99.99",
-            "status" => "In Transit",
-            "orderAddress" => "88, Lorong Bukit Jaya, 43000, Selangor"
-        ],
-        (object) [
-            "orderId" => "12347",
-            "userId" => "56789012333",
-            "orderDate" => "2024-09-15",
-            "total_price" => "399.50",
-            "status" => "Delivered",
-            "orderAddress" => "16, Jalan Taman Utama, 80000, Johor Bahru"
-        ],
-        (object) [
-            "orderId" => "12348",
-            "userId" => "19283746555",
-            "orderDate" => "2024-08-30",
-            "total_price" => "150.75",
-            "status" => "Pending",
-            "orderAddress" => "7, Jalan Ampang, 50450, Kuala Lumpur"
-        ],
-        (object) [
-            "orderId" => "12349",
-            "userId" => "67890123444",
-            "orderDate" => "2024-12-10",
-            "total_price" => "520.00",
-            "status" => "In Transit",
-            "orderAddress" => "22, Jalan Sutera Indah, 81100, Johor"
-        ],
-        (object) [
-            "orderId" => "12350",
-            "userId" => "11223344556",
-            "orderDate" => "2024-07-20",
-            "total_price" => "75.99",
-            "status" => "Delivered",
-            "orderAddress" => "5, Lorong Melati, 10460, Penang"
-        ],
-        (object) [
-            "orderId" => "12351",
-            "userId" => "99887766554",
-            "orderDate" => "2024-06-15",
-            "total_price" => "199.90",
-            "status" => "Pending",
-            "orderAddress" => "33, Jalan SS2, 47300, Petaling Jaya"
-        ],
-        (object) [
-            "orderId" => "12352",
-            "userId" => "33445566778",
-            "orderDate" => "2024-05-28",
-            "total_price" => "349.25",
-            "status" => "In Transit",
-            "orderAddress" => "11, Taman Bukit Mewah, 56000, Kuala Lumpur"
-        ],
-        (object) [
-            "orderId" => "12353",
-            "userId" => "77665544332",
-            "orderDate" => "2024-04-05",
-            "total_price" => "650.00",
-            "status" => "Delivered",
-            "orderAddress" => "45, Jalan Raya Timur, 41100, Klang"
-        ],
-        (object) [
-            "orderId" => "12354",
-            "userId" => "22334455667",
-            "orderDate" => "2024-03-22",
-            "total_price" => "129.99",
-            "status" => "Pending",
-            "orderAddress" => "99, Lorong Seberang Perai, 12345, Penang"
-        ]
-    ];
-    
-    $order_items = [
-        // Order 12345 - 2 Products
-        (object)[
-            "orderId" => "12345",
-            "productId" => "1001",
-            "seriesName" => "black grip",
-            "quantity" => "1",
-            "subtotal" => "15.99",
-            "productName" => "Yonex Astrix 100 ZR"
-        ],
-        (object)[
-            "orderId" => "12345",
-            "productId" => "1002",
-            "seriesName" => "white strings",
-            "quantity" => "1",
-            "subtotal" => "9.99",
-            "productName" => "Yonex Nanoray 7000"
-        ],
-    
-        // Order 12346 - 3 Products
-        (object)[
-            "orderId" => "12346",
-            "productId" => "1003",
-            "seriesName" => "red grip",
-            "quantity" => "2",
-            "subtotal" => "31.98",
-            "productName" => "Victor Brave Sword 12"
-        ],
-        (object)[
-            "orderId" => "12346",
-            "productId" => "1004",
-            "seriesName" => "black case",
-            "quantity" => "1",
-            "subtotal" => "25.00",
-            "productName" => "Li-Ning Turbo X 50"
-        ],
-        (object)[
-            "orderId" => "12346",
-            "productId" => "1001",
-            "seriesName" => "blue grip",
-            "quantity" => "1",
-            "subtotal" => "15.99",
-            "productName" => "Yonex Astrix 100 ZR"
-        ],
-    
-        // Order 12347 - 1 Product
-        (object)[
-            "orderId" => "12347",
-            "productId" => "1005",
-            "seriesName" => "yellow grip",
-            "quantity" => "1",
-            "subtotal" => "16.50",
-            "productName" => "Yonex Voltric Z-Force II"
-        ],
-    
-        // Order 12348 - 4 Products
-        (object)[
-            "orderId" => "12348",
-            "productId" => "1006",
-            "seriesName" => "green grip",
-            "quantity" => "2",
-            "subtotal" => "32.00",
-            "productName" => "Apacs Ziggler Pro"
-        ],
-        (object)[
-            "orderId" => "12348",
-            "productId" => "1007",
-            "seriesName" => "black strings",
-            "quantity" => "1",
-            "subtotal" => "10.00",
-            "productName" => "BG66 Ultimax"
-        ],
-        (object)[
-            "orderId" => "12348",
-            "productId" => "1003",
-            "seriesName" => "red grip",
-            "quantity" => "1",
-            "subtotal" => "15.99",
-            "productName" => "Victor Brave Sword 12"
-        ],
-        (object)[
-            "orderId" => "12348",
-            "productId" => "1004",
-            "seriesName" => "white case",
-            "quantity" => "1",
-            "subtotal" => "25.00",
-            "productName" => "Li-Ning Turbo X 50"
-        ],
-    
-        // Order 12349 - 2 Products
-        (object)[
-            "orderId" => "12349",
-            "productId" => "1008",
-            "seriesName" => "black grip",
-            "quantity" => "1",
-            "subtotal" => "12.99",
-            "productName" => "Yonex ArcSaber 11 Pro"
-        ],
-        (object)[
-            "orderId" => "12349",
-            "productId" => "1002",
-            "seriesName" => "yellow strings",
-            "quantity" => "2",
-            "subtotal" => "19.98",
-            "productName" => "Yonex Nanoray 7000"
-        ],
-    
-        // Order 12350 - 1 Product
-        (object)[
-            "orderId" => "12350",
-            "productId" => "1009",
-            "seriesName" => "blue grip",
-            "quantity" => "1",
-            "subtotal" => "13.99",
-            "productName" => "Yonex Duora 10"
-        ],
-    
-        // Order 12351 - 3 Products
-        (object)[
-            "orderId" => "12351",
-            "productId" => "1010",
-            "seriesName" => "orange grip",
-            "quantity" => "2",
-            "subtotal" => "28.00",
-            "productName" => "Carlton Powerblade 9902"
-        ],
-        (object)[
-            "orderId" => "12351",
-            "productId" => "1005",
-            "seriesName" => "white grip",
-            "quantity" => "1",
-            "subtotal" => "16.50",
-            "productName" => "Yonex Voltric Z-Force II"
-        ],
-        (object)[
-            "orderId" => "12351",
-            "productId" => "1001",
-            "seriesName" => "black grip",
-            "quantity" => "1",
-            "subtotal" => "15.99",
-            "productName" => "Yonex Astrix 100 ZR"
-        ],
-    
-        // Order 12352 - 4 Products
-        (object)[
-            "orderId" => "12352",
-            "productId" => "1011",
-            "seriesName" => "red case",
-            "quantity" => "1",
-            "subtotal" => "30.00",
-            "productName" => "Li-Ning Windstorm 72"
-        ],
-        (object)[
-            "orderId" => "12352",
-            "productId" => "1003",
-            "seriesName" => "black grip",
-            "quantity" => "1",
-            "subtotal" => "15.99",
-            "productName" => "Victor Brave Sword 12"
-        ],
-        (object)[
-            "orderId" => "12352",
-            "productId" => "1006",
-            "seriesName" => "green grip",
-            "quantity" => "2",
-            "subtotal" => "32.00",
-            "productName" => "Apacs Ziggler Pro"
-        ],
-        (object)[
-            "orderId" => "12352",
-            "productId" => "1004",
-            "seriesName" => "black case",
-            "quantity" => "1",
-            "subtotal" => "25.00",
-            "productName" => "Li-Ning Turbo X 50"
-        ],
-    
-        // Order 12353 - 2 Products
-        (object)[
-            "orderId" => "12353",
-            "productId" => "1012",
-            "seriesName" => "blue grip",
-            "quantity" => "1",
-            "subtotal" => "14.99",
-            "productName" => "Victor Thruster K Falcon"
-        ],
-        (object)[
-            "orderId" => "12353",
-            "productId" => "1008",
-            "seriesName" => "black grip",
-            "quantity" => "2",
-            "subtotal" => "25.98",
-            "productName" => "Yonex ArcSaber 11 Pro"
-        ],
-    
-        // Order 12354 - 1 Product
-        (object)[
-            "orderId" => "12354",
-            "productId" => "1013",
-            "seriesName" => "black grip",
-            "quantity" => "1",
-            "subtotal" => "15.99",
-            "productName" => "Yonex Nanoflare 800"
-        ]
-    ];
-    
-
-    /*  NOTES UPDATE DB, CALCULATE TOTALPRICE INSTEAD OF INSERTING
-        SELECT o.orderId, SUM(oi.subtotal) AS totalPrice
-        FROM Order o
-        JOIN Order_Item oi ON o.orderId = oi.orderId
-        GROUP BY o.orderId;
-    */
-
+    //if userId not logged in then redirect to homepage
+    if(!is_logged_in()){
+        redirect("/");
+    }
+    //defining some colors to be used to display the progress of delivery
     $colorStatusBar = "linear-gradient(90deg, rgba(29,204,29,1) 0%, rgba(255,177,0,1) 77%)";
     $colorStatusDefault = "rgba(221, 214, 214, 0.514)";
     $colorStatusDone = "rgb(29, 204, 29)";
@@ -317,6 +27,22 @@
         [$colorStatusDone,$colorStatusDone,$colorStatusDone,$colorStatusDone,$colorStatusDone]
     ];
     $index = 0;
+
+    //setting the filter
+    //by default, show all status type and from newest order date to oldest
+    $showOnlyStatus = $_GET["stat"] ?? "";
+    $sort = $_GET["sort"] ?? "desc"; 
+    
+    //fetching data
+    try{
+        $orders = $_db->query("Select o.*, sum(oi.subtotal) as total_price from
+orders o JOIN order_items oi ON (o.orderId = oi.orderId) WHERE o.userId = $userId GROUP BY o.orderId ORDER BY o.orderDate $sort;")->fetchAll();
+    $order_items = $_db->query("Select oi.*, p.productName FROM order_items oi JOIN product p ON (oi.productId = p.productID);")->fetchAll();
+    }
+    catch (PDOException $e){
+        die(":( Couldn't Find What You're Looking For");
+    }
+
 ?>
 
 
@@ -333,18 +59,32 @@
 
     <?php foreach($orders as $o): ?>
 
-        <?php 
-            if($o->status === "Pending")
+        <?php
+            if($o->status === "Pending"){
+                //if status parameter is set and if the parameter is not pending then skip
+                if(!empty($showOnlyStatus) and strtolower($showOnlyStatus) !== "pending")
+                    continue;
                 $index = 0;
-            else if ($o->status === "In Transit")
+            }
+                
+            else if ($o->status === "In Transit"){
+                //if status parameter is set and if the parameter is not intransit then skip
+                if(!empty($showOnlyStatus) and strtolower($showOnlyStatus)!== "intransit")
+                    continue;
                 $index = 1;
-            else $index = 2;
+            }
+            else {
+                //if status parameter is set and if the parameter is not delivered then skip
+                if(!empty($showOnlyStatus) and strtolower($showOnlyStatus)!== "delivered")
+                    continue;
+                $index = 2;
+            }
 
         ?>
     <div class="order">
         <span class="orderID">#<?=$o->orderId?></span>
         <span class="orderAddress"><?=$o->orderAddress?></span>
-        <span class="orderDate"><?=$o->orderDate?></span>
+        <span class="orderDate"><?=substr($o->orderDate,8,2) . '/' . substr($o->orderDate,5,2) . '/' . substr($o->orderDate,0,4) ?></span>
         <span class="orderStatus"><?=$o->status?></span>
         <button class="dropdown">
         <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z"/></svg>
@@ -377,7 +117,7 @@
                     <div class='items-container'>
                         <img alt="Item Image" src="https://www.yonex.com/media/catalog/product/b/4/b4000g_2023_2.png?quality=80&fit=bounds&height=819&width=600&canvas=600:819"></img>
                         <span class="item-name"><?= $oi->productName ?></span>
-                        <span class="item-series"><?= $oi->seriesName ?></span>
+                        <span class="item-series"><?= $oi->gripSize ?></span>
                         <span class="item-quantity">x <?= $oi->quantity ?></span>
                         <span class="item-subtotal">RM <?= $oi->subtotal ?></span>
                     </div>

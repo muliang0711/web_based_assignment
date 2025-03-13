@@ -121,6 +121,7 @@ p{
 }
 
 .image-box img {
+  padding: 20px;
   width: 100%; 
   height: auto; 
   object-fit: cover; 
@@ -288,4 +289,20 @@ button:active {
   top:900px;
   width: 500px;
   padding: 20px;
+}
+
+.search button{
+  display: flex;
+  position: absolute;
+  top: 60px;
+  right: 100px;
+}
+
+.searchBar{
+  display: flex;
+  position: absolute;
+  top: 60px;
+  right:240px;
+  font-size: 30px;
+  height: 50px;
 }

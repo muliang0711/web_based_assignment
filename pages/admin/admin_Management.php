@@ -21,7 +21,7 @@ $arr = $_db->query('SELECT * FROM admin')->fetchAll();
     <th>Position</th>
 </tr>
 <?php foreach ($arr as $a): ?>
-    <tr>
+    <tr class="row">
         <td class="content"><?= $a->id ?></td>
         <td class="content"><?= $a->position ?></td>
         <td><button data-post="/pages/admin/adminDelete.php?id=<?=$a->id?>" data-confirm="Are you sure you want to delete">Delete</button></td>

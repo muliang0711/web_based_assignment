@@ -1,0 +1,21 @@
+.button{
+ margin-top: 10px;
+    height: 40px;
+    border-radius: 10px;
+    border: none;
+    font-size: 20px;
+    background-color: hsl(206 100% 25%);
+    color: white;
+
+
+}
+
+.store-name{
+    color:hsl(206 100% 25%);
+    font-size:30px;
+    text-align: center;
+}
+.welcome{
+font-size: 25px;
+
+}
