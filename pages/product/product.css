@@ -96,11 +96,12 @@ p{
 .list{
     display: flex; 
     justify-content: space-around; 
+    flex-wrap: wrap;
     gap: 300px;
 }
 
 .item img {
-  width: 100%;
+  width: 200px;
   height: 90%;
   border-radius: 50%;
   display:inline-block;
