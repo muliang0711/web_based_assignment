@@ -1,5 +1,4 @@
 <?php
-session_start();
 // Include necessary files
 require_once "../../db_connection.php";
 require_once "../../controller/productController.php";
@@ -10,7 +9,7 @@ $stylesheetArray = ['../../css/admin_product.css'];
 link_stylesheet($stylesheetArray);
 
 $productController = new ProductController($_db);
-$products = $productController->getAllProducts();
+$allProducts = $productController->getAllProducts();
 
 // Retrieve search results from session
 $searchProducts = $_SESSION['search_results'] ?? [];
@@ -27,7 +26,7 @@ unset($_SESSION['Add_ErrorMsg']);
 <div>
     <h2>All Products</h2>
     <ul>
-        <?php foreach ($products as $product) { ?>
+        <?php foreach ($allProducts as $index=>$product) { ?>
             <li>
                 ---<?php echo htmlspecialchars($product->productID)?>
                 ---<?php echo htmlspecialchars($product->productName); ?> 
@@ -35,6 +34,32 @@ unset($_SESSION['Add_ErrorMsg']);
                 ---<?php echo htmlspecialchars($product->seriesID); ?>
                 ---<?php echo htmlspecialchars($product->total_stock)?>
                 ---<?php echo htmlspecialchars($product->sizeID)?>
+                <button class="updateProductBtn" data-index="<?php echo $index; ?>">update</button> 
+
+                <div class="updateForm updateForm-<?php echo $index;?>">
+                    <form action="../../controller/productController.php" method="post" >
+                        <input type="hidden" name="action" id="action" value="updateProduct">
+                        <label>Product Id: </label>
+                        <input type="text" value="<?php echo htmlspecialchars($product->productID); ?>">
+                        <label>Product Name:</label>
+                        <input type="text" name="productName" value="<?php echo htmlspecialchars($product->productName); ?>">
+
+                        <label>Price:</label>
+                        <input type="text" name="price" value="<?php echo number_format($product->price, 2); ?>">
+
+                        <label>Series ID:</label>
+                        <input type="text" name="seriesID" value="<?php echo htmlspecialchars($product->seriesID); ?>">
+
+                        <label>Stock:</label>
+                        <input type="text" name="total_stock" value="<?php echo htmlspecialchars($product->total_stock); ?>">
+
+                        <label>Size ID:</label>
+                        <input type="text" name="sizeID" value="<?php echo htmlspecialchars($product->sizeID); ?>">
+
+                        <button type="submit">Save Changes</button>
+                        <button type="button" class="cancelUpdateBtn" data-index="<?php echo $index; ?>">Cancel</button>
+                    </form>
+                </div>
             </li>
         <?php } ?>
     </ul>
@@ -43,7 +68,6 @@ unset($_SESSION['Add_ErrorMsg']);
 <!--trigger-->
 <button id="search">Search</button>
 <button id="add">addProduct</button>
-
 <!-- Search Form -->
 <div class="filter-bar">
     <form action="../../controller/productController.php" method="post">
@@ -82,6 +106,7 @@ unset($_SESSION['Add_ErrorMsg']);
         </select>
 
         <button type="submit">Search</button>
+        <button>cancel</button>
     </form>
 </div>
 <!-- Add form-->
@@ -102,9 +127,15 @@ unset($_SESSION['Add_ErrorMsg']);
             <input type="text" name='stock' placeholder="stock">
 
         <button type="submit">submit</button>
+        <button>cancel</button>
     </form>
    
  </div>
+<!--Update form -->
+
+
+
+
 <!-- Search Results -->
 <div class="result">
     <h2>Search Results</h2>
@@ -142,6 +173,10 @@ unset($_SESSION['Add_ErrorMsg']);
         <?php unset($_SESSION['Add_ErrorMsg']); ?>
     <?php endif; ?>
 </div>
+
+
+
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function() {
@@ -149,10 +184,25 @@ unset($_SESSION['Add_ErrorMsg']);
             $(".filter-bar").toggleClass("show");
         });
         $("#add").click(function(){
-            $(".add-form").toggleClass("show")
+            $(".add-form").toggleClass("show");
         })
-    });
+        $(".updateProductBtn").click(function() {
+            console.log("test"); // Debugging log
+            var index = $(this).data("index");
+            console.log("Clicked on index:", index);
+
+            $(".updateForm").hide(); // Hide all forms first
+            $(".updateForm-" + index).show(); // Show only the clicked form
+        });
+
+        // Hide form when "Cancel" is clicked
+        $(".cancelUpdateBtn").click(function() {
+            var index = $(this).data("index");
+            console.log("Cancel clicked for index:", index);
+            $(".updateForm-" + index).hide(); // Hide the form
+        });
+
+
+        });
 </script>
 
-</body>
-</html>

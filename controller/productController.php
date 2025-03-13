@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 require_once __DIR__ . "/../_base.php";
 require_once __DIR__ . "/../db_connection.php";
 require_once __DIR__ . "/../db/productDb.php";
@@ -161,8 +161,8 @@ class ProductController{
     
         $this->redirectToAdmin();
     }
-    public function getAllProducts(){
-        return $this->productDb->getAllProducts();
+    public  function getAllProducts(){
+        return  $this->productDb->getAllProducts();
     }
     private function updateProduct() {
         // Implementation for updating a product
