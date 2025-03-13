@@ -13,8 +13,8 @@ class productDb{
         // when using the pfo->query can not accpet variable ; it execute the sql directly ； 
             //stmt = $this->pdo->query("SELECT * FROM product");
             //return $stmt->fetchAll();
-        $sql = "SELECT p.productID, p.productName, p.price, p.seriesID, SUM(ps.quantity) AS total_stock
-        FROM product p
+        $sql = "SELECT p.productID, p.productName, p.price, p.seriesID, ps.sizeID , SUM(ps.quantity) AS total_stock
+        FROM product p 
         JOIN productsize ps ON p.productID = ps.productID
         WHERE ps.quantity > 0
         GROUP BY p.productID, p.productName, p.price, p.seriesID";
@@ -88,31 +88,40 @@ class productDb{
             // 4. Insert into product size table
             $this->insertProductSize($productID, $sizeID, $quantity);
 
-                          // 5. Commit transaction
+            // 5. Commit transaction
             $this->pdo->commit();
 
-  
+            // return secess msg 
+            return ["success" => true, "message" => "Product added successfully."];
         }catch(Exception $e){
-        // Rollback transaction if any error occurs
+            // Rollback transaction if any error occurs
             $this->pdo->rollBack();
-            error_log("Transaction failed: " . $e->getMessage());
-            return false;
-            
+            // Return an error message
+            return ["success" => false, "error" => $e->getMessage()];
+                
         }           
                                                                       
     }
-    
+
     private function insertSeries($seriesID, $seriesName) {
         // Check if the series exists
-        $checkSql = "SELECT seriesName FROM series WHERE seriesName = ? AND seriesID = ? LIMIT 1";
-        $check_series_stmt = $this->pdo->prepare($checkSql);
-        $check_series_stmt->execute([$seriesName, $seriesID]);
+        try{
 
-        // If not exists, insert it
-        if (!$check_series_stmt->fetch()) {
-            $seriesSql = "INSERT INTO series (seriesID, seriesName) VALUES (?, ?)";
-            $insert_series_stmt = $this->pdo->prepare($seriesSql);
-            $insert_series_stmt->execute([$seriesID, $seriesName]);
+            $checkSql = "SELECT seriesName FROM series WHERE seriesName = ? AND seriesID = ? LIMIT 1";
+            $check_series_stmt = $this->pdo->prepare($checkSql);
+            $check_series_stmt->execute([$seriesName, $seriesID]);
+
+            // If not exists, insert it
+            if (!$check_series_stmt->fetch()) {
+                $seriesSql = "INSERT INTO series (seriesID, seriesName) VALUES (?, ?)";
+                $insert_series_stmt = $this->pdo->prepare($seriesSql);
+                $insert_series_stmt->execute([$seriesID, $seriesName]);
+            }
+
+        }catch(Exception $e){
+
+            error_log("Transaction failed: " . $e->getMessage());
+            return false;
         }
     }
 
