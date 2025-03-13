@@ -75,17 +75,28 @@ include '../../_head.php';
 
 <hr>
 
-<div class="list" id="productList">
-    <!-- Use a loop to display all products -->
-    <?php foreach ($productObjectArray as $productObject): ?>
-        <div class="item" series="Arc">
-            <a onclick = "onclick()" href = "../product/productDetail.php?racket=<?php echo $productObject->productID ?>">
-                <img src="<?php echo $productObject->productImg ?>">
-                <p><?php echo $productObject->productName ?></p>
-            </a>
-        </div>
-    <?php endforeach ?>
-</div>
+<!-- product Image -->
+<?php 
+        $_db = new PDO('mysql:dbname=web_based_assignment','root', '',[
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
+        ]);
+      
+        $statement = $_db->prepare("SELECT * FROM product");
+        $statement->execute([]);
+        $productObjectArray = $statement->fetchAll();
+    ?>
+    
+    <div class="list" id="productList">
+      <?php     
+      foreach($productObjectArray as $productObject):?>
+         <div class="item">
+          <a onclick = "onclick()" href = "../product/productDetail.php?racket=<?php echo $productObject->productID ?>">
+          <img src="<?php echo $productObject->productImg ?>">
+          <p><?php echo $productObject->productName ?></p>
+          </a>
+         </div>
+      <?php endforeach ?>
+    </div>
 
 <?php
 include '../../_foot.php';
@@ -118,4 +129,4 @@ include '../../_foot.php';
 //             }
 //         });
 //     }
-// </script>
+// </script> 

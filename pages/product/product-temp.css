@@ -11,13 +11,13 @@ h1{
     font-family: "Lucida Console", "Courier New", monospace;
 }
 
-/* .top-sideMenu{
+.top-sideMenu{
 position: absolute;
 top: -20px;
   width: 100%;
   left:0px;
   background-color: #333; 
-  z-index: 1000;  (Ensure it stays above other elements )
+  z-index: 1000; /* Ensure it stays above other elements */
   font-family: "Lucida Console", "Courier New", monospace;
 }
 
@@ -29,7 +29,7 @@ top: -20px;
   display:flex;
   width: 200px;
   height: 50px;
-} */
+}
 
 #blueheading h1{
   text-align: center;
@@ -38,7 +38,7 @@ top: -20px;
   font-family: "Lucida Console", "Courier New", monospace;
 }
 
-/* .menu{
+.menu{
   display: flex;
   align-items: center;
   padding: 20px;
@@ -57,7 +57,7 @@ nav ul{
 nav ul li{
   display: inline-block;
   padding: 20px;
-} */
+}
 
 a{
   text-decoration:none;
@@ -96,12 +96,11 @@ p{
 .list{
     display: flex; 
     justify-content: space-around; 
-    flex-wrap: wrap;
     gap: 300px;
 }
 
 .item img {
-  width: 200px;
+  width: 100%;
   height: 90%;
   border-radius: 50%;
   display:inline-block;
