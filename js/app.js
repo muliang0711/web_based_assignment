@@ -72,4 +72,18 @@ $(() => {
         }
     });
 
+    // Cart button's click event handler
+    $('.cart-btn').on('click', e => {
+        e.stopPropagation();
+        console.log("cart clicked");
+
+        $('.cart-popup').fadeIn(100);
+        $('.cart-popup .content').addClass('slide-down');
+
+        $('.close-popup').on('click', e => {
+            $('.cart-popup').fadeOut(200);
+            $('.cart-popup .content').removeClass('slide-down');
+        });
+    });
+    
 });
