@@ -1,22 +1,26 @@
 <?php
+session_start();
 // Include necessary files
 require_once "../../db_connection.php";
-require_once "../../service/productService.php";
+require_once "../../controller/productController.php";
 require_once "../../_base.php";
 // secssion already start in the _base.php so we can deirect use 
 // Include CSS
 $stylesheetArray = ['../../css/admin_product.css'];
 link_stylesheet($stylesheetArray);
 
-$productService = new productService($_db);
-$products = $productService->showAllProduct();
+$productController = new ProductController($_db);
+$products = $productController->getAllProducts();
 
 // Retrieve search results from session
 $searchProducts = $_SESSION['search_results'] ?? [];
 unset($_SESSION['search_results']); // Clear after retrieval
 //--------
-$addProduct = $_SESSION['add_results'] ?? [];
-unset($_SESSION['add_results']);
+$Add_SucessMsg= $_SESSION['Add_SuccessMsg'] ?? [];
+unset($_SESSION['Add_SuccessMsg']);
+
+$Add_ErrorMsg = $_SESSION['Add_ErrorMsg'] ?? [];
+unset($_SESSION['Add_ErrorMsg']);
 //------------------------
 ?>
 <!-- All product-->
@@ -25,10 +29,12 @@ unset($_SESSION['add_results']);
     <ul>
         <?php foreach ($products as $product) { ?>
             <li>
-                <?php echo htmlspecialchars($product->productName); ?> 
-                --- $<?php echo number_format($product->price, 2); ?> 
-                --- <?php echo htmlspecialchars($product->seriesID); ?>
+                ---<?php echo htmlspecialchars($product->productID)?>
+                ---<?php echo htmlspecialchars($product->productName); ?> 
+                ---$<?php echo number_format($product->price, 2); ?> 
+                ---<?php echo htmlspecialchars($product->seriesID); ?>
                 ---<?php echo htmlspecialchars($product->total_stock)?>
+                ---<?php echo htmlspecialchars($product->sizeID)?>
             </li>
         <?php } ?>
     </ul>
@@ -41,7 +47,7 @@ unset($_SESSION['add_results']);
 <!-- Search Form -->
 <div class="filter-bar">
     <form action="../../controller/productController.php" method="post">
-        <input type="hidden" name="action" value="search">
+        <input type="hidden" name="action" value="filterProduct">
         
         <select name="productName">
             <option value="">-- Product Name --</option>
@@ -117,8 +123,24 @@ unset($_SESSION['add_results']);
     <?php } ?>
 </div>    
 <!--ADD product result -->
-<div class="add">
+<div class="messages">
+    <?php if ($Add_SucessMsg): ?>
+        <div class="success-message">
+            <?php echo htmlspecialchars($Add_SucessMsg); ?>
+        </div>
+        <?php unset($_SESSION['Add_SuccessMsg']); ?>
+    <?php endif; ?>
 
+    <?php if ($Add_ErrorMsg): ?>
+        <div class="error-messages">
+            <ul>
+                <?php foreach ($Add_ErrorMsg as $error): ?>
+                    <li><?php echo htmlspecialchars($error); ?></li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+        <?php unset($_SESSION['Add_ErrorMsg']); ?>
+    <?php endif; ?>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>

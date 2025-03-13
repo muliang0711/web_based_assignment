@@ -79,3 +79,15 @@ body {
 
 .add-form{ display: none; }
 .add-form.show { display: block; }
+
+.success-message {
+    color: green;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.error-messages {
+    color: red;
+    font-weight: bold;
+    margin: 10px 0;
+}

@@ -1,22 +1,48 @@
 <?php
-require_once __DIR__ . "/../service/productService.php";
+session_start();
 require_once __DIR__ . "/../_base.php";
 require_once __DIR__ . "/../db_connection.php";
+require_once __DIR__ . "/../db/productDb.php";
 
-$productService = new productService($_db);
+class ProductController{
 
-if (is_post()) { 
-    $action = $_POST['action'] ?? null;
+    private $productDb ; 
 
-    // 1. Search Products
-    if ($action === "search") {
+    public function __construct($_pdo){
+        $this->productDb = new productDb($_pdo);
+    }
+
+    public function handleRequest(){
+        if(!is_post()){
+            return; 
+        }
+        $action = $_POST['action'] ?? null;
+        switch ($action) {
+
+            case 'addProduct':
+                $this->addProduct(); // done improve error handing 
+                break;
+            case 'updateProduct':
+                $this->updateProduct(); 
+                break;
+            case 'deleteProduct':
+                $this->deleteProduct();
+                break;
+            case 'filterProduct':
+                $this->filterProducts(); //good 
+            default:
+                $_SESSION['errors'] = 'Invalid action';
+                $this->redirectToAdmin();
+            }
+    }
+
+    private function filterProducts() {
         $filters = [
             'productName' => $_POST['productName'] ?? null,
-            'priceMin' => $_POST['minPrice'] ?? null,
-            'priceMax' => $_POST['maxPrice'] ?? null,
+            'priceMin' => isset($_POST['minPrice']) ? (float) $_POST['minPrice'] : null,
+            'priceMax' => isset($_POST['maxPrice']) ? (float) $_POST['maxPrice'] : null,
             'seriesID' => $_POST['seriesID'] ?? null,
         ];
-         
         /* when process the data send from frontend , data will loke likes this : associative array:
         [
             "productName" => "Gaming Laptop",
@@ -32,17 +58,8 @@ if (is_post()) {
                 echo($name) /
             }
         */
-
-        // Convert to float 
-        if (!empty($filters['priceMin'])) {
-            $filters['priceMin'] = (float) $filters['priceMin'];
-        }
-        if (!empty($filters['priceMax'])) {
-            $filters['priceMax'] = (float) $filters['priceMax'];
-        }
-
-        $result = $productService->filterProduct($filters);
-        $_SESSION['search_results'] = $result;
+        
+        $_SESSION['search_results'] = $this->productDb->filterProduct($filters);
         // what is the result look like ？ ： array of object 
         // result = [ 
         // (object) ["productName" => "Laptop", "price" => 1200] 
@@ -53,41 +70,112 @@ if (is_post()) {
         //  product->productName ; 
         //  product->price ； 
         //}
-        header("Location: ../pages/admin/admin_product.php");
-        exit();
+        $this->redirectToAdmin();
     }
-
-    // 2. Add Product
-    if ($action === "addProduct") {
+    private function addProduct() {
         $productInformation = [
-            'productId' => $_POST['productId'] ?? null , 
+            'productId' => $_POST['productId'] ?? null,
             'productName' => $_POST['productName'] ?? null,
-
-            'seriesId' => $_POST['seriesId'] ?? null, 
+            'seriesId' => $_POST['seriesId'] ?? null,
             'seriesName' => $_POST['seriesName'] ?? null,
-
-            'sizeId' => $_POST['sizeId'] ?? null , 
+            'sizeId' => $_POST['sizeId'] ?? null,
             'stock' => $_POST['stock'] ?? null,
             'price' => $_POST['price'] ?? null,
         ];
+         // Initialize an empty error array
+         $errors = [];
+         // validate product id 
+         if (empty($productInformation['productId'])) {
+             $errors[] = "ProductId cannot be null!";
+             // need to add on validation number cannot more than 5
+         }elseif (strlen($productInformation['productId']) > 5) {
+            $errors[] = "❌ Product ID cannot exceed 5 characters.";
+        }
+         // Validate product name     
+         if (empty($productInformation['productName'])) {
+             $errors[] = "Product name cannot be null!";
+         }
+     
+         // Validate series ID
+         if (empty($productInformation['seriesId'])) {
+             $errors[] = "Series ID cannot be null!";
+         // need to add on validation number cannot more than 3
+         }elseif (strlen($productInformation['seriesId']) > 3) {
+            $errors[] = "❌ Series ID cannot exceed 3 characters.";
+        }
+         //need to add on one : seriesName 
+         if (empty($productInformation['seriesName'])) {
+         $errors[] = "SeriesName cannot be null!";
+         // need to add on validation number cannot more than 15 
+         }elseif (strlen($productInformation['seriesName']) > 15) {
+            $errors[] = "❌ Series Name cannot exceed 15 characters.";
+        }
+     
+         // Validate price
+         if (!isset($productInformation['price']) || $productInformation['price'] === '') {
+             $errors[] = "Price must have a value!";
+         } elseif (!is_numeric($productInformation['price'])) {
+             $errors[] = "Price must be a number!";
+         }
+     
+         // Validate stock
+         if (!isset($productInformation['stock']) || $productInformation['stock'] === '') {
+             $errors[] = "Stock must have a value!";
+         } elseif (!is_numeric($productInformation['stock'])) {
+             $errors[] = "Stock must be a number!";
+         }
+ 
+         // Validate size ID
+         if (empty($productInformation['sizeId'])) {
+            $errors[] = " sizeID cannot be null!";
+         // need to add on validation number cannot more than 3
+         }elseif (strlen($productInformation['sizeId']) > 3) {
+            $errors[] = "❌ Size ID cannot exceed 3 characters.";
+        }
+         // valdation : ensure the components of productId and sizeId existing in db
 
+        $products = $this->productDb->getAllProducts();
 
-        // store the result
-        $result1 = $productService->addProduct($productInformation);
-        $_SESSION['add_results'] = $result1; 
+        foreach ($products as $product) {
+             if (
+                 $productInformation['productId'] == $product->productID &&
+                 $productInformation['sizeId'] == $product->sizeID 
+             ) {
+                 $errors[] = "The same product ID, size ID already exist in the database.";
+             }
+         }
+         // If there are validation errors, return them
+        if (!empty($errors)) {
+            $_SESSION['Add_ErrorMsg'] = $errors;
+            $this->redirectToAdmin();
+        }
+    
+        // Try inserting the product
+        $result = $this->productDb->addProduct($productInformation);
+    
+        if ($result['success']) {
+            $_SESSION['Add_SuccessMsg'] = "Product '{$productInformation['productName']}' (ID: {$productInformation['productId']}) has been successfully added!";
+        } else {
+            $_SESSION['Add_ErrorMsg'] = ["Failed to add product. Reason: " . $result['error']];
+        }
+    
+        $this->redirectToAdmin();
+    }
+    public function getAllProducts(){
+        return $this->productDb->getAllProducts();
+    }
+    private function updateProduct() {
+        // Implementation for updating a product
+    }
 
-        header("Location: ../pages/admin/admin_product.php"); 
+    private function deleteProduct() {
+        // Implementation for deleting a product
+    }
+    private function redirectToAdmin() {
+        header('Location: ../pages/admin/admin_product.php');
         exit();
     }
-
-    // 3. Update Product (To be implemented)
-    if ($action === "updateProduct") {
-
-    }
-
-    // 4. Delete Product (To be implemented)
-    if ($action === "deleteProduct") {
-
-    }
 }
+$productController = new ProductController($_db);
+$productController->handleRequest();
 ?>
