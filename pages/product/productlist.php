@@ -70,6 +70,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     <hr>
 <!-- label filter value -->
+<!--
     <form>
       <label for="series">Choose a series:</label>
        <select id="series" name="series" onchange="filterProducts()">
@@ -98,30 +99,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         });
     }
 </script>
-
+-->
 
 <!-- product Image -->
+    <?php 
+      $_db = new PDO('mysql:dbname=web_based_assignment','root', '',[
+      PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
+      ]);
+      
+    $statement = $_db->prepare("SELECT * FROM product");
+    $statement->execute([]);
+    $productObjectArray = $statement->fetchAll();
+    ?>
+    
     <div class="list" id="productList">
-      <div class="item" series="Arc">
-        <a onclick = "onclick()" href = "../product/productDetail.php?racket=R0001">
-        <img src="https://www.yonex.com/media/catalog/product/a/r/arc11-p.png?quality=80&fit=bounds&height=819&width=600&canvas=600:819" alt="Yonex Arcsaber 11 Pro">
-       <p>Yonex Arcsaber 11 Pro</p>
-        </a>
-      </div>
-
-      <div class="item" series="Nnf">
-        <a onclick = "onclick()" href = "../product/productDetail.php?racket=R0002">
-        <img src="https://www.yonex.com/media/catalog/product/n/a/nanoflare_1000_z.png?quality=80&fit=bounds&height=819&width=600&canvas=600:819" alt="Yonex Nanoflare 1000z">
-        <p>Yonex Nanoflare 1000z</p>
-        </a>
-      </div>
-
-      <div class="item" series="Ast">
-        <a onclick = "onclick()" href = "../product/productDetail.php?racket=R0003">
-        <img src="https://www.yonex.com/media/catalog/product/3/a/3ax88d-p_076-1_02.png?quality=80&fit=bounds&height=819&width=600&canvas=600:819" alt="Yonex Astrox 88D Pro">
-        <p>Yonex Astrox 88D Pro</p>
-        </a>
-      </div>
+      <?php     
+      foreach($productObjectArray as $productObject):?>
+         <div class="item" series="Arc">
+           <a onclick = "onclick()" href = "../product/productDetail.php?racket=<?php echo $productObject->productID ?>">
+            <img src="<?php echo $productObject->productImg ?>">
+           <p><?php echo $productObject->productName ?></p>
+           </a>
+         </div>
+      <?php endforeach ?>
     </div>
-
 </body> 
