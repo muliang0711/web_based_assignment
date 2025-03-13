@@ -249,3 +249,23 @@ if (is_logged_in()) {
     $_user = $_db->query("SELECT * FROM user WHERE userID = {$_SESSION['userID']}")->fetch();
 }
 
+
+// Generate <input type='search'>
+function html_search($key, $attr = '') {
+    $value = encode($GLOBALS[$key] ?? '');
+    echo "<input type='search' id='$key' name='$key' value='$value' $attr>";
+}
+
+// Generate <select>
+function html_select($key, $items, $default = '- Select One -', $attr = '') {
+    $value = encode($GLOBALS[$key] ?? '');
+    echo "<select id='$key' name='$key' $attr>";
+    if ($default !== null) {
+        echo "<option value=''>$default</option>";
+    }
+    foreach ($items as $id => $text) {
+        $state = $id == $value ? 'selected' : '';
+        echo "<option value='$id' $state>$text</option>";
+    }
+    echo '</select>';
+}
