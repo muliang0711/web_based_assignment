@@ -134,7 +134,10 @@ class productDb{
                 $sql = "INSERT INTO product (productID, productName, price, seriesID) VALUES (?, ?, ?, ?)";
                 $stmt = $this->pdo->prepare($sql);
                 $stmt->execute([$productID, $productName, $price, $seriesID]);
+
+                $this->insertProductSize($productID, $sizeID, $quantity);
             }else{
+                
                 $this->insertProductSize($productID, $sizeID, $quantity);
             }
         } catch (Exception $e) {
