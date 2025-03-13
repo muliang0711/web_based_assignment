@@ -12,7 +12,8 @@ include '../../admin_head.php';
 // 获取 userID
 $userId = req('userID');
 if (!$userId) {
-    die("Error: Missing userID");
+    temp('info', 'No userID selected!');
+    redirect('/pages/admin/view_customer.php');
 }
 
 // 处理排序方式
@@ -48,7 +49,7 @@ if (!isset($order_items) || !is_array($order_items)) {
     $order_items = [];
 }
 ?>
-<button data-get="/" class="searchBar">Back</button>
+<button data-get="view_customer.php" class="searchBar back">Back</button>
 
 <div class="whole_container">
     <table class="customer_container customer_detail">
@@ -92,7 +93,7 @@ if (!isset($order_items) || !is_array($order_items)) {
 
     <br>
 
-    <div>
+    <div class="purchase_container">
         <h1>Purchase history</h1>
         <div class="order-header">
             <span>Order ID</span>
@@ -109,6 +110,7 @@ if (!isset($order_items) || !is_array($order_items)) {
                     <span class="orderAddress"><?= htmlspecialchars($o->orderAddress) ?></span>
                     <span class="orderDate"><?= date("d/m/Y", strtotime($o->orderDate)) ?></span>
                     <span class="orderStatus"><?= htmlspecialchars($o->status) ?></span>
+                    <span class="total-text"><?= htmlspecialchars($o->total_price) ?></span>
                     <button class="dropdown">
                         <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
                             <path d="m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z"/>
@@ -131,9 +133,6 @@ if (!isset($order_items) || !is_array($order_items)) {
                             <?php endforeach ?>
                         </div>
                         
-                        <div class="order-total-container">
-                            <div class="total-text">Total: RM <?= htmlspecialchars($o->total_price) ?></div>
-                        </div>
                     </div>                  
                 </div>
 

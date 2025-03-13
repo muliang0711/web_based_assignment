@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['generate'])) {
 $id = $_SESSION['id'] ?? 'click to generate';
 $password = $_SESSION['password'] ?? 'click to generate';
 
-//  未完成
+
 // Handle POST request
 if(is_post()){
     // $id=req('id'); // no need this, because this won't be submitted by the form. `$id = $_SESSION['id']` already store the id value.

@@ -50,3 +50,58 @@ td,th{
 .order, .orderDetailed {
     background-color: #eee;
 }
+
+.purchase_container{
+    height: 80vh;
+    width: 50vw;
+    padding-right: 10px;
+padding-left: 20px;
+
+
+}
+
+.orders-container {
+    width: auto;
+}
+
+.order-header {
+    width: auto;
+}
+
+.order-header, .order {
+    grid-template-columns: 0.4fr 0.7fr 0.5fr 0.4fr 0.4fr 0.2fr;
+
+}
+
+.order {
+    height: auto;
+}
+
+.order span, .order-header span {
+    height: auto;
+}
+
+.order-details-wrapper.show {
+    height: 100px;
+    width: 100%;
+}
+.items-container {
+    height: auto;
+> .item-name {
+    overflow: initial;
+    grid-area: name;
+}}
+
+.order-items-container {
+    height: auto;}
+
+.orderDetailed.show {
+        height: auto;
+ }
+
+ .back{
+    text-align: right;
+    position: absolute;
+    right:0;
+
+ }
