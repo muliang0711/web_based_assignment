@@ -1,8 +1,11 @@
 
 $(() => {
 
+    console.log("hello");
+
     // Toggle password visibility
     $('.visibility-toggle-icon').on('click', function() {
+        console.log("eye clicked");
         var imgSrc = $(this).attr('src');
         if (imgSrc === '../../assets/img/visibility-off.svg') {
             $(this).prop('src', '../../assets/img/visibility-on.svg');
