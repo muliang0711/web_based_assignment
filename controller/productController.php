@@ -18,18 +18,17 @@ class ProductController{
         }
         $action = $_POST['action'] ?? null;
         switch ($action) {
-
             case 'addProduct':
-                $this->addProduct(); // done improve error handing 
+                $this->addProduct(); // done 
                 break;
             case 'updateProduct':
                 $this->updateProduct(); 
                 break;
             case 'deleteProduct':
-                $this->deleteProduct();
+                $this->deleteProduct(); //
                 break;
             case 'filterProduct':
-                $this->filterProducts(); //good 
+                $this->filterProducts(); //done 
             default:
                 $_SESSION['errors'] = 'Invalid action';
                 $this->redirectToAdmin();
@@ -72,6 +71,7 @@ class ProductController{
         //}
         $this->redirectToAdmin();
     }
+
     private function addProduct() {
         $productInformation = [
             'productId' => $_POST['productId'] ?? null,
@@ -82,68 +82,13 @@ class ProductController{
             'stock' => $_POST['stock'] ?? null,
             'price' => $_POST['price'] ?? null,
         ];
-         // Initialize an empty error array
-         $errors = [];
-         // validate product id 
-         if (empty($productInformation['productId'])) {
-             $errors[] = "ProductId cannot be null!";
-             // need to add on validation number cannot more than 5
-         }elseif (strlen($productInformation['productId']) > 5) {
-            $errors[] = "❌ Product ID cannot exceed 5 characters.";
-        }
-         // Validate product name     
-         if (empty($productInformation['productName'])) {
-             $errors[] = "Product name cannot be null!";
-         }
-     
-         // Validate series ID
-         if (empty($productInformation['seriesId'])) {
-             $errors[] = "Series ID cannot be null!";
-         // need to add on validation number cannot more than 3
-         }elseif (strlen($productInformation['seriesId']) > 3) {
-            $errors[] = "❌ Series ID cannot exceed 3 characters.";
-        }
-         //need to add on one : seriesName 
-         if (empty($productInformation['seriesName'])) {
-         $errors[] = "SeriesName cannot be null!";
-         // need to add on validation number cannot more than 15 
-         }elseif (strlen($productInformation['seriesName']) > 15) {
-            $errors[] = "❌ Series Name cannot exceed 15 characters.";
-        }
-     
-         // Validate price
-         if (!isset($productInformation['price']) || $productInformation['price'] === '') {
-             $errors[] = "Price must have a value!";
-         } elseif (!is_numeric($productInformation['price'])) {
-             $errors[] = "Price must be a number!";
-         }
-     
-         // Validate stock
-         if (!isset($productInformation['stock']) || $productInformation['stock'] === '') {
-             $errors[] = "Stock must have a value!";
-         } elseif (!is_numeric($productInformation['stock'])) {
-             $errors[] = "Stock must be a number!";
-         }
- 
-         // Validate size ID
-         if (empty($productInformation['sizeId'])) {
-            $errors[] = " sizeID cannot be null!";
-         // need to add on validation number cannot more than 3
-         }elseif (strlen($productInformation['sizeId']) > 3) {
-            $errors[] = "❌ Size ID cannot exceed 3 characters.";
-        }
+
+
+        $errors = $this->validation($productInformation);
+
          // valdation : ensure the components of productId and sizeId existing in db
+         // not longer need 
 
-        $products = $this->productDb->getAllProducts();
-
-        foreach ($products as $product) {
-             if (
-                 $productInformation['productId'] == $product->productID &&
-                 $productInformation['sizeId'] == $product->sizeID 
-             ) {
-                 $errors[] = "The same product ID, size ID already exist in the database.";
-             }
-         }
          // If there are validation errors, return them
         if (!empty($errors)) {
             $_SESSION['Add_ErrorMsg'] = $errors;
@@ -161,19 +106,103 @@ class ProductController{
     
         $this->redirectToAdmin();
     }
+
     public  function getAllProducts(){
         return  $this->productDb->getAllProducts();
     }
+
     private function updateProduct() {
-        // Implementation for updating a product
+        $productInformation = [
+            'productId' => $_POST['productId'] ?? null,
+            'productName' => $_POST['productName'] ?? null,
+            'seriesId' => $_POST['seriesId'] ?? null,
+            'seriesName' => $_POST['seriesName'] ?? null,
+            'sizeId' => $_POST['sizeId'] ?? null,
+            'stock' => $_POST['stock'] ?? null,
+            'price' => $_POST['price'] ?? null,
+        ];
+        $errors = [];
+
+        $errors = $this->validation($productInformation);
+
+        if(!empty($errors)){
+            $_SESSION['Update_ErrorMsg'] = $errors;
+            $this->redirectToAdmin();
+        }
+
+        $result = $this->productDb->updateProducts($productInformation);
+
+        if($result['success']){
+            $_SESSION['Update_SuccessMsg'] = "Product '{$productInformation['productName']}' (ID: {$productInformation['productId']}) has been successfully updated!";
+
+        }else{
+            $_SESSION['Update_ErrorMsg'] = ["Failed to update : " . $result['error']];
+        }
+        $this->redirectToAdmin();
+
     }
 
     private function deleteProduct() {
         // Implementation for deleting a product
     }
+
     private function redirectToAdmin() {
         header('Location: ../pages/admin/admin_product.php');
         exit();
+    }
+
+    private function validation($productInformation){
+        // Initialize an empty error array
+        $errors = [];
+        // validate product id 
+        if (empty($productInformation['productId'])) {
+            $errors[] = "ProductId cannot be null!";
+            // need to add on validation number cannot more than 5
+        }elseif (strlen($productInformation['productId']) > 5) {
+           $errors[] = " Product ID cannot exceed 5 characters.";
+       }
+        // Validate product name     
+        if (empty($productInformation['productName'])) {
+            $errors[] = "Product name cannot be null!";
+        }
+    
+        // Validate series ID
+        if (empty($productInformation['seriesId'])) {
+            $errors[] = "Series ID cannot be null!";
+        // need to add on validation number cannot more than 3
+        }elseif (strlen($productInformation['seriesId']) > 3) {
+           $errors[] = " Series ID cannot exceed 3 characters.";
+       }
+        //need to add on one : seriesName 
+        if (empty($productInformation['seriesName'])) {
+        $errors[] = "SeriesName cannot be null!";
+        // need to add on validation number cannot more than 15 
+        }elseif (strlen($productInformation['seriesName']) > 15) {
+           $errors[] = "Series Name cannot exceed 15 characters.";
+       }
+    
+        // Validate price
+        if (!isset($productInformation['price']) || $productInformation['price'] === '') {
+            $errors[] = "Price must have a value!";
+        } elseif (!is_numeric($productInformation['price'])) {
+            $errors[] = "Price must be a number!";
+        }
+    
+        // Validate stock
+        if (!isset($productInformation['stock']) || $productInformation['stock'] === '') {
+            $errors[] = "Stock must have a value!";
+        } elseif (!is_numeric($productInformation['stock'])) {
+            $errors[] = "Stock must be a number!";
+        }
+
+        // Validate size ID
+        if (empty($productInformation['sizeId'])) {
+           $errors[] = " sizeID cannot be null!";
+        // need to add on validation number cannot more than 3
+        }elseif (strlen($productInformation['sizeId']) > 4) {
+           $errors[] = " Size ID cannot exceed 3 characters.";
+       }
+       return $errors ;
     }
 }
 $productController = new ProductController($_db);

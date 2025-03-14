@@ -13,9 +13,10 @@ class productDb{
         // when using the pfo->query can not accpet variable ; it execute the sql directly ； 
             //stmt = $this->pdo->query("SELECT * FROM product");
             //return $stmt->fetchAll();
-        $sql = "SELECT p.productID, p.productName, p.price, p.seriesID, ps.sizeID , SUM(ps.quantity) AS total_stock
+        $sql = "SELECT p.productID, p.productName, p.price, p.seriesID, ps.sizeID , s.seriesName , SUM(ps.quantity) AS total_stock
         FROM product p 
         JOIN productsize ps ON p.productID = ps.productID 
+        JOIN series s ON p.seriesID = s.seriesID
         WHERE ps.quantity > 0
         GROUP BY p.productID, ps.sizeID";
 
@@ -69,9 +70,9 @@ class productDb{
             $this->pdo->beginTransaction();
             // 1.1 fetch data : 
             $productID = $productInformation['productId'];
-            $sizeID = $productInformation['sizeId'];
             $productName = $productInformation['productName'];
             $seriesID = $productInformation['seriesId'];
+            $sizeID = $productInformation['sizeId'];
             $seriesName = $productInformation['seriesName'];
             $price = $productInformation['price'];
             $quantity = $productInformation['stock'];
@@ -90,7 +91,7 @@ class productDb{
             $this->pdo->commit();
 
             // return secess msg 
-            return ["success" => true, "message" => "Product added successfully."];
+            return ["success" => true , "success" => "Add successful"];
         }catch(Exception $e){
             // Rollback transaction if any error occurs
             $this->pdo->rollBack();
@@ -137,7 +138,7 @@ class productDb{
 
                 $this->insertProductSize($productID, $sizeID, $quantity);
             }else{
-                
+
                 $this->insertProductSize($productID, $sizeID, $quantity);
             }
         } catch (Exception $e) {
@@ -158,6 +159,90 @@ class productDb{
             throw new Exception("Error inserting product size: " . $e->getMessage());
         }
     }
+
+    public function updateProducts($productInformation){
+        // fetch data 
+        $productID = $productInformation['productId'];
+        $productName = $productInformation['productName'];
+        $seriesID = $productInformation['seriesId'];
+        $seriesName = $productInformation['seriesName'];
+        $sizeID = $productInformation['sizeId'];
+        $price = $productInformation['price'];
+        $quantity = $productInformation['stock']; 
+
+        try {
+
+            // start transaction since there have multiple table insert;
+
+            $this->pdo->beginTransaction(); 
+
+            // update series table first : 
+
+            $this->updateSeries($seriesName ,  $seriesID);
+
+            //update product table : 
+
+            $this->updateProduct( $productName , $price , $seriesID , $productID  );
+
+            // update productsize :
+
+            $this->updateProductSize($sizeID , $quantity ,  $productID);
+
+            // commit when done : 
+
+            $this->pdo->commit();
+
+            // return message when sucess : 
+            return ["success" => true , "success" => "update successful"];
+
+        }catch(Exception $e){
+
+            $this->pdo->rollBack();
+
+            // return when error 
+
+            return ["success" => false, "error" => $e->getMessage()];
+        }
+    }
+
+
+    private function updateSeries($seriesName , $seriesID ){
+
+        try{
+            $sql = "UPDATE series set seriesName = ? ,  seriesID = ? 
+                    WHERE seriesID = ? " ;
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute([$seriesName ,  $seriesID , $seriesID ]);
+        }catch(Exception $e){
+            throw new Exception("Error insert into series: " . $e->getMessage());
+        }
+
+    }
+
+    private function updateProduct($productName , $price , $seriesID , $productID ){
+        try{
+            $sql = "UPDATE product set productName = ? , price = ? , seriesID = ? 
+                    WHERE productID = ? " ;
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute([$productName , $price , $seriesID , $productID]);
+
+        }catch(Exception $e){
+            throw new Exception("Error insert into product : " . $e->getMessage());
+        }
+    }
+
+    private function updateProductSize($sizeID , $quantity ,  $productID ){
+
+        try{
+            $sql = "UPDATE productsize set sizeID = ? , quantity = ? 
+                    WHERE productID = ? AND sizeID = ?" ;
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute([ $sizeID , $quantity ,  $productID , $sizeID]);
+        }catch(Exception $e){
+            throw new Exception("Error insert into productSize : " . $e->getMessage());
+        }
+    }
+
 }
 
 

@@ -1,10 +1,8 @@
 <?php
-// Include necessary files
+
 require_once "../../db_connection.php";
 require_once "../../controller/productController.php";
 require_once "../../_base.php";
-
-// Session is already started in _base.php
 
 // Include CSS (if needed, this additional CSS can also be inline as shown below)
 $stylesheetArray = ['../../css/admin_product.css'];
@@ -13,16 +11,26 @@ link_stylesheet($stylesheetArray);
 $productController = new ProductController($_db);
 $allProducts = $productController->getAllProducts();
 
-// Retrieve search results from session
+// Retrieve search results from session =====================
 $searchProducts = $_SESSION['search_results'] ?? [];
 unset($_SESSION['search_results']);
 
-// Retrieve add product messages
-$Add_SucessMsg = $_SESSION['Add_SuccessMsg'] ?? [];
+// Retrieve addProduct messages==============================
+$Add_SuccessMsg = $_SESSION['Add_SuccessMsg'] ?? [];
 unset($_SESSION['Add_SuccessMsg']);
 
 $Add_ErrorMsg = $_SESSION['Add_ErrorMsg'] ?? [];
 unset($_SESSION['Add_ErrorMsg']);
+
+// Retrieve updateProduct messages============================
+$Update_SuccessMsg = $_SESSION['Update_SuccessMsg'] ?? null ;
+unset($_SESSION['Update_SuccessMsg']);
+
+$Update_ErrorMsg = $_SESSION['Update_ErrorMsg'] ?? [];
+unset($_SESSION['Update_ErrorMsg']);
+
+//============================================================
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -142,22 +150,25 @@ unset($_SESSION['Add_ErrorMsg']);
                 <input type="hidden" name="action" value="updateProduct">
                 
                 <label>Product ID</label>
-                <input type="text" value="<?php echo htmlspecialchars($product->productID); ?>" disabled>
+                <input type="text" name="productId" value="<?php echo htmlspecialchars($product->productID); ?>" readonly >
                 
                 <label>Product Name</label>
                 <input type="text" name="productName" value="<?php echo htmlspecialchars($product->productName); ?>">
+            
+                <label>Series ID</label>
+                <input type="text" name="seriesId" value="<?php echo htmlspecialchars($product->seriesID); ?>">
                 
+                <label>Series Name</label>
+                <input type="text" name="seriesName" value="<?php echo htmlspecialchars($product->seriesName); ?>">
+
                 <label>Price</label>
                 <input type="text" name="price" value="<?php echo number_format($product->price, 2); ?>">
                 
-                <label>Series ID</label>
-                <input type="text" name="seriesID" value="<?php echo htmlspecialchars($product->seriesID); ?>">
-                
                 <label>Stock</label>
-                <input type="text" name="total_stock" value="<?php echo htmlspecialchars($product->total_stock); ?>">
+                <input type="text" name="stock" value="<?php echo htmlspecialchars($product->total_stock); ?>">
                 
                 <label>Size ID</label>
-                <input type="text" name="sizeID" value="<?php echo htmlspecialchars($product->sizeID); ?>">
+                <input type="text" name="sizeId" value="<?php echo htmlspecialchars($product->sizeID); ?>">
                 
                 <div style="margin-top:10px;">
                   <button type="submit" class="btn btn-update">Save Changes</button>
@@ -190,22 +201,39 @@ unset($_SESSION['Add_ErrorMsg']);
     
     <!-- Messages -->
     <section class="messages">
-      <?php if ($Add_SucessMsg): ?>
-        <div class="success-message">
-          <?php echo htmlspecialchars($Add_SucessMsg); ?>
-        </div>
-      <?php endif; ?>
-      
-      <?php if ($Add_ErrorMsg): ?>
-        <div class="error-messages">
-          <ul>
-            <?php foreach ($Add_ErrorMsg as $error): ?>
-              <li><?php echo htmlspecialchars($error); ?></li>
-            <?php endforeach; ?>
-          </ul>
-        </div>
-      <?php endif; ?>
-    </section>
+  <?php if ($Add_SuccessMsg): ?>
+    <div class="success-message">
+      <?php echo htmlspecialchars($Add_SuccessMsg); ?>
+    </div>
+  <?php endif; ?>
+
+  <?php if (!empty($Add_ErrorMsg)): ?>
+    <div class="error-messages">
+      <ul>
+        <?php foreach ($Add_ErrorMsg as $error): ?>
+          <li><?php echo htmlspecialchars($error); ?></li>
+        <?php endforeach; ?>
+      </ul>
+    </div>
+  <?php endif; ?>
+
+  <?php if ($Update_SuccessMsg): ?>
+    <div class="success-message">
+      <?php echo htmlspecialchars($Update_SuccessMsg); ?>
+    </div>
+  <?php endif; ?>
+
+  <?php if (!empty($Update_ErrorMsg)): ?>
+    <div class="error-messages">
+      <ul>
+        <?php foreach ($Update_ErrorMsg as $error): ?>
+          <li><?php echo htmlspecialchars($error); ?></li>
+        <?php endforeach; ?>
+      </ul>
+    </div>
+  <?php endif; ?>
+</section>
+
   </div>
   
   <!-- jQuery and Custom Scripts -->
