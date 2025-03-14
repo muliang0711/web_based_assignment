@@ -3,7 +3,7 @@
 </html>
 
 <?php
-$stylesheetArray = ['product.css'];
+$stylesheetArray = ['product-temp.css'];
 
 function link_stylesheet($stylesheetArray) {
   if (!$stylesheetArray) {

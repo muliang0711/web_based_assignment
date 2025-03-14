@@ -13,16 +13,15 @@ class productDb{
         // when using the pfo->query can not accpet variable ; it execute the sql directly ； 
             //stmt = $this->pdo->query("SELECT * FROM product");
             //return $stmt->fetchAll();
-        $sql = "SELECT p.productID, p.productName, p.price, p.seriesID, SUM(ps.quantity) AS total_stock
-        FROM product p
-        JOIN productsize ps ON p.productID = ps.productID
+        $sql = "SELECT p.productID, p.productName, p.price, p.seriesID, ps.sizeID , SUM(ps.quantity) AS total_stock
+        FROM product p 
+        JOIN productsize ps ON p.productID = ps.productID 
         WHERE ps.quantity > 0
-        GROUP BY p.productID, p.productName, p.price, p.seriesID";
+        GROUP BY p.productID, ps.sizeID";
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll();
-
     }
 
     public function filterProduct($filters){
@@ -83,44 +82,64 @@ class productDb{
             $this->insertSeries($seriesID, $seriesName);
 
             // 3. Insert into product table
-            $this->insertProduct($productID, $productName, $price, $seriesID);
+            $this->insertProduct($productID, $productName, $price, $seriesID,$quantity,$sizeID);
+            // inside this phase already call insertProductSize function
   
-            // 4. Insert into product size table
-            $this->insertProductSize($productID, $sizeID, $quantity);
 
-                          // 5. Commit transaction
+            // 4. Commit transaction
             $this->pdo->commit();
 
-  
+            // return secess msg 
+            return ["success" => true, "message" => "Product added successfully."];
         }catch(Exception $e){
-        // Rollback transaction if any error occurs
+            // Rollback transaction if any error occurs
             $this->pdo->rollBack();
-            error_log("Transaction failed: " . $e->getMessage());
-            return false;
-            
+            // Return an error message
+            return ["success" => false, "error" => $e->getMessage()];
+                
         }           
                                                                       
     }
-    
+
     private function insertSeries($seriesID, $seriesName) {
         // Check if the series exists
-        $checkSql = "SELECT seriesName FROM series WHERE seriesName = ? AND seriesID = ? LIMIT 1";
-        $check_series_stmt = $this->pdo->prepare($checkSql);
-        $check_series_stmt->execute([$seriesName, $seriesID]);
+        try{
 
-        // If not exists, insert it
-        if (!$check_series_stmt->fetch()) {
-            $seriesSql = "INSERT INTO series (seriesID, seriesName) VALUES (?, ?)";
-            $insert_series_stmt = $this->pdo->prepare($seriesSql);
-            $insert_series_stmt->execute([$seriesID, $seriesName]);
+            $checkSql = "SELECT seriesName FROM series WHERE seriesName = ? AND seriesID = ? LIMIT 1";
+            $check_stmt = $this->pdo->prepare($checkSql);
+            $check_stmt->execute([$seriesName, $seriesID]);
+
+            // If not exists, insert it
+            if (!$check_stmt->fetch()) {
+                $sql = "INSERT INTO series (seriesID, seriesName) VALUES (?, ?)";
+                $stmt = $this->pdo->prepare($sql);
+                $stmt->execute([$seriesID, $seriesName]);
+            }
+
+        }catch(Exception $e){
+
+            error_log("Transaction failed: " . $e->getMessage());
+            return false;
         }
     }
 
-    private function insertProduct($productID, $productName, $price, $seriesID) {
+    private function insertProduct($productID, $productName, $price, $seriesID,$quantity,$sizeID) {
         try {
-            $sql = "INSERT INTO product (productID, productName, price, seriesID) VALUES (?, ?, ?, ?)";
-            $stmt = $this->pdo->prepare($sql);
-            $stmt->execute([$productID, $productName, $price, $seriesID]);
+            // product exis already : than skip this phase 
+            $checkSql = "SELECT productID FROM product WHERE productID = ? LIMIT 1";
+            $check_stmt = $this->pdo->prepare($checkSql);
+            $check_stmt->execute([$productID]);
+
+            if(!$check_stmt->fetch()){
+                $sql = "INSERT INTO product (productID, productName, price, seriesID) VALUES (?, ?, ?, ?)";
+                $stmt = $this->pdo->prepare($sql);
+                $stmt->execute([$productID, $productName, $price, $seriesID]);
+
+                $this->insertProductSize($productID, $sizeID, $quantity);
+            }else{
+                
+                $this->insertProductSize($productID, $sizeID, $quantity);
+            }
         } catch (Exception $e) {
             throw new Exception("Error inserting product: " . $e->getMessage());
         }
@@ -130,9 +149,11 @@ class productDb{
         // at this phase the one product id can have two sizeID   
         try {
             // since we already check before so here we just need to insert 
-            $sql = "INSERT INTO productsize (productID, sizeID, quantity) VALUES (?, ?, ?)";
+            $sql = "INSERT INTO productsize (productID, sizeID, quantity) VALUES (?, ?, ?)
+                    ON DUPLICATE KEY UPDATE quantity = quantity + VALUES(quantity)";
             $stmt = $this->pdo->prepare($sql);
             $stmt->execute([$productID, $sizeID, $quantity]);
+
         } catch (Exception $e) {
             throw new Exception("Error inserting product size: " . $e->getMessage());
         }
