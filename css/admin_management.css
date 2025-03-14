@@ -3,12 +3,17 @@
 
 }
 .admin_table{
-    margin:20px 20px;
+    margin:20px 40px;
     height: 15vh;
     /* width: 80vw; */
     padding: 10px;
     border-collapse: collapse;
     text-align:center;
+}
+.admin_header{
+background-color:aliceblue;
+font-size: 20px;
+height:8vh;
 }
 .content{
  
@@ -20,8 +25,8 @@
 
 }
 .row{
-    background-color: rgb(209, 227, 252);
-
+    /* background-color: rgb(209, 227, 252); */
+    height: 5vh;
 }
 
  .searchBar{

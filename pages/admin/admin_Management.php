@@ -16,9 +16,10 @@ $arr = $_db->query('SELECT * FROM admin')->fetchAll();
 
 <div class="admin_container">
 <table class="admin_table">
-<tr>
+<tr class="admin_header">
     <th>ID</th>
     <th>Position</th>
+    <th></th>
 </tr>
 <?php foreach ($arr as $a): ?>
     <tr class="row">
