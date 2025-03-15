@@ -22,13 +22,14 @@ class ProductController{
                 $this->addProduct(); // done 
                 break;
             case 'updateProduct':
-                $this->updateProduct(); 
+                $this->updateProduct(); // done 
                 break;
             case 'deleteProduct':
                 $this->deleteProduct(); //
                 break;
             case 'filterProduct':
                 $this->filterProducts(); //done 
+                break;
             default:
                 $_SESSION['errors'] = 'Invalid action';
                 $this->redirectToAdmin();
@@ -41,6 +42,7 @@ class ProductController{
             'priceMin' => isset($_POST['minPrice']) ? (float) $_POST['minPrice'] : null,
             'priceMax' => isset($_POST['maxPrice']) ? (float) $_POST['maxPrice'] : null,
             'seriesID' => $_POST['seriesID'] ?? null,
+            'sizeID' => $_POST['sizeID'] ?? null, 
         ];
         /* when process the data send from frontend , data will loke likes this : associative array:
         [
@@ -78,7 +80,7 @@ class ProductController{
             'productName' => $_POST['productName'] ?? null,
             'seriesId' => $_POST['seriesId'] ?? null,
             'seriesName' => $_POST['seriesName'] ?? null,
-            'sizeId' => $_POST['sizeId'] ?? null,
+            'sizeId' => $_POST['sizeId'] ?? null,  
             'stock' => $_POST['stock'] ?? null,
             'price' => $_POST['price'] ?? null,
         ];
@@ -89,6 +91,14 @@ class ProductController{
          // valdation : ensure the components of productId and sizeId existing in db
          // not longer need 
 
+         // SAME product idalready existing than return error :
+         $products = $this->getAllProducts();
+         foreach($products as $product){
+             if($productInformation['productId'] == $product->productID && $productInformation['seriesId'] == $product->productseriesID){
+                 $errors = ['ProductId existing already ']; 
+             }
+         
+         }
          // If there are validation errors, return them
         if (!empty($errors)) {
             $_SESSION['Add_ErrorMsg'] = $errors;
@@ -129,7 +139,8 @@ class ProductController{
             $_SESSION['Update_ErrorMsg'] = $errors;
             $this->redirectToAdmin();
         }
-
+       
+            
         $result = $this->productDb->updateProducts($productInformation);
 
         if($result['success']){
@@ -143,8 +154,41 @@ class ProductController{
     }
 
     private function deleteProduct() {
-        // Implementation for deleting a product
+
+        $productInformation = [
+            'productId' => $_POST['productId'] ?? null,
+            'productName' => $_POST['productName'] ?? null,
+            'seriesId' => $_POST['seriesId'] ?? null,
+            'seriesName' => $_POST['seriesName'] ?? null,
+            'sizeId' => $_POST['sizeId'] ?? null,
+            'stock' => $_POST['stock'] ?? null,
+            'price' => $_POST['price'] ?? null,
+        ];
+
+        $errors = [];
+        $errors[] = $this->validation($productInformation);
+        if(!empty($errors)){
+            $_SESSION['Update_ErrorMsg'] = $errors;
+            $this->redirectToAdmin();
+        }
+
+        // else the data is clean so we call out the sql service :
+        // save the sql result in variavble : 
+        $result = $this->productDb->deleteProduct($productInformation);
+
+        // validate if the error happend : for debug issue 
+
+        if($result['success']){
+            // save the sccess msg and return :
+            $_SESSION['Delete_SuccessMsg'] = 'sucessdelete';
+        }else{
+            // else return error msg : 
+            $_SESSION['Delete_ErrorMsg'] = 'Failed delete ' . $result['DBerrormsg'];
+        }
+        $this->redirectToAdmin();
     }
+
+  
 
     private function redirectToAdmin() {
         header('Location: ../pages/admin/admin_product.php');
@@ -200,7 +244,7 @@ class ProductController{
            $errors[] = " sizeID cannot be null!";
         // need to add on validation number cannot more than 3
         }elseif (strlen($productInformation['sizeId']) > 4) {
-           $errors[] = " Size ID cannot exceed 3 characters.";
+           $errors[] = " Size ID cannot exceed 4 characters.";
        }
        return $errors ;
     }

@@ -13,48 +13,84 @@ class productDb{
         // when using the pfo->query can not accpet variable ; it execute the sql directly ； 
             //stmt = $this->pdo->query("SELECT * FROM product");
             //return $stmt->fetchAll();
-        $sql = "SELECT p.productID, p.productName, p.price, p.seriesID, ps.sizeID , s.seriesName , SUM(ps.quantity) AS total_stock
-        FROM product p 
-        JOIN productsize ps ON p.productID = ps.productID 
-        JOIN series s ON p.seriesID = s.seriesID
-        WHERE ps.quantity > 0
-        GROUP BY p.productID, ps.sizeID";
+        $sql = "SELECT 
+            p.productID, 
+            p.productName, 
+            p.price, 
+            p.seriesID, 
+            s.seriesName, 
+            ps.sizeID, 
+            ps.quantity AS total_stock 
+            FROM product p
+            JOIN productsize ps ON p.productID = ps.productID
+            JOIN series s ON p.seriesID = s.seriesID
+            ORDER BY p.productID, ps.sizeID;";
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll();
     }
 
-    public function filterProduct($filters){
-        // 2. get one product :
-        // logic :
-        // 1. we set a base sql sentences(it return everything) 
-        // 2. when detetect specific filter value turn it we appned to the base sql 
-            // 2.1  since the variable is not fixed we use array:params to save the value 
-            $sql = "SELECT * FROM product WHERE 1=1"; 
-            $params = [];
+    public function filterProduct($filters) {
+        $sql = "SELECT 
+                    p.productID, 
+                    p.productName, 
+                    p.price, 
+                    p.seriesID, 
+                    s.seriesName, 
+                    ps.sizeID, 
+                    ps.quantity AS stock,
+                    SUM(ps.quantity) OVER (PARTITION BY p.productID) AS total_stock
+                FROM product p
+                JOIN productsize ps ON p.productID = ps.productID
+                JOIN series s ON p.seriesID = s.seriesID
+                WHERE 1=1"; 
     
-            if (!empty($filters['productName'])) {
-                $sql .= " AND productName LIKE ?";
-                $params[] = "%" . $filters['productName'] . "%";
-            }
-            if (!empty($filters['seriesID'])) {
-                $sql .= " AND seriesID = ?";
-                $params[] = $filters['seriesID'];
-            }
-            if (!empty($filters['priceMin'])) {
-                $sql .= " AND price >= ?";
-                $params[] = $filters['priceMin']; 
-            }
-            if (!empty($filters['priceMax'])) {
-                $sql .= " AND price <= ?";
-                $params[] = $filters['priceMax']; 
-            }
+        $params = [];
+        $filterBySize = false;
+        $filterByNameOnly = !empty($filters['productName']) && empty($filters['sizeID']);
     
-            $stmt = $this->pdo->prepare($sql);
-            $stmt->execute($params);
-            return $stmt->fetchAll();
+        // Product Name Filter
+        if (!empty($filters['productName'])) {
+            $sql .= " AND p.productName LIKE ?";
+            $params[] = "%" . $filters['productName'] . "%";
+        }
+    
+        // Series Filter
+        if (!empty($filters['seriesID'])) {
+            $sql .= " AND p.seriesID = ?";
+            $params[] = $filters['seriesID'];
+        }
+    
+        // Price Filters
+        if (!empty($filters['priceMin'])) {
+            $sql .= " AND p.price >= ?";
+            $params[] = $filters['priceMin']; 
+        }
+        if (!empty($filters['priceMax'])) {
+            $sql .= " AND p.price <= ?";
+            $params[] = $filters['priceMax']; 
+        }
+    
+        // Product Size Filter
+        if (!empty($filters['sizeID'])) {
+            $sql .= " AND ps.sizeID = ?";
+            $params[] = $filters['sizeID'];
+            $filterBySize = true;
+        }
+    
+        // Ensure the correct grouping when searching by name only (returns all sizes)
+        if ($filterByNameOnly) {
+            $sql .= " GROUP BY p.productID, ps.sizeID";
+        }
+    
+        $sql .= " ORDER BY p.productID, ps.sizeID";
+    
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute($params);
+        return $stmt->fetchAll();
     }
+    
     
     public function addProduct($productInformation){
         // since we already check data is correct in service side : 
@@ -91,7 +127,7 @@ class productDb{
             $this->pdo->commit();
 
             // return secess msg 
-            return ["success" => true , "success" => "Add successful"];
+            return ["success" => true , "message" => "Add successful"];
         }catch(Exception $e){
             // Rollback transaction if any error occurs
             $this->pdo->rollBack();
@@ -126,21 +162,14 @@ class productDb{
 
     private function insertProduct($productID, $productName, $price, $seriesID,$quantity,$sizeID) {
         try {
-            // product exis already : than skip this phase 
-            $checkSql = "SELECT productID FROM product WHERE productID = ? LIMIT 1";
-            $check_stmt = $this->pdo->prepare($checkSql);
-            $check_stmt->execute([$productID]);
 
-            if(!$check_stmt->fetch()){
-                $sql = "INSERT INTO product (productID, productName, price, seriesID) VALUES (?, ?, ?, ?)";
-                $stmt = $this->pdo->prepare($sql);
-                $stmt->execute([$productID, $productName, $price, $seriesID]);
 
-                $this->insertProductSize($productID, $sizeID, $quantity);
-            }else{
+            $sql = "INSERT INTO product (productID, productName, price, seriesID) VALUES (?, ?, ?, ?)";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute([$productID, $productName, $price, $seriesID]);
 
-                $this->insertProductSize($productID, $sizeID, $quantity);
-            }
+            $this->insertProductSize($productID, $sizeID, $quantity);
+
         } catch (Exception $e) {
             throw new Exception("Error inserting product: " . $e->getMessage());
         }
@@ -193,7 +222,7 @@ class productDb{
             $this->pdo->commit();
 
             // return message when sucess : 
-            return ["success" => true , "success" => "update successful"];
+            return ["success" => true , "message" => "update successful"];
 
         }catch(Exception $e){
 
@@ -235,14 +264,49 @@ class productDb{
 
         try{
             $sql = "UPDATE productsize set sizeID = ? , quantity = ? 
-                    WHERE productID = ? AND sizeID = ?" ;
+                    WHERE productID = ? " ;
             $stmt = $this->pdo->prepare($sql);
-            $stmt->execute([ $sizeID , $quantity ,  $productID , $sizeID]);
+            $stmt->execute([ $sizeID , $quantity ,  $productID ]);
         }catch(Exception $e){
             throw new Exception("Error insert into productSize : " . $e->getMessage());
         }
     }
-
+    public function deleteProduct($productInformation) {
+        try {
+            // fetch data :
+            $productID = $productInformation['productId'];
+            $sizeID = $productInformation['sizeId'];
+            // Step 1: Check if product and size exist
+            $checkStmt = $this->pdo->prepare("SELECT COUNT(*) FROM productsize WHERE productID = ? AND sizeID = ?");
+            $checkStmt->execute([$productID, $sizeID]);
+            $exists = $checkStmt->fetchColumn();
+    
+            if ($exists == 0) {
+                return "Error: Product with this size does not exist.";
+            }
+    
+            // Step 2: Delete the specific product-size combination
+            $deleteSizeStmt = $this->pdo->prepare("DELETE FROM productsize WHERE productID = ? AND sizeID = ?");
+            $deleteSizeStmt->execute([$productID, $sizeID]);
+    
+            // Step 3: Check if product has any remaining sizes
+            $remainingStmt = $this->pdo->prepare("SELECT COUNT(*) FROM productsize WHERE productID = ?");
+            $remainingStmt->execute([$productID]);
+            $remainingSizes = $remainingStmt->fetchColumn();
+    
+            // Step 4: If no sizes remain, delete the product itself
+            if ($remainingSizes == 0) {
+                $deleteProductStmt = $this->pdo->prepare("DELETE FROM product WHERE productID = ?");
+                $deleteProductStmt->execute([$productID]);
+                return "Product deleted completely as it had no more sizes.";
+            }
+    
+            return "Product size deleted successfully.";
+        } catch (PDOException $e) {
+            return "Database error: " . $e->getMessage();
+        }
+    }
+    
 }
 
 
