@@ -166,9 +166,9 @@ class ProductController{
         ];
 
         $errors = [];
-        $errors[] = $this->validation($productInformation);
+        $errors = $this->validation($productInformation);
         if(!empty($errors)){
-            $_SESSION['Update_ErrorMsg'] = $errors;
+            $_SESSION['Delete_ErrorMsg'] = $errors;
             $this->redirectToAdmin();
         }
 
@@ -180,10 +180,10 @@ class ProductController{
 
         if($result['success']){
             // save the sccess msg and return :
-            $_SESSION['Delete_SuccessMsg'] = 'sucessdelete';
+            $_SESSION['Delete_SuccessMsg'] = 'sucess delete';
         }else{
             // else return error msg : 
-            $_SESSION['Delete_ErrorMsg'] = 'Failed delete ' . $result['DBerrormsg'];
+            $_SESSION['Delete_ErrorMsg'] = ['Failed delete ' . $result['message']];
         }
         $this->redirectToAdmin();
     }

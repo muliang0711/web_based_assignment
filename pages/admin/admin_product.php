@@ -163,29 +163,32 @@ unset($_SESSION['Delete_ErrorMsg']);
 
 
         <!-- delete form -->
-        <form action="../../controller/productController.php" method="post" style="display: none;">
+         <div>
+         <form action="../../controller/productController.php" method="post" style="display: none;">
 
-          <input type="hidden" name="action" value="deleteProduct" hidden>
+            <input type="hidden" name="action" value="deleteProduct" hidden>
 
-          <input type="text" name="productId" value="<?php echo htmlspecialchars($product->productID); ?>" hidden >
+            <input type="text" name="productId" value="<?php echo htmlspecialchars($product->productID); ?>" hidden >
 
-          <input type="text" name="productName" value="<?php echo htmlspecialchars($product->productName); ?>"hidden>
+            <input type="text" name="productName" value="<?php echo htmlspecialchars($product->productName); ?>"hidden>
 
-          <input type="text" name="seriesId" value="<?php echo htmlspecialchars($product->seriesID); ?>" hidden>
+            <input type="text" name="seriesId" value="<?php echo htmlspecialchars($product->seriesID); ?>" hidden>
 
-          <label>Series Name</label>
-          <input type="text" name="seriesName" value="<?php echo htmlspecialchars($product->seriesName); ?>" hidden>
+            <label>Series Name</label>
+            <input type="text" name="seriesName" value="<?php echo htmlspecialchars($product->seriesName); ?>" hidden>
 
-          <label>Price</label>
-          <input type="text" name="price" value="<?php echo number_format($product->price, 2); ?>" hidden>
+            <label>Price</label>
+            <input type="text" name="price" value="<?php echo number_format($product->price, 2); ?>" hidden>
 
-          <label>Stock</label>
-          <input type="text" name="stock" value="<?php echo htmlspecialchars($product->total_stock); ?>" hidden>
+            <label>Stock</label>
+            <input type="text" name="stock" value="<?php echo htmlspecialchars($product->total_stock); ?>" hidden>
 
-          <label>Size ID</label>
-          <input type="text" name="sizeId" value="<?php echo htmlspecialchars($product->sizeID); ?>" hidden>
+            <label>Size ID</label>
+            <input type="text" name="sizeId" value="<?php echo htmlspecialchars($product->sizeID); ?>" hidden>
 
         </form>
+         </div>
+        
 
             <button class="btn btn-update updateProductBtn" data-index="<?php echo $index; ?>">Update</button>
             <button type="submit" class="btn btn-delete" data-index="<?php echo $index; ?>"
@@ -197,7 +200,7 @@ unset($_SESSION['Delete_ErrorMsg']);
                 data-stock="<?php echo htmlspecialchars($product->total_stock); ?>"
                 data-sizeid="<?php echo htmlspecialchars($product->sizeID); ?>">
               Delete
-          </button>
+            </button>
             <!-- Update Form (toggled via JS) -->
             <div class="update-form updateForm-<?php echo $index; ?>">
               <form action="../../controller/productController.php" method="post">
@@ -302,15 +305,16 @@ unset($_SESSION['Delete_ErrorMsg']);
     </div>
   <?php endif; ?>
 
-  <?php if (!empty($DeleteErrorMsg)): ?>
+  <?php if (!empty($Delete_ErrorMsg)): ?>
     <div class="error-messages">
       <ul>
         <?php foreach ($Delete_ErrorMsg as $error): ?>
-          <li><?php echo htmlspecialchars($error); ?></li>
+          <li><?php var_dump($error); ?> </li> <!-- Debugging Output -->
         <?php endforeach; ?>
       </ul>
     </div>
-  <?php endif; ?>
+<?php endif; ?>
+
 </section>
 
   </div>
@@ -346,8 +350,17 @@ unset($_SESSION['Delete_ErrorMsg']);
         $(".updateForm-" + index).slideUp();
       });
       $(".btn-delete").click(function(e) {
-        e.preventDefault();
+        e.preventDefault(); // Prevent default behavior
         
+        var productCard = $(this).closest(".product-card");
+        var deleteForm = productCard.find("form"); // Find the hidden delete form
+        
+        var deleteForm = productCard.find("form").first();
+
+if (deleteForm.length === 0) {
+    console.log("Error: Delete form not found! Please check HTML structure.");
+    return;
+}
         var productName = $(this).data("productname");
         var productId   = $(this).data("productid");
         var seriesId    = $(this).data("seriesid");
@@ -355,7 +368,7 @@ unset($_SESSION['Delete_ErrorMsg']);
         var price       = $(this).data("price");
         var stock       = $(this).data("stock");
         var sizeId      = $(this).data("sizeid");
-        
+
         var confirmMessage = "Are you sure you want to delete the following product?\n\n";
         confirmMessage += "Product Name: " + productName + "\n";
         confirmMessage += "Product ID: " + productId + "\n";
@@ -364,11 +377,11 @@ unset($_SESSION['Delete_ErrorMsg']);
         confirmMessage += "Price: $" + price + "\n";
         confirmMessage += "Stock: " + stock + "\n";
         confirmMessage += "Size ID: " + sizeId + "\n";
-        
+
         if (confirm(confirmMessage)) {
-          $(this).closest(".product-card").find("form[action*='deleteProduct']").submit();
+            deleteForm.submit(); // Correctly submit the form
         }
-      });
+    });
     });
     
   </script>

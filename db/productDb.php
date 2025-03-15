@@ -162,14 +162,22 @@ class productDb{
 
     private function insertProduct($productID, $productName, $price, $seriesID,$quantity,$sizeID) {
         try {
+            // product exis already : than skip this phase 
+            $checkSql = "SELECT productID FROM product WHERE productID = ? LIMIT 1";
+            $check_stmt = $this->pdo->prepare($checkSql);
+            $check_stmt->execute([$productID]);
 
+            if(!$check_stmt->fetch()){
+                // if not existing than insert data into product first :
+                $sql = "INSERT INTO product (productID, productName, price, seriesID) VALUES (?, ?, ?, ?)";
+                $stmt = $this->pdo->prepare($sql);
+                $stmt->execute([$productID, $productName, $price, $seriesID]);
 
-            $sql = "INSERT INTO product (productID, productName, price, seriesID) VALUES (?, ?, ?, ?)";
-            $stmt = $this->pdo->prepare($sql);
-            $stmt->execute([$productID, $productName, $price, $seriesID]);
-
-            $this->insertProductSize($productID, $sizeID, $quantity);
-
+                $this->insertProductSize($productID, $sizeID, $quantity);
+            }else{
+                
+                $this->insertProductSize($productID, $sizeID, $quantity);
+            }
         } catch (Exception $e) {
             throw new Exception("Error inserting product: " . $e->getMessage());
         }
@@ -298,12 +306,12 @@ class productDb{
             if ($remainingSizes == 0) {
                 $deleteProductStmt = $this->pdo->prepare("DELETE FROM product WHERE productID = ?");
                 $deleteProductStmt->execute([$productID]);
-                return "Product deleted completely as it had no more sizes.";
+                return ["success" => true , "message" => "delete successful"];
             }
     
-            return "Product size deleted successfully.";
+            return ["success" => true , "message" => "delete successful"];
         } catch (PDOException $e) {
-            return "Database error: " . $e->getMessage();
+            return ["success" => false, "error" => $e->getMessage()];
         }
     }
     
