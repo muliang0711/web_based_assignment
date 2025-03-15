@@ -206,6 +206,7 @@ class productDb{
         $sizeID = $productInformation['sizeId'];
         $price = $productInformation['price'];
         $quantity = $productInformation['stock']; 
+        $oldSizeID = $productInformation['oldSizeID'];
 
         try {
 
@@ -223,7 +224,7 @@ class productDb{
 
             // update productsize :
 
-            $this->updateProductSize($sizeID , $quantity ,  $productID);
+            $this->updateProductSize($sizeID , $quantity ,  $productID , $oldSizeID );
 
             // commit when done : 
 
@@ -256,7 +257,7 @@ class productDb{
 
     }
 
-    private function updateProduct($productName , $price , $seriesID , $productID ){
+    private function updateProduct($productName , $price , $seriesID , $productID  ){
         try{
             $sql = "UPDATE product set productName = ? , price = ? , seriesID = ? 
                     WHERE productID = ? " ;
@@ -268,17 +269,32 @@ class productDb{
         }
     }
 
-    private function updateProductSize($sizeID , $quantity ,  $productID ){
-
-        try{
-            $sql = "UPDATE productsize set sizeID = ? , quantity = ? 
-                    WHERE productID = ? " ;
-            $stmt = $this->pdo->prepare($sql);
-            $stmt->execute([ $sizeID , $quantity ,  $productID ]);
-        }catch(Exception $e){
-            throw new Exception("Error insert into productSize : " . $e->getMessage());
+    private function updateProductSize($sizeID, $quantity, $productID, $oldSizeID) {
+        try {
+            // Step 1: Delete the old entry first
+            $deleteStmt = $this->pdo->prepare("DELETE FROM productsize WHERE productID = ? AND sizeID = ?");
+            $deleteStmt->execute([$productID, $oldSizeID]);
+    
+            // Step 2: Check if the new (productID, sizeID) already exists
+            $checkStmt = $this->pdo->prepare("SELECT COUNT(*) FROM productsize WHERE productID = ? AND sizeID = ?");
+            $checkStmt->execute([$productID, $sizeID]);
+            $exists = $checkStmt->fetchColumn();
+    
+            if ($exists > 0) {
+                throw new Exception("Error: The combination of productID and sizeID already exists.");
+            }
+    
+            // Step 3: Insert new data
+            $insertStmt = $this->pdo->prepare("INSERT INTO productsize (productID, sizeID, quantity) VALUES (?, ?, ?)");
+            $insertStmt->execute([$productID, $sizeID, $quantity]);
+    
+        } catch (Exception $e) {
+            throw new Exception("Error updating productSize: " . $e->getMessage());
         }
     }
+    
+    
+
     public function deleteProduct($productInformation) {
         try {
             // fetch data :

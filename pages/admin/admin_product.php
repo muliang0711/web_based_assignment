@@ -212,12 +212,10 @@ unset($_SESSION['Delete_ErrorMsg']);
                 
                 <label>Product Name</label>
                 <input type="text" name="productName" value="<?php echo htmlspecialchars($product->productName); ?>">
-            
-                <label>Series ID</label>
-                <input type="text" name="seriesId" value="<?php echo htmlspecialchars($product->seriesID); ?>">
-                
-                <label>Series Name</label>
-                <input type="text" name="seriesName" value="<?php echo htmlspecialchars($product->seriesName); ?>">
+
+                <input type="text" name="seriesId" value="<?php echo htmlspecialchars($product->seriesID); ?>" hidden >
+ 
+                <input type="text" name="seriesName" value="<?php echo htmlspecialchars($product->seriesName); ?>"hidden>
 
                 <label>Price</label>
                 <input type="text" name="price" value="<?php echo number_format($product->price, 2); ?>">
@@ -228,6 +226,9 @@ unset($_SESSION['Delete_ErrorMsg']);
                 <label>Size ID</label>
                 <input type="text" name="sizeId" value="<?php echo htmlspecialchars($product->sizeID); ?>">
                 
+                <input type="text" name="oldSizeID" value="<?php echo htmlspecialchars($product->sizeID); ?>" hidden>
+                
+
                 <div style="margin-top:10px;">
                   <button type="submit" class="btn btn-update">Save Changes</button>
 
