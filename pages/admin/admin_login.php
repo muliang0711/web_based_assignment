@@ -30,7 +30,7 @@ if (is_post()) {
         $u = $stm->fetch();
 
         // If id exists, and password is correct
-        if ($u && $password ==$u->password) {
+        if ($u && pwMatch($password, $u->password)) {
             login($u->id);
             
             temp('info', "Logged in as $u->id");

@@ -69,12 +69,56 @@ h1 {
     grid-template-columns: 0.37fr 0.63fr 0.44fr 0.36fr 0.20fr;
 }
 
-.order span, .order-header span{
+.order span, .order-header span {
     align-content: center;
     overflow: hidden;
     height: 40px;
     color: var(--lessImportant);
     padding: 0px 35px;
+
+}
+
+.order-header span:last-child {
+    padding: 0px 0px;
+    justify-self: end;
+}
+
+
+#filter-button {
+     :hover{
+        cursor:pointer;
+     }   
+
+}
+
+#filter-menu {
+    position: fixed;
+    transform: translate(45px, -30px);
+    width: 160px;
+    height: 0px;
+    background: rgba(211, 210, 210, 0.747);
+    border-radius: 7px;
+    transition: height 0.35s ease;
+
+}
+
+#filter-menu.show {
+    height: 240px;
+
+}
+
+#filter-menu.show::after {
+        position: fixed;
+        transform: translate(30px, -20px);
+        content: "";
+        width: 10000px;
+        height: 100px;
+        border: 2px solid red;
+        border-top: 2px;
+        border-right: 2px;
+        border-bottom: 2px;
+        /*border-color: rgba(211, 210, 210, 0.747);*/
+
 }
 
 .dropdown {
