@@ -25,4 +25,8 @@ $(() => {
     })
 
 
+    $("#filter-button").on('click', (e) => {
+        $("#filter-menu").toggleClass('show');
+    });
+
 })
