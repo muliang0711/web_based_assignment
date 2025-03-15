@@ -94,7 +94,7 @@ if(is_post()){
 
     // If no error, insert data into db and reload page
     if (!$_errors) {
-        echo "helloooo\n";
+        // echo "helloooo\n";
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
         $stm = $_db->prepare('INSERT INTO admin
                             (id, position, password, adminLevel)
