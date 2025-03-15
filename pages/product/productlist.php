@@ -17,22 +17,6 @@ $title = 'Product List';
 //       }
 //   } 
 
-if (is_post()) {
-    if (isset($_POST['series'])) {
-        $selected_series = $_POST['series'];
-        echo "You selected: " . htmlspecialchars($selected_series);
-    } 
-    else {
-        echo "No series selected.";
-    }
-}
-
-if (is_post()) {
-    if (isset($_POST['series' == 'Arc'])) {
-        echo "<img src='" . htmlspecialchars($imageSrc) . "' width='300' alt='Product Image'>";
-    }
-}
-
 // Get product data from database
 $_db = new PDO('mysql:dbname=web_based_assignment','root', '',[
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
@@ -43,6 +27,13 @@ $productObjectArray = $statement->fetchAll();
 
 include '../../_head.php';
 ?>
+
+<form method="get" action="../product/searchResult.php?search=?">
+    <div class="searchContainer">
+     <input type="text" id="search" name="search" maxlength="30" class="input" placeholder="S E A R C H">
+    </div>
+   <button><img src="illustration-magnifying-glass-icon.png"></button>
+</form> 
 
 
 <!-- TopSide Menu -->
