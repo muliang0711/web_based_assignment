@@ -93,7 +93,6 @@ class productDb{
         return $stmt->fetchAll();
     }
     
-    
     public function addProduct($productInformation){
         // since we already check data is correct in service side : 
         // now we just need to fecth data and turn into sql 
@@ -237,49 +236,47 @@ class productDb{
         // Step 1 : fetch orderitem with status Deliverd first : --> clean data :
         // select oi.orderID , oi.productID ,  oi.quantity , oi.subtotal from orderitems where oi.orderid = o.orderid ;     
         
-        try{
-            // fetch data : 
+        try {
+            // Fetch filter data (assuming frontend always sends values)
             $startDate = $filterData['startDate'];
-            $endDate = $filterData['endDate']; // asume the frontend always send data 
-            $status = $filterData['status'] ?? null; 
-
-            // baseSql : 
-            $baseSql = "SELECT oi.orderId , 
-                        oi.productId , 
-                        SUM(oi.subtotal) AS total_revenue , 
-                        SUM(oi.quantity) AS total_quantity
+            $endDate = $filterData['endDate'];
+            $status = $filterData['status'] ?? null;
+    
+            // Base SQL Query
+            $baseSql = "SELECT 
+                            oi.orderId, 
+                            oi.productId, 
+                            SUM(oi.subtotal) AS total_revenue, 
+                            SUM(oi.quantity) AS total_quantity
                         FROM order_items oi 
-                        JOIN order o ON oi.orderId = o.orderId 
-                        WHERE o.orderDate BETWEEN ? AND ? ";
-                        // GROUP BY oi.productId";
-            
-            // validation : 
-
-            // make a params for execute : 
-            $params = ['startDate , endDate '];
-
-            if($status){
-                $baseSql .= "AND status = $status " ; 
+                        JOIN orders o ON oi.orderId = o.orderId 
+                        WHERE o.orderDate BETWEEN ? AND ?";
+    
+            // Parameters for execution
+            $params = [$startDate, $endDate];
+    
+            // Add status filter
+            if ($status) {
+                $baseSql .= " AND o.status = ?";
+                $params[] = $status;
             }
-
+    
             // Grouping by productId
             $baseSql .= " GROUP BY oi.productId ORDER BY total_quantity DESC";
-
-            // start executee : 
-            $salesData = $this->pdo->prepare($baseSql);
-            $salesData->execute($params);
-
-            // validatio  result : 
-            if(!$salesData){
-                return [['success'] => false , ['message'] => 'no data found'] ;
+    
+            // Execute query
+            $stmt = $this->pdo->prepare($baseSql);
+            $stmt->execute($params);
+            $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+            // Check if data exists
+            if (!$data) {
+                return ["success" => false, "message" => "No sales data found"];
             }
-
-            // success 
-            return ["success" => true, "data" => $salesData];
-            
+    
+            return ["success" => true, "data" => $data];
+    
         } catch (Exception $e) {
-
-            // false 
             return ["success" => false, "error" => $e->getMessage()];
         }
     }
@@ -292,38 +289,40 @@ class productDb{
         // show total_sales_quantity based (productid and gripId) quantity on the orderitem 
         // show total_revune based on SUM the same subtotal with same productID and gripsize 
         try {
-
-         // Fetch filters (assuming frontend always sends values)
-        $startDate = $filterData['startDate'];
-        $endDate = $filterData['endDate'];
-
-        // SQL query
-        $sql = "SELECT 
-                    p.productID,
-                    p.seriesID,
-                    ps.sizeID,
-                    SUM(oi.quantity) AS total_sales,
-                    SUM(oi.subtotal) AS total_revenue
-                FROM product p
-                JOIN productsize ps ON p.productID = ps.productID
-                JOIN order_items oi ON ps.productID = oi.productId AND ps.sizeID = oi.gripSize
-                JOIN orders o ON oi.orderId = o.orderId
-                WHERE o.orderDate BETWEEN ? AND ?
-                GROUP BY p.productID, p.seriesID, ps.sizeID
-                ORDER BY total_sales DESC";
-
-        // Prepare and execute query
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute([$startDate, $endDate]);
-        $result = $stmt->fetchAll();
-
-        // Return data
-        return ["success" => true, "data" => $result];
-
-    }catch (Exception $e) {
-
-        return ["success" => false, "error" => $e->getMessage()];
-    }
+            // Fetch filters
+            $startDate = $filterData['startDate'];
+            $endDate = $filterData['endDate'];
+    
+            // SQL Query
+            $sql = "SELECT 
+                        p.productID,
+                        p.seriesID,
+                        ps.sizeID,
+                        SUM(oi.quantity) AS total_sales,
+                        SUM(oi.subtotal) AS total_revenue
+                    FROM product p
+                    JOIN productsize ps ON p.productID = ps.productID
+                    JOIN order_items oi ON ps.productID = oi.productId AND ps.sizeID = oi.gripSize
+                    JOIN orders o ON oi.orderId = o.orderId
+                    WHERE o.orderDate BETWEEN ? AND ?
+                    GROUP BY p.productID, p.seriesID, ps.sizeID
+                    ORDER BY total_sales DESC";
+    
+            // Execute query
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute([$startDate, $endDate]);
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+            // Check if data exists
+            if (!$result) {
+                return ["success" => false, "message" => "No sales data found."];
+            }
+    
+            return ["success" => true, "data" => $result];
+    
+        } catch (Exception $e) {
+            return ["success" => false, "error" => $e->getMessage()];
+        }
     }
 
     public function autoCalculateProductStock($orderProduct){

@@ -25,7 +25,7 @@ class ProductController{
                 $this->updateProduct(); // done 
                 break;
             case 'deleteProduct':
-                $this->deleteProduct(); //
+                $this->deleteProduct(); // done 
                 break;
             case 'filterProduct':
                 $this->filterProducts(); //done 
@@ -35,6 +35,12 @@ class ProductController{
                 $this->redirectToAdmin();
             }
     }
+
+    public  function getAllProducts(){
+        return  $this->productDb->getAllProducts();
+    }
+
+//====================== All Private Function : 
 
     private function filterProducts() {
         $filters = [
@@ -88,37 +94,33 @@ class ProductController{
 
         $errors = $this->validation($productInformation);
 
-         // valdation : ensure the components of productId and sizeId existing in db
-         // not longer need 
+        // valdation : ensure the components of productId and sizeId existing in db
+        // not longer need 
 
-         // SAME product idalready existing than return error :
-         $products = $this->getAllProducts();
-         foreach($products as $product){
-             if($productInformation['productId'] == $product->productID && $productInformation['seriesId'] == $product->productseriesID){
-                 $errors = ['ProductId existing already ']; 
-             }
-         
-         }
-         // If there are validation errors, return them
+        // SAME product idalready existing than return error :
+        $products = $this->getAllProducts();
+        foreach($products as $product){
+            if($productInformation['productId'] == $product->productID && $productInformation['seriesId'] == $product->productseriesID){
+                $errors = ['ProductId existing already ']; 
+            }
+        
+        }
+        // If there are validation errors, return them
         if (!empty($errors)) {
             $_SESSION['Add_ErrorMsg'] = $errors;
             $this->redirectToAdmin();
         }
-    
+
         // Try inserting the product
         $result = $this->productDb->addProduct($productInformation);
-    
+
         if ($result['success']) {
             $_SESSION['Add_SuccessMsg'] = "Product '{$productInformation['productName']}' (ID: {$productInformation['productId']}) has been successfully added!";
         } else {
             $_SESSION['Add_ErrorMsg'] = ["Failed to add product. Reason: " . $result['error']];
         }
-    
-        $this->redirectToAdmin();
-    }
 
-    public  function getAllProducts(){
-        return  $this->productDb->getAllProducts();
+        $this->redirectToAdmin();
     }
 
     private function updateProduct() {
@@ -141,7 +143,7 @@ class ProductController{
             $_SESSION['Update_ErrorMsg'] = $errors;
             $this->redirectToAdmin();
         }
-       
+    
             
         $result = $this->productDb->updateProducts($productInformation);
 
@@ -189,8 +191,6 @@ class ProductController{
         }
         $this->redirectToAdmin();
     }
-
-  
 
     private function redirectToAdmin() {
         header('Location: ../pages/admin/admin_product.php');
@@ -250,6 +250,8 @@ class ProductController{
        }
        return $errors ;
     }
+
+//====================================================================================
 }
 $productController = new ProductController($_db);
 $productController->handleRequest();
