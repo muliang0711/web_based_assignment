@@ -1,6 +1,8 @@
 <?php
 include_once __DIR__ . '/../db_connection.php';
 
+// planing : I want these file only can control product crud 
+
 class productDb{
     
     private $pdo;
@@ -192,7 +194,23 @@ class productDb{
             $productID = $productInformation['productId'];
             $sizeID = $productInformation['sizeId'];
             // Step 0 : check if the productID is as fk on the orderitem and status with order status with not is Delivered than direct return fail : 
+            
+            $orderCheckStmt = $this->pdo->prepare("
+                SELECT COUNT(*)
+                FROM order_items oi
+                JOIN orders o ON oi.orderId = o.orderId
+                WHERE oi.productId = ? AND oi.gripSize = ? 
+            ");
+            $orderCheckStmt->execute([$productID, $sizeID]);
+            $orderExists = $orderCheckStmt->fetchColumn();
 
+            // If order exists 
+            if ($orderExists > 0) {
+                return [
+                    "success" => false,
+                    "message" => "Cannot delete product. It is referenced in an order."
+                ];
+            }
 
             // Step 1: Check if product and size exist
             $checkStmt = $this->pdo->prepare("SELECT COUNT(*) FROM productsize WHERE productID = ? AND sizeID = ?");
@@ -245,7 +263,6 @@ class productDb{
             // Base SQL Query
             $baseSql = "SELECT 
                             oi.orderId, 
-                            oi.productId, 
                             SUM(oi.subtotal) AS total_revenue, 
                             SUM(oi.quantity) AS total_quantity
                         FROM order_items oi 
@@ -361,7 +378,7 @@ class productDb{
 
 //==================================== ALL Private function will be here : 
 
-// =============================== Support Update Function ===================================================================
+    // =============================== Support Update Function ===================================================================
 
     /*private function updateSeries($seriesName , $seriesID ,  $oldSeriesID ){
         try{
@@ -421,7 +438,7 @@ class productDb{
         }
     }
 
-//================================= Support Insert Function =================================================================
+    //================================= Support Insert Function =================================================================
 
     private function insertSeries($seriesID, $seriesName) {
         // Check if the series exists
@@ -481,6 +498,8 @@ class productDb{
             throw new Exception("Error inserting product size: " . $e->getMessage());
         }
     }
+
+//==================================================================================================================================
 }
 
 
