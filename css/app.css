@@ -9,7 +9,8 @@
     --brand-lightblue: hsl(206, 100%, 89%);
 }
 
-/* Styling for dropdown-able components */
+/************* Styling for dropdown components *************/
+
 .dropdown-label {
     display: flex;
     flex-direction: row;
@@ -35,10 +36,6 @@
 }
 .dropdown-content {
     display: none;
-    /* opacity: 0; */
-    /* transform: translateY(-20%);
-    position: relative; */
-    /* transition: all 0.2s; */
 }
 .dropdown-content.showing {
     display: block;
@@ -51,6 +48,9 @@
     opacity: 1;
     transform: translateY(0);
 }
+
+/************* END of styling for dropdown components *************/
+
 
 body {
     margin: 0;
@@ -191,7 +191,7 @@ header nav > a:hover::after {
     /* background-color: #555; */
     width: 300px;
     padding: 10px;
-    /* display: none; */ /* Note: Do NOT add `display: none;` here, as this will interfere with dropdown behavior defined further up in app.css */
+    /* display: none; */ /* Note: Do NOT add `display: none;` here, as this will interfere with dropdown behavior defined further up in app.css, which is supposed to apply to all .dropdown elements */
 }
 
 .account .dropdown-header {
