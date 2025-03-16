@@ -342,35 +342,57 @@ class productDb{
         }
     }
     
-    public function totalsellTrack(){
+    public function totalsellTrack($filterData){
         // function : total how many item has been sold with how many profit we earn : 
 
-        // future update : lets user can choise a timeline 
-        // future update : lest user can choise to see data based on the status 
+        // future update : lets user can choise a timeline // done 
+        // future update : lest user can choise to see data based on the status // done  
 
         // Step 1 : fetch orderitem with status Deliverd first : --> clean data :
         // select oi.orderID , oi.productID ,  oi.quantity , oi.subtotal from orderitems where oi.orderid = o.orderid ;     
         
         try{
-            $fetchSql = "SELECT oi.orderId , oi.productId , SUM(oi.subtotal) AS total_revenue , SUM(oi.quantity) AS total_quantity
-                    FROM orderitems oi 
-                    JOIN order o ON oi.orderId = o.orderId 
-                    WHERE o.status = 'Delivered' 
-                    GROUP BY oi.productId";
-                    
-            $fetchdata = $this->pdo->prepare($fetchSql) ;
-            $fetchdata->execute();
-            $fetchdata->fetchAll();
+            // fetch data : 
+            $startDate = $filterData['startDate'];
+            $endDate = $filterData['endDate']; // asume the frontend always send data 
+            $status = $filterData['status'] ?? null; 
 
-            // Step 2: If no sales data, return empty response
-            if (!$salesData) {
-                return ["success" => false, "message" => "No delivered sales data found."];
+            // baseSql : 
+            $baseSql ="SELECT oi.orderId , 
+                        oi.productId , 
+                        SUM(oi.subtotal) AS total_revenue , 
+                        SUM(oi.quantity) AS total_quantity
+                        FROM order_items oi 
+                        JOIN order o ON oi.orderId = o.orderId 
+                        WHERE o.orderDate BETWEEN ? AND ? ";
+                        // GROUP BY oi.productId";
+            
+            // validation : 
+
+            // make a params for execute : 
+            $params = ['startDate , endDate '];
+
+            if($status){
+                $baseSql .= "AND status = $status " ; 
             }
 
-            // Step 3: Format the response data
+            // Grouping by productId
+            $baseSql .= " GROUP BY oi.productId ORDER BY total_quantity DESC";
+
+            // start executee : 
+            $salesData = $this->pdo->prepare($baseSql);
+            $salesData->execute($params);
+
+            // validatio  result : 
+            if(!$salesData){
+                return [['success'] => false , ['message'] => 'no data found'] ;
+            }
+
+            // success 
             return ["success" => true, "data" => $salesData];
             
         } catch (Exception $e) {
+            // false 
             return ["success" => false, "error" => $e->getMessage()];
         }
     }
