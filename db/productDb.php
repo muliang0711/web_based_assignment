@@ -32,6 +32,8 @@ class productDb{
     }
 
     public function filterProduct($filters) {
+        
+        // baseSql : 
         $sql = "SELECT 
                     p.productID, 
                     p.productName, 
@@ -244,7 +246,6 @@ class productDb{
         }
     }
 
-
     /*private function updateSeries($seriesName , $seriesID ,  $oldSeriesID ){
         try{
             // Check if the seriesID exists before updating
@@ -343,8 +344,9 @@ class productDb{
     }
     
     public function totalsellTrack($filterData){
-        // function : total how many item has been sold with how many profit we earn : 
+        // function : total how many order has been make  : 
 
+        // furure upadte : hoe many profit we make 
         // future update : lets user can choise a timeline // done 
         // future update : lest user can choise to see data based on the status // done  
 
@@ -358,7 +360,7 @@ class productDb{
             $status = $filterData['status'] ?? null; 
 
             // baseSql : 
-            $baseSql ="SELECT oi.orderId , 
+            $baseSql = "SELECT oi.orderId , 
                         oi.productId , 
                         SUM(oi.subtotal) AS total_revenue , 
                         SUM(oi.quantity) AS total_quantity
@@ -392,24 +394,89 @@ class productDb{
             return ["success" => true, "data" => $salesData];
             
         } catch (Exception $e) {
+
             // false 
             return ["success" => false, "error" => $e->getMessage()];
         }
     }
 
-    public function productSellaTrack($filter){
-        // function : show how many product have been sell
+    public function productSellaTrack($filterData){
+        // function : show how many that product have been sell
+        // user select a specific product --> product on order with status (defacult:show all)
+        // --> show sellnumber --> 
         
         // fetch data from filter :
+        $startDate = $filterData['startDate'];
+        $endDate = $filterData['endDate']; // asume the frontend always send data 
+        $productID = $filterData['peoductID'] ?? null ; 
+        $seriesID = $filterData['seriesID'] ?? null;
+        $sizeID = $filterData['sizeID'] ?? null ; 
+        
+        // baseSql : 
+        $baseSql = $sql = " SELECT 
+                            p.productID, 
+                            p.productName, 
+                            p.seriesID, 
+                            s.seriesName, 
+                            ps.sizeID, 
+                            FROM product p
+                            JOIN productsize ps ON p.productID = ps.productID
+                            JOIN series s ON p.seriesID = s.seriesID
+                            WHERE 1=1"; 
+
+        // validation : 
+
+        // Product Name Filter
+        if (!empty($filters['productID'])) {
+            $sql .= " AND p.productID = ?";
+            $params[] = $productID;
+        }
+    
+        // Series Filter
+        if (!empty($filters['seriesID'])) {
+            $sql .= " AND p.seriesID = ?";
+            $params[] = $seriesID;
+        }
+    
+        // Product Size Filter
+        if (!empty($filters['sizeID'])) {
+            $sql .= " AND ps.sizeID = ?";
+            $params[] = $sizeID;
+        }
     
     }
 
     public function autoCalculateProductStock($orderProduct){
         // verytime create a order record will auto run this function : 
+        try{
 
-        // 1. fetch data from the array (orderProduct) : 
+            // 1. fetch data from the array (orderProduct) : 
+            $productID = $orderProduct['productID'] ; 
+            $quantity = $orderProduct['quantity'] ; 
+            $sizeID = $orderProduct['sizeID'];
 
-        // 2. auto - the quantity in the productsize based on the productID and quantity : 
+            // 2. auto - the quantity in the productsize based on the productID and quantity : 
+            $sql = "UPDATE productSize 
+                    SET quantity = quantity - ? 
+                    WHERE productID = ?  AND sizeID = ? ";
+            
+            // ready the params : 
+            $params = [];
+            $params = [$quantity , $productID , $sizeID] ; 
+
+            // execuet :
+            $result = $this->pdo->prepare($sql);
+            $result->execute($params);
+
+            // success : 
+            return ["success" => true, "message" => "Stock updated successfully."];
+
+        }catch(Exception $e){
+
+            // false 
+            return ["success" => false, "error" => $e->getMessage()];
+        }
+
 
     }
 
