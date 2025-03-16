@@ -25,8 +25,29 @@ $(() => {
     })
 
 
-    $("#filter-button").on('click', (e) => {
-        $("#filter-menu").toggleClass('show');
+    $("#filter-button").on('click', function(e) {
+        if (!$(e.target).closest("#filter-menu").length) {
+            $("#filter-menu").toggleClass("show");
+        }
+            
+    });
+
+
+    $("#pricemin").on("input", function(e) {
+        $("#labelpricemin").text("Price (min) RM " + this.value);
+        $("#pricemax").attr({
+            min:+this.value
+        });
+    });
+
+
+    $("#pricemax").on("input", function(e) {
+        $("#labelpricemax").text("Price (max) RM " + this.value);
+
+    });
+    
+    $(".resetbutton").on('click', e => {
+        location = "order.php?pricemin=0&pricemax=10000&stat=&sort=desc";
     });
 
 })
