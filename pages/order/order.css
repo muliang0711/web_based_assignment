@@ -103,7 +103,7 @@ form {
     padding-right: 10px;
     padding-left: 0px;
     max-width: 1000px;
-    grid-template-columns: 0.37fr 0.63fr 0.44fr 0.36fr 0.20fr;
+    grid-template-columns: 0.37fr 0.57fr 0.48fr 0.36fr 0.12fr;
 }
 
 .order span, .order-header span {
@@ -197,6 +197,11 @@ form {
 .orderDate, .orderStatus {
     font-weight: 700;
     font-size: small;
+}
+
+.orderStatus {
+    width: 150px;
+    text-align: center;
 }
 
 .orderAddress {

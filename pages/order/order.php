@@ -15,16 +15,24 @@
     //defining some colors to be used to display the progress of delivery
     $colorStatusBar = "linear-gradient(90deg, rgba(29,204,29,1) 0%, rgba(255,177,0,1) 77%)";
     $colorStatusDefault = "rgba(221, 214, 214, 0.514)";
-    $colorStatusDone = "rgb(29, 204, 29)";
+    $colorStatusDone = "rgb(25, 165, 25)";
     $colorStatusPending = "rgb(255,177,0)";
+
+    $colorDelivered = "rgb(54, 187, 65)";
+    $colorIntransit = "rgb(255, 198, 11)";
+    $colorPending = "rgb(92, 91, 91)";
+
+    $colorDeliveredBG = "rgba(54, 187, 65, 0.15)";
+    $colorIntransitBG = "rgba(255, 198, 11, 0.15)";
+    $colorPendingBG = "rgba(92, 91, 91, 0.15)";
 
     $colorArr = [
         //colors for pending
-        [$colorStatusDone, $colorStatusBar, $colorStatusDefault, $colorStatusDefault, $colorStatusDefault],
+        [$colorStatusDone, $colorStatusBar, $colorStatusDefault, $colorStatusDefault, $colorStatusDefault, $colorPending, $colorPendingBG],
         //colors for in transit
-        [$colorStatusDone,$colorStatusDone,$colorStatusDone,$colorStatusBar,$colorStatusDefault],
+        [$colorStatusDone,$colorStatusDone,$colorStatusDone,$colorStatusBar,$colorStatusDefault, $colorIntransit, $colorIntransitBG],
         //colors for delivered
-        [$colorStatusDone,$colorStatusDone,$colorStatusDone,$colorStatusDone,$colorStatusDone]
+        [$colorStatusDone,$colorStatusDone,$colorStatusDone,$colorStatusDone,$colorStatusDone, $colorDelivered, $colorDeliveredBG]
     ];
     $index = 0;
 
@@ -122,7 +130,7 @@ orders o JOIN order_items oi ON (o.orderId = oi.orderId) WHERE o.userId = $userI
         <span class="orderID">#<?=$o->orderId?></span>
         <span class="orderAddress"><?=$o->orderAddress?></span>
         <span class="orderDate"><?=substr($o->orderDate,8,2) . '/' . substr($o->orderDate,5,2) . '/' . substr($o->orderDate,0,4) ?></span>
-        <span class="orderStatus"><?=$o->status?></span>
+        <span class="orderStatus" style="border: 2px solid <?= $colorArr[$index][5] ?>; border-radius: 15px; color: <?= $colorArr[$index][5] ?>; background: <?= $colorArr[$index][6] ?>"><?=$o->status?></span>
         <button class="dropdown">
         <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z"/></svg>
         </button>
