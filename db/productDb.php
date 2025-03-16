@@ -207,6 +207,7 @@ class productDb{
         $price = $productInformation['price'];
         $quantity = $productInformation['stock']; 
         $oldSizeID = $productInformation['oldSizeID'];
+        $oldSeriesID = $productInformation['oldSeriesID'];
 
         try {
 
@@ -216,11 +217,11 @@ class productDb{
 
             // update series table first : 
 
-            $this->updateSeries($seriesName ,  $seriesID);
+            // $this->updateSeries($seriesName ,  $seriesID ,  $oldSeriesID );
 
             //update product table : 
 
-            $this->updateProduct( $productName , $price , $seriesID , $productID  );
+            $this->updateProduct( $productName , $price , $seriesID , $productID );
 
             // update productsize :
 
@@ -244,18 +245,27 @@ class productDb{
     }
 
 
-    private function updateSeries($seriesName , $seriesID ){
-
+    /*private function updateSeries($seriesName , $seriesID ,  $oldSeriesID ){
         try{
-            $sql = "UPDATE series set seriesName = ? ,  seriesID = ? 
-                    WHERE seriesID = ? " ;
+            // Check if the seriesID exists before updating
+            $sqlCheck = "SELECT COUNT(*) FROM series WHERE seriesID = ?";
+            $stmtCheck = $this->pdo->prepare($sqlCheck);
+            $stmtCheck->execute([$oldSeriesID]);
+            $exists = $stmtCheck->fetchColumn();
+    
+            if (!$exists) {
+                throw new Exception("seriesID $oldSeriesID does not exist in series table.");
+            }
+    
+            // Only update seriesName, do not change seriesID
+            $sql = "UPDATE series SET seriesName = ? ,  seriesID = ?  WHERE seriesID = ?";
             $stmt = $this->pdo->prepare($sql);
-            $stmt->execute([$seriesName ,  $seriesID , $seriesID ]);
+            $stmt->execute([$seriesName, $seriesID , $oldSeriesID]);
+    
         }catch(Exception $e){
-            throw new Exception("Error insert into series: " . $e->getMessage());
-        }
-
-    }
+            throw new Exception("Error updating series: " . $e->getMessage());
+      }    
+    } // can not change foreign key due to mysql rule */ 
 
     private function updateProduct($productName , $price , $seriesID , $productID  ){
         try{
@@ -293,13 +303,14 @@ class productDb{
         }
     }
     
-    
-
     public function deleteProduct($productInformation) {
         try {
             // fetch data :
             $productID = $productInformation['productId'];
             $sizeID = $productInformation['sizeId'];
+            // Step 0 : check if the productID is as fk on the orderitem and status with order status with not is Delivered than direct return fail : 
+
+
             // Step 1: Check if product and size exist
             $checkStmt = $this->pdo->prepare("SELECT COUNT(*) FROM productsize WHERE productID = ? AND sizeID = ?");
             $checkStmt->execute([$productID, $sizeID]);
@@ -331,6 +342,55 @@ class productDb{
         }
     }
     
+    public function totalsellTrack(){
+        // function : total how many item has been sold with how many profit we earn : 
+
+        // future update : lets user can choise a timeline 
+        // future update : lest user can choise to see data based on the status 
+
+        // Step 1 : fetch orderitem with status Deliverd first : --> clean data :
+        // select oi.orderID , oi.productID ,  oi.quantity , oi.subtotal from orderitems where oi.orderid = o.orderid ;     
+        
+        try{
+            $fetchSql = "SELECT oi.orderId , oi.productId , SUM(oi.subtotal) AS total_revenue , SUM(oi.quantity) AS total_quantity
+                    FROM orderitems oi 
+                    JOIN order o ON oi.orderId = o.orderId 
+                    WHERE o.status = 'Delivered' 
+                    GROUP BY oi.productId";
+                    
+            $fetchdata = $this->pdo->prepare($fetchSql) ;
+            $fetchdata->execute();
+            $fetchdata->fetchAll();
+
+            // Step 2: If no sales data, return empty response
+            if (!$salesData) {
+                return ["success" => false, "message" => "No delivered sales data found."];
+            }
+
+            // Step 3: Format the response data
+            return ["success" => true, "data" => $salesData];
+            
+        } catch (Exception $e) {
+            return ["success" => false, "error" => $e->getMessage()];
+        }
+    }
+
+    public function productSellaTrack($filter){
+        // function : show how many product have been sell
+        
+        // fetch data from filter :
+    
+    }
+
+    public function autoCalculateProductStock($orderProduct){
+        // verytime create a order record will auto run this function : 
+
+        // 1. fetch data from the array (orderProduct) : 
+
+        // 2. auto - the quantity in the productsize based on the productID and quantity : 
+
+    }
+
 }
 
 

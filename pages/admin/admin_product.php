@@ -212,10 +212,14 @@ unset($_SESSION['Delete_ErrorMsg']);
                 
                 <label>Product Name</label>
                 <input type="text" name="productName" value="<?php echo htmlspecialchars($product->productName); ?>">
+            
+                <label>Series ID</label>
+                <input type="text" name="seriesId" value="<?php echo htmlspecialchars($product->seriesID); ?>" hidden>
 
-                <input type="text" name="seriesId" value="<?php echo htmlspecialchars($product->seriesID); ?>" hidden >
- 
-                <input type="text" name="seriesName" value="<?php echo htmlspecialchars($product->seriesName); ?>"hidden>
+              
+                
+                <label>Series Name</label>
+                <input type="text" name="seriesName" value="<?php echo htmlspecialchars($product->seriesName); ?>" hidden>
 
                 <label>Price</label>
                 <input type="text" name="price" value="<?php echo number_format($product->price, 2); ?>">

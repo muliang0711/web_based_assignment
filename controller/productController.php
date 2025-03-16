@@ -131,6 +131,7 @@ class ProductController{
             'stock' => $_POST['stock'] ?? null,
             'price' => $_POST['price'] ?? null,
             'oldSizeID' => $_POST['oldSizeID'] ?? null , 
+            //'oldSeriesID' => $_POST['oldSeriesID'] ?? null , 
         ];
         $errors = [];
 
