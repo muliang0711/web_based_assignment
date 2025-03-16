@@ -87,7 +87,7 @@ include '../../_head.php';
 
     <form class="form" method="post">
         <div class="form-item">
-            <label for="username">Username or email</label>
+            <label for="username">Username</label>
             <br>
             <?php input_text('username') ?>
             <?php error("username"); ?>
