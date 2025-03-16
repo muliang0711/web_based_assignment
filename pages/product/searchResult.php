@@ -1,45 +1,51 @@
 <?php
-require '../../_base.php';
-
 $stylesheetArray = ['product.css'];
 $title = 'Product List';
+require '../../_base.php';
+include '../../_head.php';
 ?>
 
 <body>
-<form method="get" action="../product/searchResult.php?search=?">
-    <div class="searchContainer">
-     <input type="text" id="search" name="search" maxlength="30" class="input" placeholder="S E A R C H">
-    </div>
-   <button><img src="illustration-magnifying-glass-icon.png"></button>
-</form> 
+    <form method="get" action="../product/searchResult.php?search=?">
+        <div class="searchContainer">
+            <input type="text" id="search" name="search" maxlength="30" class="input" placeholder="S E A R C H">
+        </div>
+        <div class="searchButton">
+        <button><img src="illustration-magnifying-glass-icon.png"></button>
+        </div>
+    </form>
     <?php
-        $search = $_REQUEST['search'];
-        if(!$search){
-            echo "Invalid input!";
-        }
-        $_db = new PDO('mysql:dbname=web_based_assignment','root', '',[
-                   PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
-        ]);
-            $statement = $_db->prepare("SELECT * FROM product WHERE productName LIKE ?");
-            $statement->execute(["%$search%"]); 
-            $productObjectArray = $statement->fetchAll();
+    $search = $_REQUEST['search'];
+    if (!$search) {
+        echo "Invalid input!";
+    }
+    $_db = new PDO('mysql:dbname=web_based_assignment', 'root', '', [
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
+    ]);
+    $statement = $_db->prepare("SELECT * FROM product WHERE productName LIKE ?");
+    $statement->execute(["%$search%"]);
+    $productObjectArray = $statement->fetchAll();
     ?>
     <div class="userInput">
-        <h>Input result " <?php echo $search ?> "</h>
+        <p>Input result " <?php echo $search ?> "</p>
     </div>
-    <?php if($productObjectArray):?>
+    <?php if ($productObjectArray): ?>
         <div class="list" id="productList">
-    <?php     
-      foreach($productObjectArray as $productObject):?>
-         <div class="item">
-          <a onclick = "onclick()" href = "../product/productDetail.php?racket=<?php echo $productObject->productID ?>">
-          <img src="<?php echo $productObject->productImg ?>">
-          <p><?php echo $productObject->productName ?></p>
-          </a>
-         </div>
-      <?php endforeach ?>
-      </div>
-      <?php else: ?>
-        <p>No result founded!</p>
+            <?php
+            foreach ($productObjectArray as $productObject): ?>
+                <div class="item">
+                    <a onclick="onclick()" href="../product/productDetail.php?racket=<?php echo $productObject->productID ?>">
+                        <img src="<?php echo $productObject->productImg ?>">
+                        <p><?php echo $productObject->productName ?></p>
+                    </a>
+                </div>
+            <?php endforeach ?>
+        </div>
+    <?php else: ?>
+        <div class="noResult">
+            <p>No result founded!</p>
+        </div>
     <?php endif ?>
-</body> 
+</body>
+<?php
+include '../../_foot.php';
