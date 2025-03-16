@@ -140,65 +140,6 @@ class productDb{
                                                                       
     }
 
-    private function insertSeries($seriesID, $seriesName) {
-        // Check if the series exists
-        try{
-
-            $checkSql = "SELECT seriesName FROM series WHERE seriesName = ? AND seriesID = ? LIMIT 1";
-            $check_stmt = $this->pdo->prepare($checkSql);
-            $check_stmt->execute([$seriesName, $seriesID]);
-
-            // If not exists, insert it
-            if (!$check_stmt->fetch()) {
-                $sql = "INSERT INTO series (seriesID, seriesName) VALUES (?, ?)";
-                $stmt = $this->pdo->prepare($sql);
-                $stmt->execute([$seriesID, $seriesName]);
-            }
-
-        }catch(Exception $e){
-
-            error_log("Transaction failed: " . $e->getMessage());
-            return false;
-        }
-    }
-
-    private function insertProduct($productID, $productName, $price, $seriesID,$quantity,$sizeID) {
-        try {
-            // product exis already : than skip this phase 
-            $checkSql = "SELECT productID FROM product WHERE productID = ? LIMIT 1";
-            $check_stmt = $this->pdo->prepare($checkSql);
-            $check_stmt->execute([$productID]);
-
-            if(!$check_stmt->fetch()){
-                // if not existing than insert data into product first :
-                $sql = "INSERT INTO product (productID, productName, price, seriesID) VALUES (?, ?, ?, ?)";
-                $stmt = $this->pdo->prepare($sql);
-                $stmt->execute([$productID, $productName, $price, $seriesID]);
-
-                $this->insertProductSize($productID, $sizeID, $quantity);
-            }else{
-                
-                $this->insertProductSize($productID, $sizeID, $quantity);
-            }
-        } catch (Exception $e) {
-            throw new Exception("Error inserting product: " . $e->getMessage());
-        }
-    }
-
-    private function insertProductSize($productID, $sizeID, $quantity) {
-        // at this phase the one product id can have two sizeID   
-        try {
-            // since we already check before so here we just need to insert 
-            $sql = "INSERT INTO productsize (productID, sizeID, quantity) VALUES (?, ?, ?)
-                    ON DUPLICATE KEY UPDATE quantity = quantity + VALUES(quantity)";
-            $stmt = $this->pdo->prepare($sql);
-            $stmt->execute([$productID, $sizeID, $quantity]);
-
-        } catch (Exception $e) {
-            throw new Exception("Error inserting product size: " . $e->getMessage());
-        }
-    }
-
     public function updateProducts($productInformation){
         // fetch data 
         $productID = $productInformation['productId'];
@@ -246,64 +187,6 @@ class productDb{
         }
     }
 
-    /*private function updateSeries($seriesName , $seriesID ,  $oldSeriesID ){
-        try{
-            // Check if the seriesID exists before updating
-            $sqlCheck = "SELECT COUNT(*) FROM series WHERE seriesID = ?";
-            $stmtCheck = $this->pdo->prepare($sqlCheck);
-            $stmtCheck->execute([$oldSeriesID]);
-            $exists = $stmtCheck->fetchColumn();
-    
-            if (!$exists) {
-                throw new Exception("seriesID $oldSeriesID does not exist in series table.");
-            }
-    
-            // Only update seriesName, do not change seriesID
-            $sql = "UPDATE series SET seriesName = ? ,  seriesID = ?  WHERE seriesID = ?";
-            $stmt = $this->pdo->prepare($sql);
-            $stmt->execute([$seriesName, $seriesID , $oldSeriesID]);
-    
-        }catch(Exception $e){
-            throw new Exception("Error updating series: " . $e->getMessage());
-      }    
-    } // can not change foreign key due to mysql rule */ 
-
-    private function updateProduct($productName , $price , $seriesID , $productID  ){
-        try{
-            $sql = "UPDATE product set productName = ? , price = ? , seriesID = ? 
-                    WHERE productID = ? " ;
-            $stmt = $this->pdo->prepare($sql);
-            $stmt->execute([$productName , $price , $seriesID , $productID]);
-
-        }catch(Exception $e){
-            throw new Exception("Error insert into product : " . $e->getMessage());
-        }
-    }
-
-    private function updateProductSize($sizeID, $quantity, $productID, $oldSizeID) {
-        try {
-            // Step 1: Delete the old entry first
-            $deleteStmt = $this->pdo->prepare("DELETE FROM productsize WHERE productID = ? AND sizeID = ?");
-            $deleteStmt->execute([$productID, $oldSizeID]);
-    
-            // Step 2: Check if the new (productID, sizeID) already exists
-            $checkStmt = $this->pdo->prepare("SELECT COUNT(*) FROM productsize WHERE productID = ? AND sizeID = ?");
-            $checkStmt->execute([$productID, $sizeID]);
-            $exists = $checkStmt->fetchColumn();
-    
-            if ($exists > 0) {
-                throw new Exception("Error: The combination of productID and sizeID already exists.");
-            }
-    
-            // Step 3: Insert new data
-            $insertStmt = $this->pdo->prepare("INSERT INTO productsize (productID, sizeID, quantity) VALUES (?, ?, ?)");
-            $insertStmt->execute([$productID, $sizeID, $quantity]);
-    
-        } catch (Exception $e) {
-            throw new Exception("Error updating productSize: " . $e->getMessage());
-        }
-    }
-    
     public function deleteProduct($productInformation) {
         try {
             // fetch data :
@@ -441,11 +324,7 @@ class productDb{
 
         return ["success" => false, "error" => $e->getMessage()];
     }
-}
-        
-
-       
-    
+    }
 
     public function autoCalculateProductStock($orderProduct){
         // verytime create a order record will auto run this function : 
@@ -481,6 +360,128 @@ class productDb{
 
     }
 
+//==================================== ALL Private function will be here : 
+
+// =============================== Support Update Function ===================================================================
+
+    /*private function updateSeries($seriesName , $seriesID ,  $oldSeriesID ){
+        try{
+            // Check if the seriesID exists before updating
+            $sqlCheck = "SELECT COUNT(*) FROM series WHERE seriesID = ?";
+            $stmtCheck = $this->pdo->prepare($sqlCheck);
+            $stmtCheck->execute([$oldSeriesID]);
+            $exists = $stmtCheck->fetchColumn();
+    
+            if (!$exists) {
+                throw new Exception("seriesID $oldSeriesID does not exist in series table.");
+            }
+    
+            // Only update seriesName, do not change seriesID
+            $sql = "UPDATE series SET seriesName = ? ,  seriesID = ?  WHERE seriesID = ?";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute([$seriesName, $seriesID , $oldSeriesID]);
+    
+        }catch(Exception $e){
+            throw new Exception("Error updating series: " . $e->getMessage());
+      }    
+    } // can not change foreign key due to mysql rule */ 
+
+    private function updateProduct($productName , $price , $seriesID , $productID  ){
+        try{
+            $sql = "UPDATE product set productName = ? , price = ? , seriesID = ? 
+                    WHERE productID = ? " ;
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute([$productName , $price , $seriesID , $productID]);
+
+        }catch(Exception $e){
+            throw new Exception("Error insert into product : " . $e->getMessage());
+        }
+    }
+
+    private function updateProductSize($sizeID, $quantity, $productID, $oldSizeID) {
+        try {
+            // Step 1: Delete the old entry first
+            $deleteStmt = $this->pdo->prepare("DELETE FROM productsize WHERE productID = ? AND sizeID = ?");
+            $deleteStmt->execute([$productID, $oldSizeID]);
+    
+            // Step 2: Check if the new (productID, sizeID) already exists
+            $checkStmt = $this->pdo->prepare("SELECT COUNT(*) FROM productsize WHERE productID = ? AND sizeID = ?");
+            $checkStmt->execute([$productID, $sizeID]);
+            $exists = $checkStmt->fetchColumn();
+    
+            if ($exists > 0) {
+                throw new Exception("Error: The combination of productID and sizeID already exists.");
+            }
+    
+            // Step 3: Insert new data
+            $insertStmt = $this->pdo->prepare("INSERT INTO productsize (productID, sizeID, quantity) VALUES (?, ?, ?)");
+            $insertStmt->execute([$productID, $sizeID, $quantity]);
+    
+        } catch (Exception $e) {
+            throw new Exception("Error updating productSize: " . $e->getMessage());
+        }
+    }
+
+//================================= Support Insert Function =================================================================
+
+    private function insertSeries($seriesID, $seriesName) {
+        // Check if the series exists
+        try{
+
+            $checkSql = "SELECT seriesName FROM series WHERE seriesName = ? AND seriesID = ? LIMIT 1";
+            $check_stmt = $this->pdo->prepare($checkSql);
+            $check_stmt->execute([$seriesName, $seriesID]);
+
+            // If not exists, insert it
+            if (!$check_stmt->fetch()) {
+                $sql = "INSERT INTO series (seriesID, seriesName) VALUES (?, ?)";
+                $stmt = $this->pdo->prepare($sql);
+                $stmt->execute([$seriesID, $seriesName]);
+            }
+
+        }catch(Exception $e){
+
+            error_log("Transaction failed: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    private function insertProduct($productID, $productName, $price, $seriesID,$quantity,$sizeID) {
+        try {
+            // product exis already : than skip this phase 
+            $checkSql = "SELECT productID FROM product WHERE productID = ? LIMIT 1";
+            $check_stmt = $this->pdo->prepare($checkSql);
+            $check_stmt->execute([$productID]);
+
+            if(!$check_stmt->fetch()){
+                // if not existing than insert data into product first :
+                $sql = "INSERT INTO product (productID, productName, price, seriesID) VALUES (?, ?, ?, ?)";
+                $stmt = $this->pdo->prepare($sql);
+                $stmt->execute([$productID, $productName, $price, $seriesID]);
+
+                $this->insertProductSize($productID, $sizeID, $quantity);
+            }else{
+                
+                $this->insertProductSize($productID, $sizeID, $quantity);
+            }
+        } catch (Exception $e) {
+            throw new Exception("Error inserting product: " . $e->getMessage());
+        }
+    }
+
+    private function insertProductSize($productID, $sizeID, $quantity) {
+        // at this phase the one product id can have two sizeID   
+        try {
+            // since we already check before so here we just need to insert 
+            $sql = "INSERT INTO productsize (productID, sizeID, quantity) VALUES (?, ?, ?)
+                    ON DUPLICATE KEY UPDATE quantity = quantity + VALUES(quantity)";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute([$productID, $sizeID, $quantity]);
+
+        } catch (Exception $e) {
+            throw new Exception("Error inserting product size: " . $e->getMessage());
+        }
+    }
 }
 
 
