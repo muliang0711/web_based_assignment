@@ -271,6 +271,10 @@ footer {
     color: darkred;
 }
 
+.error br {
+    display: block;
+    margin-top: 3px;
+}
 
 
 /* The following CSS only applies to index.php */
