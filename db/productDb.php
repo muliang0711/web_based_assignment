@@ -349,6 +349,7 @@ class productDb{
         // furure upadte : hoe many profit we make 
         // future update : lets user can choise a timeline // done 
         // future update : lest user can choise to see data based on the status // done  
+        // future update : filter out the sizeID // ing
 
         // Step 1 : fetch orderitem with status Deliverd first : --> clean data :
         // select oi.orderID , oi.productID ,  oi.quantity , oi.subtotal from orderitems where oi.orderid = o.orderid ;     
@@ -402,49 +403,49 @@ class productDb{
 
     public function productSellaTrack($filterData){
         // function : show how many that product have been sell
-        // user select a specific product --> product on order with status (defacult:show all)
-        // --> show sellnumber --> 
-        
-        // fetch data from filter :
+
+        // modify : 
+        // show productid , sizeid , seriesid (product , productsize) 
+        // show total_sales_quantity based (productid and gripId) quantity on the orderitem 
+        // show total_revune based on SUM the same subtotal with same productID and gripsize 
+        try {
+
+         // Fetch filters (assuming frontend always sends values)
         $startDate = $filterData['startDate'];
-        $endDate = $filterData['endDate']; // asume the frontend always send data 
-        $productID = $filterData['peoductID'] ?? null ; 
-        $seriesID = $filterData['seriesID'] ?? null;
-        $sizeID = $filterData['sizeID'] ?? null ; 
-        
-        // baseSql : 
-        $baseSql = $sql = " SELECT 
-                            p.productID, 
-                            p.productName, 
-                            p.seriesID, 
-                            s.seriesName, 
-                            ps.sizeID, 
-                            FROM product p
-                            JOIN productsize ps ON p.productID = ps.productID
-                            JOIN series s ON p.seriesID = s.seriesID
-                            WHERE 1=1"; 
+        $endDate = $filterData['endDate'];
 
-        // validation : 
+        // SQL query
+        $sql = "SELECT 
+                    p.productID,
+                    p.seriesID,
+                    ps.sizeID,
+                    SUM(oi.quantity) AS total_sales,
+                    SUM(oi.subtotal) AS total_revenue
+                FROM product p
+                JOIN productsize ps ON p.productID = ps.productID
+                JOIN order_items oi ON ps.productID = oi.productId AND ps.sizeID = oi.gripSize
+                JOIN orders o ON oi.orderId = o.orderId
+                WHERE o.orderDate BETWEEN ? AND ?
+                GROUP BY p.productID, p.seriesID, ps.sizeID
+                ORDER BY total_sales DESC";
 
-        // Product Name Filter
-        if (!empty($filters['productID'])) {
-            $sql .= " AND p.productID = ?";
-            $params[] = $productID;
-        }
-    
-        // Series Filter
-        if (!empty($filters['seriesID'])) {
-            $sql .= " AND p.seriesID = ?";
-            $params[] = $seriesID;
-        }
-    
-        // Product Size Filter
-        if (!empty($filters['sizeID'])) {
-            $sql .= " AND ps.sizeID = ?";
-            $params[] = $sizeID;
-        }
-    
+        // Prepare and execute query
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([$startDate, $endDate]);
+        $result = $stmt->fetchAll();
+
+        // Return data
+        return ["success" => true, "data" => $result];
+
+    }catch (Exception $e) {
+
+        return ["success" => false, "error" => $e->getMessage()];
     }
+}
+        
+
+       
+    
 
     public function autoCalculateProductStock($orderProduct){
         // verytime create a order record will auto run this function : 
