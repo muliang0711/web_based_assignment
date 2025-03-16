@@ -4,7 +4,6 @@ try {
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION  // Enable error reporting
     ]);
-    echo("connect successful");
 }catch (PDOException $e) {
     // Display meaningful error message
     die("Database Connection Failed: " . $e->getMessage());

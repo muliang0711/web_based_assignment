@@ -3,11 +3,11 @@
 require_once __DIR__ . "/../_base.php";
 require_once __DIR__ . "/../db_connection.php";
 require_once __DIR__ . "/../db/productDb.php";
-
+require_once __DIR__ . "/../db/productAnlysis.php";
 class ProductController{
 
     private $productDb ; 
-
+      
     public function __construct($_pdo){
         $this->productDb = new productDb($_pdo);
     }
@@ -46,7 +46,7 @@ class ProductController{
         return  $this->productDb->getAllProducts();
     }
 
-//====================== All Private Function : 
+    //====================== All Private Function : 
 
     private function filterProducts() {
         $filters = [
@@ -284,6 +284,7 @@ class ProductController{
         header('Location : ../pages/admin/admin_test.php');
         exit();
     }
+
 //====================================================================================
 }
 $productController = new ProductController($_db);

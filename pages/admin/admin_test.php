@@ -54,7 +54,7 @@ unset($_SESSION['product_sales_results']);
             <h3>Results:</h3>
             <?php if (!empty($totalSalesData)): ?>
                 <table class='table table-striped'>
-                    <tr><th>Product ID</th><th>Total Revenue</th><th>Total Quantity</th></tr>
+                    <tr><th>Order ID</th><th>Total Revenue</th><th>Total Quantity</th></tr>
                     <?php foreach ($totalSalesData as $row): ?>
                         <tr>     
                             <td><?= htmlspecialchars($row['orderId']) ?></td>
@@ -97,10 +97,10 @@ unset($_SESSION['product_sales_results']);
                     <?php foreach ($productSalesData as $row): ?>
                         <tr>
                         <td><?= $row->productID ?></td>
-<td><?= $row->seriesID ?></td>
-<td><?= $row->sizeID ?></td>
-<td><?= $row->total_sales ?></td>
-<td>$<?= number_format($row->total_revenue, 2) ?></td>
+                    <td><?= $row->seriesID ?></td>
+                    <td><?= $row->sizeID ?></td>
+                    <td><?= $row->total_sales ?></td>
+                    <td>$<?= number_format($row->total_revenue, 2) ?></td>
 
                         </tr>
                     <?php endforeach; ?>
