@@ -2,6 +2,10 @@
     box-sizing: border-box;
 }
 
+:root {
+    --link-color: rgb(69, 69, 69); 
+}
+
 
 /* .popup {
     position: absolute;
@@ -171,7 +175,7 @@ input[type="text"], input[type="password"] {
 .container a {
     /* margin: 10px 0; */
     text-decoration: none;
-    color: rgb(69, 69, 69);
+    color: var(--link-color);
 }
 .container a:hover {
     text-decoration: underline;
@@ -184,6 +188,7 @@ input[type="text"], input[type="password"] {
 .to-signup, .to-signin {
     display: inline-block;
     margin-top: 10px;
+    color: var(--link-color);
 }
 
 .submit-btn {

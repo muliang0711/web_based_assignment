@@ -5,6 +5,15 @@ $title = 'Login';
 $stylesheetArray = ['user.css']; // Put CSS files that are specific to this page here. If you want to change the styling of the header and the footer, go to /css/app.cs
 $scriptArray = ['user.js'];      // Put JS files that are specific to this page here. If you want to change the JavaScript for the header and the footer, go to /js/app.js
 
+$usernameRegex = '/^[a-zA-Z0-9](?!.*\.\.)[\w._]{1,28}[a-zA-Z0-9]$/';
+$emailRegex = '/^[\w._]+@[a-zA-Z\d.-]+\.[a-zA-Z]{2,}$/';
+// Some regex notes:
+// 1. `.` is usually a wildcard, meaning "any character except newline",
+//    but inside a character class ([...]), `.` loses that special meaning
+//    and instead just means a literal dot.
+// 2. (?!.*\.\.) is a negative lookahead. The syntax is (?!<pattern>). 
+//    Here it makes sure that the username does not contain any consecutive dots (e.g. .., ...)
+//    because those might break URL paths.
 
 if (is_post()) {
     var_dump($_errors);
@@ -14,6 +23,22 @@ if (is_post()) {
 
     if (!$username) {
         $_errors['username'] = 'Required';
+    } 
+    else if (!preg_match($usernameRegex, $username)) {
+        $_errors['username'] = 'Invalid format!';
+        if (strlen($username) < 3 || strlen($username) > 30) {
+            $_errors['username'] .= "<br> - Username must be between 3 and 30 characters.";
+        }
+        if (preg_match('/^[^a-zA-Z0-9]|[^a-zA-Z0-9]$/', $username)) {
+            $_errors['username'] .= "<br> - Username must begin and end with letters or digits.";
+        }
+        if (preg_match('/[^\w_.]/', $username)) {
+            $_errors['username'] .= "<br> - Username must only contain letters, digits, dots (.) or underscores (_).";
+        }
+        if (preg_match('/\.\./', $username)) {
+            $_errors['username'] .= "<br> - Consecutive dots (e.g. ..) are not allowed.";
+        } 
+        // $_errors['username'] = 'Username should only contain letters, digits, dots, and underscores, and not be longer than 30 characters. Leading or trailing dots and underscores are not allowed.';
     }
 
     if (!$password) {
