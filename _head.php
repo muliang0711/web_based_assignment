@@ -34,7 +34,7 @@ if (is_post()) {
                 <img src="/assets/img/icon-cart.png" alt="Cart" title="Cart" />
             </div>
             
-            <div class="account">
+            <div class="account dropdown">
                 <div class="dropdown-label">
                     <img class="account-icon" src="/assets/img/profile-default-icon-dark.svg" alt="Account" title="Account"/>
                 </div>

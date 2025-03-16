@@ -34,11 +34,20 @@
     transform-origin: center;
 }
 .dropdown-content {
+    display: none;
+    /* opacity: 0; */
+    /* transform: translateY(-20%);
+    position: relative; */
+    /* transition: all 0.2s; */
+}
+.dropdown-content.showing {
+    display: block;
     opacity: 0;
     transform: translateY(-20%);
     transition: all 0.2s;
 }
-.dropdown-content.active {
+.dropdown-content.fully-shown {
+    display: block;
     opacity: 1;
     transform: translateY(0);
 }
@@ -182,7 +191,7 @@ header nav > a:hover::after {
     /* background-color: #555; */
     width: 300px;
     padding: 10px;
-    display: block;
+    /* display: none; */ /* Note: Do NOT add `display: none;` here, as this will interfere with dropdown behavior defined further up in app.css */
 }
 
 .account .dropdown-header {
