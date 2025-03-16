@@ -30,6 +30,12 @@ class ProductController{
             case 'filterProduct':
                 $this->filterProducts(); //done 
                 break;
+            case 'totalsellTrack' :
+                $this->handleTotalSellTrack();
+                break;
+            case 'productSellTrack':
+                $this->handleProductSellTrack();
+                break ; 
             default:
                 $_SESSION['errors'] = 'Invalid action';
                 $this->redirectToAdmin();
@@ -251,6 +257,33 @@ class ProductController{
        return $errors ;
     }
 
+    private function handleTotalSellTrack() {
+        $filterData = [
+            'startDate' => $_POST['startDate'] ?? null,
+            'endDate' => $_POST['endDate'] ?? null,
+            'status' => $_POST['status'] ?? null,
+        ];
+        
+        $response = $this->productDb->totalsellTrack($filterData);
+        $_SESSION['total_sales_results'] = $response['success'] ? $response['data'] : [];
+        
+        header('Location : ../pages/admin/admin_test.php');
+        exit();
+    }
+
+    private function handleProductSellTrack() {
+        $filterData = [
+            'startDate' => $_POST['startDate'] ?? null,
+            'endDate' => $_POST['endDate'] ?? null,
+            'sizeID' => $_POST['sizeID'] ?? null,
+        ];
+        
+        $response = $this->productDb->productSellTrack($filterData);
+        $_SESSION['product_sales_results'] = $response['success'] ? $response['data'] : [];
+        
+        header('Location : ../pages/admin/admin_test.php');
+        exit();
+    }
 //====================================================================================
 }
 $productController = new ProductController($_db);

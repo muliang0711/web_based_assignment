@@ -281,7 +281,7 @@ class productDb{
         }
     }
 
-    public function productSellaTrack($filterData){
+    public function productSellTrack($filterData){
         // function : show how many that product have been sell
 
         // modify : 
@@ -311,7 +311,7 @@ class productDb{
             // Execute query
             $stmt = $this->pdo->prepare($sql);
             $stmt->execute([$startDate, $endDate]);
-            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $result = $stmt->fetchAll();
     
             // Check if data exists
             if (!$result) {
