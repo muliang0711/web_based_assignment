@@ -88,14 +88,15 @@ class ProductController{
 
     private function addProduct() {
         $productInformation = [
-            'productId' => $_POST['productId'] ?? null,
+            'productId'   => $_POST['productId'] ?? null,
             'productName' => $_POST['productName'] ?? null,
-            'seriesId' => $_POST['seriesId'] ?? null,
-            'seriesName' => $_POST['seriesName'] ?? null,
-            'sizeId' => $_POST['sizeId'] ?? null,  
-            'stock' => $_POST['stock'] ?? null,
-            'price' => $_POST['price'] ?? null,
+            'seriesId'    => $_POST['seriesId'] ?? null,
+            'seriesName'  => $_POST['seriesName'] ?? null,
+            'sizeId'      => $_POST['sizeId'] ?? null,  
+            'stock'       => $_POST['stock'] ?? null,
+            'price'       => $_POST['price'] ?? null,
         ];
+
 
 
         $errors = $this->validation($productInformation);
@@ -106,10 +107,9 @@ class ProductController{
         // SAME product idalready existing than return error :
         $products = $this->getAllProducts();
         foreach($products as $product){
-            if($productInformation['productId'] == $product->productID && $productInformation['seriesId'] == $product->productseriesID){
+            if($productInformation['productId'] == $product->productID && $productInformation['seriesId'] == $product->seriesID){
                 $errors = ['ProductId existing already ']; 
             }
-        
         }
         // If there are validation errors, return them
         if (!empty($errors)) {
@@ -117,8 +117,55 @@ class ProductController{
             $this->redirectToAdmin();
         }
 
-        // Try inserting the product
-        $result = $this->productDb->addProduct($productInformation);
+        $uploadDir = "uploads/";
+
+        if (!is_dir($uploadDir)) {
+            mkdir($uploadDir, 0777, true);
+        }
+
+        if(isset($_FILES['image'])){
+
+            $files = $_FILES['image'];
+            $productId = $_POST['productId'];
+            $fileCount = count($files['name']);
+
+            for($i = 0 ; $i < $fileCount ; $i ++){
+
+                $fileTmpName = $files['tmp_name'][$i];
+                $fileName = $files['name'][$i];
+                $fileExt = strtolower(pathinfo($fileName , PATHINFO_EXTENSION));
+                
+                $allowedTypes = ["jpg" , "jpeg" , "png"];
+
+                if(!in_array($fileExt,$allowedTypes)){
+                    $errors[] = ["file type not allowed"];
+                    continue ;
+                }
+                if (!file_exists($fileTmpName)) {
+                    $errors[] = "❌ Temporary file does not exist: $fileTmpName <br>";
+                }
+
+                $newFileName = "product_{$productId}_"."$i".".$fileExt";
+                $targetPath = $uploadDir . $newFileName ; 
+
+                if(move_uploaded_file($fileTmpName , $targetPath)){
+                    $result = $this->productDb->addProduct($productInformation);
+                    $this->productDb->addimage($productId , $newFileName);
+                }else{
+                    $errors[] = "error when try to move file into folder";
+                    $errors[] = print_r($_FILES);
+                    $errors[] = print_r(error_get_last()) ;
+                }
+            }
+
+
+
+        }
+        
+        if (!empty($errors)) {
+            $_SESSION['Add_ErrorMsg'] = $errors;
+            $this->redirectToAdmin();
+        }
 
         if ($result['success']) {
             $_SESSION['Add_SuccessMsg'] = "Product '{$productInformation['productName']}' (ID: {$productInformation['productId']}) has been successfully added!";
