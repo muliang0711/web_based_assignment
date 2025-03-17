@@ -95,6 +95,8 @@ class ProductController{
             'sizeId'      => $_POST['sizeId'] ?? null,  
             'stock'       => $_POST['stock'] ?? null,
             'price'       => $_POST['price'] ?? null,
+            'playerInfo'  => $_POST['playerInfo'] ?? null, 
+            'introduction'=> $_POST['introduction'] ?? null , 
         ];
 
 
@@ -116,12 +118,11 @@ class ProductController{
             $_SESSION['Add_ErrorMsg'] = $errors;
             $this->redirectToAdmin();
         }
-
+        
         $uploadDir = "uploads/";
-
-        if (!is_dir($uploadDir)) {
+        /*if (!is_dir($uploadDir)) {
             mkdir($uploadDir, 0777, true);
-        }
+        }*/
 
         if(isset($_FILES['image'])){
 

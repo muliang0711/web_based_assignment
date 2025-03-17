@@ -107,6 +107,7 @@ class productDb{
        
 
     }
+
     public function addProduct($productInformation){
         // since we already check data is correct in service side : 
         // now we just need to fecth data and turn into sql 
@@ -127,7 +128,9 @@ class productDb{
             $seriesName = $productInformation['seriesName'];
             $price = $productInformation['price'];
             $quantity = $productInformation['stock'];
-            $file = $productInformation['file']; 
+            $introduction = $productInformation['introduction'];
+            $playerInfo = $productInformation['playerInfo'];
+            
             // 2. insert data into table series : 
             // 2.1 validate does the series already existing or not 
 
@@ -135,7 +138,7 @@ class productDb{
             $this->insertSeries($seriesID, $seriesName);
 
             // 3. Insert into product table
-            $this->insertProduct($productID, $productName, $price, $seriesID,$quantity,$sizeID);
+            $this->insertProduct($productID, $productName, $price, $seriesID,$quantity,$sizeID,$playerInfo,$introduction);
             // inside this phase already call insertProductSize function
 
             // 4. Commit transaction
@@ -474,7 +477,7 @@ class productDb{
         }
     }
 
-    private function insertProduct($productID, $productName, $price, $seriesID,$quantity,$sizeID) {
+    private function insertProduct($productID, $productName, $price, $seriesID,$quantity,$sizeID ,$introduction , $playerInfo) {
         try {
             // product exis already : than skip this phase 
             $checkSql = "SELECT productID FROM product WHERE productID = ? LIMIT 1";
@@ -483,9 +486,9 @@ class productDb{
 
             if(!$check_stmt->fetch()){
                 // if not existing than insert data into product first :
-                $sql = "INSERT INTO product (productID, productName, price, seriesID) VALUES (?, ?, ?, ?)";
+                $sql = "INSERT INTO product (productID, productName, price, seriesID , introduction , playerInfo) VALUES (?, ?, ?, ? , ? , ? )";
                 $stmt = $this->pdo->prepare($sql);
-                $stmt->execute([$productID, $productName, $price, $seriesID]);
+                $stmt->execute([$productID, $productName, $price, $seriesID , $introduction , $playerInfo]);
 
                 $this->insertProductSize($productID, $sizeID, $quantity);
             }else{
