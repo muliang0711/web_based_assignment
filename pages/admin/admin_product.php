@@ -302,12 +302,12 @@ unset($_SESSION['Delete_ErrorMsg']);
         
         <label for="introduction">Introduction</label>
         <input type="text" name="introduction" placeholder="introduction">
-        
+
         <label for="playerInfo">player Info</label>
         <input type="text" name="playerInfo" placeholder="Playuer Info">
         
         <label for="playerImage">Player Image</label>
-        <input type="text" name="playerImage" placeholder="player Image">
+        <input type="file" name="playerImage" placeholder="player Image" multiple required>
              
         <div style="margin-top:10px;">
           <button type="submit" class="btn btn-add">Submit</button>

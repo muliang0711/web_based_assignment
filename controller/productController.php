@@ -124,7 +124,7 @@ class ProductController{
             mkdir($uploadDir, 0777, true);
         }*/
 
-        if(isset($_FILES['image'])){
+        if(isset($_FILES['image']) && isset($_FILES['playerImage'])){
 
             $files = $_FILES['image'];
             $productId = $_POST['productId'];
