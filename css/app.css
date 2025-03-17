@@ -82,6 +82,7 @@ header {
 
     /* border-bottom: 2px solid rgb(106, 190, 255); */
 
+    /* display: flex; */
     display: flex;
     flex-direction: row;
     justify-content: space-between;

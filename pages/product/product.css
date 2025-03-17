@@ -309,3 +309,14 @@ p{
   background: radial-gradient(circle 280px at 0% 0%, rgb(216, 248, 254), #27c8f4);
   box-shadow: 0 0 10px rgb(82, 82, 252);
 }
+
+
+.info:not(:empty){
+  border: green 2px solid;
+  color:whitesmoke;
+  background-color: rgb(197, 212, 197);
+  width: 100%;
+  font-size: 20px;
+  margin-top: 30px;
+  text-align: center;
+}

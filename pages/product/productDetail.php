@@ -9,7 +9,7 @@ include '../../_head.php';
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Products Home Page</title>
+  <title>Products Detail Page</title>
 </head>
 
 
@@ -27,7 +27,7 @@ $statement->execute([$productID]); // make sure your $productID variable is decl
 $productObject = $statement->fetch();
 if (!$productObject) {
   echo "Error: Undefined racket";
-  redirect('/');
+  // redirect('/');
 }
 
 
@@ -39,7 +39,24 @@ $imgUrl = $productObject->productImg;
 $intro = $productObject->introduction;
 $playerInfo = $productObject->playerInfo;
 $playerImg = $productObject->playerImage;
+
+$gripSize = get("gripSize");
+if ($gripSize) {
+  $available = $_db->prepare("SELECT * FROM productSize WHERE productID = ? AND sizeID = ? AND quantity > 0");
+  $available->execute([$productID, $gripSize]);
+  $productObj = $available->fetch();
+  if ($productObj) {
+    // echo "Added to cart!";
+    temp("info", "Added to cart!");
+    redirect("../product/productDetail.php?racket=$productObj->productID");
+  } else {
+    echo "Stock unvailable!";
+  }
+}
 ?>
+
+<div class="info">testing</div>
+<!-- <div class="info"><?= temp("info"); ?></div> -->
 
 <div class="detail">
   <div class="product"><img src="<?php echo $imgUrl; ?>" alt="Image"></div>
@@ -67,30 +84,38 @@ $playerImg = $productObject->playerImage;
 </div>
 <?php
 $size = $_db->prepare("SELECT * FROM productSize WHERE productID = ?");
-$size->execute([$quantity]); // make sure your $productID variable is declared - I don’t see it in the screenshot
-$productObject = $size->fetch();
-?>
-    <div class="sizeSelect" id="selectSize">
-    <div class="popup" id="popup">
-    <h2>Select grip size</h2>
-    <label>
-      <button>3UG5</button>
-      <button>4UG5</button>
-    </label>
-    <button onclick="closeSelect()">Close</button>
-    </div>
-  </div>
+$size->execute([$productID]); // make sure your $productID variable is declared - I don’t see it in the screenshot
+$productObject = $size->fetchAll();
 
-  <script>
-        function openSelect() {
-            document.getElementById("popup").style.display = "block";
-            document.getElementById("selectSize").style.display = "block";
-        }
-        function closeSelect() {
-            document.getElementById("popup").style.display = "none";
-            document.getElementById("selectSize").style.display = "none";
-        }
-    </script>
+?>
+<div class="sizeSelect" id="selectSize">
+  <div class="popup" id="popup">
+    <h2>Select grip size</h2>
+    <?php foreach ($productObject as $Obj): ?>
+      <a onclick="onclick()" href="../product/productDetail.php?racket=<?php echo $Obj->productID ?>&gripSize=<?php echo $Obj->sizeID ?>">
+        <button><?php echo $Obj->sizeID ?></button>
+      </a>
+    <?php endforeach?>
+    <?php if($Obj->quantity > 0){
+      
+    }
+    ?>
+
+    <button onclick="closeSelect()">Close</button>
+  </div>
+</div>
+
+<script>
+  function openSelect() {
+    document.getElementById("popup").style.display = "block";
+    document.getElementById("selectSize").style.display = "block";
+  }
+
+  function closeSelect() {
+    document.getElementById("popup").style.display = "none";
+    document.getElementById("selectSize").style.display = "none";
+  }
+</script>
 
 <?php
 include '../../_foot.php';
