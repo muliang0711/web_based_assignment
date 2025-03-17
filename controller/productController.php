@@ -98,6 +98,7 @@ class ProductController{
             'playerInfo'  => $_POST['playerInfo'] ?? null, 
             'introduction'=> $_POST['introduction'] ?? null , 
         ];
+        
 
 
 
