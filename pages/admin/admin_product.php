@@ -273,7 +273,7 @@ unset($_SESSION['Delete_ErrorMsg']);
   <div class="popup-overlay add-overlay">
     <div class="popup-content">
       <h2>Add New Product</h2>
-      <form action="../../controller/productController.php" method="post">
+      <form action="../../controller/productController.php" method="post" enctype="multipart/form-data">
         <input type="hidden" name="action" value="addProduct">
         
         <label for="productId">Product ID</label>
@@ -297,7 +297,8 @@ unset($_SESSION['Delete_ErrorMsg']);
         <label for="stock">Stock</label>
         <input type="text" name="stock" id="stock" placeholder="Stock">
         
-        <input type="file" name="image" accept="image/*" required>
+        <label for="image">Product Image</label>
+        <input type="file" name="image[]" multiple required>
              
         <div style="margin-top:10px;">
           <button type="submit" class="btn btn-add">Submit</button>

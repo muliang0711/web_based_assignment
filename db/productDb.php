@@ -95,6 +95,18 @@ class productDb{
         return $stmt->fetchAll();
     }
     
+    public function addimage($porductID , $imagePath){
+        try{
+            $sql = "INSERT INTO product_images(product_id , image_path ) VALUES (? , ?)";
+            $result = $this->pdo->prepare($sql);
+            $result->execute([$porductID , $imagePath]); 
+    
+        }catch(Exception $e){
+            throw new Exception("Eroor insert into product_image" . $e->getMessage());
+        }
+       
+
+    }
     public function addProduct($productInformation){
         // since we already check data is correct in service side : 
         // now we just need to fecth data and turn into sql 
@@ -115,6 +127,7 @@ class productDb{
             $seriesName = $productInformation['seriesName'];
             $price = $productInformation['price'];
             $quantity = $productInformation['stock'];
+            $file = $productInformation['file']; 
             // 2. insert data into table series : 
             // 2.1 validate does the series already existing or not 
 
@@ -124,7 +137,6 @@ class productDb{
             // 3. Insert into product table
             $this->insertProduct($productID, $productName, $price, $seriesID,$quantity,$sizeID);
             // inside this phase already call insertProductSize function
-  
 
             // 4. Commit transaction
             $this->pdo->commit();
@@ -498,6 +510,7 @@ class productDb{
             throw new Exception("Error inserting product size: " . $e->getMessage());
         }
     }
+
 
 //==================================================================================================================================
 }
