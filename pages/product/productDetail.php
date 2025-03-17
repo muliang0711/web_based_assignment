@@ -55,8 +55,7 @@ if ($gripSize) {
 }
 ?>
 
-<div class="info">testing</div>
-<!-- <div class="info"><?= temp("info"); ?></div> -->
+<div class="info"><?= temp("info"); ?></div>
 
 <div class="detail">
   <div class="product"><img src="<?php echo $imgUrl; ?>" alt="Image"></div>
@@ -77,7 +76,6 @@ if ($gripSize) {
   <?php echo $playerInfo; ?>
   <img src="<?php echo $playerImg; ?>" alt="PlayerImage">
 </div>
-</body>
 
 <div class="AddCart">
   <button onclick="openSelect()">Add To Cart</button>
