@@ -47,15 +47,19 @@ if ($gripSize) {
   $productObj = $available->fetch();
   if ($productObj) {
     // echo "Added to cart!";
-    temp("info", "Added to cart!");
+    $available = $_db->prepare('INSERT INTO cartitem (userID, productID, sizeID, quantity +1) VALUES(?,?,?,?)');
+    $available->execute([$userID, $productID, $gripSize, $quantity]);
+    temp("info", "Added to cart Successfully!");
     redirect("../product/productDetail.php?racket=$productObj->productID");
-  } else {
-    echo "Stock unvailable!";
+  } else{
+    temp("error", "Stock unvailable!");
+    redirect("../product/productDetail.php?racket=$productObject->productID");
   }
 }
 ?>
 
 <div class="info"><?= temp("info"); ?></div>
+<div class="error"><?= temp("error"); ?></div>
 
 <div class="detail">
   <div class="product"><img src="<?php echo $imgUrl; ?>" alt="Image"></div>
