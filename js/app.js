@@ -16,14 +16,18 @@ $(() => {
     $('.err:first').prev().find(':input:first').focus();
     
     // Confirmation message
-    // TODO
     $('[data-confirm]').on('click', e => {
-        const text = e.target.dataset.confirm || 'Are you sure?';
+        // sometimes the element that triggers this event handler might not be the <button> but its child. 
+        // this ensures that we get the [data-confirm] text from the <button>, even if we clicked on one of its children.
+        const button = e.target.closest('button'); 
+        const text = button.dataset.confirm || 'Are you sure?';
+
         if (!confirm(text)) {
             e.preventDefault();
             e.stopImmediatePropagation();
         }
     });
+
     // Initiate GET request
     $('[data-get]').on('click', e => {
         e.preventDefault();
@@ -97,6 +101,7 @@ $(() => {
     function closeAllDropdownsExcept($exceptDropdown) {
         $dropdowns.not($exceptDropdown).each(function() {
             const $dropdown = $(this);
+            const $content = $dropdown.find('.dropdown-content');
 
             // Toggle dropdown label arrow's direction
             $dropdown.find('.dropdown-label').removeClass('active');

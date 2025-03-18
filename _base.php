@@ -200,32 +200,42 @@ function exists_in_db($value, $table, $field) {
 // Authentication functions
 // ============================================================================
 
-// Log in with userID
-function login($userID) {
-    // Create a session variable to store user ID
-    $_SESSION['userID'] = $userID;
+/**
+ * Ensures that $role is either "user" or "admin". Throws an error if not.
+ * @param mixed $role Can only be "user" or "admin"
+ * @throws \InvalidArgumentException
+ * @return void
+ */
+function validateRole($role): void {
+    if ($role !== "admin" && $role !== "user") {
+        throw new InvalidArgumentException("Invalid role: $role. Allowed values: 'admin' or 'user'.");
+    }
+}
+
+/**
+ * Log in with a user/admin id retrieved from database
+ * @param mixed $userOrAdminID A user id or an admin id retrieved from database
+ * @param string $role This value can only be "user" or "admin".
+ * @return void
+ */
+function login($userOrAdminID, $role) {
+    validateRole($role);
+
+    // Create a session variable to store all user/admin data
+    $role === "user" ? $_SESSION['userID'] = $userOrAdminID : $_SESSION['adminID'] = $userOrAdminID;
 }
 
 // Log out 
 function logout() {
-    // Destroy the `userID` session variable
-    unset($_SESSION['userID']);
+    // Destroy the session completely
+    session_destroy();
 }
 
 // Is logged in?
-function is_logged_in() {
-    return isset($_SESSION['userID']);
-}
-
-// Obtain user object. Returns false if not logged in.
-function get_user_obj() {
-    if (!is_logged_in()) {
-        return false;
-    }
-
-    global $_db;
-    $u = $_db->query("SELECT * FROM user WHERE userID = {$_SESSION['userID']}")->fetch();
-    return $u;
+function is_logged_in($role) {
+    validateRole($role);
+    
+    return $role === "user" ? isset($_SESSION['userID']) : isset($_SESSION['adminID']);
 }
 
 //password hashing
@@ -235,18 +245,28 @@ function pwHash($pw){
 
 
 //password matching
-function pwMatch($pw,$hashedpw){
-    return password_verify($pw,$hashedpw);
+function pwMatch($pw, $hashedpw){
+    return password_verify($pw, $hashedpw);
 }
 
 // global user object
 $_user;
 
+// global admin object
+$_admin;
+
 // If is logged in, fetch user object to a global variable
-if (is_logged_in()) {
+if (is_logged_in("user")) {
     global $_db;
     global $_user;
     $_user = $_db->query("SELECT * FROM user WHERE userID = {$_SESSION['userID']}")->fetch();
+}
+
+// If is logged in, fetch admin object to a global variable
+if (is_logged_in("admin")) {
+    global $_db;
+    global $_admin;
+    $_admin = $_db->query("SELECT * FROM `admin` WHERE id = {$_SESSION['adminID']}")->fetch();
 }
 
 

@@ -1,9 +1,67 @@
 <?php
+// echo $_SERVER['REQUEST_URI']; // this line was for debugging.
 if (is_post()) {
+    // Handle logout request
     $logout = post('logout');
     if ($logout) { // If $logout has a truthy value (e.g. non-empty string, non-null values)
         logout();
         header('Location: /');
+    }
+
+    // Handle minus/delete operations on the cart
+    $action = post('action');
+
+    if ($action) {
+        $productID = post('productID');
+        $sizeID = post('sizeID');
+        $userID = $_user->userID;
+    }
+
+    if ($action === 'minus') {
+        $selectStmt = $_db->prepare('SELECT quantity FROM cartitem WHERE productID = :productID AND sizeID = :sizeID AND userID = :userID');
+        $selectStmt->execute([
+            'productID' => $productID,
+            'sizeID' => $sizeID,
+            'userID' => $userID,
+        ]);
+        $oldQuantity = $selectStmt->fetchColumn();
+
+        if ($oldQuantity === 1) {
+            removeFromCart($productID, $sizeID, $userID);
+        } else {
+            $updateStmt = $_db->prepare('UPDATE cartitem SET quantity = quantity - 1 WHERE productID = :productID AND sizeID = :sizeID AND userID = :userID');
+            $updateStmt->execute([
+                'productID' => $productID,
+                'sizeID' => $sizeID,
+                'userID' => $userID,
+            ]);
+        }
+        // $updateStmt = $_db->prepare('UPDATE cartitem SET ')
+    } else if ($action === 'add') {
+        $updateStmt = $_db->prepare('UPDATE cartitem SET quantity = quantity + 1 WHERE productID = :productID AND sizeID = :sizeID AND userID = :userID');
+        $updateStmt->execute([
+            'productID' => $productID,
+            'sizeID' => $sizeID,
+            'userID' => $userID,
+        ]);
+    } else if ($action === 'delete') {
+        removeFromCart($productID, $sizeID, $userID);
+    }
+}
+
+function removeFromCart($productID, $sizeID, $userID): void {
+    global $_db;
+    $deleteStmt = $_db->prepare('DELETE FROM cartitem WHERE productID = :productID AND sizeID = :sizeID AND userID = :userID');
+    $deleteStmt->execute([
+        'productID' => $productID,
+        'sizeID' => $sizeID,
+        'userID' => $userID,
+    ]);
+
+    if ($deleteStmt->rowCount() > 0) {
+        temp('info', "Successfully removed item from cart.");
+    } else {
+        temp('error', "Failed to remove item from cart.");
     }
 }
 ?>
@@ -30,7 +88,7 @@ if (is_post()) {
             <a href="/pages/product/productlist.php">Shop</a>
             <a href="/pages/About/about.html">About us</a>
 
-            <?php if (is_logged_in()): ?>
+            <?php if (is_logged_in("user")): ?>
 
                 <div class="cart-btn">
                     <img src="/assets/img/icon-cart.png" alt="Cart" title="Cart" />
@@ -67,9 +125,9 @@ if (is_post()) {
                         $userID = $_user->userID;
                         $statement = $_db->prepare('SELECT * FROM cartitem JOIN product USING (productID) WHERE userID = ?');
                         $statement->execute([$userID]);
-                        $cartItem = $statement->fetchAll();
+                        $cartItemArray = $statement->fetchAll();
                         ?>
-                        <?php if ($cartItem): ?>
+                        <?php if ($cartItemArray): ?>
                             <?php $status = 0 ?>
 
                             <table>
@@ -78,25 +136,59 @@ if (is_post()) {
                                     <th>Grip Size</th>
                                     <th>Quantity</th>
                                 </tr>
-                                <?php foreach ($cartItem as $cartObject): ?>
+                                <?php foreach ($cartItemArray as $cartObject): ?>
                                     <tr>
                                         <td> <?php echo $cartObject->productName ?> </td>
                                         <td> <?php echo $cartObject->sizeID ?> </td>
                                         <td> <?php echo $cartObject->quantity ?> </td>
-                                        <td><form method = "POST"><input type="hidden" name="action" value="minus"> <button type="submit"><strong>-</strong></button></form></td>
-                                        <td><a onclick="onclick()" class="deleteBtn"><button><strong>X</strong></button></a></td>
+                                        <!-- Minus button -->
+                                        <td>
+                                            <form method="POST">
+                                                <input type="hidden" name="action" value="minus"/> 
+                                                <input type="hidden" name="productID" value="<?= $cartObject->productID ?>" />
+                                                <input type="hidden" name="sizeID" value="<?= $cartObject->sizeID ?>" />
+                                                <?php if ($cartObject->quantity === 1): ?>
+                                                    <button class="minus-btn" type="submit" data-confirm="This will remove <?= $cartObject->productName ?> (<?= $cartObject->sizeID ?>) from your cart. Proceed?"><strong>-</strong></button>
+                                                <?php else: ?>
+                                                    <button class="minus-btn" type="submit"><strong>&ndash;</strong></button>
+                                                <?php endif ?>
+                                            </form>
+                                        </td>
+                                        <!-- Add button -->
+                                        <td>
+                                            <form method="POST">
+                                                <input type="hidden" name="action" value="add"/> 
+                                                <input type="hidden" name="productID" value="<?= $cartObject->productID ?>" />
+                                                <input type="hidden" name="sizeID" value="<?= $cartObject->sizeID ?>" />
+                                                <button class="add-btn" type="submit"><strong>+</strong></button>
+                                            </form>
+                                        </td>
+                                        <!-- Delete button -->
+                                        <td>
+                                            <form method="POST">
+                                                <input type="hidden" name="action" value="delete" />
+                                                <input type="hidden" name="productID" value="<?= $cartObject->productID ?>" />
+                                                <input type="hidden" name="sizeID" value="<?= $cartObject->sizeID ?>" />
+                                                <button class="delete-btn" 
+                                                        data-confirm="Remove <?= $cartObject->productName ?> (<?= $cartObject->sizeID ?>) from your cart?"
+                                                >
+                                                    <strong>&times;</strong>
+                                                </button>
+                                            </form>
+                                        </td>
+                                        <!-- <td><a onclick="onclick()" class="deleteBtn"><button><strong>X</strong></button></a></td> -->
                                     </tr>
                                 <?php endforeach ?>
                             </table>
                             <?php 
-                                $action = $_POST['action'];
-                                if($action === 'minus'){
-                                $quantity = $cartItem->quantity;
-                                $quantity -= 1;
-                                $statement = $_db->prepare('UPDATE cartitem SET quantity WHERE userID = ? AND productID = ? AND sizeID = ?');
-                                $statement->execute([$quantity, $userID, $productID, $sizeID]);
-                                $cartItem = $statement->fetchAll();
-                                }
+                                // $action = $_POST['action'];
+                                // if($action === 'minus'){
+                                //     $quantity = $cartItem->quantity;
+                                //     $quantity -= 1;
+                                //     $statement = $_db->prepare('UPDATE cartitem SET quantity WHERE userID = ? AND productID = ? AND sizeID = ?');
+                                //     $statement->execute([$quantity, $userID, $productID, $sizeID]);
+                                //     $cartItem = $statement->fetchAll();
+                                // }
                             ?>
 
                             <a onclick="onclick()" class="paymentBtn">

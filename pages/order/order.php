@@ -9,7 +9,7 @@
     $userId = $_SESSION['userID'] ?? '';
     
     //if userId not logged in then redirect to homepage
-    if(!is_logged_in()){
+    if(!is_logged_in("user")){
         redirect("/");
     }
     //defining some colors to be used to display the progress of delivery
