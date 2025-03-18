@@ -321,7 +321,7 @@ unset($_SESSION['Delete_ErrorMsg']);
   <div class="popup-overlay update-overlay">
     <div class="popup-content">
       <h2>Update Product</h2>
-      <form action="../../controller/productController.php" method="post" id="updateForm">
+      <form action="../../controller/productController.php" method="post" id="updateForm" enctype="multipart/form-data">
         <input type="hidden" name="action" value="updateProduct">
         
         <label>Product ID</label>
@@ -330,18 +330,30 @@ unset($_SESSION['Delete_ErrorMsg']);
         <label>Product Name</label>
         <input type="text" name="productName">
         
-        <label>Series ID</label>
         <input type="text" name="seriesId" hidden>
 
         <input type="text" name="seriesName" hidden>
         
+        <label for="price">Price</label>
         <input type="text" name="price">
         
         <label>Stock</label>
         <input type="text" name="stock">
         
         <label>Size ID</label>
-        <input type="text" name="sizeId">
+        <input type="text" name="sizeId" hidden>
+
+        <label for="image">Product Image</label>
+        <input type="file" name="image[]" multiple required>
+        
+        <label for="introduction">Introduction</label>
+        <input type="text" name="introduction" placeholder="introduction">
+
+        <label for="playerInfo">player Info</label>
+        <input type="text" name="playerInfo" placeholder="Playuer Info">
+        
+        <label for="playerImage">Player Image</label>
+        <input type="file" name="playerImage[]" placeholder="player Image" multiple required>
         
         <input type="hidden" name="oldSizeID">
 

@@ -109,7 +109,90 @@ class productAnlysis{
             return ["success" => false, "error" => $e->getMessage()];
         }
     }
-
+    public function generateSalesReport($filterData, $format = 'csv') {
+        try {
+            // Fetch filters
+            $startDate = $filterData['startDate'];
+            $endDate = $filterData['endDate'];
+            $status = $filterData['status'] ?? null;
+    
+            // SQL Query: Fetch sales data
+            $sql = "SELECT 
+                        oi.orderId,
+                        oi.productId,
+                        p.productName,
+                        oi.quantity,
+                        oi.subtotal AS revenue,
+                        o.orderDate,
+                        o.status
+                    FROM order_items oi
+                    JOIN orders o ON oi.orderId = o.orderId
+                    JOIN product p ON oi.productId = p.productID
+                    WHERE o.orderDate BETWEEN ? AND ?";
+    
+            // Parameters
+            $params = [$startDate, $endDate];
+    
+            // Apply status filter if provided
+            if ($status) {
+                $sql .= " AND o.status = ?";
+                $params[] = $status;
+            }
+    
+            // Execute query
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute($params);
+            $salesData = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+            // Check if data exists
+            if (!$salesData) {
+                return ["success" => false, "message" => "No sales data found."];
+            }
+    
+            // Generate report based on format (CSV or JSON)
+            if ($format === 'csv') {
+                return $this->generateCSVReport($salesData);
+            } elseif ($format === 'json') {
+                return $this->generateJSONReport($salesData);
+            } else {
+                return ["success" => false, "message" => "Invalid report format. Choose 'csv' or 'json'."];
+            }
+    
+        } catch (Exception $e) {
+            return ["success" => false, "error" => $e->getMessage()];
+        }
+    }    
+    private function generateCSVReport($salesData) {
+        try {
+            $filename = __DIR__ . "/sales_report_" . date('Y-m-d_H-i-s') . ".csv";
+            $file = fopen($filename, 'w');
+    
+            // Add column headers
+            fputcsv($file, ["Order ID", "Product ID", "Product Name", "Quantity", "Revenue", "Order Date", "Status"]);
+    
+            // Add sales data
+            foreach ($salesData as $row) {
+                fputcsv($file, $row);
+            }
+    
+            fclose($file);
+            return ["success" => true, "message" => "CSV report generated", "file" => $filename];
+    
+        } catch (Exception $e) {
+            return ["success" => false, "error" => $e->getMessage()];
+        }
+    }
+    private function generateJSONReport($salesData) {
+        try {
+            $filename = __DIR__ . "/sales_report_" . date('Y-m-d_H-i-s') . ".json";
+            file_put_contents($filename, json_encode($salesData, JSON_PRETTY_PRINT));
+    
+            return ["success" => true, "message" => "JSON report generated", "file" => $filename];
+    
+        } catch (Exception $e) {
+            return ["success" => false, "error" => $e->getMessage()];
+        }
+    }
 
 
 }
