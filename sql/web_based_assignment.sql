@@ -311,5 +311,7 @@ CREATE TABLE `cartitem` (
   `userID` int(11) NOT NULL,
   `productID` varchar(5) NOT NULL,
   `sizeID` varchar(4) NOT NULL,
-  `quantity` int(11) NOT NULL
+  `quantity` int(11) NOT NULL,
+  PRIMARY KEY (`userID`, `productID`, `sizeID`),
+  FOREIGN KEY (`productID`, `sizeID`) REFERENCES productsize(`productID`, `sizeID`) 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
