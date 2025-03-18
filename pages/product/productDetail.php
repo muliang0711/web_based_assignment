@@ -41,21 +41,49 @@ $playerInfo = $productObject->playerInfo;
 $playerImg = $productObject->playerImage;
 
 $gripSize = get("gripSize");
-if ($gripSize) {
-  $available = $_db->prepare("SELECT * FROM productSize WHERE productID = ? AND sizeID = ? AND quantity > 0");
-  $available->execute([$productID, $gripSize]);
-  $productObj = $available->fetch();
-  if ($productObj) {
-    // echo "Added to cart!";
-    $available = $_db->prepare('INSERT INTO cartitem (userID, productID, sizeID, quantity +1) VALUES(?,?,?,?)');
-    $available->execute([$userID, $productID, $gripSize, $quantity]);
-    temp("info", "Added to cart Successfully!");
-    redirect("../product/productDetail.php?racket=$productObj->productID");
-  } else{
-    temp("error", "Stock unvailable!");
-    redirect("../product/productDetail.php?racket=$productObject->productID");
-  }
+if (is_logged_in()) {
+  global $_db;
+  global $_user;
+  $_user = $_db->query("SELECT * FROM user WHERE userID = {$_SESSION['userID']}")->fetch();
+  $userID = $_user->userID;
+}else{
+  $userID = null;
 }
+
+  if ($gripSize) {
+    $available = $_db->prepare("SELECT * FROM productSize WHERE productID = ? AND sizeID = ? AND quantity > 0");
+    $available->execute([$productID, $gripSize]);
+    $productObj = $available->fetch();
+    $productQuantity = $productObj->quantity;
+
+    $cartStatement = $_db->prepare("SELECT * FROM cartitem WHERE userID = ? AND productID = ? AND sizeID = ?");
+    $cartStatement->execute([$userID, $productID, $gripSize]);
+    $cartObject = $cartStatement->fetch();
+    $cartQuantity = $cartObject->quantity;
+  
+    if(!$cartQuantity){
+      $cartQuantity = 0;
+    }
+    if ($productObj && $productQuantity > $cartQuantity) {
+      // echo "Added to cart!";
+        $cartQuantity += 1;
+        if(!$cartObject){
+          $available = $_db->prepare('INSERT INTO cartitem (userID, productID, sizeID, quantity) VALUES(?,?,?,?)');
+          $available->execute([$userID, $productID, $gripSize, $cartQuantity]);
+        }else{
+          $available = $_db->prepare('UPDATE cartitem SET quantity = ? WHERE userID = ? AND productID = ? AND sizeID = ?');
+          $available->execute([$cartQuantity, $userID, $productID, $gripSize]);
+        }
+        temp("info", "Added to cart Successfully!");
+        redirect("../product/productDetail.php?racket=$productObj->productID");
+      
+    } else {
+      if ($userID) {
+        temp("error", "Stock unvailable!");
+        redirect("../product/productDetail.php?racket=$productObject->productID");
+      }
+    }
+  }
 ?>
 
 <div class="info"><?= temp("info"); ?></div>
@@ -90,6 +118,8 @@ $size->execute([$productID]); // make sure your $productID variable is declared 
 $productObject = $size->fetchAll();
 
 ?>
+
+<?php if ($userID != null):?>
 <div class="sizeSelect" id="selectSize">
   <div class="popup" id="popup">
     <h2>Select grip size</h2>
@@ -97,13 +127,12 @@ $productObject = $size->fetchAll();
       <a onclick="onclick()" href="../product/productDetail.php?racket=<?php echo $Obj->productID ?>&gripSize=<?php echo $Obj->sizeID ?>">
         <button><?php echo $Obj->sizeID ?></button>
       </a>
-    <?php endforeach?>
-    <?php if($Obj->quantity > 0){
-      
-    }
-    ?>
-
+    <?php endforeach ?>
     <button onclick="closeSelect()">Close</button>
+    <?php else:?>
+      <p>Please login before add to cart!</p>
+      <?php endif ?>
+
   </div>
 </div>
 

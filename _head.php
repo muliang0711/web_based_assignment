@@ -60,7 +60,31 @@ if (is_post()) {
                 <div class="content">
                     <span class="close-popup">&times;</span>
                     <h2>Shopping Cart</h2>
+                    
+                    <?php
+                    $ID = $_user->userID;
+                    $statement = $_db->prepare('SELECT * FROM cartitems JOIN product USING (productID) WHERE userID = ?');
+                    $statement->execute([$ID]);
+                    $cartItem = $statement->fetchAll();
+                    ?>
+                    <?php if($cartItem):?>
+                    <?php foreach ($cartItem as $cartObject): ?>
+                        <tb>
+                            <tr>
+                            <th>Racket Name</th>
+                            <th>Grip Size</th>
+                            <th>Quantity</th>
+                            </tr>
+                            <tr>
+                            <td> <?php echo $cartObject->productName ?> </td>
+                            <td> <?php echo $cartObject->sizeID ?> </td>
+                            <td> <?php echo $cartObject->quantity ?> </td>
+                            </tr>
+                        </tb>
+                        <?php endforeach ?>
+                        <?php else: ?>
                     <p>Your cart is empty.</p>
+                <?php endif ?>
                 </div>
             </div>
 
