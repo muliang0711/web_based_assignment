@@ -1,6 +1,5 @@
 <?php
 // echo $_SERVER['REQUEST_URI']; // this line was for debugging.
-
 if (is_post()) {
     // Handle logout request
     $logout = post('logout');
@@ -12,9 +11,11 @@ if (is_post()) {
     // Handle minus/delete operations on the cart
     $action = post('action');
 
-    $productID = post('productID');
-    $sizeID = post('sizeID');
-    $userID = $_user->userID;
+    if ($action) {
+        $productID = post('productID');
+        $sizeID = post('sizeID');
+        $userID = $_user->userID;
+    }
 
     if ($action === 'minus') {
         $selectStmt = $_db->prepare('SELECT quantity FROM cartitem WHERE productID = :productID AND sizeID = :sizeID AND userID = :userID');
