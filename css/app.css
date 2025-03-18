@@ -192,7 +192,7 @@ th,td{
     font-family: "Lucida Console", "Courier New", monospace;
 }
 
-.minusBtn button{
+.delete-btn {
     background-color: red;
     color: rgb(70, 13, 13);
 

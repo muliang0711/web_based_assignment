@@ -58,7 +58,7 @@ function removeFromCart($productID, $sizeID, $userID): void {
     if ($deleteStmt->rowCount() > 0) {
         temp('info', "Successfully removed item from cart.");
     } else {
-        temp('info', "Failed to remove item from cart.");
+        temp('error', "Failed to remove item from cart.");
     }
 }
 ?>
@@ -145,9 +145,9 @@ function removeFromCart($productID, $sizeID, $userID): void {
                                                 <input type="hidden" name="productID" value="<?= $cartObject->productID ?>" />
                                                 <input type="hidden" name="sizeID" value="<?= $cartObject->sizeID ?>" />
                                                 <?php if ($cartObject->quantity === 1): ?>
-                                                    <button type="submit" data-confirm="This will remove <?= $cartObject->productName ?> (<?= $cartObject->sizeID ?>) from your cart. Proceed?"><strong>-</strong></button>
+                                                    <button class="minus-btn" type="submit" data-confirm="This will remove <?= $cartObject->productName ?> (<?= $cartObject->sizeID ?>) from your cart. Proceed?"><strong>-</strong></button>
                                                 <?php else: ?>
-                                                    <button type="submit"><strong>-</strong></button>
+                                                    <button class="minus-btn" type="submit"><strong>&ndash;</strong></button>
                                                 <?php endif ?>
                                             </form>
                                         </td>
@@ -157,7 +157,7 @@ function removeFromCart($productID, $sizeID, $userID): void {
                                                 <input type="hidden" name="action" value="add"/> 
                                                 <input type="hidden" name="productID" value="<?= $cartObject->productID ?>" />
                                                 <input type="hidden" name="sizeID" value="<?= $cartObject->sizeID ?>" />
-                                                <button type="submit"><strong>+</strong></button>
+                                                <button class="add-btn" type="submit"><strong>+</strong></button>
                                             </form>
                                         </td>
                                         <!-- Delete button -->
@@ -166,7 +166,11 @@ function removeFromCart($productID, $sizeID, $userID): void {
                                                 <input type="hidden" name="action" value="delete" />
                                                 <input type="hidden" name="productID" value="<?= $cartObject->productID ?>" />
                                                 <input type="hidden" name="sizeID" value="<?= $cartObject->sizeID ?>" />
-                                                <button data-confirm="Remove <?= $cartObject->productName ?> (<?= $cartObject->sizeID ?>) from your cart?"><strong>X</strong></button>
+                                                <button class="delete-btn" 
+                                                        data-confirm="Remove <?= $cartObject->productName ?> (<?= $cartObject->sizeID ?>) from your cart?"
+                                                >
+                                                    <strong>&times;</strong>
+                                                </button>
                                             </form>
                                         </td>
                                         <!-- <td><a onclick="onclick()" class="deleteBtn"><button><strong>X</strong></button></a></td> -->
