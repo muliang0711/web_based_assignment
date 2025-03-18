@@ -64,7 +64,21 @@ if (is_post()) {
             login($u->userID);
             
             temp('info', "Logged in as $u->username");
-            redirect('/pages/product/productlist.php');
+            
+            // If user was redirected here from a "boomerang" page 
+            // user will redirected back to that page upon successful login.
+            // ('Boomerang page' is a term I made up that means a page that 
+            // logs its path in $_SESSION['fromPage'] before redirecting 
+            // the user here, e.g. the user profile page, if accessed by an unsigned-in user, 
+            // redirects them here, prompting them to sign in, and upon successful login, the user
+            // will be redirected back to the user profile page, like a boomerang!),
+            if ($fromPage = temp('fromPage')) {
+                redirect($fromPage);
+            } 
+            // Else, just redirect user to product page.
+            else {
+                redirect('/pages/product/productlist.php');
+            }
         }
 
         $_errors['username'] = ' '; // This serves no functional purpose other than to force autofocus to focus on username (bc it selects the first input that is a sibling of .error). The value has to be ' ' (a space), not '' (empty string), because an empty string evaluates to false, so the error() function always executed the else block, which prints a <span> without a class. Somehow an empty string produces a <span> with no class. 
