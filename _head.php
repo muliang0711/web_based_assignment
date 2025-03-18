@@ -62,15 +62,15 @@ if (is_post()) {
                         <h2>Shopping Cart</h2>
                         
                         <?php
-                        $ID = $_user->userID;
+                        $userID = $_user->userID;
                         $statement = $_db->prepare('SELECT * FROM cartitem JOIN product USING (productID) WHERE userID = ?');
-                        $statement->execute([$ID]);
+                        $statement->execute([$userID]);
                         $cartItem = $statement->fetchAll();
                         ?>
                         <?php if($cartItem):?>
 
                             <?php foreach ($cartItem as $cartObject): ?>
-                                <tb>
+                                <table>
                                     <tr>
                                     <th>Racket Name</th>
                                     <th>Grip Size</th>
@@ -81,7 +81,7 @@ if (is_post()) {
                                     <td> <?php echo $cartObject->sizeID ?> </td>
                                     <td> <?php echo $cartObject->quantity ?> </td>
                                     </tr>
-                                </tb>
+                                </table>
                             <?php endforeach ?>
 
                         <?php else: ?>

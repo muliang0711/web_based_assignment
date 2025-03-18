@@ -6,14 +6,6 @@ include '../../_head.php';
 ?>
 
 
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Products Detail Page</title>
-</head>
-
-
-
 <?php
 if (isset($_GET['racket'])) {
   $productID = $_GET['racket'];
@@ -79,7 +71,7 @@ if (is_logged_in()) {
       
     } else {
       if ($userID) {
-        temp("error", "Stock unvailable!");
+        temp("error", "Stock unvailable! / Over limit!");
         redirect("../product/productDetail.php?racket=$productObject->productID");
       }
     }
@@ -119,7 +111,7 @@ $productObject = $size->fetchAll();
 
 ?>
 
-<?php if ($userID != null):?>
+<?php if ($userID):?>
 <div class="sizeSelect" id="selectSize">
   <div class="popup" id="popup">
     <h2>Select grip size</h2>
@@ -130,7 +122,9 @@ $productObject = $size->fetchAll();
     <?php endforeach ?>
     <button onclick="closeSelect()">Close</button>
     <?php else:?>
+      <div class="attention">
       <p>Please login before add to cart!</p>
+    </div>
       <?php endif ?>
 
   </div>
