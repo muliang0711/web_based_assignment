@@ -85,9 +85,7 @@ include '../../_head.php';
       foreach($productObjectArray as $productObject):?>
          <div class="item">
           <a onclick = "onclick()" href = "../product/productDetail.php?racket=<?php echo $productObject->productID ?>">
-<<<<<<< HEAD
 
-=======
         <!--  <?php
                 // Fetch associated images for the product : sample :
                 $sql = "SELECT image_path FROM product_images WHERE productID = ?";
@@ -106,7 +104,7 @@ include '../../_head.php';
                 }
                 ?>
                 <p><?php echo htmlspecialchars($productObject->productName); ?></p>-->
->>>>>>> 093ec6db407750dfc502b16c109eb850d82c4153
+
           <img src="<?php echo $productObject->productImg ?>">
           <p><?php echo $productObject->productName ?></p> 
           </a>
