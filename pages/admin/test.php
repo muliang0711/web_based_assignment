@@ -27,7 +27,7 @@ include_once __DIR__ . "/../../db_connection.php";
 $pdo = $_db;
 
 // Get the product ID from the URL
-$productID = R0001 ;
+
 
 if (!$productID) {
     echo "<p>No product ID provided.</p>";
