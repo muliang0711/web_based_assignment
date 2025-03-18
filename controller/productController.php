@@ -4,12 +4,17 @@ require_once __DIR__ . "/../_base.php";
 require_once __DIR__ . "/../db_connection.php";
 require_once __DIR__ . "/../db/productDb.php";
 require_once __DIR__ . "/../db/productAnlysis.php";
+require_once __DIR__ . "/../db/trackAction.php";
+
 class ProductController{
 
     private $productDb ; 
-      
+    private $track ; 
+
     public function __construct($_pdo){
         $this->productDb = new productDb($_pdo);
+        
+        $this->track = new track($_pdo);
     }
 
     public function handleRequest(){
@@ -30,12 +35,6 @@ class ProductController{
             case 'filterProduct':
                 $this->filterProducts(); //done 
                 break;
-            case 'totalsellTrack' :
-                $this->handleTotalSellTrack();
-                break;
-            case 'productSellTrack':
-                $this->handleProductSellTrack();
-                break ; 
             default:
                 $_SESSION['errors'] = 'Invalid action';
                 $this->redirectToAdmin();
@@ -96,88 +95,62 @@ class ProductController{
             'stock'       => $_POST['stock'] ?? null,
             'price'       => $_POST['price'] ?? null,
             'playerInfo'  => $_POST['playerInfo'] ?? null, 
-            'introduction'=> $_POST['introduction'] ?? null , 
+            'introduction'=> $_POST['introduction'] ?? null, 
         ];
-        
-
-
-
+    
         $errors = $this->validation($productInformation);
-
-        // valdation : ensure the components of productId and sizeId existing in db
-        // not longer need 
-
-        // SAME product idalready existing than return error :
+    
+        // Check if product ID already exists
         $products = $this->getAllProducts();
-        foreach($products as $product){
-            if($productInformation['productId'] == $product->productID && $productInformation['seriesId'] == $product->seriesID){
-                $errors = ['ProductId existing already ']; 
+        foreach ($products as $product) {
+            if ($productInformation['productId'] == $product->productID && 
+                $productInformation['seriesId'] == $product->seriesID) {
+                $errors[] = "Product ID already exists.";
+                break;
             }
         }
-        // If there are validation errors, return them
+    
         if (!empty($errors)) {
             $_SESSION['Add_ErrorMsg'] = $errors;
             $this->redirectToAdmin();
         }
-        
-        $uploadDir = "uploads/";
-        /*if (!is_dir($uploadDir)) {
-            mkdir($uploadDir, 0777, true);
-        }*/
+        // ----------validatio  false return errors 
 
-        if(isset($_FILES['image']) && isset($_FILES['playerImage'])){
-
-            $files = $_FILES['image'];
-            $productId = $_POST['productId'];
-            $fileCount = count($files['name']);
-
-            for($i = 0 ; $i < $fileCount ; $i ++){
-
-                $fileTmpName = $files['tmp_name'][$i];
-                $fileName = $files['name'][$i];
-                $fileExt = strtolower(pathinfo($fileName , PATHINFO_EXTENSION));
-                
-                $allowedTypes = ["jpg" , "jpeg" , "png"];
-
-                if(!in_array($fileExt,$allowedTypes)){
-                    $errors[] = ["file type not allowed"];
-                    continue ;
-                }
-                if (!file_exists($fileTmpName)) {
-                    $errors[] = "❌ Temporary file does not exist: $fileTmpName <br>";
-                }
-
-                $newFileName = "product_{$productId}_"."$i".".$fileExt";
-                $targetPath = $uploadDir . $newFileName ; 
-
-                if(move_uploaded_file($fileTmpName , $targetPath)){
-                    $result = $this->productDb->addProduct($productInformation);
-                    $this->productDb->addimage($productId , $newFileName);
-                }else{
-                    $errors[] = "error when try to move file into folder";
-                    $errors[] = print_r($_FILES);
-                    $errors[] = print_r(error_get_last()) ;
-                }
+        // **START DATABASE TRANSACTION**
+        $this->productDb->beginTransaction();
+    
+        try {
+            // 1. Insert product into the database**
+            $result = $this->productDb->addProduct($productInformation);
+    
+            if (!$result['success']) {
+                throw new Exception("Failed to add product: " . $result['error']);
             }
-
-
-
+    
+            // 2. Process images**
+            $uploadErrors = $this->processImages($_FILES['image'] ?? null, $_POST['productId'], "product");
+            if (!empty($uploadErrors)) {
+                throw new Exception(implode(", ", $uploadErrors));
+            }
+    
+            $uploadErrors = $this->processImages($_FILES['playerImage'] ?? null, $_POST['productId'], "player");
+            if (!empty($uploadErrors)) {
+                throw new Exception(implode(", ", $uploadErrors));
+            }
+    
+            $this->productDb->commitTransaction();
+    
+            $_SESSION['Add_SuccessMsg'] = "Product '{$productInformation['productName']}' (ID: {$productInformation['productId']}) added successfully!";
+        } catch (Exception $e) {
+            // **ROLLBACK TRANSACTION (Undo Database Changes if Any Step Fails)**
+            $this->productDb->rollbackTransaction();
+    
+            $_SESSION['Add_ErrorMsg'] = ["Error: " . $e->getMessage()];
         }
-        
-        if (!empty($errors)) {
-            $_SESSION['Add_ErrorMsg'] = $errors;
-            $this->redirectToAdmin();
-        }
-
-        if ($result['success']) {
-            $_SESSION['Add_SuccessMsg'] = "Product '{$productInformation['productName']}' (ID: {$productInformation['productId']}) has been successfully added!";
-        } else {
-            $_SESSION['Add_ErrorMsg'] = ["Failed to add product. Reason: " . $result['error']];
-        }
-
+    
         $this->redirectToAdmin();
     }
-
+    
     private function updateProduct() {
         $productInformation = [
             'productId' => $_POST['productId'] ?? null,
@@ -200,7 +173,9 @@ class ProductController{
         }
     
             
-        $result = $this->productDb->updateProducts($productInformation);
+        // $result = $this->productDb->updateProducts($productInformation);
+        // test : 
+        $result = $this->track->trackUpdate($productInformation);
 
         if($result['success']){
             $_SESSION['Update_SuccessMsg'] = "Product '{$productInformation['productName']}' (ID: {$productInformation['productId']}) has been successfully updated!";
@@ -306,34 +281,44 @@ class ProductController{
        return $errors ;
     }
 
-    private function handleTotalSellTrack() {
-        $filterData = [
-            'startDate' => $_POST['startDate'] ?? null,
-            'endDate' => $_POST['endDate'] ?? null,
-            'status' => $_POST['status'] ?? null,
-        ];
-        
-        $response = $this->productDb->totalsellTrack($filterData);
-        $_SESSION['total_sales_results'] = $response['success'] ? $response['data'] : [];
-        
-        header('Location : ../pages/admin/admin_test.php');
-        exit();
+    private function processImages($files, $productId, $type) {
+        if (!$files || empty($files['name'][0])) {
+            return []; // No file uploaded
+        }
+    
+        $uploadDir = "uploads/";
+        $allowedTypes = ["jpg", "jpeg", "png"];
+    
+        // Validate and move each file
+        $fileCount = count($files['name']);
+        for ($i = 0; $i < $fileCount; $i++) {
+            $fileTmpPath = $files['tmp_name'][$i];
+            $fileName = $files['name'][$i];
+            $fileExt = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
+    
+            // Check if file type is valid
+            if (!in_array($fileExt, $allowedTypes)) {
+                return ["Invalid file type '{$fileExt}' detected. Allowed: jpg, jpeg, png. Upload aborted."];
+            }
+    
+            // Ensure file exists before moving
+            if (!file_exists($fileTmpPath)) {
+                return ["Error: Temporary file does not exist: {$fileName}"];
+            }
+    
+            $newFileName = "{$type}_{$productId}_{$i}.{$fileExt}";
+            $targetPath = $uploadDir . $newFileName;
+    
+            if (!move_uploaded_file($fileTmpPath, $targetPath)) {
+                return ["Failed to move uploaded file: {$fileName}"];
+            }
+    
+            // Save image to database
+            $this->productDb->addProductImage($productId, $newFileName , $type);
+        }
+    
+        return []; // No errors
     }
-
-    private function handleProductSellTrack() {
-        $filterData = [
-            'startDate' => $_POST['startDate'] ?? null,
-            'endDate' => $_POST['endDate'] ?? null,
-            'sizeID' => $_POST['sizeID'] ?? null,
-        ];
-        
-        $response = $this->productDb->productSellTrack($filterData);
-        $_SESSION['product_sales_results'] = $response['success'] ? $response['data'] : [];
-        
-        header('Location : ../pages/admin/admin_test.php');
-        exit();
-    }
-
 //====================================================================================
 }
 $productController = new ProductController($_db);

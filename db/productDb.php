@@ -1,16 +1,28 @@
 <?php
-include_once __DIR__ . '/../db_connection.php';
+ include_once __DIR__ . '/../db_connection.php';
 
 // planing : I want these file only can control product crud 
 
 class productDb{
-    
+
     private $pdo;
 
     public function __construct($pdo) {
         $this->pdo = $pdo;
     }
-    // 1. get all product  :
+
+    public function beginTransaction() {
+        $this->pdo->beginTransaction();
+    }
+
+    public function commitTransaction() {
+        $this->pdo->commit();
+    }
+
+    public function rollbackTransaction() {
+        $this->pdo->rollBack();
+    }
+
     public function getAllProducts(){
         // when using the pfo->query can not accpet variable ; it execute the sql directly ； 
             //stmt = $this->pdo->query("SELECT * FROM product");
@@ -95,18 +107,21 @@ class productDb{
         return $stmt->fetchAll();
     }
     
-    public function addimage($porductID , $imagePath){
+    public function addProductImage($porductID , $imagePath , $type){
         try{
-            $sql = "INSERT INTO product_images(product_id , image_path ) VALUES (? , ?)";
+            $sql = "INSERT INTO product_images(productID , image_path ,  image_type ) VALUES (? , ? , ?)";
             $result = $this->pdo->prepare($sql);
-            $result->execute([$porductID , $imagePath]); 
+            $result->execute([$porductID , $imagePath , $type]); 
     
         }catch(Exception $e){
+
             throw new Exception("Eroor insert into product_image" . $e->getMessage());
+
         }
        
 
     }
+
 
     public function addProduct($productInformation){
         // since we already check data is correct in service side : 
@@ -119,7 +134,7 @@ class productDb{
         
         try{
             // 1 start Transaction : 
-            $this->pdo->beginTransaction();
+            // $this->pdo->beginTransaction();
             // 1.1 fetch data : 
             $productID = $productInformation['productId'];
             $productName = $productInformation['productName'];
@@ -142,13 +157,13 @@ class productDb{
             // inside this phase already call insertProductSize function
 
             // 4. Commit transaction
-            $this->pdo->commit();
+            // $this->pdo->commit();
 
             // return secess msg 
             return ["success" => true , "message" => "Add successful"];
         }catch(Exception $e){
             // Rollback transaction if any error occurs
-            $this->pdo->rollBack();
+            // $this->pdo->rollBack();
             // Return an error message
             return ["success" => false, "error" => $e->getMessage()];
                 
@@ -161,18 +176,16 @@ class productDb{
         $productID = $productInformation['productId'];
         $productName = $productInformation['productName'];
         $seriesID = $productInformation['seriesId'];
-        $seriesName = $productInformation['seriesName'];
         $sizeID = $productInformation['sizeId'];
         $price = $productInformation['price'];
         $quantity = $productInformation['stock']; 
         $oldSizeID = $productInformation['oldSizeID'];
-        $oldSeriesID = $productInformation['oldSeriesID'];
 
         try {
 
             // start transaction since there have multiple table insert;
 
-            $this->pdo->beginTransaction(); 
+            //$this->pdo->beginTransaction(); 
 
             // update series table first : 
 
@@ -188,14 +201,22 @@ class productDb{
 
             // commit when done : 
 
-            $this->pdo->commit();
+            //$this->pdo->commit();
 
             // return message when sucess : 
-            return ["success" => true , "message" => "update successful"];
+            // return ["success" => true , "message" => "update successful"];
+
+            // test track function : 
+
+
+            $stmt = $this->pdo->prepare("SELECT * FROM products WHERE id = ?");
+            $stmt->execute([$productID]);
+            $newValue =  $stmt->fetch(PDO::FETCH_ASSOC);
+            return $newValue ;
 
         }catch(Exception $e){
 
-            $this->pdo->rollBack();
+            //$this->pdo->rollBack();
 
             // return when error 
 
@@ -358,7 +379,7 @@ class productDb{
     }
 
     public function autoCalculateProductStock($orderProduct){
-        // verytime create a order record will auto run this function : 
+        // e  verytime create a order record will auto run this function : 
         try{
 
             // 1. fetch data from the array (orderProduct) : 
@@ -391,6 +412,8 @@ class productDb{
 
     }
 
+
+    
 //==================================== ALL Private function will be here : 
 
     // =============================== Support Update Function ===================================================================

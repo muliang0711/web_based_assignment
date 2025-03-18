@@ -307,7 +307,7 @@ unset($_SESSION['Delete_ErrorMsg']);
         <input type="text" name="playerInfo" placeholder="Playuer Info">
         
         <label for="playerImage">Player Image</label>
-        <input type="file" name="playerImage" placeholder="player Image" multiple required>
+        <input type="file" name="playerImage[]" placeholder="player Image" multiple required>
              
         <div style="margin-top:10px;">
           <button type="submit" class="btn btn-add">Submit</button>
@@ -331,12 +331,10 @@ unset($_SESSION['Delete_ErrorMsg']);
         <input type="text" name="productName">
         
         <label>Series ID</label>
-        <input type="text" name="seriesId">
+        <input type="text" name="seriesId" hidden>
 
-        <label>Series Name</label>
-        <input type="text" name="seriesName">
+        <input type="text" name="seriesName" hidden>
         
-        <label>Price</label>
         <input type="text" name="price">
         
         <label>Stock</label>
