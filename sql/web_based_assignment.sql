@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 12, 2025 at 04:21 AM
+-- Generation Time: Mar 18, 2025 at 09:59 AM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- PHP Version: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,8 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `web_based_assignment`
 --
-CREATE DATABASE IF NOT EXISTS `web_based_assignment` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `web_based_assignment`;
 
 -- --------------------------------------------------------
 
@@ -51,6 +49,19 @@ INSERT INTO `admin` (`id`, `position`, `password`, `adminLevel`) VALUES
 ('7', 'Intern', 'pass789', '0'),
 ('8', 'HR', 'pass890', '3'),
 ('9', 'Accountant', 'pass901', '2');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cartitem`
+--
+
+CREATE TABLE `cartitem` (
+  `userID` int(11) NOT NULL,
+  `productID` varchar(5) NOT NULL,
+  `sizeID` varchar(4) NOT NULL,
+  `quantity` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -135,9 +146,10 @@ INSERT INTO `product` (`productID`, `productName`, `price`, `seriesID`, `product
 ('R0001', 'Yonex Arcsaber 11 Pro', 849.00, 'ARC', 'https://www.yonex.com/media/catalog/product/a/r/arc11-p.png?', 'The Arcsaber 11 Pro adopts the unique feel of impact and offers enhanced playability with an emphasis on shuttle pocketing for a controlled attack. Taking control of the court can take many forms, and for the Arcsaber it comes from the extra milliseconds of shuttle contact time.', 'Aaron Chia Teng Fong is a Malaysian badminton player.A world champion and a double bronze medalist at the Olympic Games, he and his partner Soh Wooi Yik became the first ever world badminton champions from Malaysia after winning the men\'s doubles title at the 2022 World Championships.Together, they ', 'https://www.yonex.com/media/wysiwyg/Athletes/Badminton/810x540_aaron-chia.jpg'),
 ('R0002', 'Yonex Nanoflare 1000z', 799.00, 'NAN', 'https://www.yonex.com/media/catalog/product/n/a/nanoflare_1000_z.png?', 'The new NANOFLARE 1000 is being used on court now in the hands of Rio Olympic gold medalist, Carolina Marin (ESP), 2022 All England silver medalist, Lakshya Sen (IND), and 2022 French Open champion, He Bing Jiao (CHN). The racquets are scheduled for a global launch on June 16th, 2023, in four different models, Z, TOUR, GAME and PLAY – each developed with the same performance concept but with variations in materials used.', 'Chen Tang Jie is a Malaysian badminton player. He was part of the Malaysian 2016 Asian Junior Championships and 2016 BWF World Junior Championships team, and helped Malaysia to clinch a silver medal in the World Junior mixed team before being defeated by China.', 'https://www.badmintonplanet.com/wp-content/uploads/2023/06/06-25-2023-badminton-news-chen-tang-jie-toh-ee-wei-taipei-open.jpg'),
 ('R0003', 'Yonex Astrox 88D Pro', 899.00, 'AST', 'https://www.yonex.com/media/catalog/product/3/a/3ax88d-p_076-1_02.png?', 'This brand new Astrox 88D Pro is designed for aggressive doubles players who are always ready to dominate from the back of the court. The POWER-ASSIST BUMPER has been newly added to the top of the frame, providing even more advancement for the Rotational Generator System.', 'Kunlavut Vitidsarn is a Thai badminton player. He is the current men\'s singles World Champion as he won the gold medal at the 2023 World Championships, and a silver medalist at the 2024 Olympic Games. He was also three-times World Junior champion, winning in 2017, 2018 and 2019. He is nicknamed the ', 'https://www.pattayamail.com/wp-content/uploads/2024/08/t-09-Kunlavut-Vitidsarn-makes-history-as-first-Thai-shuttler-to-reach-Olympic-badminton-final.jpg'),
-('R0004', 'Yonex Astrox 100zz', 849.00, 'AST', 'https://www.yonex.com/media/catalog/product/a/s/astrox100zz_kurenai.png?', 'Yonex ASTROX 100 ZZ racket is built using with Rotational Generator System. The counter balanced head adapts to each shot, helping you to control the drive and attack the opposition with increased acceleration, steeper angle and power on the smash.', "Viktor Axelsen (born 4 January 1994) is a Danish badminton player. He is a two-time Olympic Champion, two-time World Champion, and four-time European Champion. He has held the No. 1 BWF World Ranking in men's singles for a total of 183 weeks (as of August 2024), and he is the current world No. 4.Throughout his career, Axelsen has won every single major title in both team and individual events at least once (World Tour Super 1000 level or higher), except for Sudirman Cup (where his team won Bronze in 2013). Known for his powerful smashes and solid defence, he is widely regarded as one of the greatest badminton players of all time.", 'https://c.ndtvimg.com/2021-12/1hhdm63o_viktor-axelsen_625x300_14_December_21.jpg?'),
-('R0005', 'Yonex Duora Z-Strike', 739.00, 'DUO', 'https://www.yonex.com/media/catalog/product/d/u/duo-zs.png?', 'YONEX Duora Z Strike Badminton Racquet Technology: By reducing the amount of carbon in the shaft to make it 60% thinner than a conventional racquet whilst retaining stiffness, YONEX has created a revolutionary lightweight racquet with lightening head speed and control.', "Chou Tien-chen is a Taiwanese badminton player. He became the first local shuttler in 17 years to win the men's singles title of the Chinese Taipei Open in 2016 since Indonesian-born Fung Permadi won it in 1999. He won his first BWF Super Series title at the 2014 French Open, beating Wang Zhengming of China 10–21, 25–23, 21–19 in the finals. He is the record holder of three consecutive Hylo Open titles from 2012 till 2014.", 'https://img.olympics.com/images/image/private/t_s_16_9_g_auto/t_s_w960/f_auto/primary/kp0rfgiyiusrlcskh5h9'),
-('R0006', 'Yonex Astrox 99 Pro', 859.00, 'AST', 'https://www.yonex.com/media/catalog/product/a/x/ax99-pro_whitetiger.png?', 'Astrox 99 Pro uses NAMD in its entire frame from head to body of racket. A world-first, new dimension graphite material, Namd, greatly improves the adhesion of the graphite fibers and resin by attaching nanomaterial directly to the graphite fiber.', "Kento Momota is a former Japanese badminton player. He has won several major badminton tournaments including two World Championships titles, two Asian Championships titles, and one All England title.", "https://ss-i.thgim.com/public/incoming/7drpf6/article68078411.ece/alternates/LANDSCAPE_1200/Indonesia_Open_Badminton_04907.jpg");
+('R0004', 'Yonex Astrox 100zz', 849.00, 'AST', 'https://www.yonex.com/media/catalog/product/a/s/astrox100zz_kurenai.png?', 'Yonex ASTROX 100 ZZ racket is built using with Rotational Generator System. The counter balanced head adapts to each shot, helping you to control the drive and attack the opposition with increased acceleration, steeper angle and power on the smash.', 'Viktor Axelsen (born 4 January 1994) is a Danish badminton player. He is a two-time Olympic Champion, two-time World Champion, and four-time European Champion. He has held the No. 1 BWF World Ranking in men\'s singles for a total of 183 weeks (as of August 2024), and he is the current world No. 4.Thr', 'https://c.ndtvimg.com/2021-12/1hhdm63o_viktor-axelsen_625x300_14_December_21.jpg?'),
+('R0005', 'Yonex Duora Z-Strike', 739.00, 'DUO', 'https://www.yonex.com/media/catalog/product/d/u/duo-zs.png?', 'YONEX Duora Z Strike Badminton Racquet Technology: By reducing the amount of carbon in the shaft to make it 60% thinner than a conventional racquet whilst retaining stiffness, YONEX has created a revolutionary lightweight racquet with lightening head speed and control.', 'Chou Tien-chen is a Taiwanese badminton player. He became the first local shuttler in 17 years to win the men\'s singles title of the Chinese Taipei Open in 2016 since Indonesian-born Fung Permadi won it in 1999. He won his first BWF Super Series title at the 2014 French Open, beating Wang Zhengming ', 'https://img.olympics.com/images/image/private/t_s_16_9_g_auto/t_s_w960/f_auto/primary/kp0rfgiyiusrlcskh5h9'),
+('R0006', 'Yonex Astrox 99 Pro', 859.00, 'AST', 'https://www.yonex.com/media/catalog/product/a/x/ax99-pro_whitetiger.png?', 'Astrox 99 Pro uses NAMD in its entire frame from head to body of racket. A world-first, new dimension graphite material, Namd, greatly improves the adhesion of the graphite fibers and resin by attaching nanomaterial directly to the graphite fiber.', 'Kento Momota is a former Japanese badminton player. He has won several major badminton tournaments including two World Championships titles, two Asian Championships titles, and one All England title.', 'https://ss-i.thgim.com/public/incoming/7drpf6/article68078411.ece/alternates/LANDSCAPE_1200/Indonesia_Open_Badminton_04907.jpg');
+
 -- --------------------------------------------------------
 
 --
@@ -171,6 +183,20 @@ INSERT INTO `productsize` (`productID`, `sizeID`, `quantity`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `product_images`
+--
+
+CREATE TABLE `product_images` (
+  `id` int(11) NOT NULL,
+  `productID` varchar(50) DEFAULT NULL,
+  `image_path` text NOT NULL,
+  `image_type` enum('product','player') NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `series`
 --
 
@@ -186,8 +212,8 @@ CREATE TABLE `series` (
 INSERT INTO `series` (`seriesID`, `seriesName`) VALUES
 ('ARC', 'Arcsaber'),
 ('AST', 'Astrox'),
-('NAN', 'Nanoflare'),
-('DUO', 'Duora');
+('DUO', 'Duora'),
+('NAN', 'Nanoflare');
 
 -- --------------------------------------------------------
 
@@ -227,6 +253,13 @@ ALTER TABLE `admin`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `cartitem`
+--
+ALTER TABLE `cartitem`
+  ADD PRIMARY KEY (`userID`,`productID`,`sizeID`),
+  ADD KEY `productID` (`productID`,`sizeID`);
+
+--
 -- Indexes for table `orders`
 --
 ALTER TABLE `orders`
@@ -254,6 +287,13 @@ ALTER TABLE `productsize`
   ADD PRIMARY KEY (`productID`,`sizeID`);
 
 --
+-- Indexes for table `product_images`
+--
+ALTER TABLE `product_images`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `productID` (`productID`);
+
+--
 -- Indexes for table `series`
 --
 ALTER TABLE `series`
@@ -274,6 +314,12 @@ ALTER TABLE `user`
 --
 
 --
+-- AUTO_INCREMENT for table `product_images`
+--
+ALTER TABLE `product_images`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
@@ -282,6 +328,12 @@ ALTER TABLE `user`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `cartitem`
+--
+ALTER TABLE `cartitem`
+  ADD CONSTRAINT `cartitem_ibfk_1` FOREIGN KEY (`productID`,`sizeID`) REFERENCES `productsize` (`productID`, `sizeID`);
 
 --
 -- Constraints for table `orders`
@@ -307,17 +359,14 @@ ALTER TABLE `product`
 --
 ALTER TABLE `productsize`
   ADD CONSTRAINT `productSize_ibfk_1` FOREIGN KEY (`productID`) REFERENCES `product` (`productID`);
+
+--
+-- Constraints for table `product_images`
+--
+ALTER TABLE `product_images`
+  ADD CONSTRAINT `product_images_ibfk_1` FOREIGN KEY (`productID`) REFERENCES `product` (`productID`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-
-CREATE TABLE `cartitem` (
-  `userID` int(11) NOT NULL,
-  `productID` varchar(5) NOT NULL,
-  `sizeID` varchar(4) NOT NULL,
-  `quantity` int(11) NOT NULL,
-  PRIMARY KEY (`userID`, `productID`, `sizeID`),
-  FOREIGN KEY (`productID`, `sizeID`) REFERENCES productsize(`productID`, `sizeID`) 
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
