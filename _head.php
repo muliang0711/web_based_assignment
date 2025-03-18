@@ -70,7 +70,7 @@ if (is_post()) {
                         $cartItem = $statement->fetchAll();
                         ?>
                         <?php if ($cartItem): ?>
-
+                            <?php $status = 0 ?>
 
                             <table>
                                 <tr>
@@ -83,12 +83,25 @@ if (is_post()) {
                                         <td> <?php echo $cartObject->productName ?> </td>
                                         <td> <?php echo $cartObject->sizeID ?> </td>
                                         <td> <?php echo $cartObject->quantity ?> </td>
-                                        <td><a onclick="onclick()" class="minusBtn"><button><strong>-</strong></button></a></td>
+                                        <td><form method = "POST"><input type="hidden" name="action" value="minus"> <button type="submit"><strong>-</strong></button></form></td>
+                                        <td><a onclick="onclick()" class="deleteBtn"><button><strong>X</strong></button></a></td>
                                     </tr>
                                 <?php endforeach ?>
                             </table>
+                            <?php 
+                                $action = $_POST['action'];
+                                if($action === 'minus'){
+                                $quantity = $cartItem->quantity;
+                                $quantity -= 1;
+                                $statement = $_db->prepare('UPDATE cartitem SET quantity WHERE userID = ? AND productID = ? AND sizeID = ?');
+                                $statement->execute([$quantity, $userID, $productID, $sizeID]);
+                                $cartItem = $statement->fetchAll();
+                                }
+                            ?>
 
-
+                            <a onclick="onclick()" class="paymentBtn">
+                            <button>Proceed to Payment </button>
+                            </a>
                         <?php else: ?>
 
                             <p>Your cart is empty.</p>
