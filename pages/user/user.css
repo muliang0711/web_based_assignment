@@ -4,6 +4,7 @@
 
 :root {
     --link-color: rgb(69, 69, 69); 
+    --error-background: rgb(225, 199, 199);
 }
 
 
@@ -86,6 +87,8 @@ body {
 /* Override /css/app.css */
 main {
     background-color: rgb(0,0,0,0);
+    padding-top: 50px;
+    padding-bottom: 100px;
 }
 
 @keyframes bg-scroll {
@@ -101,17 +104,30 @@ body, input, button {
     font-family: system-ui;
 }
 
-.container {
+.container, .notice-box {
     background-color:#fff;
     /* color: #fff; */
     width: 400px;
     border: 1px solid;
     border-radius: 15px;
-    box-shadow: 0 0 1 1 #aaa;
-    margin: 50px auto 100px;
+    margin: 0 auto;
     padding: 20px;
     box-shadow: 10px 10px 0 0 rgb(0,0,0,0.6);
     transition: all 0.2s;
+}
+
+.notice-box {
+    display: none;
+}
+
+.notice-box:not(:empty) {
+    display: block;
+    background-color: var(--error-background);
+    color: darkred;
+    border: 1px solid darkred;
+    box-shadow: 10px 10px 0 0 rgba(55, 9, 9, 0.6);
+    /* box-shadow: initial; */
+    margin-bottom: 20px;
 }
 
 .store-name {

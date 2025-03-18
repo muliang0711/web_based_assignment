@@ -64,7 +64,7 @@ if (is_post()) {
             login($u->userID);
             
             temp('info', "Logged in as $u->username");
-            redirect('./test.php');
+            redirect('/pages/product/productlist.php');
         }
 
         $_errors['username'] = ' '; // This serves no functional purpose other than to force autofocus to focus on username (bc it selects the first input that is a sibling of .error). The value has to be ' ' (a space), not '' (empty string), because an empty string evaluates to false, so the error() function always executed the else block, which prints a <span> without a class. Somehow an empty string produces a <span> with no class. 
@@ -75,6 +75,7 @@ if (is_post()) {
 include '../../_head.php';
 ?>
 
+<div class="notice-box"><?= temp('info'); ?></div>
 
 <div class="container">
     <h2 class="store-name">

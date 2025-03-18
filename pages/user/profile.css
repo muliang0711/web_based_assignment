@@ -1,0 +1,13 @@
+main {
+    display: flex;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+.side-nav {
+    width: 200px;
+}
+
+.main {
+    flex-grow: 1;
+}
