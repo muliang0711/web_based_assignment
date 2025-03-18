@@ -85,9 +85,30 @@ include '../../_head.php';
       foreach($productObjectArray as $productObject):?>
          <div class="item">
           <a onclick = "onclick()" href = "../product/productDetail.php?racket=<?php echo $productObject->productID ?>">
+<<<<<<< HEAD
 
+=======
+        <!--  <?php
+                // Fetch associated images for the product : sample :
+                $sql = "SELECT image_path FROM product_images WHERE productID = ?";
+                $stmt = $_db->prepare($sql);
+                $stmt->execute([$productObject->productID]);
+                $images = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                
+                // Display all associated images
+                if (!empty($images)) {
+                    foreach ($images as $image) {
+                        echo '<img src="../File/' . htmlspecialchars($image['image_path']) . '" alt="Product Image">';
+                    }
+                } else {
+                    // Fallback to product default image
+                    echo '<img src="../File/' . htmlspecialchars($productObject->productImg) . '" alt="Default Product Image">';
+                }
+                ?>
+                <p><?php echo htmlspecialchars($productObject->productName); ?></p>-->
+>>>>>>> 093ec6db407750dfc502b16c109eb850d82c4153
           <img src="<?php echo $productObject->productImg ?>">
-          <p><?php echo $productObject->productName ?></p>
+          <p><?php echo $productObject->productName ?></p> 
           </a>
          </div>
       <?php endforeach ?>
