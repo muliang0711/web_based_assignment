@@ -30,68 +30,72 @@ if (is_post()) {
 
             <?php if (is_logged_in()): ?>
 
-            <div class="cart-btn">
-                <img src="/assets/img/icon-cart.png" alt="Cart" title="Cart" />
-            </div>
-            
-            <div class="account dropdown">
-                <div class="dropdown-label">
-                    <img class="account-icon" src="/assets/img/profile-default-icon-dark.svg" alt="Account" title="Account"/>
+                <div class="cart-btn">
+                    <img src="/assets/img/icon-cart.png" alt="Cart" title="Cart" />
                 </div>
-                <div class="dropdown-content">
-                    <div class="dropdown-header">
-                        <img class="profile-pic" src="/assets/img/profile-default-icon-dark.svg" alt="Account" title="Account"/>
-                        <div class="username"><?= $_user->username ?></div>
+                
+                <div class="account dropdown">
+                    <div class="dropdown-label">
+                        <img class="account-icon" src="/assets/img/profile-default-icon-dark.svg" alt="Account" title="Account"/>
                     </div>
-                    <div class="dropdown-main">
-                        <a class="dropdown-item" href="/pages/user/profile.php">
-                            <span><img src="/assets/img/icon-profile.svg"/></span>
-                            <div>Profile</div>
-                        </a>
-                        <a class="dropdown-item" href="/logout.php">
-                            <span><img src="/assets/img/icon-signout.svg"/></span>
-                            <div>Log out</div>
-                        </a>
+                    <div class="dropdown-content">
+                        <div class="dropdown-header">
+                            <img class="profile-pic" src="/assets/img/profile-default-icon-dark.svg" alt="Account" title="Account"/>
+                            <div class="username"><?= $_user->username ?></div>
+                        </div>
+                        <div class="dropdown-main">
+                            <a class="dropdown-item" href="/pages/user/profile.php">
+                                <span><img src="/assets/img/icon-profile.svg"/></span>
+                                <div>Profile</div>
+                            </a>
+                            <a class="dropdown-item" href="/logout.php">
+                                <span><img src="/assets/img/icon-signout.svg"/></span>
+                                <div>Log out</div>
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="cart-popup">
-                <div class="content">
-                    <span class="close-popup">&times;</span>
-                    <h2>Shopping Cart</h2>
-                    
-                    <?php
-                    $ID = $_user->userID;
-                    $statement = $_db->prepare('SELECT * FROM cartitems JOIN product USING (productID) WHERE userID = ?');
-                    $statement->execute([$ID]);
-                    $cartItem = $statement->fetchAll();
-                    ?>
-                    <?php if($cartItem):?>
-                    <?php foreach ($cartItem as $cartObject): ?>
-                        <tb>
-                            <tr>
-                            <th>Racket Name</th>
-                            <th>Grip Size</th>
-                            <th>Quantity</th>
-                            </tr>
-                            <tr>
-                            <td> <?php echo $cartObject->productName ?> </td>
-                            <td> <?php echo $cartObject->sizeID ?> </td>
-                            <td> <?php echo $cartObject->quantity ?> </td>
-                            </tr>
-                        </tb>
-                        <?php endforeach ?>
+                <div class="cart-popup">
+                    <div class="content">
+                        <span class="close-popup">&times;</span>
+                        <h2>Shopping Cart</h2>
+                        
+                        <?php
+                        $ID = $_user->userID;
+                        $statement = $_db->prepare('SELECT * FROM cartitem JOIN product USING (productID) WHERE userID = ?');
+                        $statement->execute([$ID]);
+                        $cartItem = $statement->fetchAll();
+                        ?>
+                        <?php if($cartItem):?>
+
+                            <?php foreach ($cartItem as $cartObject): ?>
+                                <tb>
+                                    <tr>
+                                    <th>Racket Name</th>
+                                    <th>Grip Size</th>
+                                    <th>Quantity</th>
+                                    </tr>
+                                    <tr>
+                                    <td> <?php echo $cartObject->productName ?> </td>
+                                    <td> <?php echo $cartObject->sizeID ?> </td>
+                                    <td> <?php echo $cartObject->quantity ?> </td>
+                                    </tr>
+                                </tb>
+                            <?php endforeach ?>
+
                         <?php else: ?>
-                    <p>Your cart is empty.</p>
-                <?php endif ?>
+
+                            <p>Your cart is empty.</p>
+                        
+                        <?php endif ?>
+                    </div>
                 </div>
-            </div>
 
             <?php else: ?>
             
-            <a href="/pages/user/user-login.php">Log in</a>
-            <a class="signup" href="/pages/user/user-signup.php">Sign up</a>
+                <a href="/pages/user/user-login.php">Log in</a>
+                <a class="signup" href="/pages/user/user-signup.php">Sign up</a>
 
             <?php endif ?>
         </nav>
