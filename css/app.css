@@ -141,6 +141,7 @@ header nav > a:hover::after {
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
+    overflow: auto;
 }
 
 .cart-popup .content {
@@ -325,3 +326,38 @@ footer {
     padding: 50px 0;
 }
 
+table{
+    margin: 0 auto;
+    background: radial-gradient(circle 280px at 0% 0%, #444444, #0c0d0d);
+    font-size: 20px;
+    text-align: center;
+    padding: 20px;
+    height: 100%;
+    width: 100%;
+    box-shadow: 0 0 10px black;
+}
+
+th,td{
+    padding: 20px;
+    color:#7af4d7;
+    font-family: "Lucida Console", "Courier New", monospace;
+}
+
+.minusBtn button{
+    background-color: red;
+    color: rgb(70, 13, 13);
+
+}
+
+.paymentBtn button{
+    background: radial-gradient(circle 280px at 0% 0%, #5ce973, #018a38);
+    border: none;
+    margin-top: 10px;
+    font-size: 30px;
+    padding-left: 10px;
+    padding-right: 10px;
+    color: #032d14;
+    border-radius: 3px;
+    font-family: "Lucida Console", "Courier New", monospace;
+    box-shadow: 0 0 10px rgb(6, 211, 54);
+}

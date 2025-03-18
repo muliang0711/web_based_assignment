@@ -160,7 +160,13 @@ INSERT INTO `productsize` (`productID`, `sizeID`, `quantity`) VALUES
 ('R0002', '3UG5', 5),
 ('R0002', '4UG5', 6),
 ('R0003', '3UG5', 2),
-('R0003', '4UG5', 3);
+('R0003', '4UG5', 3),
+('R0004', '3UG5', 4),
+('R0004', '4UG5', 5),
+('R0005', '3UG5', 5),
+('R0005', '4UG5', 6),
+('R0006', '3UG5', 2),
+('R0006', '4UG5', 3);
 
 -- --------------------------------------------------------
 
@@ -306,3 +312,12 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+CREATE TABLE `cartitem` (
+  `userID` int(11) NOT NULL,
+  `productID` varchar(5) NOT NULL,
+  `sizeID` varchar(4) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  PRIMARY KEY (`userID`, `productID`, `sizeID`),
+  FOREIGN KEY (`productID`, `sizeID`) REFERENCES productsize(`productID`, `sizeID`) 
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
