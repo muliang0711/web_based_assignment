@@ -31,7 +31,7 @@ if (is_post()) {
 
         // If id exists, and password is correct
         if ($u && pwMatch($password, $u->password)) {
-            login($u, "admin");
+            login($u->id, "admin");
             
             temp('info', "Logged in as $u->id");
             redirect('admin_home.php');

@@ -61,7 +61,7 @@ if (is_post()) {
 
         // If username exists, and password is correct
         if ($u && $password == $u->password) {
-            login($u, "cust");
+            login($u->userID, "cust");
             
             // temp('info', "Logged in as $u->username");
             
