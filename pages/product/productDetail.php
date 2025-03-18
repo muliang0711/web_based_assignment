@@ -29,7 +29,7 @@ $playerInfo = $productObject->playerInfo;
 $playerImg = $productObject->playerImage;
 
 $gripSize = get("gripSize");
-if (is_logged_in()) {
+if (is_logged_in("cust")) {
   global $_db;
   global $_user;
   $_user = $_db->query("SELECT * FROM user WHERE userID = {$_SESSION['userID']}")->fetch();

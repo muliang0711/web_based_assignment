@@ -87,7 +87,7 @@ function removeFromCart($productID, $sizeID, $userID): void {
             <a href="/pages/product/productlist.php">Shop</a>
             <a href="/pages/About/about.html">About us</a>
 
-            <?php if (is_logged_in()): ?>
+            <?php if (is_logged_in("cust")): ?>
 
                 <div class="cart-btn">
                     <img src="/assets/img/icon-cart.png" alt="Cart" title="Cart" />

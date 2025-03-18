@@ -19,7 +19,7 @@ $title = 'Login test';
 include '../../_head.php';
 ?>
 
-<?php if (is_logged_in()): ?>
+<?php if (is_logged_in("cust")): ?>
 
 <h1>Welcome, <?= $_user->username ?>!</h1>
 <form method="post">
