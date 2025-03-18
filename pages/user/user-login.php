@@ -63,7 +63,7 @@ if (is_post()) {
         if ($u && $password == $u->password) {
             login($u->userID);
             
-            temp('info', "Logged in as $u->username");
+            // temp('info', "Logged in as $u->username");
             
             // If user was redirected here from a "boomerang" page 
             // user will redirected back to that page upon successful login.
