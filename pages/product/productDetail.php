@@ -2,11 +2,7 @@
 $stylesheetArray = ['product.css'];
 $title = 'Product List';
 require '../../_base.php';
-include '../../_head.php';
-?>
 
-
-<?php
 if (isset($_GET['racket'])) {
   $productID = $_GET['racket'];
 }
@@ -76,7 +72,11 @@ if (is_logged_in()) {
       }
     }
   }
+
+include '../../_head.php';
 ?>
+
+
 
 <div class="info"><?= temp("info"); ?></div>
 <div class="error"><?= temp("error"); ?></div>

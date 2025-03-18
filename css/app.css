@@ -141,6 +141,7 @@ header nav > a:hover::after {
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
+    overflow: auto;
 }
 
 .cart-popup .content {
@@ -327,12 +328,18 @@ footer {
 
 table{
     margin: 0 auto;
-    border: 3px black solid;
+    background: radial-gradient(circle 280px at 0% 0%, #444444, #0c0d0d);
     font-size: 20px;
     text-align: center;
     padding: 20px;
+    height: 100%;
+    width: 100%;
+    box-shadow: 0 0 10px black;
 }
 
 th,td{
     padding: 20px;
+    color:#7af4d7;
+    font-family: "Lucida Console", "Courier New", monospace;
 }
+
