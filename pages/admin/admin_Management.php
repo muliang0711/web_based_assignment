@@ -11,7 +11,7 @@ include '../../admin_head.php';
 $arr = $_db->query('SELECT * FROM admin')->fetchAll();
 ?>
 <div class="searchBar">
-<a href="/pages/admin/adminAdd.php" class="add">Add Admin</a>
+<a href="/pages/admin/adminAdd.php" class="btn btn-add">Add Admin</a>
 </div>
 
 <div class="admin_container">
@@ -25,7 +25,7 @@ $arr = $_db->query('SELECT * FROM admin')->fetchAll();
     <tr class="row">
         <td class="content"><?= $a->id ?></td>
         <td class="content"><?= $a->position ?></td>
-        <td><button data-post="/pages/admin/adminDelete.php?id=<?=$a->id?>" data-confirm="Are you sure you want to delete">Delete</button></td>
+        <td><button class="btn btn-delete" data-post="/pages/admin/adminDelete.php?id=<?=$a->id?>" data-confirm="Are you sure you want to delete">Delete</button></td>
         
     </tr>
     <?php endforeach ?>

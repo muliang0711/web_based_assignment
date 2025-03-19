@@ -111,18 +111,7 @@ table th {
   border: none;
   border-radius: 4px;
 }
-.btn-update {
-  background-color: #28a745;
-}
-.btn-update:hover {
-  background-color: #218838;
-}
-.btn-delete {
-  background-color: #dc3545;
-}
-.btn-delete:hover {
-  background-color: #c82333;
-}
+
 
 /* Pagination */
 .pagination {

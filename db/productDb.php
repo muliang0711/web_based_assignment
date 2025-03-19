@@ -122,7 +122,6 @@ class productDb{
 
     }
 
-
     public function addProduct($productInformation){
         // since we already check data is correct in service side : 
         // now we just need to fecth data and turn into sql 
@@ -180,12 +179,14 @@ class productDb{
         $price = $productInformation['price'];
         $quantity = $productInformation['stock']; 
         $oldSizeID = $productInformation['oldSizeID'];
+        $introduction = $productInformation['introduction'];
+        $playerInfo = $productInformation['playerInfo'];
 
         try {
 
             // start transaction since there have multiple table insert;
 
-            //$this->pdo->beginTransaction(); 
+            // $this->pdo->beginTransaction(); 
 
             // update series table first : 
 
@@ -193,34 +194,33 @@ class productDb{
 
             //update product table : 
 
-            $this->updateProduct( $productName , $price , $seriesID , $productID );
+            $this->updateProduct( $productName , $price , $productID , $introduction , $playerInfo);
 
             // update productsize :
 
-            $this->updateProductSize($sizeID , $quantity ,  $productID , $oldSizeID );
+            $this->updateProductSize($sizeID , $quantity ,  $productID );
+
+            // delete old IMAGE for all :
+
+            $this->deleteImage($productID); 
 
             // commit when done : 
 
-            //$this->pdo->commit();
+            // $this->pdo->commit();
 
             // return message when sucess : 
+            
             // return ["success" => true , "message" => "update successful"];
-
-            // test track function : 
-
-
-            $stmt = $this->pdo->prepare("SELECT * FROM products WHERE id = ?");
-            $stmt->execute([$productID]);
-            $newValue =  $stmt->fetch(PDO::FETCH_ASSOC);
-            return $newValue ;
 
         }catch(Exception $e){
 
-            //$this->pdo->rollBack();
+            throw new Exception("error when delete image : " . $e->getMessage());
+
+            // $this->pdo->rollBack();
 
             // return when error 
 
-            return ["success" => false, "error" => $e->getMessage()];
+            // return ["success" => false, "error" => $e->getMessage()];
         }
     }
 
@@ -440,41 +440,28 @@ class productDb{
       }    
     } // can not change foreign key due to mysql rule */ 
 
-    private function updateProduct($productName , $price , $seriesID , $productID  ){
+    private function updateProduct($productName , $price , $productID , $introduction , $playerInfo){
         try{
-            $sql = "UPDATE product set productName = ? , price = ? , seriesID = ? 
+            $sql = "UPDATE product set productName = ? , price = ?  , introduction = ? , playerINfo = ?  
                     WHERE productID = ? " ;
             $stmt = $this->pdo->prepare($sql);
-            $stmt->execute([$productName , $price , $seriesID , $productID]);
+            $stmt->execute([$productName , $price , $productID , $introduction , $playerInfo]);
 
         }catch(Exception $e){
             throw new Exception("Error insert into product : " . $e->getMessage());
         }
     }
 
-    private function updateProductSize($sizeID, $quantity, $productID, $oldSizeID) {
+    private function updateProductSize($sizeID, $quantity, $productID ) {
         try {
-            // Step 1: Delete the old entry first
-            $deleteStmt = $this->pdo->prepare("DELETE FROM productsize WHERE productID = ? AND sizeID = ?");
-            $deleteStmt->execute([$productID, $oldSizeID]);
-    
-            // Step 2: Check if the new (productID, sizeID) already exists
-            $checkStmt = $this->pdo->prepare("SELECT COUNT(*) FROM productsize WHERE productID = ? AND sizeID = ?");
-            $checkStmt->execute([$productID, $sizeID]);
-            $exists = $checkStmt->fetchColumn();
-    
-            if ($exists > 0) {
-                throw new Exception("Error: The combination of productID and sizeID already exists.");
-            }
-    
-            // Step 3: Insert new data
-            $insertStmt = $this->pdo->prepare("INSERT INTO productsize (productID, sizeID, quantity) VALUES (?, ?, ?)");
-            $insertStmt->execute([$productID, $sizeID, $quantity]);
+            $sql = "UPDATE productsize SET quantity = ? WHERE productID = ? AND sizeID = ? ";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute([$quantity , $productID , $sizeID ,]);
     
         } catch (Exception $e) {
             throw new Exception("Error updating productSize: " . $e->getMessage());
         }
-    }
+    } 
 
     //================================= Support Insert Function =================================================================
 
@@ -537,7 +524,30 @@ class productDb{
         }
     }
 
-
+    private function deleteImage($productID) {
+        try{
+            $stmt = $this->pdo->prepare("SELECT image_path FROM product_images WHERE productID = ?");
+            $stmt->execute([$productID]);
+            $images = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+            // 2. Delete image files from the uploads folder
+            $uploadDir = realpath( __DIR__ . '/../File');
+            foreach ($images as $image) {
+                $filePath = $uploadDir . '/'. $image['image_path'];
+                if (file_exists($filePath)) {
+                    unlink($filePath);  
+                }
+            }
+        
+            // 3. Delete image records from db
+            $stmt = $this->pdo->prepare("DELETE FROM product_images WHERE productID = ?");
+            $stmt->execute([$productID]);
+        }
+        catch(Exception $e){
+            throw new Exception("error when delete image : " . $e->getMessage());
+        }   
+       
+    }
 //==================================================================================================================================
 }
 

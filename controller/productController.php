@@ -116,10 +116,10 @@ class ProductController{
         }
         // ----------validatio  false return errors 
 
-        // **START DATABASE TRANSACTION**
-        $this->productDb->beginTransaction();
     
         try {
+            $this->productDb->beginTransaction();
+
             // 1. Insert product into the database**
             $result = $this->productDb->addProduct($productInformation);
     
@@ -127,7 +127,7 @@ class ProductController{
                 throw new Exception("Failed to add product: " . $result['error']);
             }
     
-            // 2. Process images**
+            // 2. Process images 
             $uploadErrors = $this->processImages($_FILES['image'] ?? null, $_POST['productId'], "product");
             if (!empty($uploadErrors)) {
                 throw new Exception(implode(", ", $uploadErrors));
@@ -142,7 +142,7 @@ class ProductController{
     
             $_SESSION['Add_SuccessMsg'] = "Product '{$productInformation['productName']}' (ID: {$productInformation['productId']}) added successfully!";
         } catch (Exception $e) {
-            // **ROLLBACK TRANSACTION (Undo Database Changes if Any Step Fails)**
+
             $this->productDb->rollbackTransaction();
     
             $_SESSION['Add_ErrorMsg'] = ["Error: " . $e->getMessage()];
@@ -163,6 +163,9 @@ class ProductController{
             'oldSizeID' => $_POST['oldSizeID'] ?? null , 
             //'oldSeriesID' => $_POST['oldSeriesID'] ?? null , 
         ];
+
+        // start validation : ----------------
+
         $errors = [];
 
         $errors = $this->validation($productInformation);
@@ -171,18 +174,36 @@ class ProductController{
             $_SESSION['Update_ErrorMsg'] = $errors;
             $this->redirectToAdmin();
         }
-    
-            
-        // $result = $this->productDb->updateProducts($productInformation);
-        // test : 
-        $result = $this->track->trackUpdate($productInformation);
+        
+        // end validation : --------------------------
 
-        if($result['success']){
+        try{
+        // start process image 
+
+            $this->productDb->beginTransaction();
+
+            $this->productDb->updateProducts($productInformation);
+
+            $uploadErrors = $this->processImages($_FILES['image'] ?? null, $_POST['productId'], "product");
+            if (!empty($uploadErrors)) {
+                throw new Exception(implode(", ", $uploadErrors));
+                }
+                
+            $uploadErrors = $this->processImages($_FILES['playerImage'] ?? null, $_POST['productId'], "player");
+            if (!empty($uploadErrors)) {
+                throw new Exception(implode(", ", $uploadErrors));
+                }
+
+            $this->productDb->commitTransaction();
+
             $_SESSION['Update_SuccessMsg'] = "Product '{$productInformation['productName']}' (ID: {$productInformation['productId']}) has been successfully updated!";
 
-        }else{
-            $_SESSION['Update_ErrorMsg'] = ["Failed to update : " . $result['error']];
-        }
+        }catch(Exception $e){
+            $this->productDb->rollbackTransaction();
+    
+            $_SESSION['Update_ErrorMsg'] = ["Error: " . $e->getMessage()];
+        }   
+
         $this->redirectToAdmin();
 
     }
@@ -285,8 +306,8 @@ class ProductController{
         if (!$files || empty($files['name'][0])) {
             return []; // No file uploaded
         }
-    
-        $uploadDir = "uploads/";
+        $uploadDir = realpath(__DIR__ . '/../File');
+
         $allowedTypes = ["jpg", "jpeg", "png"];
     
         // Validate and move each file
@@ -307,7 +328,7 @@ class ProductController{
             }
     
             $newFileName = "{$type}_{$productId}_{$i}.{$fileExt}";
-            $targetPath = $uploadDir . $newFileName;
+            $targetPath = $uploadDir . '/' . $newFileName;
     
             if (!move_uploaded_file($fileTmpPath, $targetPath)) {
                 return ["Failed to move uploaded file: {$fileName}"];

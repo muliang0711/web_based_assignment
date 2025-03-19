@@ -11,7 +11,7 @@
     text-align:center;
 }
 .admin_header{
-background-color:aliceblue;
+/* background-color:aliceblue; */
 font-size: 20px;
 height:8vh;
 }
@@ -20,8 +20,9 @@ height:8vh;
     width: 80vw;
 }
 .row:hover{
-    background-color:hsl(206 100% 25%);
-    color:white;
+    /* background-color:hsl(206 100% 25%); */
+    background-color:aliceblue;
+    /* color:white; */
 
 }
 .row{
@@ -36,22 +37,26 @@ height: 30px;
  text-align: end;
     } 
 
-.add{
+.btn-add{
     width: 20%;
     height:35px;
     margin: 5px 5px;
-    padding: 10px 15px;
-    background-color:aliceblue;
+    /* padding: 10px 15px; */
+    background-color: #28a745;
     border: none;
     text-align: center;
     text-decoration: none;
-    color:black;
-    border-radius:20px;
-}
-.add:hover{
-    transform: scale(1.10);
-    background-color:hsl(206 100% 25%);
     color:white;
+    /* border-radius:20px; */
+
+    font-size: 13px;
+    padding: 5px 8px;
+    border-radius: 4px;
+}
+.btn-add:hover{
+    transform: scale(1.10);
+    background-color: #218838;
+
     
 }
 

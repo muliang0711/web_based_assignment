@@ -77,6 +77,7 @@ include '../../_head.php';
         $statement = $_db->prepare("SELECT * FROM product");
         $statement->execute([]);
         $productObjectArray = $statement->fetchAll();
+        
     ?>
     
     <div class="list" id="productList">
@@ -84,8 +85,9 @@ include '../../_head.php';
       foreach($productObjectArray as $productObject):?>
          <div class="item">
           <a onclick = "onclick()" href = "../product/productDetail.php?racket=<?php echo $productObject->productID ?>">
+
           <img src="<?php echo $productObject->productImg ?>">
-          <p><?php echo $productObject->productName ?></p>
+          <p><?php echo $productObject->productName ?></p> 
           </a>
          </div>
       <?php endforeach ?>
