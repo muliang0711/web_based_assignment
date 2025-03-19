@@ -14,12 +14,12 @@
     width: 80vw;
 }
 .row{
-background-color: rgb(209, 227, 252);
+/* background-color: rgb(209, 227, 252); */
 }
 .row:hover{
-    background-color:hsl(206 100% 25%);
-    color:white;
-
+    /* background-color:hsl(206 100% 25%);
+    color:white; */
+    background-color: rgb(209, 227, 252);
 }
 .searchBar{
     height: 30px;
@@ -27,6 +27,12 @@ background-color: rgb(209, 227, 252);
     margin:25px 5px;
     text-align: end;
 } 
+
+.action{
+display: flex;
+gap: 5px;
+
+}
 
 .customer_detail{
     margin:20px 20px;
