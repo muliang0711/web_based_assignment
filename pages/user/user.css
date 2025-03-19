@@ -4,7 +4,7 @@
 
 :root {
     --link-color: rgb(69, 69, 69); 
-    --error-background: rgb(225, 199, 199);
+    --color-error-background: rgb(225, 199, 199);
 }
 
 
@@ -122,7 +122,7 @@ body, input, button {
 
 .notice-box:not(:empty) {
     display: block;
-    background-color: var(--error-background);
+    background-color: var(--color-error-background);
     color: darkred;
     border: 1px solid darkred;
     box-shadow: 10px 10px 0 0 rgba(55, 9, 9, 0.6);

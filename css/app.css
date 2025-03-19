@@ -5,51 +5,28 @@
 }
 
 :root {
+    --header-height: 80px;
+
     --brand-darkblue: hsl(206 100% 25%);
     --brand-lightblue: hsl(206, 100%, 89%);
+
+    --primary-background: #eee;
+    --semitransparent-gray: #0002;
+
+    --color-success-background: rgb(195, 226, 195); 
+    --color-success-text: rgb(17, 74, 17); 
+    --color-success-border: rgb(0, 51, 0); 
+    --color-error-background: rgb(238, 205, 205); 
+    --color-error-text: rgb(171, 0, 0); 
+    --color-error-border: rgb(71, 0, 0); 
+    --color-warning-background: rgb(237, 238, 205); 
+    --color-warning-text: rgb(128, 64, 0); 
+    --color-warning-border: rgb(97, 48, 0); 
+
+    --green: rgb(27, 140, 27);
 }
 
-/************* Styling for dropdown components *************/
 
-.dropdown-label {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    cursor: pointer;
-}
-.dropdown-label::after {
-    content: "";
-    mask-image: url("data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"20\" viewBox=\"0 0 20 20\" fill=\"%23000\"><path d=\"m17.5 4.75-7.5 7.5-7.5-7.5L1 6.25l9 9 9-9z\"/></svg>");
-    mask-position: center;
-    mask-repeat: no-repeat;
-    mask-size: 0.75rem;
-    background-color: white;
-    display: inline-block;
-    width: 12px;
-    height: 12px;
-    margin-left: 7px;
-    transition: all 0.2s;
-}
-.dropdown-label.active::after {
-    transform: rotate(180deg);
-    transform-origin: center;
-}
-.dropdown-content {
-    display: none;
-}
-.dropdown-content.showing {
-    display: block;
-    opacity: 0;
-    transform: translateY(-20%);
-    transition: all 0.2s;
-}
-.dropdown-content.fully-shown {
-    display: block;
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/************* END of styling for dropdown components *************/
 
 
 body {
@@ -58,6 +35,7 @@ body {
     display: flex;
     flex-direction: column;
     font-family: system-ui;
+    background-color: var(--primary-background);
 }
 
 header, main, footer {
@@ -72,10 +50,11 @@ a {
 
 header {
     /* Make header stick to the top */
-    position: sticky;
+    position: fixed;
     top: 0;
     z-index: 999;
 
+    height: var(--header-height);
     width: 100vw;
     background-color: black;
     color: white;
@@ -212,6 +191,107 @@ th,td{
     box-shadow: 0 0 10px rgb(6, 211, 54);
 }
 
+/***************************************************************
+ ************* Styling for dropdown components *****************
+***************************************************************/
+
+.dropdown-label {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    cursor: pointer;
+}
+.dropdown-label::after {
+    content: "";
+    mask-image: url("data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"20\" viewBox=\"0 0 20 20\" fill=\"%23000\"><path d=\"m17.5 4.75-7.5 7.5-7.5-7.5L1 6.25l9 9 9-9z\"/></svg>");
+    mask-position: center;
+    mask-repeat: no-repeat;
+    mask-size: 0.75rem;
+    background-color: white;
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    margin-left: 7px;
+    transition: all 0.2s;
+}
+.dropdown-label.active::after {
+    transform: rotate(180deg);
+    transform-origin: center;
+}
+.dropdown-content {
+    display: none;
+}
+.dropdown-content.showing {
+    display: block;
+    opacity: 0;
+    transform: translateY(-20%);
+    transition: all 0.2s;
+}
+.dropdown-content.fully-shown {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+/***************************************************************
+                        INFO BOX
+***************************************************************/
+
+.info-box{
+    margin-bottom: 20px;
+    width: 100%;
+    padding: 20px;
+    border-radius: 10px;
+}
+/* .info-box:first-child {
+    margin-top: 0;
+}
+.info-box:last-child {
+    margin-bottom: 0;
+} */
+
+.info-box.success {
+    border: 1px solid var(--color-success-border);
+    background: var(--color-success-background);
+    color: var(--color-success-text);
+}
+.info-box.error {
+    border: 1px solid var(--color-error-border);
+    background: var(--color-error-background);
+    color: var(--color-error-text);
+}
+.info-box.warning {
+    border: 1px solid var(--color-warning-border);
+    background: var(--color-warning-background);
+    color: var(--color-warning-text);
+}
+
+.info-box:empty {
+    display: none;
+}
+
+/***************************************************************
+                        BUTTONS
+***************************************************************/
+
+.btn-simple {
+    padding: 10px;
+    border-radius: 6px;
+    border: none;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: 1em;
+}
+.btn-simple:hover {
+    opacity: 0.8;
+}
+
+.btn-green {
+    background-color: var(--green);
+    color: white;
+}
+
 /* Styling for account button and dropdown. Only visible when signed in */
 
 .account {
@@ -304,7 +384,9 @@ header nav a.signup:hover {
 
 main {
     flex-grow: 1;
-    background-color: #eee;
+    /* background-color: var(--primary-background); */
+    margin-top: var(--header-height);
+    overscroll-behavior: none;
 }
 
 /* Footer */

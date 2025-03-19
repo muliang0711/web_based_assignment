@@ -95,6 +95,12 @@ function input_text($key, $attr = '') {
     echo "<input type='text' id='$key' name='$key' value='$value' $attr>";
 }
 
+// Generate <textarea type='text'>
+function html_textarea($key, $attr = '') {
+    $value = encode($GLOBALS[$key] ?? '');
+    echo "<textarea id='$key' name='$key' value='$value' $attr></textarea>";
+}
+
 // Generate <input type='password'>
 function input_password($key, $attr = '') {
     $value = encode($GLOBALS[$key] ?? '');
@@ -129,8 +135,10 @@ function input_select($key, $items, $default = '- Select One -', $attr = '') {
     echo '</select>';
 }
 
-
-
+// Generate <input type='file'>
+function html_file($key, $accept = '', $attr = '') {
+    echo "<input type='file' id='$key' name='$key' accept='$accept' $attr>";
+}
 
 
 

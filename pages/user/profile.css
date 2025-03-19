@@ -1,13 +1,134 @@
+:root {
+    --text-weight-semibold: 600;
+    --side-nav-width: 200px;
+}
+
 main {
     display: flex;
     padding-top: 50px;
     padding-bottom: 50px;
 }
 
+/***** page structure *****/
+
 .side-nav {
-    width: 200px;
+    width: var(--side-nav-width);
+    position: fixed;
 }
 
 .main {
     flex-grow: 1;
+    margin-left: calc(var(--side-nav-width) + 100px)
 }
+
+.heading {
+    margin: 0 0 20px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid var(--semitransparent-gray);
+}
+
+.section-container {
+    display: flex;
+    /* margin-top: 20px; */
+}
+
+.left-col {
+    flex-grow: 1;
+}
+.right-col {
+    width: 30%;
+    margin-left: 50px;
+}
+
+.form-group {
+    margin: 20px auto;
+}
+.form-group:first-child {
+    margin: 0 auto;
+}
+.form-group label {
+    font-weight: var(--text-weight-semibold);
+    display: block;
+    margin-bottom: 10px;
+}
+.form-group input[type=text], .form-group textarea {
+    background-color: #f0f0f0;
+    border: 1px solid var(--semitransparent-gray);
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-family: inherit;
+    font-size: inherit;
+    width: 400px;
+    max-width: 100%;
+}
+.form-group input[type=text] {
+}
+.form-group textarea {
+    /* width: 500px;
+    max-width: 100%; */
+}
+
+/***** side nav *****/
+
+.side-nav ul {
+    margin: 0;
+    padding: 0px;
+    /* background-color: white; */
+}
+.side-nav li {
+    list-style-type: none;
+}
+.side-nav a {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+    padding: 5px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+}
+.side-nav a.isActive {
+    font-weight: var(--text-weight-semibold);
+    background-color: rgba(150, 213, 243, 0.3);
+}
+.side-nav a:hover {
+    background-color: rgba(0,0,0,0.1);
+}
+.side-nav a.isActive::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 5px;
+    background-color: darkblue;
+    border-radius: 5px;
+}
+
+/***** profile settings page *****/
+
+.profile-pic-button {
+    position: relative;
+    cursor: pointer;
+}
+
+.profile-pic img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    /* border: 1px solid black; */
+    object-fit: cover;
+}
+
+.edit-label {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    padding: 6px 10px;
+    border: 2px solid #555;
+    border-radius: 5px;
+    color: #555;
+    line-height: 1em;
+    background-color: #eee;
+}
+
+
