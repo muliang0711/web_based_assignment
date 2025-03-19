@@ -268,10 +268,10 @@ p{
   border-radius: 10px;
   box-shadow: 0 0 10px black;
   font-family: "Lucida Console", "Courier New", monospace;
-  background: radial-gradient(circle 280px at 0% 0%, #444444, #0c0d0d);
+  background: radial-gradient(circle 280px at 0% 0%, #3edaef, #025959);
 }
 
-
+/*
 .sizeSelect{
   display: none;
   position: fixed;
@@ -285,6 +285,7 @@ p{
   font-size: 30px;
   width:300px;
 }
+
 
 .popup {
   display: none;
@@ -311,7 +312,7 @@ p{
   box-shadow: 0 0 10px rgb(82, 82, 252);
 }
 
-
+*/
 .info:not(:empty){
   border: green 2px solid;
   color:rgb(1, 72, 9);
@@ -356,3 +357,27 @@ p{
   font-family: "Lucida Console", "Courier New", monospace;
   box-shadow: 0 0 10px rgb(70, 3, 3);
 }
+
+.radioOne{
+  position: absolute;
+  top: 35%;
+  right:55%;
+  width: 40px;
+  font-size: 20px;
+  text-align: center; 
+  width: 16px;
+  height: 16px;
+}
+
+.radioTwo{
+  position: absolute;
+  top: 45%;
+  right:55%;
+  width: 40px;
+  font-size: 20px;
+  text-align: center; 
+  width: 16px;
+  height: 16px;
+}
+
+
