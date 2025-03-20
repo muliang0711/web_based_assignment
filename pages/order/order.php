@@ -58,45 +58,43 @@ orders o JOIN order_items oi ON (o.orderId = oi.orderId) WHERE o.userId = $userI
 
 <h1>My Order</h1>
 
+<div id="filter-menu">
+        <form method="GET">
+            <label id="labelpricemin" for="pricemin">Price (min)  RM <?= $pricemin ?></label>
+            <input type="range" name="pricemin" min="0" max="10000" value="<?= $pricemin ?>" class="slider" id="pricemin" step='100'><br><br>
+            
+            <label id="labelpricemax" for="pricemax">Price (max)  RM <?= $pricemax ?></label>
+            <input type="range" name="pricemax" min="0" max="10000" value="<?= $pricemax ?>" class="slider" id="pricemax" step='100'><br><br>
+            
+            
+            <label for="Status">Status</label><br>
+            <select id='selectStatus' name="stat">
+                <option value="">All</option>
+                <option value="delivered" <?= $showOnlyStatus=="delivered" ? "selected" : "" ?> >Delivered</option>
+                <option value="intransit" <?= $showOnlyStatus=="intransit" ? "selected" : "" ?> >In Transit</option>
+                <option value="pending" <?= $showOnlyStatus=="pending" ? "selected" : "" ?> >Pending</option>
+            </select><br><br>
+
+
+            <label for="Date">Date</label><br>
+            <select id='selectDate' name="sort">
+                <option value="desc" <?= $sort=="desc" ? "selected" : "" ?> >Latest</option>
+                <option value="asc" <?= $sort=="asc" ? "selected" : "" ?> >Oldest</option>
+            </select><br><br>
+
+            <div id="form-button-container">
+                <button class = "resetbutton" type="reset">Reset</button>
+                <button type="submit">Filter</button>
+            </div>
+            
+        </form>
+</div>
+
 <div class="order-header">
         <span>Order ID</span>
         <span>Address</span>
         <span>Ordered Date</span>
         <span>Status</span>
-        <span id="filter-button">
-            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="rgb(100, 100, 100)"><path d="M440-160q-17 0-28.5-11.5T400-200v-240L168-736q-15-20-4.5-42t36.5-22h560q26 0 36.5 22t-4.5 42L560-440v240q0 17-11.5 28.5T520-160h-80Zm40-308 198-252H282l198 252Zm0 0Z"/></svg>
-            <div id="filter-menu">
-                <form method="GET">
-                    <label id="labelpricemin" for="pricemin">Price (min)  RM <?= $pricemin ?></label>
-                    <input type="range" name="pricemin" min="0" max="10000" value="<?= $pricemin ?>" class="slider" id="pricemin" step='100'><br><br>
-                    
-                    <label id="labelpricemax" for="pricemax">Price (max)  RM <?= $pricemax ?></label>
-                    <input type="range" name="pricemax" min="0" max="10000" value="<?= $pricemax ?>" class="slider" id="pricemax" step='100'><br><br>
-                    
-                    
-                    <label for="Status">Status</label><br>
-                    <select id='selectStatus' name="stat">
-                        <option value="">All</option>
-                        <option value="delivered" <?= $showOnlyStatus=="delivered" ? "selected" : "" ?> >Delivered</option>
-                        <option value="intransit" <?= $showOnlyStatus=="intransit" ? "selected" : "" ?> >In Transit</option>
-                        <option value="pending" <?= $showOnlyStatus=="pending" ? "selected" : "" ?> >Pending</option>
-                    </select><br><br>
-
-
-                    <label for="Date">Date</label><br>
-                    <select id='selectDate' name="sort">
-                        <option value="desc" <?= $sort=="desc" ? "selected" : "" ?> >Latest</option>
-                        <option value="asc" <?= $sort=="asc" ? "selected" : "" ?> >Oldest</option>
-                    </select><br><br>
-
-                    <div id="form-button-container">
-                        <button class = "resetbutton" type="reset">Reset</button>
-                        <button type="submit">Filter</button>
-                    </div>
-                    
-                </form>
-            </div>
-        </span>
 </div>
 
 
