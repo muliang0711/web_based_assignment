@@ -20,7 +20,7 @@ if (!$productObject) {
 
 
 // If $productID is “R0001”, now your $productObject will be {productID: “R0001”, productName: “Yonex Arcsaber 11 Pro”, price: 849.00, seriesID: “ARC”}
-
+$racketID = $productObject->productID;
 $racketName = $productObject->productName; // Get the productName attribute of the product object
 $price = $productObject->price; // Get the price attribute of the product object
 $imgUrl = $productObject->productImg;
@@ -35,10 +35,11 @@ if (is_logged_in("user")) {
   $_user = $_db->query("SELECT * FROM user WHERE userID = {$_SESSION['userID']}")->fetch();
   $userID = $_user->userID;
 }else{
-  $userID = null;
+$userID =null;
 }
 
   if ($gripSize) {
+    if($userID){
     $available = $_db->prepare("SELECT * FROM productSize WHERE productID = ? AND sizeID = ? AND quantity > 0");
     $available->execute([$productID, $gripSize]);
     $productObj = $available->fetch();
@@ -66,11 +67,12 @@ if (is_logged_in("user")) {
         redirect("../product/productDetail.php?racket=$productObj->productID");
       
     } else {
-      if ($userID) {
         temp("error", "Stock unvailable! / Over limit!");
         redirect("../product/productDetail.php?racket=$productObject->productID");
-      }
     }
+  }else{
+    temp('login','Please login before add item to cart');
+  }
   }
 
 include '../../_head.php';
@@ -80,6 +82,7 @@ include '../../_head.php';
 
 <div class="info"><?= temp("info"); ?></div>
 <div class="error"><?= temp("error"); ?></div>
+<div class="error"><?= temp("login"); ?></div>
 
 <div class="detail">
   <div class="product"><img src="<?php echo $imgUrl; ?>" alt="Image"></div>
@@ -101,16 +104,25 @@ include '../../_head.php';
   <img src="<?php echo $playerImg; ?>" alt="PlayerImage">
 </div>
 
+
+  <form method="get">
 <div class="AddCart">
-  <button onclick="openSelect()">Add To Cart</button>
+
+  <button type="submit" id="racket" name="racket" value = "<?php echo $productObject->productID ?>">Add To Cart</button>
+  <div class="radioOne">
+  <input type="radio" id="gripSize" name="gripSize" value = '3UG5'> <label for="gripSize"><strong><p>3UG5</p></strong></label>
+  </div>
+  <div class="radioTwo">
+  <input type="radio" id="gripSize" name="gripSize" value = '4UG5'> <label for="gripSize"><strong><p>4UG5</p></strong></label>
 </div>
+</div>
+</form>
 <?php
 $size = $_db->prepare("SELECT * FROM productSize WHERE productID = ?");
-$size->execute([$productID]); // make sure your $productID variable is declared - I don’t see it in the screenshot
+$size->execute([$productID]); 
 $productObject = $size->fetchAll();
-
 ?>
-
+<!--
 <?php if ($userID):?>
 <div class="sizeSelect" id="selectSize">
   <div class="popup" id="popup">
@@ -141,6 +153,6 @@ $productObject = $size->fetchAll();
     document.getElementById("selectSize").style.display = "none";
   }
 </script>
-
+    -->
 <?php
 include '../../_foot.php';

@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 18, 2025 at 09:59 AM
+-- Generation Time: Mar 19, 2025 at 03:45 PM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.0.30
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `web_based_assignment`
 --
+CREATE DATABASE IF NOT EXISTS `web_based_assignment` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `web_based_assignment`;
 
 -- --------------------------------------------------------
 
@@ -27,6 +29,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `admin`
 --
 
+DROP TABLE IF EXISTS `admin`;
 CREATE TABLE `admin` (
   `id` varchar(10) NOT NULL,
   `position` varchar(20) NOT NULL,
@@ -56,6 +59,7 @@ INSERT INTO `admin` (`id`, `position`, `password`, `adminLevel`) VALUES
 -- Table structure for table `cartitem`
 --
 
+DROP TABLE IF EXISTS `cartitem`;
 CREATE TABLE `cartitem` (
   `userID` int(11) NOT NULL,
   `productID` varchar(5) NOT NULL,
@@ -69,6 +73,7 @@ CREATE TABLE `cartitem` (
 -- Table structure for table `orders`
 --
 
+DROP TABLE IF EXISTS `orders`;
 CREATE TABLE `orders` (
   `orderId` int(5) NOT NULL,
   `userId` int(11) NOT NULL,
@@ -95,12 +100,13 @@ INSERT INTO `orders` (`orderId`, `userId`, `orderDate`, `status`, `orderAddress`
 -- Table structure for table `order_items`
 --
 
+DROP TABLE IF EXISTS `order_items`;
 CREATE TABLE `order_items` (
   `orderId` int(5) NOT NULL,
   `productId` varchar(5) NOT NULL,
   `quantity` int(10) DEFAULT NULL,
   `subtotal` decimal(10,2) DEFAULT NULL,
-  `gripSize` char(2) NOT NULL
+  `gripSize` varchar(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -108,18 +114,19 @@ CREATE TABLE `order_items` (
 --
 
 INSERT INTO `order_items` (`orderId`, `productId`, `quantity`, `subtotal`, `gripSize`) VALUES
-(12345, 'R0001', 1, 15.99, 'G5'),
-(12345, 'R0002', 1, 9.99, 'G4'),
-(12346, 'R0001', 1, 25.00, 'G5'),
-(12346, 'R0002', 1, 15.99, 'G4'),
-(12346, 'R0003', 2, 31.98, 'G6'),
-(12347, 'R0003', 1, 16.50, 'G6'),
-(12348, 'R0001', 2, 32.00, 'G5'),
-(12348, 'R0002', 1, 10.00, 'G4'),
-(12348, 'R0003', 1, 15.99, 'G6'),
-(12349, 'R0002', 1, 12.99, 'G4'),
-(12349, 'R0003', 2, 19.98, 'G6'),
-(12350, 'R0001', 1, 13.99, 'G5');
+(12345, 'R0001', 1, 15.99, '3UG5'),
+(12345, 'R0001', 1, 15.99, '4UG5'),
+(12345, 'R0002', 1, 9.99, '3UG5'),
+(12346, 'R0001', 1, 25.00, '4UG5'),
+(12346, 'R0002', 1, 15.99, '3UG5'),
+(12346, 'R0003', 2, 31.98, '3UG5'),
+(12347, 'R0003', 1, 16.50, '3UG5'),
+(12348, 'R0001', 2, 32.00, '4UG5'),
+(12348, 'R0002', 1, 10.00, '3UG5'),
+(12348, 'R0003', 1, 15.99, '3UG5'),
+(12349, 'R0002', 1, 12.99, '3UG5'),
+(12349, 'R0003', 2, 19.98, '3UG5'),
+(12350, 'R0001', 1, 13.99, '4UG5');
 
 -- --------------------------------------------------------
 
@@ -127,6 +134,7 @@ INSERT INTO `order_items` (`orderId`, `productId`, `quantity`, `subtotal`, `grip
 -- Table structure for table `product`
 --
 
+DROP TABLE IF EXISTS `product`;
 CREATE TABLE `product` (
   `productID` varchar(5) NOT NULL,
   `productName` varchar(100) NOT NULL,
@@ -156,6 +164,7 @@ INSERT INTO `product` (`productID`, `productName`, `price`, `seriesID`, `product
 -- Table structure for table `productsize`
 --
 
+DROP TABLE IF EXISTS `productsize`;
 CREATE TABLE `productsize` (
   `productID` varchar(5) NOT NULL,
   `sizeID` varchar(4) NOT NULL,
@@ -186,6 +195,7 @@ INSERT INTO `productsize` (`productID`, `sizeID`, `quantity`) VALUES
 -- Table structure for table `product_images`
 --
 
+DROP TABLE IF EXISTS `product_images`;
 CREATE TABLE `product_images` (
   `id` int(11) NOT NULL,
   `productID` varchar(50) DEFAULT NULL,
@@ -200,6 +210,7 @@ CREATE TABLE `product_images` (
 -- Table structure for table `series`
 --
 
+DROP TABLE IF EXISTS `series`;
 CREATE TABLE `series` (
   `seriesID` varchar(3) NOT NULL,
   `seriesName` varchar(15) DEFAULT NULL
@@ -221,6 +232,7 @@ INSERT INTO `series` (`seriesID`, `seriesName`) VALUES
 -- Table structure for table `user`
 --
 
+DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `userID` int(11) NOT NULL,
   `username` varchar(255) NOT NULL,
@@ -270,8 +282,9 @@ ALTER TABLE `orders`
 -- Indexes for table `order_items`
 --
 ALTER TABLE `order_items`
-  ADD PRIMARY KEY (`orderId`,`productId`),
-  ADD KEY `productId` (`productId`);
+  ADD PRIMARY KEY (`orderId`,`productId`,`gripSize`),
+  ADD KEY `productId` (`productId`),
+  ADD KEY `order_items_ibfk_2` (`productId`,`gripSize`);
 
 --
 -- Indexes for table `product`
@@ -346,7 +359,7 @@ ALTER TABLE `orders`
 --
 ALTER TABLE `order_items`
   ADD CONSTRAINT `order_items_ibfk_1` FOREIGN KEY (`orderId`) REFERENCES `orders` (`orderId`),
-  ADD CONSTRAINT `order_items_ibfk_2` FOREIGN KEY (`productId`) REFERENCES `product` (`productID`);
+  ADD CONSTRAINT `order_items_ibfk_2` FOREIGN KEY (`productId`,`gripSize`) REFERENCES `productsize` (`productID`, `sizeID`);
 
 --
 -- Constraints for table `product`
