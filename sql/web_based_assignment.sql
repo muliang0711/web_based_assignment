@@ -232,7 +232,6 @@ INSERT INTO `series` (`seriesID`, `seriesName`) VALUES
 -- Table structure for table `user`
 --
 
-DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `userID` int(11) NOT NULL,
   `username` varchar(255) NOT NULL,
@@ -241,8 +240,9 @@ CREATE TABLE `user` (
   `birthdate` date DEFAULT NULL,
   `email` varchar(255) NOT NULL,
   `phoneNo` varchar(15) DEFAULT NULL,
-  `gender` enum('F','M') DEFAULT NULL COMMENT 'F: Female. \r\nM: Male.\r\nNullable. User won''t be prompted to provide their gender upon signup, but may choose to set one in the profile settings.',
+  `gender` enum('F','M','R') NOT NULL DEFAULT 'R' COMMENT 'F: Female. \r\nM: Male.\r\nR: Rather not say',
   `profilePic` varchar(255) DEFAULT NULL,
+  `bio` varchar(1000) DEFAULT NULL,
   `memberStatus` enum('Active','Inactive') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -250,9 +250,9 @@ CREATE TABLE `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`userID`, `username`, `password`, `address`, `birthdate`, `email`, `phoneNo`, `gender`, `profilePic`, `memberStatus`) VALUES
-(1, 'cookie', '123', NULL, NULL, 'cookie@mail.com', '012-3456789', NULL, NULL, 'Inactive'),
-(2, 'icecream', '456', NULL, NULL, 'icecream@mail.com', '012-9876543', NULL, NULL, 'Inactive');
+INSERT INTO `user` (`userID`, `username`, `password`, `address`, `birthdate`, `email`, `phoneNo`, `gender`, `profilePic`, `bio`, `memberStatus`) VALUES
+(1, 'cookie', '123', NULL, NULL, 'cookie@mail.com', '012-3456789', 'R', NULL, 'I love cookies, as you may have already guessed', 'Inactive'),
+(2, 'icecream', '456', NULL, NULL, 'icecream@mail.com', '012-9876543', 'R', NULL, 'I love ice cream!', 'Inactive');
 
 --
 -- Indexes for dumped tables

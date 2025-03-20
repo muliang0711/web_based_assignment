@@ -211,3 +211,18 @@ function removeFromCart($productID, $sizeID, $userID): void {
         </nav>
     </header>
     <main>
+        <!-- Flash messages -->
+        <div class="info-container success">
+            <div class="progress-bar"></div>
+            <span class="info-text"><?= temp('info') ?></span>
+        </div>
+        
+        <div class="info-container error">
+            <div class="progress-bar"></div>
+            <span class="info-text"><?= temp('error') ?></span>
+        </div>
+
+        <div class="info-container warn">
+            <div class="progress-bar"></div>
+            <span class="info-text"><?= temp('warn') ?></span>
+        </div>
