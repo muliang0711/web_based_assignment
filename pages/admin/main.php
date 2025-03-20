@@ -22,13 +22,37 @@ link_stylesheet($stylesheetArray);
   <?php include 'sidebar.php'; ?>
 
   <!-- Main Content Area -->
+   
   <div class="main-content">
     <!-- Example Search/Filter Section -->
     <div style="margin-bottom: 1rem;">
       <form style="display: flex; gap: 1rem;">
         <div style="flex: 1;">
-          <input type="text" placeholder="Search..." style="width: 100%; padding: 0.5rem;">
+          <input type="text" placeholder="Search..." style="width: 50%; padding: 0.5rem;">
         </div>
+          <!--filter bar or what right here -->
+
+        <select style="padding: 0.5rem;">
+          <option>All Categories</option>
+          <option>Active</option>
+          <option>Pending</option>
+          <option>Archived</option>
+        </select>
+
+        <select style="padding: 0.5rem;">
+          <option>All Categories</option>
+          <option>Active</option>
+          <option>Pending</option>
+          <option>Archived</option>
+        </select>
+
+        <select style="padding: 0.5rem;">
+          <option>All Categories</option>
+          <option>Active</option>
+          <option>Pending</option>
+          <option>Archived</option>
+        </select>
+        
         <select style="padding: 0.5rem;">
           <option>All Categories</option>
           <option>Active</option>
