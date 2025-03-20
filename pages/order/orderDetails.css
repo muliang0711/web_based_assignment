@@ -1,0 +1,58 @@
+:root {
+    --divColor : rgb(214, 214, 214);
+
+}
+
+main {
+    padding: 35px;
+}
+
+.container {
+    width: 100%;
+    height: auto;
+
+    display: grid;
+    grid-template-columns: 0.6fr 0.4fr;
+    grid-template-rows: 1fr 0.15fr 0.4fr;
+    grid-template-areas:
+    "status summary" 
+    "email buttons" 
+    "email .";
+
+    row-gap: 20px;
+    column-gap: 30px;
+
+}
+
+.status-container {
+    border-radius: 10px;
+    height: 450px;
+    grid-area: status;
+    background-color: var(--divColor);
+
+}
+
+.summary-container {
+    border-radius: 10px;
+    height: 500px;
+    grid-area: summary;
+    background-color: var(--divColor);
+    
+}
+
+.email-container {
+    position: relative;
+    top: -50px;
+    border-radius: 10px;
+    height: 200px;
+    grid-area: email;
+    background-color: var(--divColor);
+
+}
+
+.buttons-container {
+    border-radius: 10px;
+    grid-area: buttons;
+    background-color: var(--divColor);
+
+}

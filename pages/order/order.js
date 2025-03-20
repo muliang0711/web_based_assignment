@@ -25,13 +25,6 @@ $(() => {
     })
 
 
-    $("#filter-button").on('click', function(e) {
-        if (!$(e.target).closest("#filter-menu").length) {
-            $("#filter-menu").toggleClass("show");
-        }
-            
-    });
-
 
     $("#pricemin").on("input", function(e) {
         $("#labelpricemin").text("Price (min) RM " + this.value);
