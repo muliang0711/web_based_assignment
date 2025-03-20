@@ -13,3 +13,26 @@ body {
   transition: margin-left 0.3s;
 }
 
+.th{
+  padding: 0.75rem; 
+  border: 1px solid #ddd;
+}
+.td{
+  padding: 0.75rem; border: 1px solid #ddd;
+}
+.status-span{
+  background-color: #28a745; 
+  color: #fff; 
+  padding: 0.25rem 0.5rem; 
+  border-radius: 0.25rem;
+}
+.action-btn-add{
+  padding: 0.3rem 0.6rem; 
+  border: 1px solid #007bff; 
+  background: none; 
+  cursor: pointer; 
+  color: #007bff;
+}
+.action-btn-delete{
+  padding: 0.3rem 0.6rem; border: 1px solid #dc3545; background: none; cursor: pointer; color: #dc3545;
+}

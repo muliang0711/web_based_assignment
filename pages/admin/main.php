@@ -56,52 +56,35 @@ link_stylesheet($stylesheetArray);
         <table style="width: 100%; border-collapse: collapse;">
           <thead>
             <tr style="background-color: #f9f9f9;">
-              <th style="padding: 0.75rem; border: 1px solid #ddd;">Order ID</th>
-              <th style="padding: 0.75rem; border: 1px solid #ddd;">Customer</th>
-              <th style="padding: 0.75rem; border: 1px solid #ddd;">Status</th>
-              <th style="padding: 0.75rem; border: 1px solid #ddd;">Total</th>
-              <th style="padding: 0.75rem; border: 1px solid #ddd;">Status</th>
-              <th style="padding: 0.75rem; border: 1px solid #ddd;">Total</th>
-              <th style="padding: 0.75rem; border: 1px solid #ddd;">Actions</th>
+              <th class="th">Order ID</th>
+              <th class="th">Customer</th>
+              <th class="th">Status</th>
+              <th class="th">Total</th>
+              <th class="th">Status</th>
+              <th class="th">Total</th>
+              <th class="th">Actions</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td style="padding: 0.75rem; border: 1px solid #ddd;">#1234</td>
-              <td style="padding: 0.75rem; border: 1px solid #ddd;">John Doe</td>
-              <td style="padding: 0.75rem; border: 1px solid #ddd;">#1234</td>
-              <td style="padding: 0.75rem; border: 1px solid #ddd;">John Doe</td>
-              <td style="padding: 0.75rem; border: 1px solid #ddd;">
-                <span style="background-color: #28a745; color: #fff; padding: 0.25rem 0.5rem; border-radius: 0.25rem;">Completed</span>
+              <td class="td">#1234</td>
+              <td class="td">John Doe</td>
+              <td class="td">#1234</td>
+              <td class="td">John Doe</td>
+              <td class="td">
+                <span class="status-span">Completed</span>
               </td>
-              <td style="padding: 0.75rem; border: 1px solid #ddd;">$199.99</td>
-              <td style="padding: 0.75rem; border: 1px solid #ddd;">
-                <button style="padding: 0.3rem 0.6rem; border: 1px solid #007bff; background: none; cursor: pointer; color: #007bff;">
+              <td class="td">199.99</td>
+              <td class="td">
+                <button class="action-btn-add">
                   <i class="fas fa-eye"></i>
                 </button>
-                <button style="padding: 0.3rem 0.6rem; border: 1px solid #dc3545; background: none; cursor: pointer; color: #dc3545;">
+                <button class="action-btn-delete">
                   <i class="fas fa-trash"></i>
                 </button>
               </td>
             </tr>
-            <tr>
-              <td style="padding: 0.75rem; border: 1px solid #ddd;">#1234</td>
-              <td style="padding: 0.75rem; border: 1px solid #ddd;">John Doe</td>
-              <td style="padding: 0.75rem; border: 1px solid #ddd;">#1234</td>
-              <td style="padding: 0.75rem; border: 1px solid #ddd;">John Doe</td>
-              <td style="padding: 0.75rem; border: 1px solid #ddd;">
-                <span style="background-color: #28a745; color: #fff; padding: 0.25rem 0.5rem; border-radius: 0.25rem;">Completed</span>
-              </td>
-              <td style="padding: 0.75rem; border: 1px solid #ddd;">$199.99</td>
-              <td style="padding: 0.75rem; border: 1px solid #ddd;">
-                <button style="padding: 0.3rem 0.6rem; border: 1px solid #007bff; background: none; cursor: pointer; color: #007bff;">
-                  <i class="fas fa-eye"></i>
-                </button>
-                <button style="padding: 0.3rem 0.6rem; border: 1px solid #dc3545; background: none; cursor: pointer; color: #dc3545;">
-                  <i class="fas fa-trash"></i>
-                </button>
-              </td>
-            </tr>
+           
             <!-- Additional rows as needed -->
           </tbody>
         </table>
@@ -116,12 +99,6 @@ link_stylesheet($stylesheetArray);
       document.getElementById('sidebar').classList.toggle('active');
     });
 
-    // DARK MODE TOGGLE
-    document.getElementById('darkModeToggle').addEventListener('click', function() {
-      const htmlEl = document.documentElement;
-      const isDark = htmlEl.getAttribute('data-theme') === 'dark';
-      htmlEl.setAttribute('data-theme', isDark ? 'light' : 'dark');
-    });
   </script>
 </body>
 </html>
