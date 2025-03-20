@@ -3,8 +3,8 @@
 require_once "../../db_connection.php";
 require_once "../../controller/productController.php";
 require_once "../../_base.php";
-
-$stylesheetArray = ['../../css/admin_sales.css'];
+require_once "../admin/main.php";
+;$stylesheetArray = ['../../css/admin_sales.css'];
 link_stylesheet($stylesheetArray);
 
 $productController = new ProductController($_db);

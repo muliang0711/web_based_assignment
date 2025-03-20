@@ -17,19 +17,19 @@ link_stylesheet($stylesheetArray);
   </div>
   <ul class="nav-links">
     <li>
-      <a href="#" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+      <a href="../admin/admin_home.php" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
     </li>
     <li>
-      <a href="#"><i class="fas fa-users"></i> Users</a>
+      <a href="../admin/admin_Management.php"><i class="fas fa-users"></i> Users</a>
     </li>
     <li>
-      <a href="#"><i class="fas fa-boxes"></i> Products</a>
+      <a href="../admin/admin_product.php"><i class="fas fa-boxes"></i> Products</a>
     </li>
     <li>
-      <a href="#"><i class="fas fa-shopping-cart"></i> Orders</a>
+      <a href="../admin/admin_order.php"><i class="fas fa-shopping-cart"></i> Orders</a>
     </li>
     <li>
-      <a href="#"><i class="fas fa-chart-line"></i> Reports</a>
+      <a href="../admin/admin_test.php"><i class="fas fa-chart-line"></i> Reports</a>
     </li>
     <li>
       <a href="#"><i class="fas fa-cog"></i> Settings</a>
