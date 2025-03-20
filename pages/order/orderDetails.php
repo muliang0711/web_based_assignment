@@ -28,7 +28,9 @@
     Order #12345
 </span>
 
-<div class="container">
+<div class="giant-container">
+
+<div class="container1">
 
     <div class="status-container">
 
@@ -64,20 +66,83 @@
         </div>
     </div>
 
-    <div class="summary-container">Order Summary Here</div>
+
 
     <div class="email-container">
         <span>Sign Up for Email Notifications</span>
-        <p>Get delivery updates sent directly to <span style="font-weight: 500;">wayneganyw@gmail.com</span>. By signing up for SMS updates for this order, you accept our <a href="about:blank" target="_blank" style="color: rgb(10,132,255);">terms of use</a></p>
-        <button>
-            Get delivery updates
+        <p>Get delivery updates sent directly to <span style="color: var(--seclessImportant);font-weight: 500;">wayneganyw@gmail.com</span>. By signing up for SMS updates for this order, you accept our <a href="about:blank" target="_blank" style="color: rgb(10,132,255);">terms of use</a></p>
+        <button class="email-button">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="rgb(39, 39, 39)"><path d="M160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h640q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160H160Zm320-280L160-640v400h640v-400L480-440Zm0-80 320-200H160l320 200ZM160-640v-80 480-400Z"/></svg>
+            <span>Get delivery updates</span>
         </button>
     </div>
 
-    <div class="buttons-container">Buttons here</div>
+
+
+    </div>
+
+
+
+    <div class="container2">
+
+        <div class="summary-container">
+            <span>Order Summary</span>
+
+            <div class="order-items">
+                <div class="item">
+                    <img src="https://www.yonex.com/media/catalog/product/3/a/3ax88d-t_076-1_02.png">
+                    <span class="product-name" >Yonex Astrox 3000 GD</span>
+                    <span class="product-quantity">x1</span>
+                    <span class="product-subtotal">RM 169.99</span>
+                    <span class="product-variation">3UG5</span>
+                </div>
+                <div class="item">
+                    <img src="https://www.yonex.com/media/catalog/product/3/a/3ax88d-t_076-1_02.png">
+                    <span class="product-name" >Yonex Astrox 3000 GD</span>
+                    <span class="product-quantity">x1</span>
+                    <span class="product-subtotal">RM 169.99</span>
+                    <span class="product-variation">3UG5</span>
+                </div>
+                <div class="item">
+                    <img src="https://www.yonex.com/media/catalog/product/3/a/3ax88d-t_076-1_02.png">
+                    <span class="product-name" >Yonex Astrox 3000 GD</span>
+                    <span class="product-quantity">x1</span>
+                    <span class="product-subtotal">RM 169.99</span>
+                    <span class="product-variation">3UG5</span>
+                </div>
+            </div>
+
+            <div class="subtotal">
+                <span>Subtotal</span>
+                <span>RM 49.99</span>
+            </div>
+
+            <hr>
+            <div class="shipping-fee">
+                <span>Shipping</span>
+                <span>Free</span>
+            </div>
+
+            <div class="discount">
+                <span>Discount</span>
+                <span>RM 4.55</span>
+            </div>
+
+            <hr>
+            <div class="total">
+                <span>Total</span>
+                <span>RM 55.54</span>
+            </div>
+        </div>
+
+
+
+        <div class="buttons-container">Buttons here</div>
+
+    </div>
+
 
 </div>
-
 
 
 
