@@ -313,7 +313,7 @@ p{
 }
 
 */
-.info:not(:empty){
+/* .info:not(:empty){
   border: green 2px solid;
   color:rgb(1, 72, 9);
   background-color: rgb(197, 212, 197);
@@ -326,9 +326,9 @@ p{
   left: 30px;
   font-family: "Lucida Console", "Courier New", monospace;
   box-shadow: 0 0 10px rgba(7, 90, 1, 0.505);
-}
+} */
 
-.error:not(:empty){
+/* .error:not(:empty){
   border: rgb(128, 0, 0) 2px solid;
   color:rgb(72, 2, 1);
   background-color: rgb(215, 88, 56);
@@ -341,7 +341,7 @@ p{
   left: 30px;
   font-family: "Lucida Console", "Courier New", monospace;
   box-shadow: 0 0 10px rgb(70, 3, 3);
-}
+} */
 
 .attention{
   position: absolute;

@@ -98,7 +98,7 @@ function input_text($key, $attr = '') {
 // Generate <textarea type='text'>
 function html_textarea($key, $attr = '') {
     $value = encode($GLOBALS[$key] ?? '');
-    echo "<textarea id='$key' name='$key' value='$value' $attr></textarea>";
+    echo "<textarea id='$key' name='$key' value='$value' $attr>$value</textarea>";
 }
 
 // Generate <input type='password'>

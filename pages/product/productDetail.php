@@ -71,7 +71,7 @@ $userID =null;
         redirect("../product/productDetail.php?racket=$productObject->productID");
     }
   }else{
-    temp('login','Please login before add item to cart');
+    temp('warn','Please login before add item to cart');
   }
   }
 
@@ -80,9 +80,9 @@ include '../../_head.php';
 
 
 
-<div class="info"><?= temp("info"); ?></div>
+<!-- <div class="info"><?= temp("info"); ?></div>
 <div class="error"><?= temp("error"); ?></div>
-<div class="error"><?= temp("login"); ?></div>
+<div class="error"><?= temp("login"); ?></div> -->
 
 <div class="detail">
   <div class="product"><img src="<?php echo $imgUrl; ?>" alt="Image"></div>

@@ -1,6 +1,10 @@
 <?php
 require '_base.php';
 
+temp('info', 'Something went right.');
+temp('error', 'Something went wrong.');
+temp('warn', 'You are not logged in. <a href="/pages/user/user-login.php">Log in</a>');
+
 $title = 'Home';
 include '_head.php';
 ?>
