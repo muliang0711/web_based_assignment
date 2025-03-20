@@ -2,7 +2,7 @@
 include __DIR__ . "/../admin/FINALDEMO.PHP";
 ?>
 
-<table class="tb">
+        <table class="tb">
           <thead>
             <tr style="background-color: #f9f9f9;">
               <th class="th">Order ID</th>
