@@ -1,0 +1,63 @@
+/* ============================= */
+/*       TOPBAR STYLES          */
+/* ============================= */
+.topbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background-color: #f1f1f1;
+    color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 9999; /* Ensures topbar stays above sidebar */
+  }
+  .topbar h3 {
+    margin: 0;
+  }
+  .topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  /* Simple button style */
+
+  /* Dropdown styles */
+  .dropdown {
+    position: relative;
+  }
+  .dropdown-toggle {
+    background: #007bff;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+  }
+  .dropdown-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 60px; /* Below topbar */
+    background-color: #fff;
+    border: 1px solid #ccc;
+    min-width: 150px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .dropdown-menu li a {
+    display: block;
+    padding: 0.5rem 1rem;
+    color: #333;
+    text-decoration: none;
+  }
+  .dropdown-menu li a:hover {
+    background-color: #eee;
+  }
+  .dropdown:hover .dropdown-menu {
+    display: block;
+  }

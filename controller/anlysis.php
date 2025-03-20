@@ -25,8 +25,8 @@ class ProductAnlysis{
                 break ; 
             default:
             ////
+            }
     }
-
     private function handleTotalSellTrack() {
         $filterData = [
             'startDate' => $_POST['startDate'] ?? null,
@@ -54,7 +54,6 @@ class ProductAnlysis{
         header('Location : ../pages/admin/admin_test.php');
         exit();
     }
+    }
 
-
-}
 ?>
