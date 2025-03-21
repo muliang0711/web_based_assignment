@@ -21,6 +21,23 @@
     catch (PDOException | Exception $e){
         die(":( Couldn't Find What You're Looking For");
     }
+
+
+    /*
+        what i need from database:
+        orderPlaced Date
+        status
+        shipping address
+        delivery method
+        tracking-id
+        discount
+        totalprice -> calculate
+        deliveredDate
+
+        customer email
+
+        orderitems product name, quantity, subtotal
+    */
 ?>
 
 
@@ -89,20 +106,6 @@
             <span>Order Summary</span>
 
             <div class="order-items">
-                <div class="item">
-                    <img src="https://www.yonex.com/media/catalog/product/3/a/3ax88d-t_076-1_02.png">
-                    <span class="product-name" >Yonex Astrox 3000 GD</span>
-                    <span class="product-quantity">x1</span>
-                    <span class="product-subtotal">RM 169.99</span>
-                    <span class="product-variation">3UG5</span>
-                </div>
-                <div class="item">
-                    <img src="https://www.yonex.com/media/catalog/product/3/a/3ax88d-t_076-1_02.png">
-                    <span class="product-name" >Yonex Astrox 3000 GD</span>
-                    <span class="product-quantity">x1</span>
-                    <span class="product-subtotal">RM 169.99</span>
-                    <span class="product-variation">3UG5</span>
-                </div>
                 <div class="item">
                     <img src="https://www.yonex.com/media/catalog/product/3/a/3ax88d-t_076-1_02.png">
                     <span class="product-name" >Yonex Astrox 3000 GD</span>

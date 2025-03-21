@@ -173,7 +173,7 @@ main {
     
     display: flex;
     flex-direction: column;
-    min-height: 300px;
+    min-height: 160px;
     height: auto;
     gap: 25px;
 } 
@@ -309,13 +309,20 @@ main {
         border: 2px solid var(--lessImportant);
         border-radius: 5px;
         
+        margin-top: 25px;
         padding: 0 15px;
         height: 35px;
+
+        transition: 0.3s ease;
 
         > span {
             font-weight: bold;
             color: var(--lessImportant);
         }
+    }
+
+    > button:hover {
+        scale: 1.07;
     }
 
 }
@@ -346,7 +353,7 @@ main {
 
         cursor: pointer;
 
-        border: 2px solid var(--lessImportant);
+        border: 2px solid rgba(118, 118, 118, 0.485);
         border-radius: 8px;
         height: 80%;
         width: 25%;
@@ -354,22 +361,38 @@ main {
         font-size: 15px;
         font-weight: bold;
         color: var(--lessImportant);
+
+        transition: 0.3s ease;
     }
 
+
+    > button:first-child:hover {    
+        background: rgb(203, 203, 203);
+        
+    }
 
     > button:last-child {
         cursor: pointer;
 
         background: rgba(255, 130, 21, 1);
-        border: 2px solid rgb(255, 134, 21);;
         border-radius: 8px;
+        border: none;
         height: 80%;
         width: 35%;
 
         font-size: 15px;
         font-weight: bold;
         color: white;
+        transition: 0.3s ease;
+
+    }
+
+    > button:last-child:hover {
+        background: rgb(217, 113, 21);
+        
     }
 }
+
+
 
 /*-----------------------------------------------------------------------------*/
