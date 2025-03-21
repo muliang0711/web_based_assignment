@@ -137,7 +137,10 @@
 
 
 
-        <div class="buttons-container">Buttons here</div>
+        <div class="buttons-container">
+            <button>Cancel Order</button>
+            <button>Contact Support</button>
+        </div>
 
     </div>
 
