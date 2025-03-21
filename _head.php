@@ -114,11 +114,12 @@ function removeFromCart($productID, $sizeID, $userID): void {
                             </a>
                             <a class="dropdown-item" href="/pages/order/order.php">
                                 <span>
-                                    <svg style="vertical-align:text-bottom;" width="20px" height="20px" viewBox="0 0 24 24" fill="black" stroke="white" stroke-width="1.5" xmlns="http://www.w3.org/2000/svg">
-                                        <rect x="2" y="5" width="14" height="17" rx="2" />
-                                        <path d="M6 10H12" stroke-linecap="round"/>
-                                        <path d="M6 14H12" stroke-linecap="round"/>
-                                        <path d="M6 18H10" stroke-linecap="round"/>
+                                    <svg style="vertical-align:text-bottom;" width="23px" height="23px" viewBox="-2 0 26 24" fill="black" stroke="white" stroke-width="1.5" xmlns="http://www.w3.org/2000/svg">
+                                        <rect x="2" y="5" width="14" height="17" rx="2" fill="none" />
+                                        <path d="M6 9.5H12" stroke-linecap="round"/>
+                                        <path d="M6 13.5H12" stroke-linecap="round"/>
+                                        <path d="M6 17.5H10" stroke-linecap="round"/>
+                                        <circle cx="16" cy="8" r="8" stroke="black"/>
                                         <circle cx="16" cy="8" r="6"/>
                                         <line x1="16" y1="8" x2="16" y2="5" stroke-linecap="round"/>
                                         <line x1="16" y1="8" x2="18" y2="10" stroke-linecap="round"/>
