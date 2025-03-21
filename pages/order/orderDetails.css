@@ -108,6 +108,7 @@ main {
     display: flex;
 
     > div:first-child{
+        max-width: 300px;
         > span {
             font-weight: 500;
             color: var(--seclessImportant);
@@ -309,7 +310,7 @@ main {
         border: 2px solid var(--lessImportant);
         border-radius: 5px;
         
-        margin-top: 25px;
+        margin-top: 15px;
         padding: 0 15px;
         height: 35px;
 
