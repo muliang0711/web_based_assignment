@@ -277,6 +277,14 @@ if (is_logged_in("admin")) {
     $_admin = $_db->query("SELECT * FROM `admin` WHERE id = {$_SESSION['adminID']}")->fetch();
 }
 
+// TODO
+// Generate login prompt using temp()
+function prompt_login($customPrompt = null) {
+    $customPrompt ??= 'You are not logged in.';
+    $customPrompt .= ' <a href="/pages/user/user-login.php?fromPage=' . urlencode($_SERVER['REQUEST_URI']) . '">Log in</a>';
+    temp('warn', $customPrompt);
+}
+
 
 // Generate <input type='search'>
 function html_search($key, $attr = '') {

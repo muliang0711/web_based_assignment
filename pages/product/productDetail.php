@@ -34,12 +34,12 @@ if (is_logged_in("user")) {
   global $_user;
   $_user = $_db->query("SELECT * FROM user WHERE userID = {$_SESSION['userID']}")->fetch();
   $userID = $_user->userID;
-}else{
-$userID =null;
+} else {
+  $userID = null;
 }
 
-  if ($gripSize) {
-    if($userID){
+if ($gripSize) {
+  if ($userID) {
     $available = $_db->prepare("SELECT * FROM productSize WHERE productID = ? AND sizeID = ? AND quantity > 0");
     $available->execute([$productID, $gripSize]);
     $productObj = $available->fetch();
@@ -49,31 +49,31 @@ $userID =null;
     $cartStatement->execute([$userID, $productID, $gripSize]);
     $cartObject = $cartStatement->fetch();
     $cartQuantity = $cartObject->quantity;
-  
-    if(!$cartQuantity){
+
+    if (!$cartQuantity) {
       $cartQuantity = 0;
     }
     if ($productObj && $productQuantity > $cartQuantity) {
       // echo "Added to cart!";
-        $cartQuantity += 1;
-        if(!$cartObject){
-          $available = $_db->prepare('INSERT INTO cartitem (userID, productID, sizeID, quantity) VALUES(?,?,?,?)');
-          $available->execute([$userID, $productID, $gripSize, $cartQuantity]);
-        }else{
-          $available = $_db->prepare('UPDATE cartitem SET quantity = ? WHERE userID = ? AND productID = ? AND sizeID = ?');
-          $available->execute([$cartQuantity, $userID, $productID, $gripSize]);
-        }
-        temp("info", "Added to cart Successfully!");
-        redirect("../product/productDetail.php?racket=$productObj->productID");
-      
+      $cartQuantity += 1;
+      if (!$cartObject) {
+        $available = $_db->prepare('INSERT INTO cartitem (userID, productID, sizeID, quantity) VALUES(?,?,?,?)');
+        $available->execute([$userID, $productID, $gripSize, $cartQuantity]);
+      } else {
+        $available = $_db->prepare('UPDATE cartitem SET quantity = ? WHERE userID = ? AND productID = ? AND sizeID = ?');
+        $available->execute([$cartQuantity, $userID, $productID, $gripSize]);
+      }
+      temp("info", "Added to cart Successfully!");
+      redirect("../product/productDetail.php?racket=$productObj->productID");
     } else {
-        temp("error", "Stock unvailable! / Over limit!");
-        redirect("../product/productDetail.php?racket=$productObject->productID");
+      temp("error", "Stock unvailable! / Over limit!");
+      redirect("../product/productDetail.php?racket=$productObject->productID");
     }
-  }else{
-    temp('warn','Please login before add item to cart');
+  } else {
+    prompt_login("Please log in to add to cart.");
+    // temp('warn', 'Please login before add item to cart');
   }
-  }
+}
 
 include '../../_head.php';
 ?>
@@ -105,25 +105,29 @@ include '../../_head.php';
 </div>
 
 
-  <form method="get">
-<div class="AddCart">
+<form method="get">
+  <div class="AddCart">
 
-  <button type="submit" id="racket" name="racket" value = "<?php echo $productObject->productID ?>">Add To Cart</button>
-  <div class="radioOne">
-  <input type="radio" id="gripSize" name="gripSize" value = '3UG5'> <label for="gripSize"><strong><p>3UG5</p></strong></label>
+    <button type="submit" id="racket" name="racket" value="<?php echo $productObject->productID ?>">Add To Cart</button>
+    <div class="radioOne">
+      <input type="radio" id="gripSize" name="gripSize" value='3UG5'> <label for="gripSize"><strong>
+          <p>3UG5</p>
+        </strong></label>
+    </div>
+    <div class="radioTwo">
+      <input type="radio" id="gripSize" name="gripSize" value='4UG5'> <label for="gripSize"><strong>
+          <p>4UG5</p>
+        </strong></label>
+    </div>
   </div>
-  <div class="radioTwo">
-  <input type="radio" id="gripSize" name="gripSize" value = '4UG5'> <label for="gripSize"><strong><p>4UG5</p></strong></label>
-</div>
-</div>
 </form>
 <?php
 $size = $_db->prepare("SELECT * FROM productSize WHERE productID = ?");
-$size->execute([$productID]); 
+$size->execute([$productID]);
 $productObject = $size->fetchAll();
 ?>
 <!--
-<?php if ($userID):?>
+<?php if ($userID): ?>
 <div class="sizeSelect" id="selectSize">
   <div class="popup" id="popup">
     <h2>Select grip size</h2>
@@ -133,7 +137,7 @@ $productObject = $size->fetchAll();
       </a>
     <?php endforeach ?>
     <button onclick="closeSelect()">Close</button>
-    <?php else:?>
+    <?php else: ?>
       <div class="attention">
       <p>Please login before add to cart!</p>
     </div>

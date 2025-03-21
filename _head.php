@@ -114,7 +114,7 @@ function removeFromCart($productID, $sizeID, $userID): void {
                             </a>
                             <a class="dropdown-item" href="/pages/order/order.php">
                                 <span>
-                                    <svg style="vertical-align:text-bottom;" width="23px" height="23px" viewBox="-2 0 26 24" fill="black" stroke="white" stroke-width="1.5" xmlns="http://www.w3.org/2000/svg">
+                                    <svg style="vertical-align:text-bottom;transform:scale(1.15);transform-origin:center;" width="20px" height="20px" viewBox="-2 0 26 24" fill="black" stroke="white" stroke-width="1.5" xmlns="http://www.w3.org/2000/svg">
                                         <rect x="2" y="5" width="14" height="17" rx="2" fill="none" />
                                         <path d="M6 9.5H12" stroke-linecap="round"/>
                                         <path d="M6 13.5H12" stroke-linecap="round"/>

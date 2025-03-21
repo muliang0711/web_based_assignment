@@ -506,6 +506,11 @@ th,td{
     width: 20px;
     height: 20px;
     vertical-align: text-bottom;
+    /* position: absolute; */
+}
+/* The link text */
+.account .dropdown-item div { 
+    /* padding-left: 30px; */
 }
 
 /* Special style for signup button */
