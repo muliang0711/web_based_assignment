@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 21, 2025 at 01:56 PM
+-- Generation Time: Mar 21, 2025 at 02:18 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -83,7 +83,7 @@ CREATE TABLE `orders` (
   `deliveryMethod` varchar(20) NOT NULL,
   `deliveredDate` date DEFAULT NULL,
   `tracking` int(30) DEFAULT NULL,
-  `discount` decimal(10,2) DEFAULT NULL
+  `discount` decimal(10,2) NOT NULL DEFAULT 0.00
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -91,12 +91,12 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`orderId`, `userId`, `orderDate`, `status`, `orderAddress`, `deliveryMethod`, `deliveredDate`, `tracking`, `discount`) VALUES
-(12345, 1, '2024-10-25', 'Pending', '2 Jalan Port Dickson Langkawi, 72010, Kuala Lumpur', '', NULL, NULL, NULL),
-(12346, 2, '2024-11-02', 'In Transit', '88, Lorong Bukit Jaya, 43000, Selangor', '', NULL, NULL, NULL),
-(12347, 1, '2024-09-15', 'Delivered', '16, Jalan Taman Utama, 80000, Johor Bahru', '', NULL, NULL, NULL),
-(12348, 2, '2024-08-30', 'Pending', '7, Jalan Ampang, 50450, Kuala Lumpur', '', NULL, NULL, NULL),
-(12349, 1, '2024-12-10', 'In Transit', '22, Jalan Sutera Indah, 81100, Johor', '', NULL, NULL, NULL),
-(12350, 2, '2024-07-20', 'Delivered', '5, Lorong Melati, 10460, Penang', '', NULL, NULL, NULL);
+(12345, 1, '2024-10-25', 'Pending', '2 Jalan Port Dickson Langkawi, 72010, Kuala Lumpur', 'Standard', NULL, NULL, 0.00),
+(12346, 2, '2024-11-02', 'In Transit', '88, Lorong Bukit Jaya, 43000, Selangor', 'Standard', NULL, NULL, 0.00),
+(12347, 1, '2024-09-15', 'Delivered', '16, Jalan Taman Utama, 80000, Johor Bahru', 'Standard', '2024-09-18', NULL, 0.50),
+(12348, 2, '2024-08-30', 'Pending', '7, Jalan Ampang, 50450, Kuala Lumpur', 'Standard', NULL, NULL, 0.00),
+(12349, 1, '2024-12-10', 'In Transit', '22, Jalan Sutera Indah, 81100, Johor', 'Standard', NULL, NULL, 0.00),
+(12350, 2, '2024-07-20', 'Delivered', '5, Lorong Melati, 10460, Penang', 'Standard', '2024-07-23', NULL, 0.00);
 
 -- --------------------------------------------------------
 
