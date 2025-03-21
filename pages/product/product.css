@@ -229,14 +229,14 @@ p{
   height: 50px;
   padding: 10px;
   transition: .2s linear;
-  border: 3px solid black;
+  border: 3px solid rgb(9, 237, 184);
   font-size: 14px;
   text-transform: uppercase;
 }
 
 .input:focus {
   outline: none;
-  box-shadow: -5px -5px 0px black;
+  box-shadow: -5px -5px 0px rgb(9, 237, 184);
 }
 
 .searchButton button{
