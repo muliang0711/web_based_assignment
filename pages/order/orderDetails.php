@@ -2,7 +2,15 @@
     require "../../_base.php";
     $title = "Order Details";
     $stylesheetArray  = ["orderDetails.css?"];
-    include "../../_head.php";
+
+
+    //getting session info;
+    $userId = $_SESSION['userID'] ?? '';
+    
+    //if userId not logged in then redirect to homepage
+    if(!is_logged_in("user")){
+        redirect("/");
+    }
 
     $orderId = $_GET["id"] ?? "";
 
@@ -11,31 +19,38 @@
         $orderId=="" ? throw new Exception("Order ID is required.")  : null;
 
         
-        $order = $_db->prepare("SELECT o.*, o.orderDate + INTERVAL 3 DAY as estimatedDate, u.email, sum(oi.subtotal)-o.discount as totalPrice FROM
+        $order = $_db->prepare("SELECT o.*, o.orderDate + INTERVAL 3 DAY as estimatedDate, u.userID, u.email, sum(oi.subtotal) as subtotal, sum(oi.subtotal)-o.discount as totalPrice FROM
                                 orders o JOIN order_items oi ON (o.orderId = oi.orderId)
                                 JOIN user u ON (u.userID = o.userId)
                                 GROUP BY o.orderId HAVING o.orderId = ?;");
         $order->execute([$orderId]);
         $order = $order -> fetch(PDO::FETCH_OBJ);
+        
+        if(!$order) throw new Exception("No Orders Found.");
+        //if the orderid not in user's order history then redirect back to homepage
+        if($order->userID != $userId){
+            redirect("/pages/order/order.php");
+        }
 
-
-
-        $orderItems = $_db->prepare("SELECT * FROM order_items WHERE orderId=?");
+        $orderItems = $_db->prepare("SELECT oi.*, p.productName as name, p.productImg as img FROM order_items oi JOIN product p
+                                    ON (oi.productId = p.productID) WHERE orderId=?");
         $orderItems->execute([$orderId]);
         $orderItems = $orderItems->fetchAll();
     }
     catch (PDOException | Exception $e){
-        die(":( Couldn't Find What You're Looking For");
+        redirect("/pages/order/order.php");
     }
 
-    $deliveredColor = "rgb(45, 153, 45)";
-    $pendingColor = "rgba(255,177,0,1)";
+    $deliveredColor = "rgb(46, 190, 46)";
+    $pendingColor = "rgba(249, 182, 26, 0.7)";
 
-    //delivery method can only be express or standard
+    //extracting the postcode and state from address
     preg_match("/(\d{5}),\s*([A-Za-z\s]+)/", $order->orderAddress, $matches);
     $street = trim(str_replace($matches[0], "", $order->orderAddress));
     $postcode = $matches[1];
     $state = trim($matches[2]);
+
+    //delivery method can only be express or standard
     $deliverySpeed = $order->deliveryMethod == "Standard" ? "3-5" : "1-3";
     $trackingId = $order->tracking != NULL? $order->tracking : "Coming Soon!";
 
@@ -50,9 +65,9 @@
         $color = $deliveredColor;
     }
     //if order is in transit
-    else if ($order->status == "Pending"){
+    else if ($order->status == "In Transit"){
         $msg = "Estimated Delivery Date";
-        $msg2 = "Out For Delivery";
+        $msg2 = "Order Shipped";
         $msg3 = "Your package is on the way";
         $Day = date("l", strtotime($order->estimatedDate));
         $Month = date("M", strtotime($order->estimatedDate));
@@ -70,6 +85,7 @@
         $color = $pendingColor;
     }
     
+    include "../../_head.php";
 ?>
 
 
@@ -136,52 +152,63 @@
 
 
 
-    <div class="container2">
+<div class="container2">
 
-        <div class="summary-container">
-            <span>Order Summary</span>
+    <div class="summary-container">
+        <span>Order Summary</span>
 
-            <div class="order-items">
+        <div class="order-items">
+            <?php foreach($orderItems as $item): ?>
                 <div class="item">
-                    <img src="https://www.yonex.com/media/catalog/product/3/a/3ax88d-t_076-1_02.png">
-                    <span class="product-name" >Yonex Astrox 3000 GD</span>
-                    <span class="product-quantity">x1</span>
-                    <span class="product-subtotal">RM 169.99</span>
-                    <span class="product-variation">3UG5</span>
+                <img src="<?= $item->img ?>">
+                <span class="product-name" ><?= $item->name ?></span>
+                <span class="product-quantity">x<?= $item->quantity ?></span>
+                <span class="product-subtotal">RM <?= $item->subtotal ?></span>
+                <span class="product-variation"><?= $item->gripSize ?></span>
                 </div>
-            </div>
-
-            <div class="subtotal">
-                <span>Subtotal</span>
-                <span>RM 49.99</span>
-            </div>
-
-            <hr>
-            <div class="shipping-fee">
-                <span>Shipping</span>
-                <span>Free</span>
-            </div>
-
-            <div class="discount">
-                <span>Discount</span>
-                <span>RM 4.55</span>
-            </div>
-
-            <hr>
-            <div class="total">
-                <span>Total</span>
-                <span>RM 55.54</span>
-            </div>
+            <?php endforeach ?>
         </div>
 
-
-
-        <div class="buttons-container">
-            <button>Cancel Order</button>
-            <button>Contact Support</button>
+        <div class="subtotal">
+            <span>Subtotal</span>
+            <span>RM <?= $order->subtotal ?></span>
         </div>
 
+        <hr>
+        <div class="shipping-fee">
+            <span>Shipping</span>
+            <span>Free</span>
+        </div>
+
+        <div class="discount">
+            <span>Discount</span>
+            <span>RM <?= $order->discount ?></span>
+        </div>
+
+        <hr>
+        <div class="total">
+            <span>Total</span>
+            <span>RM <?= $order->totalPrice ?></span>
+        </div>
     </div>
+
+
+
+    <div class="buttons-container">
+        <?php if($order->status == "Pending"): ?>
+            <button data-cancel="">Cancel Order</button>
+            <button data-support>Contact Support</button>
+
+        <?php elseif($order->status == "In Transit"): ?>
+            <button data-support>Contact Support</button>
+
+        <?php elseif($order->status == "Delivered"): ?>
+            <button data-support>Contact Support</button>
+
+        <?php endif ?>
+    </div>
+
+</div>
 
 
 </div>
@@ -190,5 +217,6 @@
 
 
 <?php 
+    $scriptArray = ["orderDetails.js"];
     include "../../_foot.php";
 ?>
