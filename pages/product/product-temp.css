@@ -121,6 +121,7 @@ p{
 }
 
 .image-box img {
+  position: absolute;
   padding: 20px;
   width: 100%; 
   height: auto; 
