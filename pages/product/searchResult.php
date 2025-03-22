@@ -3,19 +3,44 @@ $stylesheetArray = ['product.css'];
 $title = 'Product List';
 require '../../_base.php';
 include '../../_head.php';
+$search = $_REQUEST['search'];
+$seriesStatement = $_db->prepare("SELECT * FROM series");
+$seriesStatement->execute([]);
+$seriesArray = $seriesStatement->fetchAll();
 ?>
 
 <body>
+
+<div class="sidebar">
+    <div class="sidebarFont">
+        <ul>
+            <h>Series</h>
+            <hr>
+            <?php foreach ($seriesArray as $s): ?>
+                <a onclick="onclick()" href ="../product/searchResult.php?search=<?php echo $s->seriesName ?>" >
+                <li><p><?php echo "$s->seriesName" ?></p></li>
+                </a>
+            <?php endforeach ?>
+            <hr>
+            <h>Price Range</h>
+            <hr>
+            <form method="get" action="../product/searchResult.php?price=?">
+            <input type="text" id="price" name="price" maxlength="30" class="input" placeholder="P R I C E">
+            </form>
+            <hr>
+        </ul>
+    </div>
+</div>
+
     <form method="get" action="../product/searchResult.php?search=?">
         <div class="searchContainer">
-            <input type="text" id="search" name="search" maxlength="30" class="input" placeholder="S E A R C H">
+            <input type="text" id="search" name="search" maxlength="30" class="input" placeholder="<?php echo $search ?>">
         </div>
         <div class="searchButton">
         <button><img src="illustration-magnifying-glass-icon.png"></button>
         </div>
     </form>
     <?php
-    $search = $_REQUEST['search'];
     if (!$search) {
         echo "Invalid input!";
     }
@@ -25,6 +50,8 @@ include '../../_head.php';
     $statement = $_db->prepare("SELECT * FROM product WHERE productName LIKE ?");
     $statement->execute(["%$search%"]);
     $productObjectArray = $statement->fetchAll();
+
+    
     ?>
     <div class="userInput">
         <p>Input result " <?php echo $search ?> "</p>

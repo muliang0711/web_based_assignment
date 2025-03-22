@@ -10,7 +10,7 @@ $title = 'Product List';
 //   }
 // }
 //   $time = time();
-  
+
 //   if (is_array($stylesheetArray)) {
 //       foreach ($stylesheetArray as $stylesheet) {
 //           echo "<link rel='stylesheet' href='$stylesheet?v=$time' />";
@@ -18,24 +18,47 @@ $title = 'Product List';
 //   } 
 
 // Get product data from database
-$_db = new PDO('mysql:dbname=web_based_assignment','root', '',[
+$_db = new PDO('mysql:dbname=web_based_assignment', 'root', '', [
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
 ]);
 $statement = $_db->prepare("SELECT * FROM product");
 $statement->execute([]);
 $productObjectArray = $statement->fetchAll();
-
+$seriesStatement = $_db->prepare("SELECT * FROM series");
+$seriesStatement->execute([]);
+$seriesArray = $seriesStatement->fetchAll();
 include '../../_head.php';
 ?>
+<div class="sidebar">
+    <div class="sidebarFont">
+        <ul>
+            <h>Series</h>
+            <hr>
+            <?php foreach ($seriesArray as $s): ?>
+                <a onclick="onclick()" href ="../product/searchResult.php?search=<?php echo $s->seriesName ?>" >
+                <li><p><?php echo "$s->seriesName" ?></p></li>
+                </a>
+            <?php endforeach ?>
+            <hr>
+            <h>Price Range</h>
+            <hr>
+            <form method="get" action="../product/searchResult.php?price=?">
+            <input type="text" id="price" name="price" maxlength="30" class="input" placeholder="P R I C E">
+            </form>
+            <hr>
+        </ul>
+    </div>
+</div>
+
 
 <form method="get" action="../product/searchResult.php?search=?">
     <div class="searchContainer">
-     <input type="text" id="search" name="search" maxlength="30" class="input" placeholder="S E A R C H">
+        <input type="text" id="search" name="search" maxlength="30" class="input" placeholder="S E A R C H">
     </div>
     <div class="searchButton">
-     <button><img src="illustration-magnifying-glass-icon.png"></button>
+        <button><img src="illustration-magnifying-glass-icon.png"></button>
     </div>
-</form> 
+</form>
 
 
 <!-- TopSide Menu -->
@@ -69,29 +92,29 @@ include '../../_head.php';
 <hr>
 
 <!-- product Image -->
-<?php 
-        $_db = new PDO('mysql:dbname=web_based_assignment','root', '',[
-        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
-        ]);
-      
-        $statement = $_db->prepare("SELECT * FROM product");
-        $statement->execute([]);
-        $productObjectArray = $statement->fetchAll();
-        
-    ?>
-    
-    <div class="list" id="productList">
-      <?php     
-      foreach($productObjectArray as $productObject):?>
-         <div class="item">
-          <a onclick = "onclick()" href = "../product/productDetail.php?racket=<?php echo $productObject->productID ?>">
+<?php
+$_db = new PDO('mysql:dbname=web_based_assignment', 'root', '', [
+    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
+]);
 
-          <img src="<?php echo $productObject->productImg ?>">
-          <p><?php echo $productObject->productName ?></p> 
-          </a>
-         </div>
-      <?php endforeach ?>
-    </div>
+$statement = $_db->prepare("SELECT * FROM product");
+$statement->execute([]);
+$productObjectArray = $statement->fetchAll();
+
+?>
+
+<div class="list" id="productList">
+    <?php
+    foreach ($productObjectArray as $productObject): ?>
+        <div class="item">
+            <a onclick="onclick()" href="../product/productDetail.php?racket=<?php echo $productObject->productID ?>">
+
+                <img src="<?php echo $productObject->productImg ?>">
+                <p><?php echo $productObject->productName ?></p>
+            </a>
+        </div>
+    <?php endforeach ?>
+</div>
 
 <?php
 include '../../_foot.php';
