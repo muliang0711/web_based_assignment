@@ -12,6 +12,7 @@ if (!$product) {
   echo "Product not found.";
   exit;
 }
+
 ?>
 
 <link rel="stylesheet" href="../../css/test.css">

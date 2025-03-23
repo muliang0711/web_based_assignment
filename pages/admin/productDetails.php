@@ -64,6 +64,17 @@ if (!$product) {
         <input type="text" value="<?php echo htmlspecialchars($product['total_stock']); ?>" disabled>
       </div>
 
+      
+      <div class="form-group">
+        <label>Introduction</label>
+        <textarea name="introduction" rows="3" readonly><?php echo htmlspecialchars($product['introduction']); ?></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Player Info</label>
+        <textarea name="playerInfo" rows="3" readonly><?php echo htmlspecialchars($product['playerInfo']); ?></textarea>
+      </div>
+
       <div class="form-group">
         <button type="button" class="back-btn" onclick="window.location.href='admin_product.php'">← Back</button>
       </div>
