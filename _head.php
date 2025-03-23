@@ -1,8 +1,5 @@
 <?php
-<<<<<<< HEAD
 
-=======
->>>>>>> 16258399aff318f2e05092b86223521cce8f7ae5
 // echo $_SERVER['REQUEST_URI']; // this line was for debugging.
 if (is_post()) {
     // Handle logout request
