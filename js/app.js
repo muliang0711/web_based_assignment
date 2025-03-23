@@ -38,12 +38,16 @@ $(() => {
     // Initiate POST request
     $('[data-post]').on('click', e => {
         e.preventDefault();
-        const url = e.target.dataset.post;
+        const button = e.target.closest('button');
+        const url = button?.dataset.post;
+        if (!url) return;
+    
         const f = $('<form>').appendTo(document.body)[0];
         f.method = 'POST';
-        f.action = url || location;
+        f.action = url;
         f.submit();
     });
+    
 
     // Reset form
     $('[type=reset]').on('click', e => {
