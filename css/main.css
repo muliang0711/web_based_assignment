@@ -8,9 +8,8 @@ body {
 /* Main content offset by sidebar width and topbar height */
 .main-content {
   margin-left: var(--sidebar-width);
-  margin-top: var(--topbar-height);
+  margin-top: 50px;
   padding: 1rem;
-  transition: margin-left 0.3s;
 }
 .container-table{
   border: 1px solid #ccc;

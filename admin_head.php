@@ -1,40 +1,29 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><?= $title ?? 'Untitled' ?></title>
-    <link rel="stylesheet" href="/css/admin.css">
-    <!-- <link rel="stylesheet" href="/css/flash_msg.css"> -->
-    <?= link_stylesheet($stylesheetArray ?? ''); ?>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-</head>
+<?php
+// topbar.php
+include_once __DIR__ . "/_base.php";
+$stylesheetArray = ['../css/topbar.css'];
+link_stylesheet($stylesheetArray);
+?>
+<style>
 
-<body>
-    <!-- Flash message -->
-    <div id="info">
-        <div id="progress-bar"></div>
-        <span id="info-text"><?= temp('info') ?></span>
+</style>
+
+<div class="topbar">
+  <h3>Dashboard</h3>
+  <div class="topbar-right">
+    <!-- User Dropdown -->
+    <div class="dropdown">
+      <button class="dropdown-toggle" type="button">
+        <i class="fas fa-user"></i> Admin
+      </button>
+      <ul class="dropdown-menu">
+        <li>
+          <a href="#"><i class="fas fa-user-cog"></i> Profile</a>
+        </li>
+        <li>
+          <a href="#"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        </li>
+      </ul>
     </div>
-
-    <div class="side-container">
-        <p class="display_topleft adminHeader"><b><i>Admin</i></b></p>
-        <a href="/pages/admin/admin_home.php" class="button">Home</a>
-        <a href="" class="button">Order</a>
-        <a class="button" href="/pages/admin/admin_product.php">Product</a>
-        <a class="button" href="/pages/admin/view_customer.php">Customer</a>
-        <a class="button">Discount/Voucher</a>
-        <a class="button">Analysis</a>
-        <!-- ?php if (is_logged_in()): ?> -->
-        <a href="/pages/admin/admin_Management.php" class="button">Admin Management</a>
-        <!-- ?php endif ?> -->
-        <a class="display_bottomleft">
-            <img src="/assets/img/signout.jpg" width="20px">
-        </a>
-    </div>
-
-    <div class="main">
-         <div>
-            <header><?= $title ?? 'Untitled' ?></header>
-        </div>
-        <!-- <div id="container"> -->
+  </div>
+</div>

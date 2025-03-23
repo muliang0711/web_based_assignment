@@ -1,7 +1,7 @@
 <?php
 // sidebar.php
-include_once __DIR__ . "/../../_base.php";
-$stylesheetArray = ['../../css/sidebar.css'];
+include_once __DIR__ . "/_base.php";
+$stylesheetArray = ['../css/sidebar.css'];
 link_stylesheet($stylesheetArray);
 ?>
 <style>
