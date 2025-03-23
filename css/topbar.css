@@ -54,10 +54,12 @@
     padding: 0.5rem 1rem;
     color: #333;
     text-decoration: none;
+    border: 2px solid rgb(161, 161, 161);
   }
-  .dropdown-menu li a:hover {
+  .dropdown-menu li a {
     background-color: #eee;
   }
-  .dropdown:hover .dropdown-menu {
+
+  .dropdown-menu.active{
     display: block;
   }

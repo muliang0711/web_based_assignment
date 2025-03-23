@@ -28,3 +28,22 @@ link_stylesheet($stylesheetArray);
     </div>
   </div>
 </div>
+<script>
+  $(document).ready(function () {
+    // Toggle active class on click
+    $('.dropdown-toggle').on('click', function (e) {
+      e.stopPropagation(); // Prevent closing immediately
+
+      const $dropdown = $(this).closest('.dropdown');
+      const $menu = $dropdown.find('.dropdown-menu');
+
+      // Toggle active class
+      $menu.toggleClass('active');
+    });
+
+    // Optional: Hide dropdown if clicking outside
+    $(document).on('click', function () {
+      $('.dropdown-menu').removeClass('active');
+    });
+  });
+</script>
