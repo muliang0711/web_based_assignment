@@ -1,43 +1,95 @@
 body {
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif;
-    background-color: #f8f9fa;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f4f6f9;
     color: #333;
   }
-.container{
-    width: 100%;
-    height: 100%;
-    background-color: #ff0000;
+  
+  .container {
+    width: 100vw;
+    height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-}
-.form-container{
-    width: 80%;
-    height: 80%;
-    background-color: antiquewhite;
+    padding: 20px;
+  }
+  
+  .form-container {
+    width: 90%;
+    max-width: 1200px;
+    background-color: #fff;
     display: flex;
     justify-content: space-between;
-}
-
-.box{
-    width: 45%;
-    height: 100%;
-    background-color: #833939;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+    gap: 20px;
+  }
+  
+  .box {
+    flex: 1;
     display: flex;
     flex-direction: column;
-}
-
-.image {
-    width: 100%;
-    height: 40%;
-    background-color: aquamarine;
+  }
+  
+  .section-title {
+    font-size: 1.25rem;
+    margin-bottom: 20px;
+    color: #007bff;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
     display: flex;
     flex-direction: column;
-}
-
-.form-container .image:nth-child(1) {
-    /* Your styles here */
+  }
+  
+  label {
     margin-bottom: 5px;
-}
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+  
+  input[type="text"],
+  input[type="number"],
+  input[type="file"] {
+    padding: 8px 10px;
+    font-size: 0.95rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  input[type="file"] {
+    background-color: #fff;
+  }
+  
+  .submit-btn {
+    margin-top: auto;
+    padding: 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+  }
+  
+  .submit-btn:hover {
+    background-color: #0056b3;
+  }
+  
+  .preview-gallery {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  
+  .preview-gallery img {
+    width: 100px;
+    height: auto;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  

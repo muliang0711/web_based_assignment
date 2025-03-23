@@ -44,6 +44,7 @@ body {
 
 .action-btn-delete{
   padding: 0.3rem 0.6rem;
+  padding-top: 8px ;
    border: 1px solid #dc3545; 
    background: none; 
    cursor: pointer; 

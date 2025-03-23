@@ -38,15 +38,17 @@ unset($_SESSION['Delete_ErrorMsg']);
 <div class="main-content">
     <!-- Example Search/Filter Section -->
 
-  <div style="margin-bottom: 1rem;">
+  <div style="margin-bottom: 1rem; display: flex ; justify-content : space-between ;">
 
-    <form style="display: flex; gap: 1rem;">
+    <form style="display: flex;">
 
         <div style="flex: 1;">
           <input type="text" placeholder="Search..." style="width: 50%; padding: 0.5rem;">
         </div>
+
+    </form>
           <!--filter bar or what right here -->
-        <form action="">
+        <form action="" style="display: flex; ">
               <select style="padding: 0.5rem;">
                 <option>All Categories</option>
                 <option>Active</option>
@@ -75,12 +77,7 @@ unset($_SESSION['Delete_ErrorMsg']);
                 <option>Archived</option>
               </select>
         </form>
-        
-        <input type="date" style="padding: 0.5rem;">
-        <button type="reset" style="padding: 0.5rem;">
-          <i class="fas fa-undo"></i> Reset
-        </button>
-      </form>
+ 
   </div>
 
           <!-- Alert -->
@@ -171,15 +168,21 @@ unset($_SESSION['Delete_ErrorMsg']);
               <td class="td">RM<?php echo number_format($product->price, 2); ?></td>
               <td class="td"><?php echo htmlspecialchars($product->total_stock); ?></td>
               <td class="td">
-                    <button class="action-btn-add">
+                      <!-- Add -->
+                    <a href="appProduct.php" class="action-btn-add" title="Add New Product">
                       <i class="fa-solid fa-plus"></i>
-                    </button>
-                    <button class="action-btn-details">
+                    </a>
+
+                    <!-- View Details -->
+                    <a href="detailsProduct.php?productID=<?php echo $product->productID; ?>" class="action-btn-details" title="View Details">
                       <i class="fas fa-eye"></i>
-                    </button>
-                    <button class="action-btn-edit">
+                    </a>
+
+                    <!-- Edit -->
+                    <a href="editProduct.php?productID=<?php echo $product->productID; ?>" class="action-btn-edit" title="Edit Product">
                       <i class="fa-solid fa-pen-to-square"></i>
-                    </button>
+                    </a>
+                    
                     <button class="action-btn-delete">
                       <i class="fas fa-trash"></i>
                     </button>
