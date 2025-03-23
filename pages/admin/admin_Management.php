@@ -8,7 +8,7 @@ $scriptArray = ['/js/app.js'];       // 注意：这边只放特定于此页面�
 
 include '../../admin_head.php';
 ?>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <?php
 $arr = $_db->query('SELECT * FROM admin')->fetchAll();
 ?>
