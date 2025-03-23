@@ -287,7 +287,7 @@ class productDb{
                 "message" => "Size '$sizeID' for product '$productID' deleted successfully."
             ];
     
-        } catch (PDOException $e) {
+        } catch (Exception $e) {
             return [
                 "success" => false,
                 "message" => "Database error: " . $e->getMessage()

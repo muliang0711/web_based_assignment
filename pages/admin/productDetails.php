@@ -3,7 +3,7 @@ require_once "../../db_connection.php";
 require_once "../../controller/productController.php";
 require_once "../../_base.php";
 
-$stylesheetArray = ['../../css/test.css'];
+$stylesheetArray = ['../../css/editAnddetails.css'];
 link_stylesheet($stylesheetArray);
 
 $productID = $_GET['productID'] ?? null;

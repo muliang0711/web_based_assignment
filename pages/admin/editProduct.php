@@ -13,12 +13,13 @@ if (!$product) {
   exit;
 }
 
+$stylesheetArray = ['../../css/editAnddetails.css'];
+link_stylesheet($stylesheetArray);
 ?>
 
-<link rel="stylesheet" href="../../css/test.css">
 
 <div class="container">
-  <form action="updateProductHandler.php" method="POST" enctype="multipart/form-data" class="form-container">
+  <form action="../../controller/productController.php" method="POST" enctype="multipart/form-data" class="form-container">
 
     <!-- LEFT -->
     <div class="left-side box">

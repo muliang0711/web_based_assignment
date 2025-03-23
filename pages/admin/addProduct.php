@@ -1,7 +1,7 @@
 
 <?php
 require_once "../../_base.php";      
-$stylesheetArray = ['../../css/test.css'];
+$stylesheetArray = ['../../css/editAnddetails.css'];
 link_stylesheet($stylesheetArray);
 
 ?>
@@ -36,7 +36,7 @@ link_stylesheet($stylesheetArray);
 
       <div class="form-group">
         <label for="sizeID">Size ID</label>
-        <input type="text" id="sizeID" name="sizeID" required>
+        <input type="text" id="sizeId" name="sizeId" required>
       </div>
 
       <div class="form-group">
@@ -47,6 +47,15 @@ link_stylesheet($stylesheetArray);
       <div class="form-group">
         <label for="stock">Stock</label>
         <input type="number" id="stock" name="stock" required>
+      </div>
+      <div class="form-group">
+        <label>Introduction</label>
+        <textarea name="introduction" rows="3"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Player Info</label>
+        <textarea name="playerInfo" rows="3"></textarea>
       </div>
 
       <button type="submit" class="submit-btn">Add Product</button>
@@ -181,7 +190,7 @@ link_stylesheet($stylesheetArray);
     setupDragDrop("#drop-zone-product", "#productImage", "#preview-product");
     setupDragDrop("#drop-zone-player", "#playerImage", "#preview-player");
   });
-  
+
 </script>
 
 

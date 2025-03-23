@@ -164,8 +164,7 @@ class ProductController{
             'sizeId' => $_POST['sizeId'] ?? null,
             'stock' => $_POST['stock'] ?? null,
             'price' => $_POST['price'] ?? null,
-            'oldSizeID' => $_POST['oldSizeID'] ?? null , 
-            //'oldSeriesID' => $_POST['oldSeriesID'] ?? null , 
+            'oldSizeID' => $_POST['oldSizeID'] ?? null ,                
         ];
 
         // start validation : ----------------
@@ -216,16 +215,13 @@ class ProductController{
 
         $productInformation = [
             'productId' => $_POST['productId'] ?? null,
-            'productName' => $_POST['productName'] ?? null,
-            'seriesId' => $_POST['seriesId'] ?? null,
-            'seriesName' => $_POST['seriesName'] ?? null,
             'sizeId' => $_POST['sizeId'] ?? null,
-            'stock' => $_POST['stock'] ?? null,
-            'price' => $_POST['price'] ?? null,
+
         ];
 
-        $errors = [];
-        $errors = $this->validation($productInformation);
+        // $errors = [];
+        // $errors = $this->validation($productInformation);
+
         if(!empty($errors)){
             $_SESSION['Delete_ErrorMsg'] = $errors;
             $this->redirectToAdmin();
