@@ -5,8 +5,10 @@ $title='Admin Management';
 $stylesheetArray = ['/css/admin_management.css'];   // 注意：这边只放特定于此页面的 .css file(s)。所有 admin 页面都会用到的 .css files 应放在 /css/admin.css
 $scriptArray = ['/js/app.js'];       // 注意：这边只放特定于此页面的 .js file(s)。所有 admin 页面都会用到的 .js files 应放在 /js/admin.js
 
+
 include '../../admin_head.php';
 ?>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <?php
 $arr = $_db->query('SELECT * FROM admin')->fetchAll();
 ?>
@@ -29,7 +31,6 @@ $arr = $_db->query('SELECT * FROM admin')->fetchAll();
         <td class="td"><?= $a->id ?></td>
         <td class="td"><?= $a->position ?></td>
         <td class="td"><button class="action-btn-delete" data-post="/pages/admin/adminDelete.php?id=<?=$a->id?>" data-confirm="Are you sure you want to delete"><i class="fas fa-trash"></i></button></td>
-        
     </tr>
     <?php endforeach ?>
 </table>
