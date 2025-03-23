@@ -20,7 +20,10 @@ link_stylesheet($stylesheetArray);
       <a href="../admin/admin_home.php" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
     </li>
     <li>
-      <a href="../admin/admin_Management.php"><i class="fas fa-users"></i> Users</a>
+      <a href="../admin/view_customer.php"><i class="fas fa-users"></i> Customer</a>
+    </li>
+    <li>
+      <a href="../admin/admin_Management.php"><i class="fas fa-users"></i> Admin</a>
     </li>
     <li>
       <a href="../admin/admin_product.php"><i class="fas fa-boxes"></i> Products</a>
