@@ -125,7 +125,7 @@
             }
 
         ?>
-    <div class="order">
+    <div class="order" data-order-id="<?=$o->orderId?>" style="cursor:pointer;">
         <span class="orderID">#<?=$o->orderId?></span>
         <span class="orderAddress"><?=$o->orderAddress?></span>
         <span class="orderDate"><?=substr($o->orderDate,8,2) . '/' . substr($o->orderDate,5,2) . '/' . substr($o->orderDate,0,4) ?></span>
