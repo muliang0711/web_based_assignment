@@ -6,8 +6,9 @@ link_stylesheet($stylesheetArray);
 
 ?>
 <div class="container">
-  <form action="storeProduct.php" method="POST" enctype="multipart/form-data" class="form-container">
-
+  <form action="/controller/productController.php" method="POST" enctype="multipart/form-data" class="form-container">
+    
+  <input type="hidden" name="action" value="addProduct">
     <!-- Left Side: Product Details -->
     <div class="left-side box">
       <h3 class="section-title">Product Info</h3>
@@ -23,8 +24,8 @@ link_stylesheet($stylesheetArray);
       </div>
 
       <div class="form-group">
-        <label for="seriesID">Series ID</label>
-        <input type="text" id="seriesID" name="seriesID" required>
+        <label for="seriesId">Series ID</label>
+        <input type="text" id="seriesId" name="seriesId" required>
       </div>
 
       
@@ -55,25 +56,108 @@ link_stylesheet($stylesheetArray);
     <div class="right-side box">
       <h3 class="section-title">Images</h3>
 
+      <!-- Product Upload Drop Zone -->
       <div class="form-group">
-        <label for="productImage">Product Picture</label>
-        <input type="file" name="productImage" id="productImage" accept="image/*">
-      </div>
-
-      <div class="form-group">
-        <label for="playerImage">Player Picture</label>
-        <input type="file" name="playerImage" id="playerImage" accept="image/*">
-      </div>
-
-      <div class="form-group">
-        <label>Preview</label>
-        <div class="preview-gallery">
-          <img src="../../File/player_R0001_0.jpg" alt="Preview" />
-          <img src="../../File/player_R0001_0.jpg" alt="Preview" />
-          <img src="../../File/player_R0001_0.jpg" alt="Preview" />
+        <label>Product Picture</label>
+        <div id="drop-zone-product" class="drop-zone">
+          <p>Drag & drop product images here or click to select</p>
+          <input type="file" id="productImage" name="productImage[]" accept="image/jpeg,image/png,image/webp" multiple >
         </div>
+        <div id="preview-product" class="preview-gallery"></div>
       </div>
+
+      <!-- Player Upload Drop Zone -->
+      <div class="form-group">
+        <label>Player Picture</label>
+        <div id="drop-zone-player" class="drop-zone">
+          <p>Drag & drop player images here or click to select</p>
+          <input type="file" id="playerImage" name="playerImage[]" accept="image/jpeg,image/png,image/webp" multiple >
+        </div>
+        <div id="preview-player" class="preview-gallery"></div>
+      </div>
+
+
+      <div class="form-group">
+      <button type="button" class="back-btn" onclick="window.location.href='admin_product.php'">← Back</button>
+    </div>
+
     </div>
 
   </form>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+  function setupDragDrop(dropZoneId, inputId, previewId, maxFiles = 5, maxSizeMB = 2, allowedTypes = ['image/jpeg', 'image/png', 'image/webp']) {
+    const dropZone = $(dropZoneId);
+    const fileInput = $(inputId);
+    const preview = $(previewId);
+
+    // Click opens file selector
+    dropZone.on('click', function () {
+      fileInput.trigger('click');
+    });
+
+    // Drag over style
+    dropZone.on('dragover', function (e) {
+      e.preventDefault();
+      dropZone.addClass('dragover');
+    });
+
+    dropZone.on('dragleave', function () {
+      dropZone.removeClass('dragover');
+    });
+
+    // Drop files
+    dropZone.on('drop', function (e) {
+      e.preventDefault();
+      dropZone.removeClass('dragover');
+      const files = e.originalEvent.dataTransfer.files;
+      handleFiles(files);
+    });
+
+    // File input change
+    fileInput.on('change', function () {
+      handleFiles(this.files);
+    });
+
+    // File validation + preview
+    function handleFiles(files) {
+      if (files.length > maxFiles) {
+        alert(`Max ${maxFiles} images allowed.`);
+        fileInput.val('');
+        return;
+      }
+
+      preview.html(""); // clear previews
+      Array.from(files).forEach(file => {
+        if (!allowedTypes.includes(file.type)) {
+          alert("Only JPG, PNG, WEBP formats allowed.");
+          fileInput.val('');
+          return;
+        }
+
+        if (file.size / (1024 * 1024) > maxSizeMB) {
+          alert("File too large. Max: " + maxSizeMB + "MB.");
+          fileInput.val('');
+          return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          const img = $("<img>", { src: e.target.result });
+          preview.append(img);
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+  }
+
+  $(document).ready(function () {
+    setupDragDrop("#drop-zone-product", "#productImage", "#preview-product");
+    setupDragDrop("#drop-zone-player", "#playerImage", "#preview-player");
+  });
+</script>
+
+

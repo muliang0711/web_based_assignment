@@ -169,7 +169,7 @@ unset($_SESSION['Delete_ErrorMsg']);
               <td class="td"><?php echo htmlspecialchars($product->total_stock); ?></td>
               <td class="td">
                       <!-- Add -->
-                    <a href="appProduct.php" class="action-btn-add" title="Add New Product">
+                    <a href="addProduct.php" class="action-btn-add" title="Add New Product">
                       <i class="fa-solid fa-plus"></i>
                     </a>
 
@@ -184,9 +184,14 @@ unset($_SESSION['Delete_ErrorMsg']);
                       <i class="fa-solid fa-pen-to-square"></i>
                     </a>
 
-                    <button class="action-btn-delete">
-                      <i class="fas fa-trash"></i>
-                    </button>
+                    <form method="POST" action="../../controller/productController.php" class="delete-form" style="display:inline;">
+                      <input type="hidden" name="productID" value="<?php echo $product->productID; ?>">
+                      <input type="hidden" name="sizeID" value="<?php echo $product->sizeID; ?>">
+                      <button type="submit" class="action-btn-delete" data-productid="<?php echo $product->productID; ?>" data-sizeid="<?php echo $product->sizeID; ?>">
+                        <i class="fas fa-trash"></i>
+                      </button>
+                    </form>
+
                 </td>
             </tr>
             
@@ -209,3 +214,20 @@ unset($_SESSION['Delete_ErrorMsg']);
 // 3. 
 ?> 
     
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+  $(document).ready(function () {
+    $('.delete-form').on('submit', function (e) {
+      const productID = $(this).find('button').data('productid');
+      const sizeID = $(this).find('button').data('sizeid');
+
+      const confirmDelete = confirm(`Are you sure you want to delete this product?\nProduct ID: ${productID}\nSize ID: ${sizeID}`);
+
+      if (!confirmDelete) {
+        e.preventDefault(); // Cancel submission
+      }
+    });
+  });
+</script>
+
