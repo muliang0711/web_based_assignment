@@ -46,34 +46,36 @@ unset($_SESSION['Delete_ErrorMsg']);
           <input type="text" placeholder="Search..." style="width: 50%; padding: 0.5rem;">
         </div>
           <!--filter bar or what right here -->
+        <form action="">
+              <select style="padding: 0.5rem;">
+                <option>All Categories</option>
+                <option>Active</option>
+                <option>Pending</option>
+                <option>Archived</option>
+              </select>
 
-        <select style="padding: 0.5rem;">
-          <option>All Categories</option>
-          <option>Active</option>
-          <option>Pending</option>
-          <option>Archived</option>
-        </select>
+              <select style="padding: 0.5rem;">
+                <option>All Categories</option>
+                <option>Active</option>
+                <option>Pending</option>
+                <option>Archived</option>
+              </select>
 
-        <select style="padding: 0.5rem;">
-          <option>All Categories</option>
-          <option>Active</option>
-          <option>Pending</option>
-          <option>Archived</option>
-        </select>
-
-        <select style="padding: 0.5rem;">
-          <option>All Categories</option>
-          <option>Active</option>
-          <option>Pending</option>
-          <option>Archived</option>
-        </select>
+              <select style="padding: 0.5rem;">
+                <option>All Categories</option>
+                <option>Active</option>
+                <option>Pending</option>
+                <option>Archived</option>
+              </select>
+              
+              <select style="padding: 0.5rem;">
+                <option>All Categories</option>
+                <option>Active</option>
+                <option>Pending</option>
+                <option>Archived</option>
+              </select>
+        </form>
         
-        <select style="padding: 0.5rem;">
-          <option>All Categories</option>
-          <option>Active</option>
-          <option>Pending</option>
-          <option>Archived</option>
-        </select>
         <input type="date" style="padding: 0.5rem;">
         <button type="reset" style="padding: 0.5rem;">
           <i class="fas fa-undo"></i> Reset
@@ -149,11 +151,10 @@ unset($_SESSION['Delete_ErrorMsg']);
           <thead>
             <tr style="background-color: #f9f9f9;">
               <th class="th">product ID  </th>
+              <th class="th">series ID</th>
               <th class="th">sizeID</th>
               <th class="th">price</th>
               <th class="th">stock</th>
-
-
               <th class="th">Actions</th>
             </tr>
           </thead>
@@ -165,12 +166,19 @@ unset($_SESSION['Delete_ErrorMsg']);
             <!-- Product Info -->
             <tr>
               <td class="td"><?php echo htmlspecialchars($product->productID); ?></td>
+              <td class="td"><?php echo htmlspecialchars($product->seriesID); ?></td>
               <td class="td"><?php echo htmlspecialchars($product->sizeID); ?></td>
               <td class="td">RM<?php echo number_format($product->price, 2); ?></td>
               <td class="td"><?php echo htmlspecialchars($product->total_stock); ?></td>
-              <td>
-                <button class="action-btn-details">
+              <td class="td">
+                    <button class="action-btn-add">
+                      <i class="fa-solid fa-plus"></i>
+                    </button>
+                    <button class="action-btn-details">
                       <i class="fas fa-eye"></i>
+                    </button>
+                    <button class="action-btn-edit">
+                      <i class="fa-solid fa-pen-to-square"></i>
                     </button>
                     <button class="action-btn-delete">
                       <i class="fas fa-trash"></i>

@@ -6,6 +6,8 @@ include __DIR__ . "/../admin/main.php";
 // if we want our table all look same than you may copy the code below ;
 // if you want to have a personal table than igoner it and develop by yourself buty just make sure all action is place on the right side 
 
+// ------------- noted!! will you include main.php please use __DIR__ to 
+
 // 1. after you include the main.php 
   // 1.1 : main.php auto include topbar and sidebar already 
   // 1.2 : you can based on your requirenment include sidebar or topbar independent 
