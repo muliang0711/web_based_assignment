@@ -40,7 +40,11 @@ class ProductController{
                 $this->redirectToAdmin();
             }
     }
+    public function getProductByIDAndSize($productID , $sizeID){
 
+        $product = $this->productDb->getProductByIDAndSize($productID , $sizeID);
+        return $product ;
+    }
     public  function getAllProducts(){
         return  $this->productDb->getAllProducts();
     }

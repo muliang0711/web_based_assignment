@@ -412,6 +412,44 @@ class productDb{
 
     }
 
+    public function getProductByIDAndSize($productID, $sizeID) {
+        $sql = "SELECT 
+                    p.productID,
+                    p.productName,
+                    p.price,
+                    p.introduction,
+                    p.playerInfo,
+                    p.seriesID,
+                    s.seriesName,
+                    ps.sizeID,
+                    ps.quantity AS total_stock,
+                    GROUP_CONCAT(CASE WHEN pi.image_type = 'product' THEN pi.image_path END) AS product_images,
+                    GROUP_CONCAT(CASE WHEN pi.image_type = 'player' THEN pi.image_path END) AS player_images
+                FROM product p
+                JOIN productsize ps ON p.productID = ps.productID
+                JOIN series s ON p.seriesID = s.seriesID
+                LEFT JOIN product_images pi ON p.productID = pi.productID
+                WHERE p.productID = :productID AND ps.sizeID = :sizeID
+                GROUP BY p.productID, ps.sizeID";
+    
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([
+            ':productID' => $productID,
+            ':sizeID' => $sizeID
+        ]);
+    
+        $product = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+        if ($product) {
+            // Convert image paths into arrays
+            $product['product_images'] = array_filter(explode(',', $product['product_images']));
+            $product['player_images'] = array_filter(explode(',', $product['player_images']));
+        }
+    
+        return $product;
+    }
+    
+
 
     
 //==================================== ALL Private function will be here : 

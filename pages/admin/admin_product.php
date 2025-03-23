@@ -174,15 +174,16 @@ unset($_SESSION['Delete_ErrorMsg']);
                     </a>
 
                     <!-- View Details -->
-                    <a href="detailsProduct.php?productID=<?php echo $product->productID; ?>" class="action-btn-details" title="View Details">
+                    <a href="productDetails.php?productID=<?php echo $product->productID; ?>&sizeID=<?php echo $product->sizeID; ?>" class="action-btn-details">
                       <i class="fas fa-eye"></i>
                     </a>
 
+
                     <!-- Edit -->
-                    <a href="editProduct.php?productID=<?php echo $product->productID; ?>" class="action-btn-edit" title="Edit Product">
+                    <a href="editProduct.php?productID=<?php echo $product->productID; ?> &sizeID=<?php echo $product->sizeID; ?>" class="action-btn-edit" title="Edit Product">
                       <i class="fa-solid fa-pen-to-square"></i>
                     </a>
-                    
+
                     <button class="action-btn-delete">
                       <i class="fas fa-trash"></i>
                     </button>
