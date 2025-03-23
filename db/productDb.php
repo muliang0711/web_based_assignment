@@ -271,10 +271,24 @@ class productDb{
                 // Delete from product table
                 $deleteProductStmt = $this->pdo->prepare("DELETE FROM product WHERE productID = ?");
                 $deleteProductStmt->execute([$productID]);
-    
-                // Optionally: also delete associated images
+                // also unlink file :
+
+                $fetchImagesStmt = $this->pdo->prepare("SELECT image_path FROM product_images WHERE productID = ?");
+                $fetchImagesStmt->execute([$productID]);
+                $imagePaths = $fetchImagesStmt->fetchAll(PDO::FETCH_COLUMN); // gets array of paths
+            
+                // Delete image files from folder
+                foreach ($imagePaths as $path) {
+                    $fullPath = "../../File/" . $path;
+                    if (file_exists($fullPath)) {
+                        unlink($fullPath); // delete the file
+                    }
+                }
+
+                // also delete associated images
                 $deleteImagesStmt = $this->pdo->prepare("DELETE FROM product_images WHERE productID = ?");
                 $deleteImagesStmt->execute([$productID]);
+
     
                 return [
                     "success" => true,
