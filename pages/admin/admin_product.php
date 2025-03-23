@@ -166,10 +166,10 @@ unset($_SESSION['Delete_ErrorMsg']);
             <tr>
               <td class="td"><?php echo htmlspecialchars($product->productID); ?></td>
               <td class="td"><?php echo htmlspecialchars($product->sizeID); ?></td>
-              <td class="td"><?php echo number_format($product->price, 2); ?></td>
+              <td class="td">RM<?php echo number_format($product->price, 2); ?></td>
               <td class="td"><?php echo htmlspecialchars($product->total_stock); ?></td>
               <td>
-                <button class="action-btn-add">
+                <button class="action-btn-details">
                       <i class="fas fa-eye"></i>
                     </button>
                     <button class="action-btn-delete">
@@ -188,7 +188,12 @@ unset($_SESSION['Delete_ErrorMsg']);
   </div>
 
 
-  </div>
+</div>
     
-
+<?php
+// TODO : 
+// 1. delete than just show a confirm message than delete 
+// 2. add than show user add_product page 
+// 3. 
+?> 
     

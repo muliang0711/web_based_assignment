@@ -1,0 +1,43 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+  }
+.container{
+    width: 100%;
+    height: 100%;
+    background-color: #ff0000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.form-container{
+    width: 80%;
+    height: 80%;
+    background-color: antiquewhite;
+    display: flex;
+    justify-content: space-between;
+}
+
+.box{
+    width: 45%;
+    height: 100%;
+    background-color: #833939;
+    display: flex;
+    flex-direction: column;
+}
+
+.image {
+    width: 100%;
+    height: 40%;
+    background-color: aquamarine;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-container .image:nth-child(1) {
+    /* Your styles here */
+    margin-bottom: 5px;
+}
