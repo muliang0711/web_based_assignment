@@ -26,7 +26,7 @@ if (!$product) {
     exit;
 }
 
-
+// TODO : show how many have been sold 
 ?>
 <div class="container">
   <div class="details-card">

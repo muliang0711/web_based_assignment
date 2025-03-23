@@ -221,3 +221,7 @@ table th {
 }
 /* Result and Message */
 
+.action-btn-delete:hover {
+  background-color: #dc3545;
+  color: white;
+}
