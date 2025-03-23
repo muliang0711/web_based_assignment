@@ -76,10 +76,15 @@ link_stylesheet($stylesheetArray);
         <div id="preview-player" class="preview-gallery"></div>
       </div>
 
+      <!-- Modal Container -->
+      <div id="imageModal" class="modal">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="zoomedImage">
+      </div>
 
       <div class="form-group">
-      <button type="button" class="back-btn" onclick="window.location.href='admin_product.php'">← Back</button>
-    </div>
+        <button type="button" class="back-btn" onclick="window.location.href='admin_product.php'">← Back</button>
+      </div>
 
     </div>
 
@@ -130,7 +135,7 @@ link_stylesheet($stylesheetArray);
         return;
       }
 
-      preview.html(""); // clear previews
+      // preview.html(""); // clear previews
       Array.from(files).forEach(file => {
         if (!allowedTypes.includes(file.type)) {
           alert("Only JPG, PNG, WEBP formats allowed.");
@@ -152,12 +157,31 @@ link_stylesheet($stylesheetArray);
         reader.readAsDataURL(file);
       });
     }
+
+    $(document).on("click", ".preview-gallery img", function () {
+    const src = $(this).attr("src");
+    $("#zoomedImage").attr("src", src);
+    $("#imageModal").fadeIn();
+    });
+
+    // Close modal
+    $(".close").click(function () {
+      $("#imageModal").fadeOut();
+    });
+
+    // Optional: Click outside image to close
+    $("#imageModal").click(function (e) {
+      if (e.target === this) {
+        $(this).fadeOut();
+      }
+    });
   }
 
   $(document).ready(function () {
     setupDragDrop("#drop-zone-product", "#productImage", "#preview-product");
     setupDragDrop("#drop-zone-player", "#playerImage", "#preview-player");
   });
+  
 </script>
 
 

@@ -226,56 +226,72 @@ class productDb{
 
     public function deleteProduct($productInformation) {
         try {
-            // fetch data :
             $productID = $productInformation['productId'];
             $sizeID = $productInformation['sizeId'];
-            // Step 0 : check if the productID is as fk on the orderitem and status with order status with not is Delivered than direct return fail : 
-            
+    
+            // Step 0: Check if this product-size is part of any order (not yet delivered)
             $orderCheckStmt = $this->pdo->prepare("
-                SELECT COUNT(*)
-                FROM order_items oi
+                SELECT COUNT(*) FROM order_items oi
                 JOIN orders o ON oi.orderId = o.orderId
-                WHERE oi.productId = ? AND oi.gripSize = ? 
+                WHERE oi.productId = ? AND oi.gripSize = ? AND o.status != 'Delivered'
             ");
             $orderCheckStmt->execute([$productID, $sizeID]);
-            $orderExists = $orderCheckStmt->fetchColumn();
-
-            // If order exists 
-            if ($orderExists > 0) {
+            $activeOrders = $orderCheckStmt->fetchColumn();
+    
+            if ($activeOrders > 0) {
                 return [
                     "success" => false,
-                    "message" => "Cannot delete product. It is referenced in an order."
+                    "message" => "Cannot delete. This product (ID: $productID, Size: $sizeID) is used in an active order."
                 ];
             }
-
-            // Step 1: Check if product and size exist
+    
+            // Step 1: Check if the product-size combination exists
             $checkStmt = $this->pdo->prepare("SELECT COUNT(*) FROM productsize WHERE productID = ? AND sizeID = ?");
             $checkStmt->execute([$productID, $sizeID]);
             $exists = $checkStmt->fetchColumn();
     
             if ($exists == 0) {
-                return "Error: Product with this size does not exist.";
+                return [
+                    "success" => false,
+                    "message" => "This product-size combination does not exist."
+                ];
             }
     
-            // Step 2: Delete the specific product-size combination
+            // Step 2: Delete this product-size entry
             $deleteSizeStmt = $this->pdo->prepare("DELETE FROM productsize WHERE productID = ? AND sizeID = ?");
             $deleteSizeStmt->execute([$productID, $sizeID]);
     
-            // Step 3: Check if product has any remaining sizes
-            $remainingStmt = $this->pdo->prepare("SELECT COUNT(*) FROM productsize WHERE productID = ?");
-            $remainingStmt->execute([$productID]);
-            $remainingSizes = $remainingStmt->fetchColumn();
+            // Step 3: Check if the product has any remaining sizes
+            $remainingSizesStmt = $this->pdo->prepare("SELECT COUNT(*) FROM productsize WHERE productID = ?");
+            $remainingSizesStmt->execute([$productID]);
+            $remainingSizes = $remainingSizesStmt->fetchColumn();
     
-            // Step 4: If no sizes remain, delete the product itself
+            // Step 4: If no more sizes left, delete the product record
             if ($remainingSizes == 0) {
+                // Delete from product table
                 $deleteProductStmt = $this->pdo->prepare("DELETE FROM product WHERE productID = ?");
                 $deleteProductStmt->execute([$productID]);
-                return ["success" => true , "message" => "delete successful"];
+    
+                // Optionally: also delete associated images
+                $deleteImagesStmt = $this->pdo->prepare("DELETE FROM product_images WHERE productID = ?");
+                $deleteImagesStmt->execute([$productID]);
+    
+                return [
+                    "success" => true,
+                    "message" => "Product '$productID' and all associated data deleted successfully (last size)."
+                ];
             }
     
-            return ["success" => true , "message" => "delete successful"];
+            return [
+                "success" => true,
+                "message" => "Size '$sizeID' for product '$productID' deleted successfully."
+            ];
+    
         } catch (PDOException $e) {
-            return ["success" => false, "error" => $e->getMessage()];
+            return [
+                "success" => false,
+                "message" => "Database error: " . $e->getMessage()
+            ];
         }
     }
     

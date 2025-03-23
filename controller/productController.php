@@ -331,7 +331,7 @@ class ProductController{
                 return ["Error: Temporary file does not exist: {$fileName}"];
             }
     
-            $newFileName = "{$type}_{$productId}_{$i}.{$fileExt}";
+            $newFileName = "$type"  .  "_"  . "$productId"  .  "_"  .time()  .  "."  ."$fileExt";
             $targetPath = $uploadDir . '/' . $newFileName;
     
             if (!move_uploaded_file($fileTmpPath, $targetPath)) {

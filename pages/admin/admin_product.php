@@ -185,6 +185,7 @@ unset($_SESSION['Delete_ErrorMsg']);
                     </a>
 
                     <form method="POST" action="../../controller/productController.php" class="delete-form" style="display:inline;">
+                      <input type="hidden" name="action" value="deleteProduct">  
                       <input type="hidden" name="productID" value="<?php echo $product->productID; ?>">
                       <input type="hidden" name="sizeID" value="<?php echo $product->sizeID; ?>">
                       <button type="submit" class="action-btn-delete" data-productid="<?php echo $product->productID; ?>" data-sizeid="<?php echo $product->sizeID; ?>">
