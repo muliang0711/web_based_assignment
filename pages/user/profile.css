@@ -61,12 +61,7 @@ main {
     width: 400px;
     max-width: 100%;
 }
-.form-group input[type=text] {
-}
-.form-group textarea {
-    /* width: 500px;
-    max-width: 100%; */
-}
+
 
 /***** side nav *****/
 

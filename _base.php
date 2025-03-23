@@ -98,7 +98,7 @@ function input_text($key, $attr = '') {
 // Generate <textarea type='text'>
 function html_textarea($key, $attr = '') {
     $value = encode($GLOBALS[$key] ?? '');
-    echo "<textarea id='$key' name='$key' value='$value' $attr></textarea>";
+    echo "<textarea id='$key' name='$key' value='$value' $attr>$value</textarea>";
 }
 
 // Generate <input type='password'>
@@ -275,6 +275,14 @@ if (is_logged_in("admin")) {
     global $_db;
     global $_admin;
     $_admin = $_db->query("SELECT * FROM `admin` WHERE id = {$_SESSION['adminID']}")->fetch();
+}
+
+// TODO
+// Generate login prompt using temp()
+function prompt_login($customPrompt = null) {
+    $customPrompt ??= 'You are not logged in.';
+    $customPrompt .= ' <a href="/pages/user/user-login.php?fromPage=' . urlencode($_SERVER['REQUEST_URI']) . '">Log in</a>';
+    temp('warn', $customPrompt);
 }
 
 

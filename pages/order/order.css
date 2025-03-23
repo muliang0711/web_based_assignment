@@ -86,6 +86,7 @@ form {
     overflow-x: hidden;
     gap: 25px;
     padding-right: 10px;
+    padding-top: 10px;
 }
 
 
@@ -108,7 +109,7 @@ form {
     padding-right: 10px;
     padding-left: 0px;
     max-width: 1000px;
-    grid-template-columns: 0.37fr 0.57fr 0.48fr 0.36fr 0.12fr;
+    grid-template-columns: 0.4fr 0.65fr 0.53fr 0.4fr 0.1fr;
 }
 
 .order span, .order-header span {
@@ -120,10 +121,6 @@ form {
 
 }
 
-.order-header span:last-child {
-    padding: 0px 0px;
-    justify-self: end;
-}
 
 
 
@@ -150,10 +147,6 @@ form {
     background: transparent;
     cursor: pointer;
     padding-top: 10px;
-}
-
-.rotate svg {
-    transform: rotate(90deg);
 }
 
 .order svg{
@@ -189,93 +182,16 @@ form {
     border-radius: 10px;
     height: 50px;
     background-color: white;
+    transform: translateY(0);
     transition: 0.5s ease;
 }
 
-
-
-.order::after {
-    content: "";
-    opacity: 0;
-    position: absolute;
-    left: 50%;
-    right: 50%;
-    height: 4px;
-    width: auto;
-    bottom: 0.3px;
-    border-radius: inherit;
-    background-color: var(--barColor);
-}
-
-
 .order:hover {
+    box-shadow: 5px 7px 8px rgba(0, 0, 0, 0.2);
+    transform: translateY(-10px);
     background-color: var(--hoverColor);
 }
 
-.order:hover::after {
-    animation: extendBar 0.6s ease forwards;
-}
-
-.order.noanimation::after {
-    animation: retractBar 0.4s ease forwards;
-}
-
-@keyframes extendBar {
-    0% {
-        opacity: 1;
-        left: 50%;
-        right: 50%;
-    }
-
-    100% {
-        opacity: 1;
-        left: 0%;
-        right: 0%;
-    }
-}
-
-@keyframes retractBar {
-    0% {
-        opacity: 1;
-        left: 0%;
-        right: 0%;
-    }
-
-    100% {
-        opacity: 1;
-        left: 50%;
-        right: 50%;
-    }
-}
-
-.orderDetailed {
-    display: block;
-    position: relative;
-    height: 0px;
-    margin-top: -30px;
-    background-color: white;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-    transition: 0.5s ease;
-    flex-shrink: 0;
-}
-
-.orderDetailed.show {
-    height: 400px;
-    padding: 5px;
-}
-
-.order-details-wrapper {
-    height: 0px;
-    width: 0px;
-    transition: 0.2s ease;
-    overflow: hidden;
-}
-
-.order-details-wrapper.show {
-    height: 100%;
-    width: 100%;
-}
 
 .orderProgress { 
     display: flex;
@@ -285,121 +201,6 @@ form {
     align-items: center;
 }
 
-.order-items-container {
-    height: 60%;
-    width: 100%;
-    overflow-y: auto;
-    mask-image: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(0,0,0,1) 12%, rgba(0,0,0,1) 83%, rgba(255,255,255,0) 97%);
-}
-
-.items-container {
-    width: 100%;
-    height: 40%;
-    display:grid;
-    grid-template-columns: 0.3fr 1fr 0.2fr 0.5fr;
-    grid-template-rows: 0.2fr 0.8fr;
-    grid-template-areas: 
-        "image name quantity subtotal"
-        "image series quantity subtotal";
-
-    > img {
-        width: 60px;
-        height: 80px;
-        grid-area: image;
-        justify-self: center;
-        align-self: start;
-    }
-    
-    > span {
-        font-family:Arial, Helvetica, sans-serif;
-    }
-
-    > .item-name {
-        overflow: hidden;
-        grid-area: name;
-    }
-
-    > .item-series {
-        color: var(--lessImportant);
-        grid-area: series;
-        font-size: 13px;
-
-    }
-
-    > .item-quantity {
-        color: var(--lessImportant);
-        text-align: center;
-        grid-area: quantity;
-        font-size: 13px;
-    }
-    > .item-subtotal {
-        
-        padding-right: 7px;
-        text-align: end;
-        grid-area: subtotal;
-    }
-}
-
-
-.order-total-container {
-    height: 15%;
-    width: 100%;
-    display: flex;
-    justify-content: flex-end;
-    align-items: flex-end;
-
-    > .total-text {
-        margin-right: 15px;
-        font-weight: 500;
-        font-size: 20px;
-    }
-
-    > button {
-        margin-right:auto;
-        margin-left: 10px;
-        width: 15%;
-        height: 70%;
-
-        border-radius: 8px ;
-        border: solid 2px rgb(226, 223, 218);
-        background: transparent;
-        transition: 0.5s ease;
-
-        font-weight: bold;
-        cursor: pointer;
-    }
-
-    > button:hover {
-        background: rgb(226, 223, 218);
-    }
-}
-
-.order-placed, .order-intransit, .order-delivered {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
-    > div {
-        font-size: 13px;
-        color: var(--lessImportant);
-    }
-
-}
-
-.progress1, .progress2 {
-    position: absolute;
-    border-radius: 10px;
-    width: 80%;
-    height: 5%;
-    right: 0;
-    top: 35%;
-    transform: translateX(50%);
-    /* background: linear-gradient(90deg, rgba(29,204,29,1) 0%, rgba(255,177,0,1) 77%); */
-}
 
 
 

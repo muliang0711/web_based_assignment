@@ -1,58 +1,399 @@
 :root {
-    --divColor : rgb(214, 214, 214);
-
+    --divColor : rgba(243, 243, 243, 0.753);
+    --lessImportant : rgb(90, 90, 90);
+    --seclessImportant : rgb(39, 39, 39);
+    --barColor : rgb(85, 221, 255);
+    --hoverColor : rgba(243, 243, 243, 0.699);
+    --statusDone : rgb(45, 153, 45);
+    --statusNotDone : rgba(221, 214, 214, 0.514);
+    --pending : rgba(255,177,0,1);
 }
 
 main {
     padding: 35px;
+    background-color: rgb(218, 218, 218);
 }
 
-.container {
-    width: 100%;
+.giant-container{
+    display: flex;
+}
+
+
+.container1 {
+    width: 50%;
+    min-width: 435px;
+    max-width: 780px;
+    height: 670px;
+
+   
+    flex-grow: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 0.4fr;
+    grid-template-areas:
+    "status" 
+    "email";
+
+    row-gap: 20px;
+}
+
+.container2 {
+    width: 50%;
+    min-width: 380px;
+    max-width: 600px;
     height: auto;
 
     display: grid;
-    grid-template-columns: 0.6fr 0.4fr;
-    grid-template-rows: 1fr 0.15fr 0.4fr;
+    grid-template-columns: 1fr;
+    grid-template-rows: 0.6fr 0.30fr;
     grid-template-areas:
-    "status summary" 
-    "email buttons" 
-    "email .";
+    "summary" 
+    "buttons";
 
-    row-gap: 20px;
-    column-gap: 30px;
-
+    row-gap: 8px;
+    padding-left: 20px;
 }
 
+/*----------------------FOR STATUS CONTAINER---------------------------------*/
 .status-container {
+    display: flex;
+    flex-direction: column;
+
+    padding: 20px 20px;
     border-radius: 10px;
+
     height: 450px;
     grid-area: status;
     background-color: var(--divColor);
 
 }
 
-.summary-container {
-    border-radius: 10px;
-    height: 500px;
-    grid-area: summary;
-    background-color: var(--divColor);
+#delivery-date {
+    
+    > span:first-child{
+        font-weight: 500;
+        font-size: 15px;
+        color: var(--lessImportant);
+    }
+
+    > span:last-child{
+        font-weight: 500;
+        font-size: 30px;
+        color: black;
+    }
+}
+
+#delivery-status {
+    padding-top: 25px;
+
+    > span:first-child{
+        font-weight: 500;
+        font-size: 25px;
+        color: var(--statusDone);
+    }
+
+    > span:last-child{
+        font-weight: 500;
+        font-size: 15px;
+        color: var(--seclessImportant);
+    }
     
 }
 
+
+#address-container {
+    padding-top: 40px;
+    margin-bottom: 20px;
+
+    display: flex;
+
+    > div:first-child{
+        max-width: 300px;
+        > span {
+            font-weight: 500;
+            color: var(--seclessImportant);
+        }
+        > p {
+            color: var(--lessImportant);
+        }
+    }
+
+    > div:last-child {
+        margin-left: auto;
+        > span {
+            font-weight: 500;
+            color: var(--seclessImportant);
+        }
+        > p {
+            color: var(--lessImportant);
+        }
+    }
+}
+
+
+#courier-type {
+    margin-top: auto;
+    > img {
+
+        width: 70px;
+        height: 30px;
+    }
+}
+
+/*------------------------------------------------------------------------------*/
+
+
+
+
+
+
+/*----------------------FOR SUMMARY CONTAINER---------------------------------*/
+.summary-container {
+    padding: 20px 20px;
+    border-radius: 10px;
+    height: auto;
+    grid-area: summary;
+    background-color: var(--divColor);
+    
+
+    > span {
+        color: black;
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    > hr {
+        border: 1px solid rgba(90, 90, 90, 0.15);;
+    }
+}
+
+
+.order-items {
+    margin-top: 20px;
+    margin-bottom: 30px;
+    
+    display: flex;
+    flex-direction: column;
+    min-height: 160px;
+    height: auto;
+    gap: 25px;
+} 
+
+.item {
+    display: grid;
+    grid-template-columns: 70px auto 50px 120px;
+    grid-template-rows: 0.2fr 0.8fr;
+
+    > img {
+        grid-row: span 2;
+        border-radius: 5px;
+        width: 70px;
+        height: auto;
+    }
+
+    > span:nth-child(-n+4){
+        margin-top: 10px;
+    }
+
+    .product-name {
+        color: var(--seclessImportant);
+        font-weight: 500;
+        font-size: 18px;
+    }
+
+    .product-quantity {
+        color: var(--lessImportant);
+        font-weight: 400;
+        font-size: 15px;
+    }
+
+    .product-subtotal {
+        margin-left: auto;
+        color: var(--lessImportant);
+        font-weight: 500;
+        font-size: 15px;
+    }
+
+    .product-variation {
+        color: var(--lessImportant);
+        font-weight: 400;
+        font-size: 15px;
+    }
+}
+
+
+
+.subtotal, .shipping-fee, .discount{
+    display: flex;
+
+    > span:first-child {
+        color: var(--lessImportant);
+        font-weight: 500;
+        font-size: 15px;
+    }
+
+    > span:last-child {
+        margin-left: auto;
+        color: var(--lessImportant);
+        font-weight: 500;
+        font-size: 15px;
+    }
+}
+
+.subtotal {
+    > span:first-child {
+        color: var(--seclessImportant);
+        font-weight: 500;
+        font-size: 15px;
+    }
+}
+
+.shipping-fee {
+    margin-bottom: 10px;
+}
+
+
+.total {
+    display: flex;
+
+    > span:first-child {
+        align-content: center;
+        color: black;
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    > span:last-child {
+        margin-left: auto;
+        color: black;
+        font-weight: 500;
+        font-size: 26px;
+    }
+}
+/*---------------------------------------------------------------------------*/
+
+
+
+
+
+
+
+
+
+/*----------------------FOR EMAIL CONTAINER---------------------------------*/
 .email-container {
-    position: relative;
-    top: -50px;
     border-radius: 10px;
     height: 200px;
+    padding: 20px 20px;
+
     grid-area: email;
     background-color: var(--divColor);
 
-}
+    > span {
+        font-size: 18px;
+        font-weight: 500;
+        color: black;
+    }
 
+    > p {
+        width: 85%;
+        color: var(--lessImportant);
+    }
+
+    > button {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        cursor: pointer;
+
+        border: 2px solid var(--lessImportant);
+        border-radius: 5px;
+        
+        margin-top: 15px;
+        padding: 0 15px;
+        height: 35px;
+
+        transition: 0.3s ease;
+
+        > span {
+            font-weight: bold;
+            color: var(--lessImportant);
+        }
+    }
+
+    > button:hover {
+        scale: 1.07;
+    }
+
+}
+/*-----------------------------------------------------------------------------*/
+
+
+
+
+
+
+/*----------------------------FOR BUTTONS CONTAINER-------------------------------------*/
 .buttons-container {
+    display: flex;
+    align-items: center;
+
+    height: 50px;
     border-radius: 10px;
     grid-area: buttons;
     background-color: var(--divColor);
 
+    background: transparent;
+
+
+
+    > button:first-child {
+        margin-left: auto;
+        margin-right: 10px;
+
+        cursor: pointer;
+
+        border: 2px solid rgba(118, 118, 118, 0.485);
+        border-radius: 8px;
+        height: 80%;
+        width: 25%;
+
+        font-size: 15px;
+        font-weight: bold;
+        color: var(--lessImportant);
+
+        transition: 0.3s ease;
+    }
+
+
+    > button:first-child:hover {    
+        background: rgb(203, 203, 203);
+        
+    }
+
+    > button:last-child {
+        cursor: pointer;
+
+        background: rgba(255, 130, 21, 1);
+        border-radius: 8px;
+        border: none;
+        height: 80%;
+        width: 35%;
+
+        font-size: 15px;
+        font-weight: bold;
+        color: white;
+        transition: 0.3s ease;
+
+    }
+
+    > button:last-child:hover {
+        background: rgb(217, 113, 21);
+        
+    }
 }
+
+
+
+/*-----------------------------------------------------------------------------*/

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 19, 2025 at 03:45 PM
+-- Generation Time: Mar 21, 2025 at 02:18 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -79,20 +79,24 @@ CREATE TABLE `orders` (
   `userId` int(11) NOT NULL,
   `orderDate` date NOT NULL,
   `status` varchar(10) NOT NULL,
-  `orderAddress` varchar(150) NOT NULL
+  `orderAddress` varchar(150) NOT NULL,
+  `deliveryMethod` varchar(20) NOT NULL,
+  `deliveredDate` date DEFAULT NULL,
+  `tracking` int(30) DEFAULT NULL,
+  `discount` decimal(10,2) NOT NULL DEFAULT 0.00
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`orderId`, `userId`, `orderDate`, `status`, `orderAddress`) VALUES
-(12345, 1, '2024-10-25', 'Pending', '2 Jalan Port Dickson Langkawi, 72010, Kuala Lumpur'),
-(12346, 2, '2024-11-02', 'In Transit', '88, Lorong Bukit Jaya, 43000, Selangor'),
-(12347, 1, '2024-09-15', 'Delivered', '16, Jalan Taman Utama, 80000, Johor Bahru'),
-(12348, 2, '2024-08-30', 'Pending', '7, Jalan Ampang, 50450, Kuala Lumpur'),
-(12349, 1, '2024-12-10', 'In Transit', '22, Jalan Sutera Indah, 81100, Johor'),
-(12350, 2, '2024-07-20', 'Delivered', '5, Lorong Melati, 10460, Penang');
+INSERT INTO `orders` (`orderId`, `userId`, `orderDate`, `status`, `orderAddress`, `deliveryMethod`, `deliveredDate`, `tracking`, `discount`) VALUES
+(12345, 1, '2024-10-25', 'Pending', '2 Jalan Port Dickson Langkawi, 72010, Kuala Lumpur', 'Standard', NULL, NULL, 0.00),
+(12346, 2, '2024-11-02', 'In Transit', '88, Lorong Bukit Jaya, 43000, Selangor', 'Standard', NULL, NULL, 0.00),
+(12347, 1, '2024-09-15', 'Delivered', '16, Jalan Taman Utama, 80000, Johor Bahru', 'Standard', '2024-09-18', NULL, 0.50),
+(12348, 2, '2024-08-30', 'Pending', '7, Jalan Ampang, 50450, Kuala Lumpur', 'Standard', NULL, NULL, 0.00),
+(12349, 1, '2024-12-10', 'In Transit', '22, Jalan Sutera Indah, 81100, Johor', 'Standard', NULL, NULL, 0.00),
+(12350, 2, '2024-07-20', 'Delivered', '5, Lorong Melati, 10460, Penang', 'Standard', '2024-07-23', NULL, 0.00);
 
 -- --------------------------------------------------------
 
@@ -241,8 +245,9 @@ CREATE TABLE `user` (
   `birthdate` date DEFAULT NULL,
   `email` varchar(255) NOT NULL,
   `phoneNo` varchar(15) DEFAULT NULL,
-  `gender` enum('F','M') DEFAULT NULL COMMENT 'F: Female. \r\nM: Male.\r\nNullable. User won''t be prompted to provide their gender upon signup, but may choose to set one in the profile settings.',
+  `gender` enum('F','M','R') NOT NULL DEFAULT 'R' COMMENT 'F: Female. \r\nM: Male.\r\nR: Rather not say',
   `profilePic` varchar(255) DEFAULT NULL,
+  `bio` varchar(1000) DEFAULT NULL,
   `memberStatus` enum('Active','Inactive') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -250,9 +255,9 @@ CREATE TABLE `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`userID`, `username`, `password`, `address`, `birthdate`, `email`, `phoneNo`, `gender`, `profilePic`, `memberStatus`) VALUES
-(1, 'cookie', '123', NULL, NULL, 'cookie@mail.com', '012-3456789', NULL, NULL, 'Inactive'),
-(2, 'icecream', '456', NULL, NULL, 'icecream@mail.com', '012-9876543', NULL, NULL, 'Inactive');
+INSERT INTO `user` (`userID`, `username`, `password`, `address`, `birthdate`, `email`, `phoneNo`, `gender`, `profilePic`, `bio`, `memberStatus`) VALUES
+(1, 'cookie', '123', NULL, NULL, 'cookie@mail.com', '012-3456789', 'R', NULL, 'I love cookies, as you may have already guessed', 'Inactive'),
+(2, 'icecream', '456', NULL, NULL, 'icecream@mail.com', '012-9876543', 'R', NULL, 'I love ice cream!', 'Inactive');
 
 --
 -- Indexes for dumped tables

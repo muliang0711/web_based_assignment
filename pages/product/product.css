@@ -11,6 +11,27 @@ h1{
     font-family: "Lucida Console", "Courier New", monospace;
 }
 
+.sidebar{
+  position: fixed;
+  left: 0;
+  width: 250px;
+  height: 100%;
+  background-color: rgb(50, 50, 50);
+  font-size: 20px;
+}
+
+.sidebarFont p{
+  cursor: pointer;
+  color: white;
+}
+
+.sidebarFont{
+  text-align: center;
+  font-weight: 4px;
+  padding: 20px;
+  color: white;
+}
+
 /* .top-sideMenu{
 position: absolute;
 top: -20px;
@@ -221,7 +242,7 @@ p{
   width: 220px;
   position: relative;
   top:30px;
-  left:100px;
+  left:200px;
 }
 
 .input{
@@ -229,20 +250,20 @@ p{
   height: 50px;
   padding: 10px;
   transition: .2s linear;
-  border: 3px solid black;
+  border: 3px solid rgb(9, 69, 55);
   font-size: 14px;
   text-transform: uppercase;
 }
 
 .input:focus {
   outline: none;
-  box-shadow: -5px -5px 0px black;
+  box-shadow: -5px -5px 0px rgb(9, 69, 55);
 }
 
 .searchButton button{
   display: flex;
   position: absolute;
-  left: 370px;
+  left: 470px;
   top: 117px;
   height: 39px;
   width: 39px;
@@ -269,6 +290,7 @@ p{
   box-shadow: 0 0 10px black;
   font-family: "Lucida Console", "Courier New", monospace;
   background: radial-gradient(circle 280px at 0% 0%, #3edaef, #025959);
+  cursor: pointer;
 }
 
 /*
@@ -313,7 +335,7 @@ p{
 }
 
 */
-.info:not(:empty){
+/* .info:not(:empty){
   border: green 2px solid;
   color:rgb(1, 72, 9);
   background-color: rgb(197, 212, 197);
@@ -326,9 +348,9 @@ p{
   left: 30px;
   font-family: "Lucida Console", "Courier New", monospace;
   box-shadow: 0 0 10px rgba(7, 90, 1, 0.505);
-}
+} */
 
-.error:not(:empty){
+/* .error:not(:empty){
   border: rgb(128, 0, 0) 2px solid;
   color:rgb(72, 2, 1);
   background-color: rgb(215, 88, 56);
@@ -341,7 +363,7 @@ p{
   left: 30px;
   font-family: "Lucida Console", "Courier New", monospace;
   box-shadow: 0 0 10px rgb(70, 3, 3);
-}
+} */
 
 .attention{
   position: absolute;

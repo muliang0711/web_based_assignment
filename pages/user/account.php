@@ -66,15 +66,14 @@ include 'profile_dynamic_navbar.php';
 ?>
 
 <div class="main">
-    <section class="info-boxes">
+    <!-- <section class="info-boxes">
         <div role="alert" class="info-box success"><?= temp('info') ?></div>
         <div role="alert" class="info-box error"><?= temp('error') ?></div>
-    </section>
+    </section> -->
 
     <h1 class="heading"><?= $current_title ?></h1>
     <div class="section-container">
-        <section class="left-col">
-            <!-- <div role="alert" class="info-box warning">You have unsaved changes!</div> -->
+        <!-- <section class="left-col">
             <form method="post">
                 <div class="form-group">
                     <label>Username</label>
@@ -110,12 +109,11 @@ include 'profile_dynamic_navbar.php';
                 <label class="profile-pic-button">
                     <?= html_file('photo', 'image/*', 'hidden'); ?>
                     <img src="/assets/img/profile-default-icon-light.svg" alt="Profile picture">
-                    <!-- <img src="/assets/img/logo.jpg" alt="Profile picture"> -->
                     <div class="edit-label">Edit</div>
                 </l>
             </div>
             
-        </section>
+        </section> -->
     </div>
 </div>
 
