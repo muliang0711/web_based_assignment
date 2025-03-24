@@ -1,6 +1,6 @@
 <?php
-require_once "../../db_connection.php";
-require_once "../../controller/productController.php";
+require_once "../../../db_connection.php";
+require_once "../../../controller/productController.php";
 
 $productID = $_GET['productID'] ?? '';
 $sizeID = $_GET['sizeID'] ?? '';
@@ -13,7 +13,7 @@ if (!$product) {
   exit;
 }
 
-$stylesheetArray = ['../../css/editAnddetails.css'];
+$stylesheetArray = ['../../../css/editAnddetails.css'];
 link_stylesheet($stylesheetArray);
 ?>
 
@@ -94,7 +94,7 @@ link_stylesheet($stylesheetArray);
         <label>Current Product Images</label>
         <div class="preview-gallery ">
           <?php foreach ($product['product_images'] as $imgPath): ?>
-            <img src="../../File/<?php echo htmlspecialchars($imgPath); ?>" alt="product image">
+            <img src="../../../File/<?php echo htmlspecialchars($imgPath); ?>" alt="product image">
           <?php endforeach; ?>
         </div>
       </div>
@@ -112,7 +112,7 @@ link_stylesheet($stylesheetArray);
         <label>Current Player Images</label>
         <div class="preview-gallery">
           <?php foreach ($product['player_images'] as $imgPath): ?>
-            <img src="../../File/<?php echo htmlspecialchars($imgPath); ?>" alt="player image">
+            <img src="../../../File/<?php echo htmlspecialchars($imgPath); ?>" alt="player image">
           <?php endforeach; ?>
         </div>
       </div>
@@ -135,6 +135,10 @@ link_stylesheet($stylesheetArray);
 
   </form>
 </div>
+
+<?php
+include "../../../admin_foot.php"
+?>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
   $(document).ready(function(){

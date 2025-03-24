@@ -1,10 +1,10 @@
 <?php
-require_once "../../db_connection.php";
-require_once "../../controller/productController.php";
-require_once "../../_base.php";      
-require_once  "../admin/main.php";
+require_once "../../../db_connection.php";
+require_once "../../../controller/productController.php";
+require_once "../../../_base.php";      
+include "../main.php";
 // Include CSS
-$stylesheetArray = ['../../css/admin_product.css'];
+$stylesheetArray = ['../../../css/admin_product.css'];
 link_stylesheet($stylesheetArray);
 
 $productController = new ProductController($_db);
@@ -209,13 +209,16 @@ unset($_SESSION['Delete_ErrorMsg']);
 </div>
     
 <?php
+include "../../../admin_foot.php"
+?>
+<?php
 // TODO : 
 // 1. delete than just show a confirm message than delete 
 // 2. add than show user add_product page 
 // 3. 
 ?> 
     
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
   $(document).ready(function () {

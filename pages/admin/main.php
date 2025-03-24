@@ -1,9 +1,4 @@
-<?php
-// main.php
-include_once __DIR__ . "/../../_base.php";
-$stylesheetArray = ['../../css/main.css' , '../../css/sidebar.css' , '../../css/topbar.css'];
-link_stylesheet($stylesheetArray);
-?>
+
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
@@ -11,16 +6,14 @@ link_stylesheet($stylesheetArray);
   <title>Admin Panel </title>
   <!-- Font Awesome for icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/topbar.css">
+  <link rel="stylesheet" href="/css/sidebar.css">
 </head>
 <body>
 
   <!-- Include Topbar -->
-  <?php include __DIR__ .'/../../admin_topbar.php'; ?>
+  <?php include __DIR__ . "/../../admin_topbar.php"; ?>
 
   <!-- Include Sidebar -->
   <?php include __DIR__ . '/../../admin_sidebar.php'; ?>
-
-
-</body>
-</html>
