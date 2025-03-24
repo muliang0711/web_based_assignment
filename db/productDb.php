@@ -245,17 +245,7 @@ class productDb{
                 ];
             }
     
-            // Step 1: Check if the product-size combination exists
-            $checkStmt = $this->pdo->prepare("SELECT COUNT(*) FROM productsize WHERE productID = ? AND sizeID = ?");
-            $checkStmt->execute([$productID, $sizeID]);
-            $exists = $checkStmt->fetchColumn();
-    
-            if ($exists == 0) {
-                return [
-                    "success" => false,
-                    "message" => "This product-size combination does not exist."
-                ];
-            }
+
     
             // Step 2: Delete this product-size entry
             $deleteSizeStmt = $this->pdo->prepare("DELETE FROM productsize WHERE productID = ? AND sizeID = ?");
@@ -268,28 +258,13 @@ class productDb{
     
             // Step 4: If no more sizes left, delete the product record
             if ($remainingSizes == 0) {
+
+                
+                $this->deleteImage($productID);
+                
                 // Delete from product table
                 $deleteProductStmt = $this->pdo->prepare("DELETE FROM product WHERE productID = ?");
                 $deleteProductStmt->execute([$productID]);
-                // also unlink file :
-
-                $fetchImagesStmt = $this->pdo->prepare("SELECT image_path FROM product_images WHERE productID = ?");
-                $fetchImagesStmt->execute([$productID]);
-                $imagePaths = $fetchImagesStmt->fetchAll(PDO::FETCH_COLUMN); // gets array of paths
-            
-                // Delete image files from folder
-                foreach ($imagePaths as $path) {
-                    $fullPath = "../../File/" . $path;
-                    if (file_exists($fullPath)) {
-                        unlink($fullPath); // delete the file
-                    }
-                }
-
-                // also delete associated images
-                $deleteImagesStmt = $this->pdo->prepare("DELETE FROM product_images WHERE productID = ?");
-                $deleteImagesStmt->execute([$productID]);
-
-    
                 return [
                     "success" => true,
                     "message" => "Product '$productID' and all associated data deleted successfully (last size)."
@@ -599,9 +574,17 @@ class productDb{
             $images = $stmt->fetchAll(PDO::FETCH_ASSOC);
         
             // 2. Delete image files from the uploads folder
-            $uploadDir = realpath( __DIR__ . '/../File');
+            $uploadDir = __DIR__ . '/../File';
+
+
             foreach ($images as $image) {
                 $filePath = $uploadDir . '/'. $image['image_path'];
+                if (!file_exists($filePath)) {
+                    error_log("NOT FOUND: $filePath");
+                } else {
+                    error_log("DELETING: $filePath");
+                }
+                
                 if (file_exists($filePath)) {
                     unlink($filePath);  
                 }

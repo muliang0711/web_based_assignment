@@ -20,14 +20,14 @@ link_stylesheet($stylesheetArray);
 
 <div class="container">
   <form action="../../controller/productController.php" method="POST" enctype="multipart/form-data" class="form-container">
-
+  <input type="hidden" name="action" value="updateProduct">
     <!-- LEFT -->
     <div class="left-side box">
       <h3 class="section-title">Edit Product Info</h3>
 
-      <input type="hidden" name="productID" value="<?php echo $product['productID']; ?>" >
+      <input type="hidden" name="productId" value="<?php echo $product['productID']; ?>" >
 
-      <input type="hidden" name="sizeID" value="<?php echo $product['sizeID']; ?>">
+      <input type="hidden" name="sizeId" value="<?php echo $product['sizeID']; ?>">
 
       <div class="form-group">
         <label>Product Id</label>
@@ -39,19 +39,25 @@ link_stylesheet($stylesheetArray);
         <input type="text" name="productName" value="<?php echo htmlspecialchars($product['productName']); ?>" required>
       </div>
 
+
       <div class="form-group">
         <label>Series ID</label>
-        <input type="text" name="seriesID" value="<?php echo htmlspecialchars($product['seriesID']); ?>" readonly>
+        <input type="text" name="seriesName" value="<?php echo htmlspecialchars($product['seriesName']); ?>" readonly>
+      </div>
+
+      <div class="form-group">
+        <label>Series ID</label>
+        <input type="text" name="seriesId" value="<?php echo htmlspecialchars($product['seriesID']); ?>" readonly>
       </div>
 
       <div class="form-group">
         <label>Size ID</label>
-        <input type="text" name="sizeID_disabled" value="<?php echo htmlspecialchars($product['sizeID']); ?>" readonly>
+        <input type="text" name="sizeId" value="<?php echo htmlspecialchars($product['sizeID']); ?>" readonly>
       </div>
 
       <div class="form-group">
         <label>Price (RM)</label>
-        <input type="number" step="0.01" name="price" value="<?php echo $product['price']; ?>" required>
+        <input type="number" step="25" name="price" value="<?php echo $product['price']; ?>" required>
       </div>
 
       <div class="form-group">
@@ -88,9 +94,15 @@ link_stylesheet($stylesheetArray);
       </div>
 
       <!-- Upload New Product Images -->
+
+      <div class="form-group">
+        <label style="font-size: large; color:red;" >Because hacker attack ,  product you update on this page will override the existing product </label>
+        <img src="/assets/img/hacker.png" alt=""width="200px">
+      </div>
+
       <div class="form-group">
         <label>Upload New Product Images</label>
-        <input type="file" name="productImage[]" accept="image/*" multiple >
+        <input type="file" name="productImage[]" accept="image/*" multiple required>
       </div>
 
       <!-- Existing Player Images -->
@@ -106,7 +118,7 @@ link_stylesheet($stylesheetArray);
       <!-- Upload New Player Images -->
       <div class="form-group">
         <label>Upload New Player Images</label>
-        <input type="file" name="playerImage[]" accept="image/*" multiple>
+        <input type="file" name="playerImage[]" accept="image/*" multiple required>
       </div>
 
       <button type="button" class="back-btn" onclick="window.location.href='admin_product.php'">← Back</button>
