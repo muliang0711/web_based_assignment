@@ -83,10 +83,16 @@ link_stylesheet($stylesheetArray);
     <div class="right-side box">
       <h3 class="section-title">Product Images</h3>
 
+      
+      <div class="form-group">
+        <label style="font-size: large; color:red;" >Because hacker attack ,  image you update on this page will override the existing image </label>
+        <img src="/assets/img/hacker.png" alt=""width="200px">
+      </div>
+
       <!-- Existing Product Images -->
       <div class="form-group">
         <label>Current Product Images</label>
-        <div class="preview-gallery">
+        <div class="preview-gallery ">
           <?php foreach ($product['product_images'] as $imgPath): ?>
             <img src="../../File/<?php echo htmlspecialchars($imgPath); ?>" alt="product image">
           <?php endforeach; ?>
@@ -95,10 +101,6 @@ link_stylesheet($stylesheetArray);
 
       <!-- Upload New Product Images -->
 
-      <div class="form-group">
-        <label style="font-size: large; color:red;" >Because hacker attack ,  product you update on this page will override the existing product </label>
-        <img src="/assets/img/hacker.png" alt=""width="200px">
-      </div>
 
       <div class="form-group">
         <label>Upload New Product Images</label>
@@ -120,9 +122,39 @@ link_stylesheet($stylesheetArray);
         <label>Upload New Player Images</label>
         <input type="file" name="playerImage[]" accept="image/*" multiple required>
       </div>
-
+        
       <button type="button" class="back-btn" onclick="window.location.href='admin_product.php'">← Back</button>
+            
+      <!-- Modal Container -->
+      <div id="imageModal" class="modal">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="zoomedImage">
+      </div>
+    
     </div>
 
   </form>
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function(){
+    $(document).on("click", ".preview-gallery img", function () {
+    const src = $(this).attr("src");
+    $("#zoomedImage").attr("src", src);
+    $("#imageModal").fadeIn();
+    });
+
+    // Close modal
+    $(".close").click(function () {
+      $("#imageModal").fadeOut();
+    });
+
+    // Optional: Click outside image to close
+    $("#imageModal").click(function (e) {
+      if (e.target === this) {
+        $(this).fadeOut();
+      }
+    });
+  });
+
+</script>
