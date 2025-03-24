@@ -114,8 +114,8 @@ include '../../_head.php';
   </div>
 </div>
 <div class="introduction">
-<p>Introduction</p>
 <hr>
+<p>Racket Introduction ↓</p>
   <?php echo $intro ?>
 </div>
 

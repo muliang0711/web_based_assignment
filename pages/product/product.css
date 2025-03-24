@@ -89,7 +89,7 @@ p{
 
 .item p{
   text-align: center;
-  margin-left: 55%;
+  margin-left: 50%;
   font-family: Arial, sans-serif;
 }
 
@@ -114,7 +114,7 @@ p{
 .product img{
   width: 40%;
   height: 20%;
-  background-color: #e4e9f1;
+  background-color: #ebf0fb;
   display:inline-block;
   gap: 50px;
   margin-top: 50px;
@@ -174,17 +174,18 @@ p{
 }
 
 .introduction{
+  border: 1px;
   font-size: 20px;
   font-weight: 2px;
   position:absolute;
   text-align: left;
   color: #222222;
   right: 5%;
-  top: 85%;
+  top: 90%;
   font-family: Arial, sans-serif;
   gap:50px;
-  padding: 40px;
   width: 900px;
+  padding: 20px;
 }
 
 .playerPhoto{
@@ -195,7 +196,7 @@ p{
   color: black;
   width: 800px;
   left:100px;
-  background-color: wheat;
+  background-color: #ecf1f4;
 }
 
 .HeadingIntro{
@@ -261,9 +262,8 @@ p{
   width: 300px;
   height: 50px;
   border-radius: 10px;
-  box-shadow: 0 0 10px black;
   font-family: "Lucida Console", "Courier New", monospace;
-  background: radial-gradient(circle 280px at 0% 0%, #3edaef, #025959);
+  background: radial-gradient(circle 280px at 0% 0%, #7300ff, #0048ff);
   cursor: pointer;
 }
 
@@ -374,6 +374,11 @@ p{
 }
 
 .radioOne{
+  right:39%;
+  border: none;
+}
+
+.radioOne:focus{
   right:39%;
   border: none;
 }
