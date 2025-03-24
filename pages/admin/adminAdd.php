@@ -1,10 +1,13 @@
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <?php
-require __DIR__ . "/../admin/main.php";
-include '../../admin_head.php';
-require '../../_base.php';
+include __DIR__ . "/main.php";
 require 'selection.php';
+
 $title='Add a new admin';
-$stylesheetArray = ['/css/admin_management.css'];   // 注意：这边只放特定于此页面的 .css file(s)。所有 admin 页面都会用到的 .css files 应放在 /css/admin.css
+$stylesheetArray = ['/css/admin_management.css' ,];   // 注意：这边只放特定于此页面的 .css file(s)。所有 admin 页面都会用到的 .css files 应放在 /css/admin.css
+
+
 $scriptArray = ['/js/app.js'];       // 注意：这边只放特定于此页面的 .js file(s)。所有 admin 页面都会用到的 .js files 应放在 /js/admin.js
 
 // Functions to generate random id and password
@@ -110,9 +113,22 @@ if(is_post()){
     }
 }
 
-?>
 
-<div class="main-content">
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    owefiugwqofuiwqgwuqggggqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgg
+</body>
+</html>
+    <div class="main-content" style="  margin-left: var(--sidebar-width);
+  margin-top: 50px;
+  padding: 1rem;">
 
     <form method="post" class="insert_form add_container">
     <label for="position">Position</label>
@@ -141,6 +157,7 @@ if(is_post()){
     </section>
     </form>
 </div>
+
 <!-- <div class="back">
 <a href="admin_Mnagement.php">Back</a>
 

@@ -1,5 +1,5 @@
 <?php
-
+require_once __DIR__  . "/_base.php";
 // echo $_SERVER['REQUEST_URI']; // this line was for debugging.
 if (is_post()) {
     // Handle logout request
