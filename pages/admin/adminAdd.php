@@ -112,7 +112,7 @@ if(is_post()){
 
 ?>
 
-<div class="container">
+<div class="main-content">
 
     <form method="post" class="insert_form add_container">
     <label for="position">Position</label>
