@@ -17,9 +17,7 @@
   </style>
 </head>
 <body>
-<div class="main-content">
-    
-</div>
+<div class="main-content xx"> 
   <div class="contanier"> 
 
     <div class="upPart">
@@ -69,10 +67,25 @@
     <div class="downpart">
 
       <!-- Preview Area -->
-      <div class="preview">
-        <h3>📄 Report Preview</h3>
-        <p>Your report will appear here after generation...</p>
-      </div>
+       <div class="preview-container">
+
+        <div class="preview">
+          <h3>📄 Table Report Preview</h3>
+          <p>Your report will appear here after generation...</p>
+        </div>
+
+        <div class="preview">
+          <h3>📄 pdf Report Preview</h3>
+          <p>Your report will appear here after generation...</p>
+        </div>
+
+        <div class="preview">
+          <h3>📄 chart Report Preview</h3>
+          <p>Your report will appear here after generation...</p>
+        </div>
+
+       </div>
+      
 
       <!-- Export / Download Buttons -->
       <div class="decision-bar" style="margin-top: 20px;">
@@ -84,6 +97,9 @@
     </div>
 
   </div> 
+</div>
+    
+
 
 </body>
 </html>

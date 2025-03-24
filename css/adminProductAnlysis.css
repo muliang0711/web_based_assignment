@@ -3,10 +3,16 @@ body {
     font-family: Arial, sans-serif;
     background: #f7f8fa;
   }
-
+  .main-content .xx{
+    display: flex;
+    flex-direction: column;
+    max-width: max-content;
+    justify-content: center;
+    align-items: center;
+  }
   .contanier {
     padding: 20px;
-    max-width: 1200px;
+    max-width: 1400px;
     margin: auto;
   }
 
@@ -16,6 +22,7 @@ body {
     box-shadow: 0 0 10px rgba(0,0,0,0.05);
     padding: 20px;
     margin-bottom: 20px;
+    width: 100%;
   }
 
   .top-bar, .filter-bar, .decision-bar {
@@ -28,6 +35,9 @@ body {
     color: #333;
   }
 
+  .filter-bar {
+    margin-left: 650px;
+  }
   .filter-bar label {
     margin-top: 10px;
     margin-right: 10px;
@@ -36,7 +46,7 @@ body {
 
   .filter-bar select, .filter-bar input {
     margin-right: 15px;
-    padding: 5px 10px;
+    padding: 5px 1px;
   }
   .filter-form{
     display: flex;
@@ -72,5 +82,13 @@ body {
     padding: 20px;
     overflow: auto;
     border-radius: 8px;
+    margin-left: 5px;
+    flex: 1;
+    
+  }
+  .preview-container{
+    display: flex;
+
+    
   }
 
