@@ -1,7 +1,3 @@
-:root {
-  --sidebar-width: 250px;
-}
-
 body{
   background-color: #eef5ff;
 }
@@ -15,15 +11,10 @@ h1{
     font-family: "Lucida Console", "Courier New", monospace;
 }
 
-main {
-  padding: 0; /* override app.css */
-}
-
 .sidebar{
   position: fixed;
   left: 0;
-  width: var(--sidebar-width);
-  z-index: -1;
+  width: 250px;
   height: 100%;
   background-color: rgb(50, 50, 50);
   font-size: 20px;
@@ -44,10 +35,6 @@ main {
   display: inline-block;
   text-align: left;
   width: 100%; 
-}
-
-.main-container {
-  margin-left: var(--sidebar-width);
 }
 
 a{
@@ -91,20 +78,18 @@ p{
 }
 
 .item img {
-  /* margin-top: -5px; */
-  margin-top: 5px;
-  margin-bottom: 5px;
-  margin-left: 100px;
-  margin-right: 100px;
+  margin-top: -5px;
+  margin-left: 200px;
   flex-grow: 1;
   width: 200px;
-  /* height: 90%; */
+  height: 90%;
   display:inline-block;
   gap: 100px;
 }
 
 .item p{
   text-align: center;
+  margin-left: 55%;
   font-family: Arial, sans-serif;
 }
 
@@ -118,11 +103,11 @@ p{
 }
 
 .image-box img {
-  padding: 40px;
+  padding: 20px;
   width: 100%; 
   height: 100%; 
   object-fit: cover; 
-  /* margin-left: 170px; */
+  margin-left: 170px;
   flex-grow: 1;
 }
 
@@ -219,7 +204,7 @@ p{
   width: 220px;
   position: relative;
   top:10px;
-  left:100px;
+  left:200px;
 }
 
 .input{
