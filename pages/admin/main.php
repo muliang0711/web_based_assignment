@@ -16,7 +16,7 @@ link_stylesheet($stylesheetArray);
 <body>
 
   <!-- Include Topbar -->
-  <?php include '../../admin_head.php'; ?>
+  <?php include '../../admin_topbar.php'; ?>
 
   <!-- Include Sidebar -->
   <?php include '../../admin_sidebar.php'; ?>
