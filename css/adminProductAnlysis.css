@@ -1,0 +1,76 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f7f8fa;
+  }
+
+  .contanier {
+    padding: 20px;
+    max-width: 1200px;
+    margin: auto;
+  }
+
+  .upPart, .downpart {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+
+  .top-bar, .filter-bar, .decision-bar {
+    margin-bottom: 20px;
+  }
+
+  .top-bar h2 {
+    margin: 0;
+    font-size: 24px;
+    color: #333;
+  }
+
+  .filter-bar label {
+    margin-top: 10px;
+    margin-right: 10px;
+    font-weight: bold;
+  }
+
+  .filter-bar select, .filter-bar input {
+    margin-right: 15px;
+    padding: 5px 10px;
+  }
+  .filter-form{
+    display: flex;
+  }
+  .sub-button{
+    padding: 7px;
+    background: rgb(0, 110, 255);
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+
+  }
+
+  .decision-bar button {
+    padding: 10px 15px;
+    margin-right: 10px;
+    background: #007bff;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .decision-bar button:hover {
+    background: #0056b3;
+  }
+
+  .preview {
+    border: 1px solid #ccc;
+    height: 300px;
+    background: #fff;
+    padding: 20px;
+    overflow: auto;
+    border-radius: 8px;
+  }
+

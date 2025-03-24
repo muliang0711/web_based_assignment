@@ -7,7 +7,7 @@ class ProductAnlysis{
     private $pdo ;
 
     public function __construct($_db){
-        $this->pdo = $_db ;
+        $this->pdo = 
     }
 
     public function handleRequest(){
@@ -18,28 +18,14 @@ class ProductAnlysis{
         $action = $_POST['action'] ?? null;
         switch ($action) {
             case 'totalProductionSales':
-                $this->totalProductionSales(); // done 
+                $this->handleProductSellTrack(); // done 
                 break;
-            case 'totalOrderMade':
-                $this->totalOrderMade();
-                break ; 
-            default:
+            default :
+                return "error";
             ////
             }
     }
-    private function handleTotalSellTrack() {
-        $filterData = [
-            'startDate' => $_POST['startDate'] ?? null,
-            'endDate' => $_POST['endDate'] ?? null,
-            'status' => $_POST['status'] ?? null,
-        ];
-        
-        $response = $this->productDb->totalsellTrack($filterData);
-        $_SESSION['total_sales_results'] = $response['success'] ? $response['data'] : [];
-        
-        header('Location : ../pages/admin/admin_test.php');
-        exit();
-    }
+
 
     private function handleProductSellTrack() {
         $filterData = [

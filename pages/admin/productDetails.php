@@ -75,13 +75,12 @@ if (!$product) {
         <textarea name="playerInfo" rows="3" readonly><?php echo htmlspecialchars($product['playerInfo']); ?></textarea>
       </div>
 
-      <div class="form-group">
-        <button type="button" class="back-btn" onclick="window.location.href='admin_product.php'">← Back</button>
-      </div>
+      
     </div>
 
     <!-- Right Side: Images -->
     <div class="right-side box">
+
       <h3 class="section-title">Images</h3>
 
       <!-- Product Images -->
@@ -103,6 +102,11 @@ if (!$product) {
           <?php endforeach; ?>
         </div>
       </div>
+
+      <div class="form-group">
+        <button type="button" class="back-btn" onclick="window.location.href='admin_product.php'">← Back</button>
+      </div>
+      
     </div>
   </div>
 </div>

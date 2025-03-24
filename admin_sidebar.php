@@ -32,7 +32,7 @@ link_stylesheet($stylesheetArray);
       <a href="../admin/admin_order.php"><i class="fas fa-shopping-cart"></i> Orders</a>
     </li>
     <li>
-      <a href="../admin/admin_test.php"><i class="fas fa-chart-line"></i> Reports</a>
+      <a href="../admin/adminProductAnlysis.php"><i class="fas fa-chart-line"></i> Reports</a>
     </li>
     <li>
       <a href="#"><i class="fas fa-cog"></i> Settings</a>
