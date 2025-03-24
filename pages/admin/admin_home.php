@@ -1,14 +1,13 @@
 <?php
 require '../../_base.php';
-include __DIR__ . "/main.php";
-require __DIR__ . "/../admin/main.php";
+require_once  "../admin/main.php";
 $title='Home Page';
 $stylesheetArray = ['/css/admin_home.css'];   // 注意：这边只放特定于此页面的 .css file(s)。所有 admin 页面都会用到的 .css files 应放在 /css/admin.css
 // $scriptArray = [];       // 注意：这边只放特定于此页面的 .js file(s)。所有 admin 页面都会用到的 .js files 应放在 /js/admin.js
 
 
 ?>
-
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <?php
 try {
     $_db = new PDO('mysql:dbname=web_based_assignment;host=localhost', 'root', '', [

@@ -1,8 +1,7 @@
 
 
 <?php
-require_once  "../admin/main.php";
-include __DIR__ . "/main.php";
+  require_once  "../admin/main.php";
 require 'selection.php';
 
 $title='Add a new admin';
