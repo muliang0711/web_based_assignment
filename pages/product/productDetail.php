@@ -87,8 +87,15 @@ include '../../_head.php';
 <div class="detail">
   <div class="product"><img src="<?php echo $imgUrl; ?>" alt="Image"></div>
   <div class="racketName"><?php echo $racketName ?></div>
-  <div class="price"><?php echo "Price:RM " ?><?php echo $price ?><?php echo ".00" ?><br>
-    <?php echo "Grip Size: 3UG5/4UG5" ?> <br> <?php echo "Made in Japan" ?> <br> <?php echo "Item code" ?> <?php echo $productID ?>
+  <div class="price"><?php echo "Price:RM " ?>
+  <?php echo $price ?><?php echo ".00" ?>
+  <br>
+  <?php echo "Grip Size: 3UG5/4UG5" ?> 
+  <br> 
+  <?php echo "Made in Japan" ?> 
+  <br> 
+  <?php echo "Item code" ?> 
+  <?php echo $productID ?>
   </div>
 </div>
 <div class="introduction">

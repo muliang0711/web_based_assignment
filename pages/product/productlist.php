@@ -36,7 +36,7 @@ include '../../_head.php';
             <hr>
             <?php foreach ($seriesArray as $s): ?>
                 <a onclick="onclick()" href ="../product/searchResult.php?search=<?php echo $s->seriesName ?>" >
-                <li><p><?php echo "$s->seriesName" ?></p></li>
+                <p><?php echo "$s->seriesName" ?></p>
                 </a>
             <?php endforeach ?>
             <hr>
@@ -89,7 +89,7 @@ include '../../_head.php';
 
 <!-- Nanoflare 1000z image -->
 <div class="image-box">
-    <img src="https://www.yonex.com/media/scandiweb/slider/n/a/nanoflare1000pc.png" alt="Nanoflare 700 RISING">
+    <img src="aerosharp ad2.jpg" alt="Nanoflare 700 RISING">
 </div>
 
 <hr>

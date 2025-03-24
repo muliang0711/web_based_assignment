@@ -18,7 +18,7 @@ $seriesArray = $seriesStatement->fetchAll();
             <hr>
             <?php foreach ($seriesArray as $s): ?>
                 <a onclick="onclick()" href ="../product/searchResult.php?search=<?php echo $s->seriesName ?>" >
-                <li><p><?php echo "$s->seriesName" ?></p></li>
+                <p><?php echo "$s->seriesName" ?></p>
                 </a>
             <?php endforeach ?>
             <hr>
@@ -54,9 +54,6 @@ $seriesArray = $seriesStatement->fetchAll();
     $statement->execute(["%$search%"]);
     $productObjectArray = $statement->fetchAll();
     ?>
-    <div class="userInput">
-        <p>Input result " <?php echo $search ?> "</p>
-    </div>
     <?php if ($productObjectArray): ?>
         <div class="list" id="productList">
             <?php
