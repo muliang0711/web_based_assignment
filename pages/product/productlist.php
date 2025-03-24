@@ -40,10 +40,13 @@ include '../../_head.php';
                 </a>
             <?php endforeach ?>
             <hr>
-            <h>Price Range</h>
+            <h>Price Sorting</h>
             <hr>
-            <form method="get" action="../product/searchResult.php?price=?">
-            <input type="text" id="price" name="price" maxlength="30" class="input" placeholder="P R I C E">
+            <form method="get" action="../product/searchResult.php?price=LowToHigh">
+            <p>Low  ->  High</p>
+            </form>
+            <form method="get" action="../product/searchResult.php?price=HighToLow">
+            <p>High ->  Low</p>
             </form>
             <hr>
         </ul>

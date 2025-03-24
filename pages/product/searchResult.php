@@ -22,10 +22,13 @@ $seriesArray = $seriesStatement->fetchAll();
                 </a>
             <?php endforeach ?>
             <hr>
-            <h>Price Range</h>
+            <h>Price Sorting</h>
             <hr>
-            <form method="get" action="../product/searchResult.php?price=?">
-            <input type="text" id="price" name="price" maxlength="30" class="input" placeholder="P R I C E">
+            <form method="get" action="../product/searchResult.php?price=LowToHigh">
+            <p>Low  ->  High</p>
+            </form>
+            <form method="get" action="../product/searchResult.php?price=HighToLow">
+            <p>High ->  Low</p>
             </form>
             <hr>
         </ul>
@@ -37,7 +40,7 @@ $seriesArray = $seriesStatement->fetchAll();
             <input type="text" id="search" name="search" maxlength="30" class="input" placeholder="<?php echo $search ?>">
         </div>
         <div class="searchButton">
-        <button><img src="illustration-magnifying-glass-icon.png"></button>
+            <button><img src="illustration-magnifying-glass-icon.png"></button>
         </div>
     </form>
     <?php
@@ -50,8 +53,6 @@ $seriesArray = $seriesStatement->fetchAll();
     $statement = $_db->prepare("SELECT * FROM product WHERE productName LIKE ?");
     $statement->execute(["%$search%"]);
     $productObjectArray = $statement->fetchAll();
-
-    
     ?>
     <div class="userInput">
         <p>Input result " <?php echo $search ?> "</p>
@@ -71,6 +72,22 @@ $seriesArray = $seriesStatement->fetchAll();
     <?php else: ?>
         <div class="noResult">
             <p>No result founded!</p>
+            <hr>
+            <div class="list" id="productList">
+                <?php
+                $statement = $_db->prepare("SELECT * FROM product");
+                $statement->execute([]);
+                $productObjectArray = $statement->fetchAll();
+                foreach ($productObjectArray as $productObject): ?>
+                    <div class="item">
+                        <a onclick="onclick()" href="../product/productDetail.php?racket=<?php echo $productObject->productID ?>">
+
+                            <img src="<?php echo $productObject->productImg ?>">
+                            <p><?php echo $productObject->productName ?></p>
+                        </a>
+                    </div>
+                <?php endforeach ?>
+            </div>
         </div>
     <?php endif ?>
 </body>

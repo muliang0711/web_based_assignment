@@ -4,14 +4,11 @@ $(() => {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
 
-    $(".dropdown").on('click', function(e) {
-        let button = $(e.target).closest(".dropdown")[0];
-        let orderid = button.dataset.orderId;
-        location = "orderDetails.php?id=" + orderid;
 
+    $("[data-order-id]").on("click", function(e){
+        let oid = this.dataset.orderId;
+        location = "orderDetails.php?id=" + oid;
     })
-
-
 
     $("#pricemin").on("input", function(e) {
         $("#labelpricemin").text("Price (min) RM " + this.value);

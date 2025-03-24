@@ -118,19 +118,20 @@ p{
     display: flex; 
     justify-content: space-around; 
     flex-wrap: wrap;
-    gap: 300px;
 }
 
 .item img {
+  margin-left: 200px;
+  flex-grow: 1;
   width: 200px;
   height: 90%;
-  border-radius: 50%;
   display:inline-block;
-  gap: 50px;
+  gap: 100px;
 }
 
 .item p{
   text-align: center;
+  margin-left: 55%;
 }
 
 .image-box {
@@ -147,6 +148,8 @@ p{
   width: 100%; 
   height: auto; 
   object-fit: cover; 
+  margin-left: 260px;
+  flex-grow: 1;
 }
 
 .product img{
