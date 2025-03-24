@@ -88,7 +88,8 @@ include '../../_head.php';
   <div class="product"><img src="<?php echo $imgUrl; ?>" alt="Image"></div>
   <div class="racketName"><?php echo $racketName ?></div>
   <div class="price"><?php echo "Price:RM " ?>
-  <?php echo $price ?><?php echo ".00" ?>
+  <?php echo $price ?><?php echo ".00" ?></div>
+  <div class="information">
   <br>
   <?php echo "Grip Size: 3UG5/4UG5" ?> 
   <br> 
