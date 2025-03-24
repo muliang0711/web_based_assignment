@@ -156,7 +156,7 @@ header nav > a:hover::after {
     cursor: pointer;
 }
 
-table{
+.cart-popup table{
     margin: 0 auto;
     background: radial-gradient(circle 280px at 0% 0%, #444444, #0c0d0d);
     font-size: 20px;
@@ -167,7 +167,7 @@ table{
     box-shadow: 0 0 10px black;
 }
 
-th,td{
+.cart-popup th, .cart-popup td{
     padding: 20px;
     color:#7af4d7;
     font-family: "Lucida Console", "Courier New", monospace;

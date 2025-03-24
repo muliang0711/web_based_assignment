@@ -121,7 +121,6 @@ p{
   margin-left: -100px;
 }
 
-
 .racketName{
   font-size: 50px;
   font-weight: bold;
@@ -141,18 +140,38 @@ p{
 .price{
   display: flex;
   font-size: 30px;
-  font-weight: 2px;
+  font-weight: bolder;
   width: 60%;
   position:absolute;
   text-align: left;
-  color: #222222;
+  color: #992a2a;
   right: 5%;
   top: 25%;
-  font-family: "Lucida Console", "Courier New", monospace;
+  font-family: Arial, sans-serif;
   padding: 40px;
   background-color: #ecf1f4;
+  letter-spacing: 1px;
 }
 
+.information table{
+  position: absolute;
+  top: 40%;
+  right: 48%;
+  text-align: left;
+  background-color: #eef5ff;
+  color: black;
+  font-size: 20px;
+}
+
+.information th, .information td{
+  padding-top: 10px;
+  padding: 10px;
+}
+
+.introduction p{
+  font-weight: bold;
+  text-align: center;
+}
 
 .introduction{
   font-size: 20px;
@@ -160,15 +179,12 @@ p{
   position:absolute;
   text-align: left;
   color: #222222;
-  right: 170px;
-  top: 600px;
-  font-family: "Lucida Console", "Courier New", monospace;
+  right: 5%;
+  top: 85%;
+  font-family: Arial, sans-serif;
   gap:50px;
   padding: 40px;
-  width: 700px;
-  border: solid Black 2px;
-  border-radius: 10px;
-  background-color: #cfd8dc;
+  width: 900px;
 }
 
 .playerPhoto{
@@ -237,8 +253,8 @@ p{
 .AddCart button{
   font-size: 30px;
   position: absolute;
-  right:370px;
-  top:500px;
+  right:25%;
+  top:75%;
   background-color: gray;
   color: white;
   border: none;
@@ -339,26 +355,32 @@ p{
   box-shadow: 0 0 10px rgb(70, 3, 3);
 }
 
-.radioOne{
+.radioOne, .radioTwo{
+  display: flex;
   position: absolute;
-  top: 35%;
-  right:55%;
-  width: 40px;
+  top: 70%;
   font-size: 20px;
   text-align: center; 
   width: 16px;
-  height: 16px;
+  height: 20px;
+  padding: 0px 20px;
+  align-items: center;
+  accent-color: rgb(7, 249, 209);
+  justify-content: center;
+  appearance: none;
+  border: 2px solid black;
+  border-radius: 3px;
+  gap: 10px;
+}
+
+.radioOne{
+  right:39%;
+  border: none;
 }
 
 .radioTwo{
-  position: absolute;
-  top: 45%;
-  right:55%;
-  width: 40px;
-  font-size: 20px;
-  text-align: center; 
-  width: 16px;
-  height: 16px;
+  right:29%;
+  border: none;
 }
 
 .noResult p{
