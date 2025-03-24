@@ -1,11 +1,11 @@
 <?php
+require __DIR__ . "/../admin/main.php";
+include '../../admin_head.php';
 require '../../_base.php';
 require 'selection.php';
 $title='Add a new admin';
 $stylesheetArray = ['/css/admin_management.css'];   // 注意：这边只放特定于此页面的 .css file(s)。所有 admin 页面都会用到的 .css files 应放在 /css/admin.css
 $scriptArray = ['/js/app.js'];       // 注意：这边只放特定于此页面的 .js file(s)。所有 admin 页面都会用到的 .js files 应放在 /js/admin.js
-
-include '../../admin_head.php';
 
 // Functions to generate random id and password
 function random_password() {
@@ -112,7 +112,9 @@ if(is_post()){
 
 ?>
 
-<form method="post" class="insert_form add_container">
+<div class="container">
+
+    <form method="post" class="insert_form add_container">
     <label for="position">Position</label>
     <?= input_text('position', 'maxlength="20"') ?>
     <?=error('position') ?>
@@ -137,8 +139,8 @@ if(is_post()){
     <section>
 
     </section>
-</form>
-
+    </form>
+</div>
 <!-- <div class="back">
 <a href="admin_Mnagement.php">Back</a>
 

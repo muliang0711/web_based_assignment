@@ -1,4 +1,3 @@
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <?php
 require '../../_base.php';
 require __DIR__ . "/../admin/main.php";
