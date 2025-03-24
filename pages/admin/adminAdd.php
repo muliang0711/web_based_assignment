@@ -1,6 +1,7 @@
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 
 <?php
+require_once  "../admin/main.php";
 include __DIR__ . "/main.php";
 require 'selection.php';
 
@@ -115,17 +116,7 @@ if(is_post()){
 
 
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    owefiugwqofuiwqgwuqggggqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgqgg
-</body>
-</html>
+
     <div class="main-content" style="  margin-left: var(--sidebar-width);
   margin-top: 50px;
   padding: 1rem;">
