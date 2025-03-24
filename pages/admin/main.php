@@ -3,7 +3,8 @@
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
-  <title>Admin Panel </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><?= $title ?? 'Untitled' ?></title>
   <!-- Font Awesome for icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="/css/main.css">
