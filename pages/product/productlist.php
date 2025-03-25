@@ -27,6 +27,14 @@ $productObjectArray = $statement->fetchAll();
 $seriesStatement = $_db->prepare("SELECT * FROM series");
 $seriesStatement->execute([]);
 $seriesArray = $seriesStatement->fetchAll();
+if (is_logged_in("user")) {
+  global $_db;
+  global $_user;
+  $_user = $_db->query("SELECT * FROM user WHERE userID = {$_SESSION['userID']}")->fetch();
+  $userID = $_user->userID;
+} else {
+  $userID = null;
+}
 include '../../_head.php';
 ?>
 <div class="sidebar">
@@ -140,6 +148,9 @@ include '../../_head.php';
                     <div class="btn"><button class="btn">Add to Cart</button></div>
                     <div class="btn"><button class="btn">Buy</button></div>
                     <div class="btn"><button class="btn" onclick="window.location.href='../product/productDetail.php?racket=<?php echo $productObject->productID ?>'">View Details</button></div>
+                   <!-- <?php if(!$user){
+                    prompt_login("Please log in to add to cart.");}
+                    ?> -->
                   </div>
                 </div>
               </div>
