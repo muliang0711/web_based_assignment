@@ -3,7 +3,7 @@ require '../../_base.php';
 
 $title = 'View Customer';
 $stylesheetArray = ['../order/order.css', '/css/admin_customer.css'];
-$scriptArray = ['/js/app.js', '../order/order.js'];
+$scriptArray = ['/js/app.js', '../order/order.js','/pages/admin/admin.js'];
 
 require_once  "../admin/main.php";
 ?>
