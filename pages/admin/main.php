@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
@@ -10,8 +9,16 @@
   <link rel="stylesheet" href="/css/main.css">
   <link rel="stylesheet" href="/css/topbar.css">
   <link rel="stylesheet" href="/css/sidebar.css">
+  <link rel="stylesheet" href="/css/admin.css">
+  <?php link_stylesheet($stylesheetArray ?? ''); ?>
+  
 </head>
 <body>
+      <!-- Flash message -->
+      <div id="info">
+        <div id="progress-bar"></div>
+        <span id="info-text"><?= temp('info') ?></span>
+    </div>
 
   <!-- Include Topbar -->
   <?php include __DIR__ . "/../../admin_topbar.php"; ?>

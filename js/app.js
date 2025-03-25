@@ -30,8 +30,13 @@ $(() => {
 
     // Initiate GET request
     $('[data-get]').on('click', e => {
+        // sometimes the element that triggers this event handler might not be the <button> but its child. 
+        // this ensures that we get the [data-confirm] text from the <button>, even if we clicked on one of its children.
+        const button = e.target.closest('button'); 
+        
         e.preventDefault();
-        const url = e.target.dataset.get;
+        
+        const url = button.dataset.get;
         location = url || location;
     });
 
