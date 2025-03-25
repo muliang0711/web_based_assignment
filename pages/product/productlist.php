@@ -110,7 +110,9 @@ include '../../_head.php';
     <div class="list" id="productList">
         <?php
         foreach ($productObjectArray as $productObject): ?>
-         <div class="container">
+        <!-- start -->
+        <div class="container">
+        <!-- top side  -->
             <div class="product-card">
               <div class="top-side">
                 <div class="true-card">
@@ -121,17 +123,17 @@ include '../../_head.php';
                   </div>
                 </div>
               </div>
-        
+        <!-- middle side  -->
               <div class="middle-side">
                 <div class="true-card">
                   <div class="information">
                     <div class="product-name dsc"><h2><?php echo $productObject->productName ?></h2></div>
-                    <div class="product-series-name dsc"><span>ThunderStrik</span></div>
+                    <div class="product-series-name dsc"><span>pending........</span></div>
                     <div class="size-id dsc"><span>3UG5 / 4UG5</span></div>
                   </div>
                 </div>
               </div>
-        
+        <!-- bottom side  -->
               <div class="bottom-side">
                 <div class="true-card">
                   <div class="function">
@@ -142,7 +144,9 @@ include '../../_head.php';
                 </div>
               </div>
             </div>
-          </div>
+        <!-- the end  -->
+        </div>
+
         <?php endforeach ?>
     </div>
 </div>
