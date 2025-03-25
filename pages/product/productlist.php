@@ -128,7 +128,7 @@ include '../../_head.php';
                 <div class="true-card">
                   <div class="information">
                     <div class="product-name dsc"><h2><?php echo $productObject->productName ?></h2></div>
-                    <div class="product-series-name dsc"><span>pending........</span></div>
+                    <div class="product-series-name dsc"><span><p>RM <?php echo $productObject->price ?>.00</p></span></div>
                     <div class="size-id dsc"><span>3UG5 / 4UG5</span></div>
                   </div>
                 </div>
