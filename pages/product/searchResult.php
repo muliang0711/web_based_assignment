@@ -35,6 +35,7 @@ $seriesArray = $seriesStatement->fetchAll();
     </div>
 </div>
 
+<div class="main-container">
     <form method="get" action="../product/searchResult.php?search=?">
         <div class="searchContainer">
             <input type="text" id="search" name="search" maxlength="30" class="input" placeholder="<?php echo $search ?>">
@@ -43,6 +44,7 @@ $seriesArray = $seriesStatement->fetchAll();
             <button><img src="illustration-magnifying-glass-icon.png"></button>
         </div>
     </form>
+
     <?php
     if (!$search) {
         echo "Invalid input!";
@@ -66,7 +68,7 @@ $seriesArray = $seriesStatement->fetchAll();
             <div class="true-card">
               <div class="picture-card">
                 <div class="picture">
-                  <img width="150px" height="250px" id="productImage" src="<?php echo $productObject->productImg ?>" alt="Product Image" />
+                  <img width="150px" height="250px" id="productImage" src="../../../File/<?php echo $productObject->productImg ?>" alt="Product Image" />
                 </div>
               </div>
             </div>
@@ -114,7 +116,7 @@ $seriesArray = $seriesStatement->fetchAll();
                 <div class="true-card">
                   <div class="picture-card">
                     <div class="picture">
-                      <img width="150px" height="250px" id="productImage" src="<?php echo $productObject->productImg ?>" alt="Product Image" />
+                      <img width="150px" height="250px" id="productImage" src="../../../File/<?php echo $productObject->productImg ?>" alt="Product Image" />
                     </div>
                   </div>
                 </div>
@@ -124,7 +126,7 @@ $seriesArray = $seriesStatement->fetchAll();
                 <div class="true-card">
                   <div class="information">
                     <div class="product-name dsc"><h2><?php echo $productObject->productName ?></h2></div>
-                    <div class="product-series-name dsc"><span>pending........</span></div>
+                    <div class="product-series-name dsc"><span><p>RM <?php echo $productObject->price ?>.00</p></span></div>
                     <div class="size-id dsc"><span>3UG5 / 4UG5</span></div>
                   </div>
                 </div>
@@ -146,6 +148,7 @@ $seriesArray = $seriesStatement->fetchAll();
             </div>
         </div>
     <?php endif ?>
+</div>
 </body>
 <?php
 include '../../_foot.php';

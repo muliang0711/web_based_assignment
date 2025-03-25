@@ -232,7 +232,7 @@ p{
   width: 220px;
   position: relative;
   top:10px;
-  left:100px;
+  left:50px;
 }
 
 .input{
@@ -517,6 +517,7 @@ p{
     .btn button:hover {
       background-color: #e0544b;
     }
+    
     .product-card {
   position: relative;
   overflow: hidden;

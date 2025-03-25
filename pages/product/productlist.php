@@ -118,7 +118,7 @@ include '../../_head.php';
                 <div class="true-card">
                   <div class="picture-card">
                     <div class="picture">
-                      <img width="150px" height="250px" id="productImage" src="<?php echo $productObject->productImg ?>" alt="Product Image" />
+                      <img width="150px" height="250px" id="productImage" src="../../../File/<?php echo $productObject->productImg; ?>" alt="Product Image" />
                     </div>
                   </div>
                 </div>

@@ -85,7 +85,7 @@ include '../../_head.php';
 <div class="error"><?= temp("login"); ?></div> -->
 
 <div class="detail">
-  <div class="product"><img src="<?php echo $imgUrl; ?>" alt="Image"></div>
+  <div class="product"><img src="../../../File/<?php echo $imgUrl; ?>" alt="Image"></div>
   <div class="racketName"><?php echo $racketName ?></div>
   <div class="price"><?php echo "RM " ?>
   <?php echo $price ?><?php echo ".00" ?></div>
@@ -125,7 +125,7 @@ include '../../_head.php';
   <div class="HeadingIntro">
     <?php echo "The player who is using this racket" ?></div><br>
   <?php echo $playerInfo; ?>
-  <img src="<?php echo $playerImg; ?>" alt="PlayerImage">
+  <img src="../../../File/<?php echo $playerImg; ?>" alt="PlayerImage">
 </div>
 
 
