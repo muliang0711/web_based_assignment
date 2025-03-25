@@ -9,7 +9,7 @@
   </div>
   <ul class="nav-links">
     <li>
-      <a href="/pages/admin_home.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+      <a href="/pages/admin/admin_home.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
     </li>
     <li>
       <a href="/pages/admin/view_customer.php"><i class="fas fa-users"></i> Customer</a>

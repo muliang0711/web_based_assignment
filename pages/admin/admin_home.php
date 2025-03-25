@@ -1,9 +1,10 @@
 <?php
 require '../../_base.php';
-require_once  "../admin/main.php";
+
 $title='Home Page';
 $stylesheetArray = ['/css/admin_home.css'];   // 注意：这边只放特定于此页面的 .css file(s)。所有 admin 页面都会用到的 .css files 应放在 /css/admin.css
 // $scriptArray = [];       // 注意：这边只放特定于此页面的 .js file(s)。所有 admin 页面都会用到的 .js files 应放在 /js/admin.js
+require_once  "../admin/main.php";
 
 
 ?>
@@ -30,7 +31,9 @@ try {
 ?>
 
 <div class="title">Today Sales</div>
-<div class="container">
+<div class="main-content" style="  margin-left: var(--sidebar-width);
+  margin-top: 50px;
+  padding: 1rem;">
     <table class="block">
         <tr>
             <th>Total Product</th>

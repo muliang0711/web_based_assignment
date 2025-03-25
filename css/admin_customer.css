@@ -48,10 +48,12 @@ td,th{
     padding: 10px 10px;
 }
 
-.whole_container {
-    display:flex;
+.main-content {
+    /*  */
 } 
-
+.whole{
+    display:flex;
+}
 /* Styling for purchase history （overriding /pages/order/order.css) */
 .order, .orderDetailed {
     background-color: #eee;

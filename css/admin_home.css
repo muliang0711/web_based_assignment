@@ -1,8 +1,9 @@
 .block {
+    display: inline-table;
     padding: 20px 50px;
     margin: 20px;
     height: 10vh;
-    width: 25vw;
+    width: 15vw;
     border: none;
     color: hsl(206, 100%, 30%);
     text-align: center;
@@ -24,7 +25,7 @@
 }
 
 .container {
-    display: flex;
+    /* display: flex; */
 }
 
 /* 背景渐变滑动 */
