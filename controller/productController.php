@@ -187,7 +187,7 @@ class ProductController{
 
             $this->productDb->updateProducts($productInformation);
 
-            $uploadErrors = $this->processImages($_FILES['image'] ?? null, $_POST['productId'], "product");
+            $uploadErrors = $this->processImages($_FILES['productImage'] ?? null, $_POST['productId'], "product");
             if (!empty($uploadErrors)) {
                 throw new Exception(implode(", ", $uploadErrors));
                 }
