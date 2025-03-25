@@ -89,7 +89,7 @@ p{
 
 .item p{
   text-align: center;
-  margin-left: 55%;
+  margin-left: 50%;
   font-family: Arial, sans-serif;
 }
 
@@ -114,25 +114,24 @@ p{
 .product img{
   width: 40%;
   height: 20%;
-  border-radius: 50%;
+  background-color: #ebf0fb;
   display:inline-block;
   gap: 50px;
   margin-top: 50px;
   margin-left: -100px;
 }
 
-
 .racketName{
-  font-size: 60px;
+  font-size: 50px;
   font-weight: bold;
-  position:absolute;
-  text-align: center;
+  position: absolute;
+  text-align: left;
   color: #222222;
   right: 80px;
   top: 150px;
   letter-spacing: 1px;
+  padding-left: 30px;
   font-family: "Lucida Console", "Courier New", monospace;
-  background-color: #cfd8dc;
   height: 60px;
   width: 900px;
   border-radius: 10px;
@@ -141,36 +140,52 @@ p{
 .price{
   display: flex;
   font-size: 30px;
-  font-weight: 2px;
+  font-weight: bolder;
+  width: 60%;
   position:absolute;
   text-align: left;
-  color: #222222;
-  right: 300px;
-  top: 250px;
-  font-family: "Lucida Console", "Courier New", monospace;
-  gap:50px;
+  color: #992a2a;
+  right: 5%;
+  top: 25%;
+  font-family: Arial, sans-serif;
   padding: 40px;
-  border: solid Black 2px;
-  border-radius: 10px;
-  background-color: #cfd8dc;
+  background-color: #ecf1f4;
+  letter-spacing: 1px;
 }
 
+.information table{
+  position: absolute;
+  top: 40%;
+  right: 48%;
+  text-align: left;
+  background-color: #eef5ff;
+  color: black;
+  font-size: 20px;
+}
+
+.information th, .information td{
+  padding-top: 10px;
+  padding: 10px;
+}
+
+.introduction p{
+  font-weight: bold;
+  text-align: center;
+}
 
 .introduction{
+  border: 1px;
   font-size: 20px;
   font-weight: 2px;
   position:absolute;
   text-align: left;
   color: #222222;
-  right: 170px;
-  top: 600px;
-  font-family: "Lucida Console", "Courier New", monospace;
+  right: 5%;
+  top: 90%;
+  font-family: Arial, sans-serif;
   gap:50px;
-  padding: 40px;
-  width: 700px;
-  border: solid Black 2px;
-  border-radius: 10px;
-  background-color: #cfd8dc;
+  width: 900px;
+  padding: 20px;
 }
 
 .playerPhoto{
@@ -181,7 +196,7 @@ p{
   color: black;
   width: 800px;
   left:100px;
-  background-color: wheat;
+  background-color: #ecf1f4;
 }
 
 .HeadingIntro{
@@ -239,17 +254,16 @@ p{
 .AddCart button{
   font-size: 30px;
   position: absolute;
-  right:370px;
-  top:500px;
+  right:25%;
+  top:75%;
   background-color: gray;
   color: white;
   border: none;
   width: 300px;
   height: 50px;
   border-radius: 10px;
-  box-shadow: 0 0 10px black;
   font-family: "Lucida Console", "Courier New", monospace;
-  background: radial-gradient(circle 280px at 0% 0%, #3edaef, #025959);
+  background: radial-gradient(circle 280px at 0% 0%, #7300ff, #0048ff);
   cursor: pointer;
 }
 
@@ -341,26 +355,37 @@ p{
   box-shadow: 0 0 10px rgb(70, 3, 3);
 }
 
-.radioOne{
+.radioOne, .radioTwo{
+  display: flex;
   position: absolute;
-  top: 35%;
-  right:55%;
-  width: 40px;
+  top: 70%;
   font-size: 20px;
   text-align: center; 
   width: 16px;
-  height: 16px;
+  height: 20px;
+  padding: 0px 20px;
+  align-items: center;
+  accent-color: rgb(7, 249, 209);
+  justify-content: center;
+  appearance: none;
+  border: 2px solid black;
+  border-radius: 3px;
+  gap: 10px;
+}
+
+.radioOne{
+  right:39%;
+  border: none;
+}
+
+.radioOne:focus{
+  right:39%;
+  border: none;
 }
 
 .radioTwo{
-  position: absolute;
-  top: 45%;
-  right:55%;
-  width: 40px;
-  font-size: 20px;
-  text-align: center; 
-  width: 16px;
-  height: 16px;
+  right:29%;
+  border: none;
 }
 
 .noResult p{

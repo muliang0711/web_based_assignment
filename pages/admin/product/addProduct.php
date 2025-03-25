@@ -1,7 +1,7 @@
 
 <?php
-require_once "../../_base.php";      
-$stylesheetArray = ['../../css/editAnddetails.css'];
+require_once "../../../_base.php";      
+$stylesheetArray = ['../../../css/editAnddetails.css'];
 link_stylesheet($stylesheetArray);
 
 ?>
@@ -100,6 +100,9 @@ link_stylesheet($stylesheetArray);
   </form>
 </div>
 
+<?php
+include "../../../admin_foot.php"
+?>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>

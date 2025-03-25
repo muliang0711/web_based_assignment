@@ -1,22 +1,12 @@
 <?php
-  require_once  "../admin/main.php";
-  require_once "../../_base.php"; 
-  require_once "../../db_connection.php";
+  include "../main.php";
+  require_once "../../../_base.php"; 
+  require_once "../../../db_connection.php";
 
-  $stylesheetArray = ['../../css/adminProductAnlysis.css'];
+  $stylesheetArray = ['../../../css/adminProductAnlysis.css'];
   link_stylesheet($stylesheetArray);
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Report Generator UI</title>
-  <style>
-
-  </style>
-</head>
-<body>
 <div class="main-content xx"> 
   <div class="contanier"> 
 
@@ -100,6 +90,6 @@
 </div>
     
 
-
-</body>
-</html>
+<?php
+include "../../../admin_foot.php"
+?>
