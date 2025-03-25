@@ -1,9 +1,9 @@
 
-$(document).ready(function(){
-    $(".add").onclick(function(){
-  ;
-    });
-  });
+// $(document).ready(function(){
+//     $(".add").onclick(function(){
+//   ;
+//     });
+//   });
   
   $(() => {
 
@@ -33,3 +33,4 @@ $(document).ready(function(){
 
 
 })
+console.log("testing");

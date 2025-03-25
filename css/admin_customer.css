@@ -22,7 +22,7 @@
     background-color: aliceblue;
 }
 .searchBar{
-    height: 30px;
+    height: 40px;
     /* width: 100%; */
     margin:25px 5px;
     text-align: end;
@@ -108,8 +108,23 @@ padding-left: 20px;
  }
 
  .back{
-    text-align: right;
+
     position: absolute;
     right:0;
-
+    width:5%;
+    height:35px;
+    margin: 10px 10px;    
+    border: none;
+    text-align: center;
+    text-decoration: none;
+     border-radius:20px;
  }
+
+
+
+  .back:hover{
+    color:white;
+    background-color: grey;
+
+
+  }
