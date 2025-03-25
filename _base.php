@@ -305,3 +305,18 @@ function html_select($key, $items, $default = '- Select One -', $attr = '') {
     }
     echo '</select>';
 }
+
+function sorting($fields, $sort, $dir, $href = '') {
+    foreach ($fields as $k => $v) {
+        $d = 'asc'; 
+        $c = '';    // default no css
+
+        if ($k == $sort) {
+            $d = ($dir == 'asc') ? 'desc' : 'asc'; 
+            $c = $dir; }
+        // 生成排序url，保留原 URL parameter
+        $queryString = http_build_query(array_merge($_GET, ['sort' => $k, 'dir' => $d]));
+
+        echo "<th><a href='?$queryString' class='$c'>$v</a></th>";
+    }
+}

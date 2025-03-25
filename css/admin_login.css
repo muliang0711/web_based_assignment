@@ -10,6 +10,11 @@
 
 }
 
+body{
+
+padding: 100px;
+
+}
 .store-name{
     color:hsl(206 100% 25%);
     font-size:30px;
