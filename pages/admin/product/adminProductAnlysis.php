@@ -1,6 +1,7 @@
 <?php
-  include "../main.php";
+  
   require_once "../../../_base.php"; 
+  include "../main.php";
   require_once "../../../db_connection.php";
 
   $stylesheetArray = ['../../../css/adminProductAnlysis.css'];
@@ -10,7 +11,7 @@
 <div class="main-content xx"> 
   <div class="contanier"> 
 
-    <div class="upPart">
+    <div class="upPart"> 
 
       <!-- Top Bar -->
       <div class="top-bar">

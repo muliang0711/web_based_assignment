@@ -43,7 +43,15 @@ unset($_SESSION['Delete_ErrorMsg']);
     <form style="display: flex;">
 
         <div style="flex: 1;">
-          <input type="text" placeholder="Search..." style="width: 50%; padding: 0.5rem;">
+
+              <div class="box">
+                  <form name="search">
+                      <input type="text" class="input" name="txt" onmouseout="this.value = ''; this.blur();">
+                  </form>
+
+                  <i class="fas fa-search"></i>
+
+              </div>
         </div>
 
     </form>
@@ -135,7 +143,6 @@ unset($_SESSION['Delete_ErrorMsg']);
   </div>
 
 
-    <!-- Example Data Table  this is a sample when include to another page please replace this table to your page -->
   <div class="container-table">
 
     <div class="tb-title">
@@ -184,7 +191,7 @@ unset($_SESSION['Delete_ErrorMsg']);
                       <i class="fa-solid fa-pen-to-square"></i>
                     </a>
 
-                    <form method="POST" action="../../controller/productController.php" class="delete-form" style="display:inline;">
+                    <form method="POST" action="/controller/productController.php" class="delete-form" style="display:inline;">
                       <input type="hidden" name="action" value="deleteProduct">  
                       <input type="hidden" name="productId" value="<?php echo $product->productID; ?>">
                       <input type="hidden" name="sizeId" value="<?php echo $product->sizeID; ?>">

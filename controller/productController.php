@@ -244,7 +244,7 @@ class ProductController{
     }
 
     private function redirectToAdmin() {
-        header('Location: ../pages/admin/admin_product.php');
+        header('Location: ../pages/admin/product/admin_product.php');
         exit();
     }
 

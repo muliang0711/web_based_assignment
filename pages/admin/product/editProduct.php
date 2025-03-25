@@ -19,7 +19,7 @@ link_stylesheet($stylesheetArray);
 
 
 <div class="container">
-  <form action="../../controller/productController.php" method="POST" enctype="multipart/form-data" class="form-container">
+  <form action="/controller/productController.php" method="POST" enctype="multipart/form-data" class="form-container">
   <input type="hidden" name="action" value="updateProduct">
     <!-- LEFT -->
     <div class="left-side box">
