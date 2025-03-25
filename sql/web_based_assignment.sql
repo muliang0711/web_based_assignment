@@ -148,12 +148,12 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`productID`, `productName`, `price`, `seriesID`, `productImg`, `introduction`, `playerInfo`, `playerImage`) VALUES
-('R0001', 'AeroSharp 11', 499.00, 'AS', 'https://www.yonex.com/media/catalog/product/a/r/arc11-p.png?', 'Precision meets mastery with the AeroSharp 11. Designed for players who dictate the pace of the game, this racket offers superior shuttle control, effortless net play, and unmatched accuracy. The ultra-thin shaft and aerodynamic frame reduce drag, ensuring maximum maneuverability for the smartest players on the court.', 'Ethan Cheng. A tactical genius, Ethan is known for his surgical net drops and pinpoint clears. He controls rallies with calm precision, forcing opponents into mistakes before delivering the final blow.', 'https://www.yonex.com/media/wysiwyg/Athletes/Badminton/810x540_aaron-chia.jpg'),
-('R0002', 'TurboSmash 1000', 599.00, 'TSM', 'https://www.yonex.com/media/catalog/product/n/a/nanoflare_1000_z.png?', 'Speed redefined. The TurboSmash 1000 is built for lightning-fast reactions and rapid counterattacks. With an ultra-lightweight frame and enhanced repulsion technology, this racket enables players to unleash quick drives and rapid smashes with ease. Perfect for those who thrive on pace and aggression.', 'Kei Tanaka. With his lightning footwork and relentless attacking style, Kei overwhelms opponents before they can react. His signature double-tap drive keeps defenders scrambling to keep up.', 'https://www.badmintonplanet.com/wp-content/uploads/2023/06/06-25-2023-badminton-news-chen-tang-jie-toh-ee-wei-taipei-open.jpg'),
-('R0003', 'ThunderStrike 88 max', 459.00, 'TST', 'https://www.yonex.com/media/catalog/product/3/a/3ax88d-p_076-1_02.png?', 'Pure dominance on the court. The ThunderStrike 88 Max is designed for explosive power, engineered with an extra-stiff shaft and head-heavy balance to deliver devastating smashes. Whether attacking from the baseline or finishing at the net, this racket turns every shot into a statement.', 'Aleksandr Ivanov. A powerhouse with a smash that echoes across arenas, Aleksandr thrives on brute force. His signature "Iron Hammer" smash has made him a feared opponent worldwide.', 'https://www.pattayamail.com/wp-content/uploads/2024/08/t-09-Kunlavut-Vitidsarn-makes-history-as-first-Thai-shuttler-to-reach-Olympic-badminton-final.jpg'),
-('R0004', 'ThunderStrike 100', 679.00, 'TST', 'https://www.yonex.com/media/catalog/product/a/s/astrox100zz_kurenai.png?', 'For those who demand control over raw power, the ThunderStrike 100 balances explosive smashes with excellent shot placement. The reinforced T-joint and optimized frame weight create a racket that delivers controlled aggression, allowing powerful yet precise play.', 'Leo Park. A relentless attacker with a strategic mind, Leo mixes powerful smashes with deceptive drop shots, making him unpredictable and deadly in any rally.', 'https://c.ndtvimg.com/2021-12/1hhdm63o_viktor-axelsen_625x300_14_December_21.jpg?'),
-('R0005', 'Shadow Z', 399.00, 'SHD', 'https://www.yonex.com/media/catalog/product/d/u/duo-zs.png?', 'A perfect fusion of speed and strength, the Shadow Z is built for aggressive players who need both lightning-fast reactions and crushing power. With a revolutionary hybrid frame and reinforced carbon core, this racket ensures rapid-fire play without sacrificing stability.', 'Nathan Cole. A bold, risk-taking player, Nathan’s agility and attacking prowess keep opponents constantly guessing. His signature "Phantom Smash"—a deceptive half-smash disguised as a full-power shot—has won him countless matches.', 'https://img.olympics.com/images/image/private/t_s_16_9_g_auto/t_s_w960/f_auto/primary/kp0rfgiyiusrlcskh5h9'),
-('R0006', 'ThunderStrike 99 max', 519.00, 'TST', 'https://www.yonex.com/media/catalog/product/a/x/ax99-pro_whitetiger.png?', 'The evolution of power. The ThunderStrike 99 is crafted for relentless attackers who aim to dominate the game. Its high-tension frame and reinforced shaft provide the ultimate combination of stability and power, making it the ultimate weapon for smash-heavy players.', 'Rajat Sharma, known as the "Wall Breaker," Rajat’s smashes have been recorded at over 400 km/h. His aggressive baseline game and ruthless net kills make him an unstoppable force.', 'https://ss-i.thgim.com/public/incoming/7drpf6/article68078411.ece/alternates/LANDSCAPE_1200/Indonesia_Open_Badminton_04907.jpg');
+('R0001', 'AeroSharp 11', 499.00, 'AS', 'product_R0001_1742917010.jpg', 'Precision meets mastery with the AeroSharp 11. Designed for players who dictate the pace of the game, this racket offers superior shuttle control, effortless net play, and unmatched accuracy. The ultra-thin shaft and aerodynamic frame reduce drag, ensuring maximum maneuverability for the smartest players on the court.', 'Ethan Cheng. A tactical genius, Ethan is known for his surgical net drops and pinpoint clears. He controls rallies with calm precision, forcing opponents into mistakes before delivering the final blow.', 'player_R0001_1742917010.jpg'),
+('R0002', 'TurboSmash 1000', 599.00, 'TSM', 'product_R0002_1742917087.jpg', 'Speed redefined. The TurboSmash 1000 is built for lightning-fast reactions and rapid counterattacks. With an ultra-lightweight frame and enhanced repulsion technology, this racket enables players to unleash quick drives and rapid smashes with ease. Perfect for those who thrive on pace and aggression.', 'Kei Tanaka. With his lightning footwork and relentless attacking style, Kei overwhelms opponents before they can react. His signature double-tap drive keeps defenders scrambling to keep up.', 'player_R0002_1742917087.jpg'),
+('R0003', 'ThunderStrike 88 max', 459.00, 'TST', 'product_R0003_1742917753.jpg', 'Pure dominance on the court. The ThunderStrike 88 Max is designed for explosive power, engineered with an extra-stiff shaft and head-heavy balance to deliver devastating smashes. Whether attacking from the baseline or finishing at the net, this racket turns every shot into a statement.', 'Aleksandr Ivanov. A powerhouse with a smash that echoes across arenas, Aleksandr thrives on brute force. His signature \"Iron Hammer\" smash has made him a feared opponent worldwide.', 'player_R0003_1742917753.jpg'),
+('R0004', 'ThunderStrike 100', 679.00, 'TST', 'product_R0004_1742917944.jpg', 'For those who demand control over raw power, the ThunderStrike 100 balances explosive smashes with excellent shot placement. The reinforced T-joint and optimized frame weight create a racket that delivers controlled aggression, allowing powerful yet precise play.', 'Leo Park. A relentless attacker with a strategic mind, Leo mixes powerful smashes with deceptive drop shots, making him unpredictable and deadly in any rally.', 'player_R0004_1742917944.jpg'),
+('R0005', 'Shadow Z', 399.00, 'SHD', 'product_R0005_1742918129.jpg', 'A perfect fusion of speed and strength, the Shadow Z is built for aggressive players who need both lightning-fast reactions and crushing power. With a revolutionary hybrid frame and reinforced carbon core, this racket ensures rapid-fire play without sacrificing stability.', 'Nathan Cole. A bold, risk-taking player, Nathan’s agility and attacking prowess keep opponents constantly guessing. His signature \"Phantom Smash\"—a deceptive half-smash disguised as a full-power shot—has won him countless matches.', 'player_R0005_1742918129.jpg'),
+('R0006', 'ThunderStrike 99 max', 519.00, 'TST', 'product_R0006_1742918288.jpg', 'The evolution of power. The ThunderStrike 99 is crafted for relentless attackers who aim to dominate the game. Its high-tension frame and reinforced shaft provide the ultimate combination of stability and power, making it the ultimate weapon for smash-heavy players.', 'Rajat Sharma, known as the \"Wall Breaker,\" Rajat’s smashes have been recorded at over 400 km/h. His aggressive baseline game and ruthless net kills make him an unstoppable force.', 'player_R0006_1742918288.jpg');
 
 -- --------------------------------------------------------
 
@@ -203,19 +203,21 @@ CREATE TABLE `product_images` (
 -- Dumping data for table `product_images`
 --
 
+
 INSERT INTO `product_images` (`id`, `productID`, `image_path`, `image_type`, `created_at`) VALUES
-(1, 'R0001', 'product_R0001_0.jpg', 'product', '2025-03-18 07:54:25'),
-(2, 'R0001', 'player_R0001_0.jpg', 'player', '2025-03-18 07:54:25'),
-(3, 'R0002', 'product_R0002_0.jpg', 'product', '2025-03-18 07:55:30'),
-(4, 'R0002', 'player_R0002_0.jpg', 'player', '2025-03-18 07:55:30'),
-(5, 'R0003', 'product_R0003_0.jpg', 'product', '2025-03-18 07:55:50'),
-(6, 'R0003', 'player_R0003_0.jpg', 'player', '2025-03-18 07:55:50'),
-(7, 'R0004', 'product_R0004_0.jpg', 'product', '2025-03-18 07:57:15'),
-(8, 'R0004', 'player_R0004_0.jpg', 'player', '2025-03-18 07:57:15'),
-(9, 'R0005', 'product_R0005_0.jpg', 'product', '2025-03-18 07:57:26'),
-(10, 'R0005', 'player_R0005_0.jpg', 'player', '2025-03-18 07:57:26'),
-(11, 'R0006', 'product_R0006_0.jpg', 'product', '2025-03-18 07:57:33'),
-(12, 'R0006', 'player_R0006_0.jpg', 'player', '2025-03-18 07:57:33');
+(1, 'R0001', 'product_R0001_1742917010.jpg', 'product', '2025-03-25 15:36:50'),
+(2, 'R0001', 'player_R0001_1742917010.jpg', 'player', '2025-03-25 15:36:50'),
+(3, 'R0002', 'product_R0002_1742917087.jpg', 'product', '2025-03-25 15:38:07'),
+(4, 'R0002', 'player_R0002_1742917087.jpg', 'player', '2025-03-25 15:38:07'),
+(5, 'R0003', 'product_R0003_1742917753.jpg', 'product', '2025-03-25 15:49:13'),
+(6, 'R0003', 'player_R0003_1742917753.jpg', 'player', '2025-03-25 15:49:13'),
+(7, 'R0004', 'product_R0004_1742917944.jpg', 'product', '2025-03-25 15:52:24'),
+(8, 'R0004', 'player_R0004_1742917944.jpg', 'player', '2025-03-25 15:52:24'),
+(9, 'R0005', 'product_R0005_1742918129.jpg', 'product', '2025-03-25 15:55:29'),
+(10, 'R0005', 'player_R0005_1742918129.jpg', 'player', '2025-03-25 15:55:29'),
+(11, 'R0006', 'product_R0006_1742918288.jpg', 'product', '2025-03-25 15:58:08'),
+(12, 'R0006', 'player_R0006_1742918288.jpg', 'player', '2025-03-25 15:58:08');
+
 
 -- --------------------------------------------------------
 
