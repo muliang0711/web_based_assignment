@@ -23,7 +23,6 @@ main {
   position: fixed;
   left: 0;
   width: var(--sidebar-width);
-  z-index: -1;
   height: 100%;
   background-color: rgb(50, 50, 50);
   font-size: 20px;
@@ -463,7 +462,7 @@ p{
       height: 100%;
       overflow: hidden;
       border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
       display: flex;
       justify-content: center;
       align-items: center;

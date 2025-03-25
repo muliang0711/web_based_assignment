@@ -57,13 +57,43 @@ $seriesArray = $seriesStatement->fetchAll();
     <?php if ($productObjectArray): ?>
         <div class="list" id="productList">
             <?php
-            foreach ($productObjectArray as $productObject): ?>
-                <div class="item">
-                    <a onclick="onclick()" href="../product/productDetail.php?racket=<?php echo $productObject->productID ?>">
-                        <img src="<?php echo $productObject->productImg ?>">
-                        <p><?php echo $productObject->productName ?></p>
-                    </a>
+ foreach ($productObjectArray as $productObject): ?>
+    <!-- start -->
+    <div class="container">
+    <!-- top side  -->
+        <div class="product-card">
+          <div class="top-side">
+            <div class="true-card">
+              <div class="picture-card">
+                <div class="picture">
+                  <img width="150px" height="250px" id="productImage" src="<?php echo $productObject->productImg ?>" alt="Product Image" />
                 </div>
+              </div>
+            </div>
+          </div>
+    <!-- middle side  -->
+          <div class="middle-side">
+            <div class="true-card">
+              <div class="information">
+                <div class="product-name dsc"><h2><?php echo $productObject->productName ?></h2></div>
+                <div class="product-series-name dsc"><span><p>RM <?php echo $productObject->price ?>.00</p></span></div>
+                <div class="size-id dsc"><span>3UG5 / 4UG5</span></div>
+              </div>
+            </div>
+          </div>
+    <!-- bottom side  -->
+          <div class="bottom-side">
+            <div class="true-card">
+              <div class="function">
+                <div class="btn"><button class="btn">Add to Cart</button></div>
+                <div class="btn"><button class="btn">Buy</button></div>
+                <div class="btn"><button class="btn" onclick="window.location.href='../product/productDetail.php?racket=<?php echo $productObject->productID ?>'">View Details</button></div>
+              </div>
+            </div>
+          </div>
+        </div>
+    <!-- the end  -->
+    </div>
             <?php endforeach ?>
         </div>
     <?php else: ?>
@@ -76,13 +106,42 @@ $seriesArray = $seriesStatement->fetchAll();
                 $statement->execute([]);
                 $productObjectArray = $statement->fetchAll();
                 foreach ($productObjectArray as $productObject): ?>
-                    <div class="item">
-                        <a onclick="onclick()" href="../product/productDetail.php?racket=<?php echo $productObject->productID ?>">
-
-                            <img src="<?php echo $productObject->productImg ?>">
-                            <p><?php echo $productObject->productName ?></p>
-                        </a>
+                            <!-- start -->
+        <div class="container">
+        <!-- top side  -->
+            <div class="product-card">
+              <div class="top-side">
+                <div class="true-card">
+                  <div class="picture-card">
+                    <div class="picture">
+                      <img width="150px" height="250px" id="productImage" src="<?php echo $productObject->productImg ?>" alt="Product Image" />
                     </div>
+                  </div>
+                </div>
+              </div>
+        <!-- middle side  -->
+              <div class="middle-side">
+                <div class="true-card">
+                  <div class="information">
+                    <div class="product-name dsc"><h2><?php echo $productObject->productName ?></h2></div>
+                    <div class="product-series-name dsc"><span>pending........</span></div>
+                    <div class="size-id dsc"><span>3UG5 / 4UG5</span></div>
+                  </div>
+                </div>
+              </div>
+        <!-- bottom side  -->
+              <div class="bottom-side">
+                <div class="true-card">
+                  <div class="function">
+                    <div class="btn"><button class="btn">Add to Cart</button></div>
+                    <div class="btn"><button class="btn">Buy</button></div>
+                    <div class="btn"><button class="btn" onclick="window.location.href='../product/productDetail.php?racket=<?php echo $productObject->productID ?>'">View Details</button></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        <!-- the end  -->
+        </div>
                 <?php endforeach ?>
             </div>
         </div>
