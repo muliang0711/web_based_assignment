@@ -110,13 +110,39 @@ include '../../_head.php';
     <div class="list" id="productList">
         <?php
         foreach ($productObjectArray as $productObject): ?>
-            <div class="item">
-                <a onclick="onclick()" href="../product/productDetail.php?racket=<?php echo $productObject->productID ?>">
-    
-                    <img src="<?php echo $productObject->productImg ?>">
-                    <p><?php echo $productObject->productName ?></p>
-                </a>
+         <div class="container">
+            <div class="product-card">
+              <div class="top-side">
+                <div class="true-card">
+                  <div class="picture-card">
+                    <div class="picture">
+                      <img width="150px" height="250px" id="productImage" src="<?php echo $productObject->productImg ?>" alt="Product Image" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+        
+              <div class="middle-side">
+                <div class="true-card">
+                  <div class="information">
+                    <div class="product-name dsc"><h2><?php echo $productObject->productName ?></h2></div>
+                    <div class="product-series-name dsc"><span>ThunderStrik</span></div>
+                    <div class="size-id dsc"><span>3UG5 / 4UG5</span></div>
+                  </div>
+                </div>
+              </div>
+        
+              <div class="bottom-side">
+                <div class="true-card">
+                  <div class="function">
+                    <div class="btn"><button class="btn">Add to Cart</button></div>
+                    <div class="btn"><button class="btn">Buy</button></div>
+                    <div class="btn"><button class="btn" onclick="window.location.href='../product/productDetail.php?racket=<?php echo $productObject->productID ?>'">>View Details</button></div>
+                  </div>
+                </div>
+              </div>
             </div>
+          </div>
         <?php endforeach ?>
     </div>
 </div>
