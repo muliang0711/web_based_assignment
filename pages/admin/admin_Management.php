@@ -1,10 +1,11 @@
 <?php
 require '../../_base.php';
-require __DIR__ . "/../admin/main.php";
+
 $title = 'Admin Management';
 $stylesheetArray = ['/css/admin_management.css'];   // 注意：这边只放特定于此页面的 .css file(s)。所有 admin 页面都会用到的 .css files 应放在 /css/admin.css
 
 $scriptArray = ['/js/app.js'];       // 注意：这边只放特定于此页面的 .js file(s)。所有 admin 页面都会用到的 .js files 应放在 /js/admin.js
+require __DIR__ . "/../admin/main.php";
 ?>
 
 <?php
@@ -13,7 +14,7 @@ $arr = $_db->query('SELECT * FROM admin')->fetchAll();
 
 <div class="main-content">
     <div class="searchBar">
-        <a href="/pages/admin/adminAdd.php" class="btn btn-add">Add Admin</a>
+        <a href="/pages/admin/adminAdd.php" class="btn-add"><i class="fa-solid fa-plus"></i>Add Admin</a>
     </div>
     <div class="container-table">
 

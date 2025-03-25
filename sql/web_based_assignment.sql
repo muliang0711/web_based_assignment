@@ -255,7 +255,7 @@ CREATE TABLE `user` (
   `gender` enum('F','M','R') NOT NULL DEFAULT 'R' COMMENT 'F: Female. \r\nM: Male.\r\nR: Rather not say',
   `profilePic` varchar(255) DEFAULT NULL,
   `bio` varchar(1000) DEFAULT NULL,
-  `memberStatus` enum('Active','Inactive') NOT NULL
+  `memberStatus` enum('Active','Inactive','Blocked') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --

@@ -135,7 +135,7 @@ header{
 #info {
     position: fixed;
     color: #222;
-    background: #bcedff;
+    background: white;
     box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.2);
     border-radius: 3px;
     padding: 30px 50px;
@@ -179,17 +179,20 @@ header{
 }
 
 
-/* .btn-update {
+ /* .btn-update {
     background-color: #28a745;
-  }
-  .btn-update:hover {
-    background-color: #218838;
-  }
+  }  
   .btn-delete {
     background-color: #dc3545;
+  } */
+  .action-btn-details:hover {
+    background-color: #218838;
+    color:white;
   }
-  .btn-delete:hover {
+
+  .action-btn-delete:hover {
     background-color: #c82333;
+    color: white;
   }
 
   .btn-detail {
@@ -206,4 +209,4 @@ header{
     color: #fff;
     border: none;
     border-radius: 4px;
-  } */
+  }

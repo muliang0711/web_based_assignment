@@ -31,17 +31,18 @@ height:8vh;
 }
 
  .searchBar{
-height: 30px;
+height: 40px;
 /* width: 100%; */
- margin:25px 5px;
+ margin:15px 5px;
  text-align: end;
+ /* background-color: #a72841; */
     } 
 
 .btn-add{
     width: 20%;
     height:35px;
-    margin: 5px 5px;
-    /* padding: 10px 15px; */
+    margin: 10px 10px;
+    /* padding: 10px 15px;  */
     background-color: #28a745;
     border: none;
     text-align: center;
@@ -49,13 +50,13 @@ height: 30px;
     color:white;
     /* border-radius:20px; */
 
-    font-size: 13px;
+    font-size: 15px;
     padding: 5px 8px;
     border-radius: 4px;
 }
 .btn-add:hover{
-    transform: scale(1.10);
-    background-color: #218838;
+    transform: scale(1.20);
+    background-color: #88c595;
 
     
 }

@@ -19,7 +19,7 @@
 .row:hover{
     /* background-color:hsl(206 100% 25%);
     color:white; */
-    background-color: rgb(209, 227, 252);
+    background-color: aliceblue;
 }
 .searchBar{
     height: 30px;
