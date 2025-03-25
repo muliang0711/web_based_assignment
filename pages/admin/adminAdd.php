@@ -1,18 +1,18 @@
-
-
 <?php
+require '../../_base.php';
 
 require 'selection.php';
 
-$title='Add a new admin';
-$stylesheetArray = ['/css/admin_management.css' ,];   // 注意：这边只放特定于此页面的 .css file(s)。所有 admin 页面都会用到的 .css files 应放在 /css/admin.css
-  require_once  "../admin/main.php";
+$title = 'Add a new admin';
+$stylesheetArray = ['/css/admin_management.css',];   // 注意：这边只放特定于此页面的 .css file(s)。所有 admin 页面都会用到的 .css files 应放在 /css/admin.css
+require_once  "../admin/main.php";
 
 $scriptArray = ['/js/app.js'];       // 注意：这边只放特定于此页面的 .js file(s)。所有 admin 页面都会用到的 .js files 应放在 /js/admin.js
 
 // Functions to generate random id and password
-function random_password() {
-    $n = rand(10,15);
+function random_password()
+{
+    $n = rand(10, 15);
 
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     $randomPassword = '';
@@ -25,7 +25,8 @@ function random_password() {
     return $randomPassword;
 }
 
-function random_id() {
+function random_id()
+{
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     $randomId = '';
 
@@ -50,14 +51,14 @@ $password = $_SESSION['password'] ?? 'click to generate';
 
 
 // Handle POST request
-if(is_post()){
+if (is_post()) {
     // $id=req('id'); // no need this, because this won't be submitted by the form. `$id = $_SESSION['id']` already store the id value.
-    $position=req('position');
+    $position = req('position');
     // $password=req('password'); // no need this, because this won't be submitted by the form. `$password = $_SESSION['password']` already store the password value.
-    $level=req('level');
+    $level = req('level');
 
     // Validate id
-    if ($id == ''||$id=='click to generate') {
+    if ($id == '' || $id == 'click to generate') {
         $_errors['id'] = 'Required';
     }
 
@@ -76,18 +77,17 @@ if(is_post()){
     // Validate position
     if ($position == '') {
         $_errors['position'] = 'Required';
-    }
-    else if (strlen($position) > 20) {
+    } else if (strlen($position) > 20) {
         $_errors['position'] = 'Maximum length 20';
     }
 
-      // Validate password
-      if ($password == ''||$password=='click to generate') {
+    // Validate password
+    if ($password == '' || $password == 'click to generate') {
         $_errors['password'] = 'Required';
     }
 
 
- 
+
     // Validate level
     if ($level == '') {
         $_errors['level'] = 'Required';
@@ -103,7 +103,7 @@ if(is_post()){
                             (id, position, password, adminLevel)
                             VALUES(?, ?, ?, ?)');
         $stm->execute([$id, $position, $password, $level]);
-        
+
         // Destory id and password SESSION variables
         unset($_SESSION['id']);
         unset($_SESSION['password']);
@@ -116,35 +116,35 @@ if(is_post()){
 
 ?>
 
-    <div class="main-content" style="  margin-left: var(--sidebar-width);
+<div class="main-content" style="  margin-left: var(--sidebar-width);
   margin-top: 50px;
   padding: 1rem;">
 
     <form method="post" class="insert_form add_container">
-    <label for="position">Position</label>
-    <?= input_text('position', 'maxlength="20"') ?>
-    <?=error('position') ?>
-   
-    <br><br>
-    <label>Level</label>
-    <?= input_radios('level', $_level) ?>
-    <!-- <span>Hello</span> -->
-    <?= error('level') ?>
+        <label for="position">Position</label>
+        <?= input_text('position', 'maxlength="20"') ?>
+        <?= error('position') ?>
 
-    <!--  htmlspecialchars to prevent attack -->
-    <p>User ID: <?php echo htmlspecialchars($id); ?><?= error('id') ?></p>   
-    
-    <p>Password: <?php echo htmlspecialchars($password); ?><?= error('password') ?></p>
-    
-    <br>
-    <form method="POST">
-        <button class="subbutton" type="submit" name="generate">Generate ID and Password</button>
-        <button class="subbutton" data-confirm="Are you sure you want to add a new admin?">Submit</button>            
-    </form>
+        <br><br>
+        <label>Level</label>
+        <?= input_radios('level', $_level) ?>
+        <!-- <span>Hello</span> -->
+        <?= error('level') ?>
 
-    <section>
+        <!--  htmlspecialchars to prevent attack -->
+        <p>User ID: <?php echo htmlspecialchars($id); ?><?= error('id') ?></p>
 
-    </section>
+        <p>Password: <?php echo htmlspecialchars($password); ?><?= error('password') ?></p>
+
+        <br>
+        <form method="POST">
+            <button class="subbutton" type="submit" name="generate">Generate ID and Password</button>
+            <button class="subbutton" data-confirm="Are you sure you want to add a new admin?">Submit</button>
+        </form>
+
+        <section>
+
+        </section>
     </form>
 </div>
 
