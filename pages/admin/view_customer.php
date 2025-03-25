@@ -27,11 +27,16 @@ padding: 1rem;">
         <div style="padding: 1rem;">
             <table class="tb">
                 <tr>
-                    <th class="th">Customer ID</th>
-                    <th class="th">Name</th>
-                    <th class="th">Contact Number</th>
-                    <th class="th">Member Status</th>
-                    <th class="th">Action</th>
+                <?php
+        $fields = [
+            'userID' => 'Customer ID',
+            'username' => 'Name',
+            'phoneNo' => 'Contact Number',
+            'memberStatus' => 'Member Status'
+        ];
+        sorting($fields, $_GET['sort'] ?? '', $_GET['dir'] ?? '');
+        ?>
+        <th>Action</th> 
                 </tr>
                 <?php foreach ($arr as $c): ?>
                     <tr class="row">
