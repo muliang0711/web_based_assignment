@@ -48,6 +48,15 @@ class ProductController{
     public  function getAllProducts(){
         return  $this->productDb->getAllProducts();
     }
+    
+    public  function getAllSeriesID(){
+        return  $this->productDb->getSeriesID();
+    }
+
+    public  function getAllProductName(){
+        return  $this->productDb->getProductName();
+    }
+
 
     //====================== All Private Function : 
 

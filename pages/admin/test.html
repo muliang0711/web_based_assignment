@@ -1,383 +1,46 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Product Card</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
-
-    body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-      padding: 0;
-      font-family: 'Poppins', sans-serif;
-      background-color: #fdfdfb;
-      color: #333;
-      box-sizing: border-box;
-    }
-
-    .container {
-  width: 100%;
-  max-width: 410px;
-  max-height: 900px;
-  background-color: #ffffff;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start; /* allow top alignment if it grows */
-  padding: 15px;
-}
-
-.product-card {
-  width: 100%;
-  background-color: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding: 10px;
-  box-sizing: border-box;
-}
-
-
-.top-side,
-.middle-side,
-.bottom-side {
-  width: 100%;
-  background-color: #ffffff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 10px 0;
-}
-
-
-    .true-card {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 95%;
-      height: 90%;
-      background-color: transparent;
-    }
-
-    .picture-card {
-      width: 100%;
-      height: 100%;
-      background-color: #fff;
-      border-radius: 10px;
-    }
-
-    .picture {
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .picture img {
-      max-width: 100%;
-      max-height: 100%;
-      object-fit: contain;
-      display: block;
-      cursor: pointer;
-    }
-
-    .information {
-      width: 100%;
-      height: 100%;
-      color: #333;
-      background-color: #ffffff;
-      text-align: center;
-      padding: 10px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    .information .dsc {
-      margin: 5px 0;
-      font-size: 16px;
-      background-color: transparent;
-      color: #444;
-    }
-
-    .function {
-      display: flex;
-      justify-content: space-evenly;
-      align-items: center;
-      width: 100%;
-    }
-
-    .btn button {
-      padding: 10px 15px;
-      background-color: #ff6f61;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-
-    .btn button:hover {
-      background-color: #e0544b;
-    }
-    .product-card {
-  position: relative;
-  overflow: hidden;
-  transition: all 0.3s ease;
-}
-
-/* Hide bottom-side by default */
-.bottom-side {
-  transform: translateY(100%);
-  opacity: 0;
-  transition: all 0.3s ease;
-}
-
-/* Show it on hover */
-.product-card:hover .bottom-side {
-  transform: translateY(0);
-  opacity: 1;
-}
-
-.product-list {
-  width: 1450px;
-  max-height: 100vh; /* full screen height or any value */
-  overflow-y: auto;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
-  gap: 20px;
-  padding: 20px;
-  box-sizing: border-box;
-  margin-left: auto;
-}
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
 </head>
+<style>
+  .body{
+    background-color: rgb(231, 231, 231);
+    width: 80%;
+    height: 1100px;
+  }
+  .left{
+    background-color: rgb(231, 231, 231);
+    width: 80%;
+    height: 1100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .picture-card{
+    width: 510px;
+    height: 690px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    text-align: center;
+  }
+  .picture-card img {
+    object-fit: contain;
+    display: block;
+    cursor: pointer;
+  }
+</style>
 <body>
-    <div class="product-list">
-        <div class="container">
-            <div class="product-card">
-              <div class="top-side">
-                <div class="true-card">
-                  <div class="picture-card">
-                    <div class="picture">
-                      <img width="200px" id="productImage" src="/File/product_R0002_0.jpg" alt="Product Image" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-        
-              <div class="middle-side">
-                <div class="true-card">
-                  <div class="information">
-                    <div class="product-name dsc"><h2>ThunderStrike 99 Max</h2></div>
-                    <div class="product-series-name dsc"><span>ThunderStrik</span></div>
-                    <div class="size-id dsc"><span>3UG5 / 4UG5</span></div>
-                  </div>
-                </div>
-              </div>
-        
-              <div class="bottom-side">
-                <div class="true-card">
-                  <div class="function">
-                    <div class="btn"><button class="btn">Add to Cart</button></div>
-                    <div class="btn"><button class="btn">Buy</button></div>
-                    <div class="btn"><button class="btn">View Details</button></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="container">
-            <div class="product-card">
-              <div class="top-side">
-                <div class="true-card">
-                  <div class="picture-card">
-                    <div class="picture">
-                      <img id="productImage" src="/File/product_R0002_0.jpg" alt="Product Image" width="200px" height=""/>
-                    </div>
-                  </div>
-                </div>
-              </div>
-        
-              <div class="middle-side">
-                <div class="true-card">
-                  <div class="information">
-                    <div class="product-name dsc"><h2>ThunderStrike 99 Max</h2></div>
-                    <div class="product-series-name dsc"><span>ThunderStrik</span></div>
-                    <div class="size-id dsc"><span>3UG5 / 4UG5</span></div>
-                  </div>
-                </div>
-              </div>
-        
-              <div class="bottom-side">
-                <div class="true-card">
-                  <div class="function">
-                    <div class="btn"><button class="btn">Add to Cart</button></div>
-                    <div class="btn"><button class="btn">Buy</button></div>
-                    <div class="btn"><button class="btn">Buy</button></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="container">
-            <div class="product-card">
-              <div class="top-side">
-                <div class="true-card">
-                  <div class="picture-card">
-                    <div class="picture">
-                      <img id="productImage" src="/File/product_R0002_0.jpg" alt="Product Image" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-        
-              <div class="middle-side">
-                <div class="true-card">
-                  <div class="information">
-                    <div class="product-name dsc"><h2>ThunderStrike 99 Max</h2></div>
-                    <div class="product-series-name dsc"><span>ThunderStrik</span></div>
-                    <div class="size-id dsc"><span>3UG5 / 4UG5</span></div>
-                  </div>
-                </div>
-              </div>
-        
-              <div class="bottom-side">
-                <div class="true-card">
-                  <div class="function">
-                    <div class="btn"><button class="btn">Add to Cart</button></div>
-                    <div class="btn"><button class="btn">Buy</button></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="container">
-            <div class="product-card">
-              <div class="top-side">
-                <div class="true-card">
-                  <div class="picture-card">
-                    <div class="picture">
-                      <img id="productImage" src="/File/product_R0002_0.jpg" alt="Product Image" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-        
-              <div class="middle-side">
-                <div class="true-card">
-                  <div class="information">
-                    <div class="product-name dsc"><h2>ThunderStrike 99 Max</h2></div>
-                    <div class="product-series-name dsc"><span>ThunderStrik</span></div>
-                    <div class="size-id dsc"><span>3UG5 / 4UG5</span></div>
-                  </div>
-                </div>
-              </div>
-        
-              <div class="bottom-side">
-                <div class="true-card">
-                  <div class="function">
-                    <div class="btn"><button class="btn">Add to Cart</button></div>
-                    <div class="btn"><button class="btn">Buy</button></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="container">
-            <div class="product-card">
-              <div class="top-side">
-                <div class="true-card">
-                  <div class="picture-card">
-                    <div class="picture">
-                      <img id="productImage" src="/File/product_R0002_0.jpg" alt="Product Image" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-        
-              <div class="middle-side">
-                <div class="true-card">
-                  <div class="information">
-                    <div class="product-name dsc"><h2>ThunderStrike 99 Max</h2></div>
-                    <div class="product-series-name dsc"><span>ThunderStrik</span></div>
-                    <div class="size-id dsc"><span>3UG5 / 4UG5</span></div>
-                  </div>
-                </div>
-              </div>
-        
-              <div class="bottom-side">
-                <div class="true-card">
-                  <div class="function">
-                    <div class="btn"><button class="btn">Add to Cart</button></div>
-                    <div class="btn"><button class="btn">Buy</button></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="container">
-            <div class="product-card">
-              <div class="top-side">
-                <div class="true-card">
-                  <div class="picture-card">
-                    <div class="picture">
-                      <img id="productImage" src="/File/product_R0002_0.jpg" alt="Product Image" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-        
-              <div class="middle-side">
-                <div class="true-card">
-                  <div class="information">
-                    <div class="product-name dsc"><h2>ThunderStrike 99 Max</h2></div>
-                    <div class="product-series-name dsc"><span>ThunderStrik</span></div>
-                    <div class="size-id dsc"><span>3UG5 / 4UG5</span></div>
-                  </div>
-                </div>
-              </div>
-        
-              <div class="bottom-side">
-                <div class="true-card">
-                  <div class="function">
-                    <div class="btn"><button class="btn">Add to Cart</button></div>
-                    <div class="btn"><button class="btn">Buy</button></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+  <div class="left">
+    <div class="picture-card">
+      <img src="/File/product_R0001_1742917010-removebg-preview.png" alt="" width="500px">
     </div>
-
-
-  <script>
-    const imageList = [
-      "/File/product_R0002_0.jpg",
-      "/File/product_R0003_0.jpg",
-      "/File/product_R0004_0.jpg"
-    ];
-
-    let currentIndex = 0;
-
-    const imgElement = document.getElementById("productImage");
-
-    imgElement.addEventListener("click", () => {
-      currentIndex = (currentIndex + 1) % imageList.length;
-      imgElement.src = imageList[currentIndex];
-    });
-  </script>
+  </div>
+  <div class="right"></div>
 </body>
 </html>

@@ -454,6 +454,19 @@ class productDb{
         return $product;
     }
     
+    public function getSeriesID(){
+        $sql = "SELECT seriesID FROM series ";
+        $stmt = $this->pdo->query($sql);
+        $seriesIdList = $stmt->fetchAll();
+        return  $seriesIdList; 
+    }
+
+    public function getProductName(){
+        $sql = "SELECT productName FROM product ";
+        $stmt = $this->pdo->query($sql);
+        $productNameList = $stmt->fetchAll();
+        return  $productNameList; 
+    }
 
 
     

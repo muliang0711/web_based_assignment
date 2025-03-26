@@ -10,6 +10,11 @@ link_stylesheet($stylesheetArray);
 $productController = new ProductController($_db);
 $allProducts = $productController->getAllProducts();
 
+$productController = new ProductController($_db);
+$seriesIdList = $productController->getAllSeriesID();
+
+$productController = new ProductController($_db);
+$productNameList = $productController->getAllProductName();
 // Retrieve search results from session
 $searchProducts = $_SESSION['search_results'] ?? [];
 unset($_SESSION['search_results']);
@@ -40,7 +45,7 @@ unset($_SESSION['Delete_ErrorMsg']);
 
   <div style="margin-bottom: 1rem; display: flex ; justify-content : space-between ;">
 
-    <form style="display: flex;">
+    <form style="display: flex;" action="/controller/productController.php">
 
         <div style="flex: 1;">
 
@@ -56,34 +61,32 @@ unset($_SESSION['Delete_ErrorMsg']);
 
     </form>
           <!--filter bar or what right here -->
-        <form action="" style="display: flex; ">
+        <form action="/controller/productController.php" style="display: flex; ">
+          <label for="">Product Name</label>
+              <select style="padding: 0.5rem;">
+              <option></option>
+                <?php foreach($seriesIdList as $slist):  ?>
+             
+                <option><? echo $slist->seriesID?></option>
+                <??>
+              </select>
+          <label for="">Product Series ID</label>
               <select style="padding: 0.5rem;">
                 <option>All Categories</option>
                 <option>Active</option>
                 <option>Pending</option>
                 <option>Archived</option>
               </select>
-
-              <select style="padding: 0.5rem;">
-                <option>All Categories</option>
-                <option>Active</option>
-                <option>Pending</option>
-                <option>Archived</option>
-              </select>
-
-              <select style="padding: 0.5rem;">
+          <label for="">Product Size ID</label>
+              <select>
                 <option>All Categories</option>
                 <option>Active</option>
                 <option>Pending</option>
                 <option>Archived</option>
               </select>
               
-              <select style="padding: 0.5rem;">
-                <option>All Categories</option>
-                <option>Active</option>
-                <option>Pending</option>
-                <option>Archived</option>
-              </select>
+              <input type="number" step="25" name="minPrice" value="10" required>
+              <input type="number" step="25" name="maxPrice" value="25" required>
         </form>
  
   </div>
