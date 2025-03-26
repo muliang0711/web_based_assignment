@@ -50,33 +50,19 @@ unset($_SESSION['Delete_ErrorMsg']);
         <div style="flex: 1;">
 
               <div class="box">
-                  <form name="search" action="/controller/productController.php">
-                      <input type="text" class="input" name="searchText" onmouseout="this.value = ''; this.blur();" required>
+                  <form  action="/controller/productController.php">
+                      <input type="text" class="input" name="searchText" required>
+                      <button type="submit">submit</button>
                       <input type="hidden" name="action" value="search">
-                    </form>
-
-                  <i class="fas fa-search"></i>
+                  </form>
 
               </div>
         </div>
 
     </form>
           <!--filter bar or what right here -->
-<<<<<<< HEAD
-        <form action="/controller/productController.php" style="display: flex; ">
-          <label for="">Product Name</label>
-              <select style="padding: 0.5rem;">
-              <option></option>
-                <?php foreach($seriesIdList as $slist):  ?>
-             
-                <option><? echo $slist->seriesID?></option>
-                <??>
-              </select>
-          <label for="">Product Series ID</label>
-=======
         <form action="" style="display: flex; ">
           <input type="hidden" name="action" value="filter">
->>>>>>> 74f6c50391b0a0f88fa527bf569b2002c0529b05
               <select style="padding: 0.5rem;">
                 <option>All Categories</option>
                 <option>Active</option>
@@ -217,8 +203,8 @@ unset($_SESSION['Delete_ErrorMsg']);
 
         </tbody>
       </table>
-
     </div>
+
   </div>
 
 
