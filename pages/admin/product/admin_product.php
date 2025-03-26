@@ -45,9 +45,10 @@ unset($_SESSION['Delete_ErrorMsg']);
         <div style="flex: 1;">
 
               <div class="box">
-                  <form name="search">
-                      <input type="text" class="input" name="txt" onmouseout="this.value = ''; this.blur();">
-                  </form>
+                  <form name="search" action="/controller/productController.php">
+                      <input type="text" class="input" name="searchText" onmouseout="this.value = ''; this.blur();" required>
+                      <input type="hidden" name="action" value="search">
+                    </form>
 
                   <i class="fas fa-search"></i>
 
@@ -57,6 +58,7 @@ unset($_SESSION['Delete_ErrorMsg']);
     </form>
           <!--filter bar or what right here -->
         <form action="" style="display: flex; ">
+          <input type="hidden" name="action" value="filter">
               <select style="padding: 0.5rem;">
                 <option>All Categories</option>
                 <option>Active</option>
