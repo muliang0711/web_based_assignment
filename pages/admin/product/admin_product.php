@@ -46,7 +46,6 @@ unset($_SESSION['Delete_ErrorMsg']);
   <div style="margin-bottom: 1rem; display: flex ; justify-content : space-between ;">
 
     <form style="display: flex;" action="/controller/productController.php">
-
         <div style="flex: 1;">
 
               <div class="box">
@@ -58,28 +57,27 @@ unset($_SESSION['Delete_ErrorMsg']);
 
               </div>
         </div>
-
     </form>
           <!--filter bar or what right here -->
-        <form action="" style="display: flex; ">
-          <input type="hidden" name="action" value="filter">
-              <select style="padding: 0.5rem;">
-                <option>All Categories</option>
-                <option>Active</option>
-                <option>Pending</option>
-                <option>Archived</option>
-              </select>
-          <label for="">Product Size ID</label>
-              <select>
-                <option>All Categories</option>
-                <option>Active</option>
-                <option>Pending</option>
-                <option>Archived</option>
-              </select>
-              
-              <input type="number" step="25" name="minPrice" value="10" required>
-              <input type="number" step="25" name="maxPrice" value="25" required>
-        </form>
+    <form action="" style="display: flex; ">
+      <input type="hidden" name="action" value="filter">
+          <select style="padding: 0.5rem;">
+            <option>All Categories</option>
+            <option>Active</option>
+            <option>Pending</option>
+            <option>Archived</option>
+          </select>
+      <label for="">Product Size ID</label>
+          <select>
+            <option>All Categories</option>
+            <option>Active</option>
+            <option>Pending</option>
+            <option>Archived</option>
+          </select>
+            
+          <input type="number" step="25" name="minPrice" value="10" required>
+          <input type="number" step="25" name="maxPrice" value="25" required>
+    </form>
  
   </div>
 
@@ -150,6 +148,7 @@ unset($_SESSION['Delete_ErrorMsg']);
           <thead>
             <tr style="background-color: #f9f9f9;">
               <th class="th">product ID  </th>
+              <th class="th">product Name  </th>
               <th class="th">series ID</th>
               <th class="th">sizeID</th>
               <th class="th">price</th>
@@ -165,6 +164,7 @@ unset($_SESSION['Delete_ErrorMsg']);
             <!-- Product Info -->
             <tr>
               <td class="td"><?php echo htmlspecialchars($product->productID); ?></td>
+              <td class="td"><?php echo htmlspecialchars($product->productName); ?></td>
               <td class="td"><?php echo htmlspecialchars($product->seriesID); ?></td>
               <td class="td"><?php echo htmlspecialchars($product->sizeID); ?></td>
               <td class="td">RM<?php echo number_format($product->price, 2); ?></td>
