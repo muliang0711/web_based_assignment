@@ -35,6 +35,8 @@ class ProductController{
             case 'filterProduct':
                 $this->filterProducts(); //done 
                 break;
+            case 'search' :
+                $this->searchProduct();
             default:
                 $_SESSION['errors'] = 'Invalid action';
                 $this->redirectToAdmin();
@@ -84,7 +86,7 @@ class ProductController{
             }
         */
         
-        $_SESSION['search_results'] = $this->productDb->filterProduct($filters);
+        $_SESSION['filterResult'] = $this->productDb->filterProduct($filters);
         // what is the result look like ？ ： array of object 
         // result = [ 
         // (object) ["productName" => "Laptop", "price" => 1200] 
@@ -348,6 +350,26 @@ class ProductController{
         }
     
         return []; // No errors
+    }
+
+    private function searchProduct(){
+
+        // 1. fetch data : 
+        $searchText = $_POST['searchText'];
+
+        // 2. validation : future 
+
+        // 3. call db service :
+        // 3.1 save result in session variable : 
+
+        $searchResult = $this->productDb->search($searchText);
+        $encodeResult = urlencode(json_encode($searchResult));
+
+        // 4. direct to target page 
+        header("Location : ../pages/admin/product/searchResult.php?" . urldecode($searchText)
+                &result = $encodeResult) ;
+        exit();
+
     }
 //====================================================================================
 }

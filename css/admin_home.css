@@ -9,7 +9,7 @@
     text-align: center;
     text-shadow:5px 1px 3px rgba(0, 0, 0, 0.2);
     border: 2px solid white;
-    border-radius: 50px 20px;
+    border-radius: 20px;
     box-shadow: 5px 5px rgba(0, 0, 0, 0.2);
 
     position: relative;
@@ -41,4 +41,18 @@
     font:blue;
     padding:20px 50px;
     text-decoration: underline;
+}
+
+.chart {
+/* display: inline-block; */
+padding:20px;
+}
+.bar{
+    transform: scale(0.9); 
+    transform-origin:center; 
+}
+.pie{
+    /* transform: scale(0.8); 
+    transform-origin:center;  */
+
 }

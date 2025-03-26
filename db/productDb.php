@@ -454,6 +454,7 @@ class productDb{
         return $product;
     }
     
+<<<<<<< HEAD
     public function getSeriesID(){
         $sql = "SELECT seriesID FROM series ";
         $stmt = $this->pdo->query($sql);
@@ -466,6 +467,24 @@ class productDb{
         $stmt = $this->pdo->query($sql);
         $productNameList = $stmt->fetchAll();
         return  $productNameList; 
+=======
+    public function search($searchText){
+        // 1. search from the product table :
+        // 2. search from the size table :
+        // 3. search from the series table : 
+
+        $sql = "SELECT productName , productID FROM  product WHERE productName like ?  OR productID like ?  
+                UNION
+                SELECT seriesName , seriesID FROM series WHERE seriesName like ? OR seriesID like ? 
+                UNION 
+                SELECT sizeID FROM productsize WHERE sizeID like ?  "; 
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute($searchText , $searchText , $searchText , $searchText , $searchText);
+
+        $stmt->fetchAll();
+
+        return $stmt ; 
+>>>>>>> 74f6c50391b0a0f88fa527bf569b2002c0529b05
     }
 
 

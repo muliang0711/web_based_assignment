@@ -32,7 +32,15 @@ $arr = $_db->query('SELECT * FROM admin')->fetchAll();
                     <tr class="row">
                         <td class="td"><?= $a->id ?></td>
                         <td class="td"><?= $a->position ?></td>
-                        <td class="td"><button class="action-btn-delete" data-post="/pages/admin/adminDelete.php?id=<?= $a->id ?>" data-confirm="Are you sure you want to delete"><i class="fas fa-trash"></i></button></td>
+                        <td class="td"><button class="action-btn-delete" data-post="/pages/admin/adminDelete.php?id=<?= $a->id ?>" data-confirm="Are you sure you want to delete"><i class="fas fa-trash"></i></button>
+                        <?php if ($a->status=='Active'): ?>
+                                <button class="action-btn-delete" data-post="/pages/admin/blockAdmin.php?id=<?= $a->id  ?>" data-confirm="Are you sure you want to block this user?"><i class="fas fa-ban"></i></button>
+                                <?php endif ?>
+                                <?php if ($a->status=='Blocked'): ?>
+                                <button class="action-btn-unblocked" data-post="/pages/admin/unblockAdmin.php?id=<?= $a->id  ?>" data-confirm="Are you sure you want to unblock this user?"><i class="fas fa-unlock"></i></button>
+                                <?php endif ?>
+                                </td>
+                    
                     </tr>
                 <?php endforeach ?>
             </table>
