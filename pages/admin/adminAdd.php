@@ -100,7 +100,7 @@ if (is_post()) {
         // echo "helloooo\n";
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
         $stm = $_db->prepare('INSERT INTO admin
-                            (id, position, password, adminLevel)
+                            (id, position, passwordHash, adminLevel)
                             VALUES(?, ?, ?, ?)');
         $stm->execute([$id, $position, $password, $level]);
 

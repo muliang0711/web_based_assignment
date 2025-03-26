@@ -11,6 +11,11 @@
         return new Promise(resolve => setTimeout(resolve, ms));
     }
 
+    $("[data-order-id]").on("click", function(e){
+      let oid = this.dataset.orderId;
+      location = "orderDetails.php?id=" + oid;
+  })
+
     $(".dropdown").on('click', function() {
 
 
@@ -23,7 +28,8 @@
 
         $(".noanimation").not($(this).closest(".order")).removeClass("noanimation");
 
-        $(this).toggleClass('rotate');
+        
+        $(this).child("svg").toggleClass('rotate');
         $(this).closest(".order").next("div").toggleClass("show");
         $(this).closest(".order").next("div").children(".order-details-wrapper").toggleClass("show");
         $(this).closest(".order").toggleClass("noanimation");

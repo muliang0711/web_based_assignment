@@ -8,7 +8,18 @@ $scriptArray = ['/js/app.js'];       // 注意：这边只放特定于此页面�
 require_once  "../admin/main.php";
 ?>
 <?php
-$arr = $_db->query('SELECT * FROM user')->fetchAll();
+$fields = [
+    'userID' => 'Customer ID',
+    'username' => 'Name',
+    'phoneNo' => 'Contact Number',
+    'memberStatus' => 'Member Status'
+];
+
+$sort = req('sort');
+key_exists($sort,$fields)||$sort='userID';
+$dir = req('dir');
+in_array($dir,['asc','desc'])||$dir='asc';
+$arr = $_db->query("SELECT * FROM user order by $sort $dir")->fetchAll();
 ?>
 <div class="searchBar">
     <a href="" class="add">Add Admin</a>
@@ -28,12 +39,7 @@ padding: 1rem;">
             <table class="tb">
                 <tr>
                 <?php
-        $fields = [
-            'userID' => 'Customer ID',
-            'username' => 'Name',
-            'phoneNo' => 'Contact Number',
-            'memberStatus' => 'Member Status'
-        ];
+        
         sorting($fields, $_GET['sort'] ?? '', $_GET['dir'] ?? '');
         ?>
         <th>Action</th> 

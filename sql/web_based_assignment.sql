@@ -7,6 +7,10 @@
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
+
+--DROP DATABASE `web_based_assignment
+
+
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
@@ -31,7 +35,7 @@ USE web_based_assignment;
 CREATE TABLE `admin` ( 
   `id` varchar(10) NOT NULL,
   `position` varchar(20) NOT NULL,
-  `password` varchar(15) NOT NULL,
+  `passwordHash` varchar(255) NOT NULL,
   `adminLevel` ENUM('main', 'staff') NOT NULL,
   `status` ENUM('Active', 'Blocked') NOT NULL
   -- PRIMARY KEY (`id`)
@@ -40,18 +44,24 @@ CREATE TABLE `admin` (
 --
 -- Dumping data for table `admin`
 --
+-- 
+-- ('A001', 'HR Manager', 'pass123', 'main', 'Active'),
+-- ('A002', 'IT Support', 'itpass', 'staff', 'Active'),
+-- ('A003', 'Finance Head', 'finpass', 'main', 'Blocked'),
+-- ('A004', 'Marketing Lead', 'mkpass', 'staff', 'Active'),
+-- ('A005', 'Operations', 'oppass', 'staff', 'Blocked'),
+-- ('A006', 'Sales Manager', 'salepass', 'main', 'Active'),
+-- ('A007', 'Admin Assistant', 'admpass', 'staff', 'Blocked'),
+-- ('A008', 'Project Manager', 'pm123', 'main', 'Active'),
+-- ('A009', 'Customer Support', 'cspass', 'staff', 'Blocked'),
+-- ('A010', 'Security', 'secpass', 'staff', 'Active');
+INSERT INTO `admin` (`id`, `position`, `passwordHash`, `adminLevel`, `status`) VALUES
+('A001', 'HR Manager', '$2y$10$5Y2WIZtHCoElCeI6IXp94.4TiLKeTcbOK5AgTswY9oAwbFw9FViFi', 'main', 'Active'),
+('A002', 'IT Support', '$2y$10$2ioQwFoTCz3dH1AjoKG7NuOAHqKjzmecG7b.8BPW5aGiuImR9oji2', 'staff', 'Active'),
+('A003', 'Finance Head', '$2y$10$AeTa6/0xSoeDf2gz0.bXE.i1/kG56Alerke8pFPhe9NSVBVOKA3wi', 'main', 'Blocked'),
+('A004', 'Marketing Lead', '$2y$10$rYBjsAfzbPMGCn4MANIZ.ef78dfu/MnSbq8RwOKHnY272KCo9h8gK', 'staff', 'Active'),
+('A005', 'Operations', '$2y$10$.2ZxTbzEPRnm0H9EYwJQnOG2YBQL8plEmxN3K7WzIAJHO1FUUYVFW', 'staff', 'Blocked');
 
-INSERT INTO `admin` (`id`, `position`, `password`, `adminLevel`, `status`) VALUES
-('A001', 'HR Manager', 'pass123', 'main', 'Active'),
-('A002', 'IT Support', 'itpass', 'staff', 'Active'),
-('A003', 'Finance Head', 'finpass', 'main', 'Blocked'),
-('A004', 'Marketing Lead', 'mkpass', 'staff', 'Active'),
-('A005', 'Operations', 'oppass', 'staff', 'Blocked'),
-('A006', 'Sales Manager', 'salepass', 'main', 'Active'),
-('A007', 'Admin Assistant', 'admpass', 'staff', 'Blocked'),
-('A008', 'Project Manager', 'pm123', 'main', 'Active'),
-('A009', 'Customer Support', 'cspass', 'staff', 'Blocked'),
-('A010', 'Security', 'secpass', 'staff', 'Active');
 
 -- --------------------------------------------------------
 

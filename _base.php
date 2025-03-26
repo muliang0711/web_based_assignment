@@ -267,6 +267,7 @@ $_admin;
 if (is_logged_in("user")) {
     global $_db;
     global $_user;
+    // Reminder: userID is a NUMBER, therefore does not require single quotes
     $_user = $_db->query("SELECT * FROM user WHERE userID = {$_SESSION['userID']}")->fetch();
 }
 
@@ -274,7 +275,8 @@ if (is_logged_in("user")) {
 if (is_logged_in("admin")) {
     global $_db;
     global $_admin;
-    $_admin = $_db->query("SELECT * FROM `admin` WHERE id = {$_SESSION['adminID']}")->fetch();
+    // Reminder: admin's id column is a VARCHAR, therefore requires single quotes
+    $_admin = $_db->query("SELECT * FROM `admin` WHERE id = '{$_SESSION['adminID']}'")->fetch();
 }
 
 // TODO
