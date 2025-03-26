@@ -185,24 +185,7 @@ header{
   .btn-delete {
     background-color: #dc3545;
   } */
-  .action-btn-details:hover {
-    background-color: #218838;
-    color:white;
-  }
 
-  .action-btn-delete:hover {
-    background-color: #c82333;
-    color: white;
-  }
-
-  .btn-detail {
-    background-color: #2847d1;
-
-  }
-  .btn-detail:hover {
-    background-color: #062095;
-  }
-  
   .btn {
     font-size: 13px;
     padding: 5px 8px;

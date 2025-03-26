@@ -28,28 +28,30 @@ USE web_based_assignment;
 -- Table structure for table `admin`
 --
 
-CREATE TABLE `admin` (
+CREATE TABLE `admin` ( 
   `id` varchar(10) NOT NULL,
   `position` varchar(20) NOT NULL,
   `password` varchar(15) NOT NULL,
-  `adminLevel` varchar(5) NOT NULL
+  `adminLevel` ENUM('main', 'staff') NOT NULL,
+  `status` ENUM('Active', 'Blocked') NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `admin`
 --
 
-INSERT INTO `admin` (`id`, `position`, `password`, `adminLevel`) VALUES
-('1', 'Manager', 'pass123', '5'),
-('10', 'CEO', 'admin000', '5'),
-('2', 'Employee', 'pass234', '2'),
-('3', 'Supervisor', 'pass345', '4'),
-('4', 'Clerk', 'pass456', '1'),
-('5', 'Technician', 'pass567', '3'),
-('6', 'Director', 'pass678', '5'),
-('7', 'Intern', 'pass789', '0'),
-('8', 'HR', 'pass890', '3'),
-('9', 'Accountant', 'pass901', '2');
+INSERT INTO `admin` (`id`, `position`, `password`, `adminLevel`, `status`) VALUES
+('A001', 'HR Manager', 'pass123', 'main', 'Active'),
+('A002', 'IT Support', 'itpass', 'staff', 'Active'),
+('A003', 'Finance Head', 'finpass', 'main', 'Blocked'),
+('A004', 'Marketing Lead', 'mkpass', 'staff', 'Active'),
+('A005', 'Operations', 'oppass', 'staff', 'Blocked'),
+('A006', 'Sales Manager', 'salepass', 'main', 'Active'),
+('A007', 'Admin Assistant', 'admpass', 'staff', 'Blocked'),
+('A008', 'Project Manager', 'pm123', 'main', 'Active'),
+('A009', 'Customer Support', 'cspass', 'staff', 'Blocked'),
+('A010', 'Security', 'secpass', 'staff', 'Active');
 
 -- --------------------------------------------------------
 

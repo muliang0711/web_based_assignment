@@ -42,3 +42,16 @@
     padding:20px 50px;
     text-decoration: underline;
 }
+
+.chart {
+/* display: inline-block; */
+}
+.bar{
+    /* transform: scale(0.5); 
+    transform-origin:center;  */
+}
+.pie{
+    /* transform: scale(0.8); 
+    transform-origin:center;  */
+
+}
