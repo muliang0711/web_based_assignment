@@ -21,9 +21,9 @@ try {
     $stmA->execute();
     $resultA = $stmA->fetch();
 
-    $stmB = $_db->prepare("SELECT ProductID,ProductName FROM Product");
-    $stmB->execute();
-    $resultB = $stmB->fetchAll();
+    // $stmB = $_db->prepare("SELECT ProductID,ProductName FROM Product");
+    // $stmB->execute();
+    // $resultB = $stmB->fetchAll();
 
     //percentage of the product
     $stmC = $_db->prepare("SELECT 
@@ -54,7 +54,7 @@ try {
 
 <div class="title">Today Sales</div>
 <div class="main-content" style="  margin-left: var(--sidebar-width);
-  margin-top: 50px;
+  margin-top: 10px;
   padding: 1rem;">
     <table class="block">
         <tr>
@@ -81,15 +81,15 @@ try {
         </tr>
     </table>
 
-
+<!-- 
     <table>
-        <?php foreach ($resultB as $s): ?>
+        ?php foreach ($resultB as $s): ?>
             <tr>
-                <td><?= $s->ProductID ?></td>
-                <td><?= $s->ProductName ?></td>
+                <td>?= $s->ProductID ?></td>
+                <td>?= $s->ProductName ?></td>
             </tr>
-        <?php endforeach ?>
-    </table>
+        ?php endforeach ?>
+    </table> -->
 <br>
     <div class="Chart">
         <div class="pie">

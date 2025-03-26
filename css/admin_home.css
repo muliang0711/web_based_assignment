@@ -45,10 +45,11 @@
 
 .chart {
 /* display: inline-block; */
+padding:20px;
 }
 .bar{
-    /* transform: scale(0.5); 
-    transform-origin:center;  */
+    transform: scale(0.9); 
+    transform-origin:center; 
 }
 .pie{
     /* transform: scale(0.8); 
