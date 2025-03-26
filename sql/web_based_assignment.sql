@@ -33,8 +33,8 @@ CREATE TABLE `admin` (
   `position` varchar(20) NOT NULL,
   `password` varchar(15) NOT NULL,
   `adminLevel` ENUM('main', 'staff') NOT NULL,
-  `status` ENUM('Active', 'Blocked') NOT NULL,
-  PRIMARY KEY (`id`)
+  `status` ENUM('Active', 'Blocked') NOT NULL
+  -- PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -252,7 +252,7 @@ INSERT INTO `series` (`seriesID`, `seriesName`) VALUES
 CREATE TABLE `user` (
   `userID` int(11) NOT NULL,
   `username` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL,
+  `passwordHash` varchar(255) NOT NULL,
   `address` text DEFAULT NULL,
   `birthdate` date DEFAULT NULL,
   `email` varchar(255) NOT NULL,
@@ -267,7 +267,7 @@ CREATE TABLE `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`userID`, `username`, `password`, `address`, `birthdate`, `email`, `phoneNo`, `gender`, `profilePic`, `bio`, `memberStatus`) VALUES
+INSERT INTO `user` (`userID`, `username`, `passwordHash`, `address`, `birthdate`, `email`, `phoneNo`, `gender`, `profilePic`, `bio`, `memberStatus`) VALUES
 (1, 'cookie', '123', NULL, NULL, 'cookie@mail.com', '012-3456789', 'R', NULL, 'I love cookies, as you may have already guessed', 'Inactive'),
 (2, 'icecream', '456', NULL, NULL, 'icecream@mail.com', '012-9876543', 'R', NULL, 'I love ice cream!', 'Inactive');
 
