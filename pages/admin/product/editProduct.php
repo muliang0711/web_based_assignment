@@ -104,7 +104,7 @@ link_stylesheet($stylesheetArray);
 
       <div class="form-group">
         <label>Upload New Product Images</label>
-        <input type="file" name="productImage[]" accept="image/*" multiple required>
+        <input type="file" name="productImage[]" accept="image/*" multiple >
       </div>
 
       <!-- Existing Player Images -->
@@ -120,7 +120,7 @@ link_stylesheet($stylesheetArray);
       <!-- Upload New Player Images -->
       <div class="form-group">
         <label>Upload New Player Images</label>
-        <input type="file" name="playerImage[]" accept="image/*" multiple required>
+        <input type="file" name="playerImage[]" accept="image/*" multiple >
       </div>
         
       <button type="button" class="back-btn" onclick="window.location.href='admin_product.php'">← Back</button>

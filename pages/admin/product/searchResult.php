@@ -38,12 +38,14 @@ if (empty($searchResult)) {
 
 
             <div style="padding: 1rem;">
-                <table class="tb">
+                <table class="tb ">
 
                 <thead>
                         <tr style="background-color: #f9f9f9;">
                         <th class="th">product ID  </th>
+                        <th class="th">product Name  </th>
                         <th class="th">series ID</th>
+                        <th class="th">series Name</th>
                         <th class="th">sizeID</th>
                         <th class="th">price</th>
                         <th class="th">stock</th>
@@ -56,11 +58,13 @@ if (empty($searchResult)) {
 
                         <!-- Product Info -->
                         <tr>
-                            <td class="td"><?php echo htmlspecialchars($product->productID); ?></td>
-                            <td class="td"><?php echo htmlspecialchars($product->seriesID); ?></td>
-                            <td class="td"><?php echo htmlspecialchars($product->sizeID); ?></td>
-                            <td class="td">RM<?php echo number_format($product->price, 2); ?></td>
-                            <td class="td"><?php echo htmlspecialchars($product->total_stock); ?></td>
+                            <td class="td searchtext"><?php echo htmlspecialchars($product->productID); ?></td>
+                            <td class="td searchtext"><?php echo htmlspecialchars($product->productName); ?></td>
+                            <td class="td searchtext"><?php echo htmlspecialchars($product->seriesID); ?></td>
+                            <td class="td searchtext"><?php echo htmlspecialchars($product->seriesName); ?></td>
+                            <td class="td searchtext"><?php echo htmlspecialchars($product->sizeID); ?></td>
+                            <td class="td searchtext">RM<?php echo number_format($product->price, 2); ?></td>
+                            <td class="td searchtext"><?php echo htmlspecialchars($product->total_stock); ?></td>
                             <td class="td">
                                 <!-- View Details -->
                                 <a href="productDetails.php?productID=<?php echo $product->productID; ?>&sizeID=<?php echo $product->sizeID; ?>" class="action-btn-details">
@@ -96,3 +100,28 @@ if (empty($searchResult)) {
     </div>
 </body>
 </html>
+
+<script>
+    // Get search query from URL
+    const params = new URLSearchParams(window.location.search);
+    const searchQuery = params.get("search");
+
+function highlightSearchTerm(term) {
+
+
+
+
+  if (!term) return;
+
+  const elementsToSearch = document.querySelectorAll(".searchtext");
+
+  elementsToSearch.forEach(element => {
+    const regex = new RegExp(`(${term})`, "gi");
+    element.innerHTML = element.innerHTML.replace(regex, '<mark>$1</mark>');
+  });
+}
+
+// Call the function
+highlightSearchTerm(searchQuery);
+
+</script>

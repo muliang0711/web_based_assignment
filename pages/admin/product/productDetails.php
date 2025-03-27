@@ -40,7 +40,7 @@ if (!$product) {
       </div>
 
       <div class="form-group">
-        <label>Series ID</label>
+        <label>Series Name</label>
         <input type="text" value="<?php echo htmlspecialchars($product['seriesID']); ?>" disabled>
       </div>
 

@@ -148,7 +148,6 @@ unset($_SESSION['Delete_ErrorMsg']);
           <thead>
             <tr style="background-color: #f9f9f9;">
               <th class="th">product ID  </th>
-              <th class="th">product Name  </th>
               <th class="th">series ID</th>
               <th class="th">sizeID</th>
               <th class="th">price</th>
@@ -164,7 +163,6 @@ unset($_SESSION['Delete_ErrorMsg']);
             <!-- Product Info -->
             <tr>
               <td class="td"><?php echo htmlspecialchars($product->productID); ?></td>
-              <td class="td"><?php echo htmlspecialchars($product->productName); ?></td>
               <td class="td"><?php echo htmlspecialchars($product->seriesID); ?></td>
               <td class="td"><?php echo htmlspecialchars($product->sizeID); ?></td>
               <td class="td">RM<?php echo number_format($product->price, 2); ?></td>
