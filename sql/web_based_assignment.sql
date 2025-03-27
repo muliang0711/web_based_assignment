@@ -8,7 +8,7 @@
 -- PHP Version: 8.0.30
 
 
---DROP DATABASE `web_based_assignment
+-- DROP DATABASE `web_based_assignment`
 
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
