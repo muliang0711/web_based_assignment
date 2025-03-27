@@ -34,6 +34,7 @@ class ProductController{
             'deleteProduct'  => 'deleteProduct',
             'filterProduct'  => 'filterProducts',
             'search'         => 'searchProduct',
+            'updateStatus'   => 'updateStatus',
         ];
 
 
@@ -62,6 +63,7 @@ class ProductController{
     public  function getAllProductName(){
         return  $this->productDb->getProductName();
     }
+
 
 
     //====================== All Private Function : 
@@ -379,10 +381,29 @@ class ProductController{
         exit();
 
     }
+
+    private function updateStatus(){
+
+        // fetch data : 
+        $data = json_decode(file_get_contents('php://input') , true );
+
+        // validation  : 
+        $correctData =  isset($data['productID'], $data['status']) &&
+                        in_array($data['status'], ['onsales', 'notonsales']);
+      
+        // get data : 
+        $productID = $correctData['productID'];
+        $sizeID = $correctData['sizeID'];
+        $status = $correctData['status'];
+        $action = $correctData['action'];
+
+    }
+
 //====================================================================================
 }
 $productController = new ProductController($_db);
 if (isset($_GET['action']) || isset($_POST['action'])) {
     $productController->handleAction();
 }
+
 ?>

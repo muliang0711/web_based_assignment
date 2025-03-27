@@ -34,6 +34,7 @@ class productDb{
             p.seriesID, 
             s.seriesName, 
             ps.sizeID, 
+            ps.status,
             ps.quantity AS total_stock 
             FROM product p
             JOIN productsize ps ON p.productID = ps.productID
@@ -493,6 +494,7 @@ class productDb{
 
         return $stmt->fetchAll();; 
     }
+
 
 
     
