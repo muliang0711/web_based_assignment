@@ -215,7 +215,12 @@ function exists_in_db($value, $table, $field) {
  * @return void
  */
 function validateRole($role): void {
-    if ($role !== "admin" && $role !== "user") {
+    $roles = [
+        "main",
+        "staff",
+        "user"
+    ];
+    if (!$roles.include($role)) {
         throw new InvalidArgumentException("Invalid role: $role. Allowed values: 'admin' or 'user'.");
     }
 }

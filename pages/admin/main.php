@@ -1,3 +1,7 @@
+<?php
+include '../../admin_login_guard.php';
+?> 
+
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
