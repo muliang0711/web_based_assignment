@@ -15,9 +15,7 @@ $seriesIdList = $productController->getAllSeriesID();
 
 $productController = new ProductController($_db);
 $productNameList = $productController->getAllProductName();
-// Retrieve search results from session
-$searchProducts = $_SESSION['search_results'] ?? [];
-unset($_SESSION['search_results']);
+
 
 // Retrieve messages
 $Add_SuccessMsg = $_SESSION['Add_SuccessMsg'] ?? null;

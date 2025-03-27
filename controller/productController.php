@@ -17,8 +17,7 @@ class ProductController{
         $this->track = new track($_pdo);
     }
 
-    public function handleAction()
-    {
+    public function handleAction(){
 
         $action = $_POST['action'] ?? $_GET['action'] ?? null;
 
@@ -175,13 +174,15 @@ class ProductController{
         $productInformation = [
             'productId' => $_POST['productId'] ?? null,
             'productName' => $_POST['productName'] ?? null,
-            'seriesId' => $_POST['seriesId'] ?? null,
-            'seriesName' => $_POST['seriesName'] ?? null,
+            'seriesId'    => $_POST['seriesId'] ?? null,
+            'seriesName'  => $_POST['seriesName'] ?? null,
             'sizeId' => $_POST['sizeId'] ?? null,
             'stock' => $_POST['stock'] ?? null,
-            'price' => $_POST['price'] ?? null,
-            'oldSizeID' => $_POST['oldSizeID'] ?? null ,                
+            'price' => $_POST['price'] ?? null, 
+            'introduction' => $_POST['introduction'] ?? null, 
+            'playerInfo'   => $_POST['playerInfo'] ?? null,           
         ];
+        //var_dump($productInformation);
 
         // start validation : ----------------
 
@@ -223,7 +224,7 @@ class ProductController{
             $_SESSION['Update_ErrorMsg'] = ["Error: " . $e->getMessage()];
         }   
 
-        $this->redirectToAdmin();
+         $this->redirectToAdmin();
 
     }
 
