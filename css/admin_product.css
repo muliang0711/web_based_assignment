@@ -225,3 +225,22 @@ table th {
   background-color: #dc3545;
   color: white;
 }
+
+.toggle-btn {
+  padding: 0.4rem 0.6rem; 
+  background: none; 
+  cursor: pointer; 
+  transition: background-color 0.3s ease;
+}
+
+.onsales {
+  border: 1px solid #17b824; 
+  color: #28a745;
+}
+
+.notonsales {
+  border: 1px solid #b81717; 
+  color: #dc3545;
+}
+
+

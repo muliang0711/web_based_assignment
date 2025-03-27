@@ -37,7 +37,9 @@ $Delete_ErrorMsg = $_SESSION['Delete_ErrorMsg'] ?? [];
 unset($_SESSION['Delete_ErrorMsg']);
 
 ?>
-    
+    <style>
+     
+    </style>
 <div class="main-content">
     <!-- Example Search/Filter Section -->
 
@@ -81,7 +83,7 @@ unset($_SESSION['Delete_ErrorMsg']);
 
           <!-- Alert -->
          <!-- Messages -->
-  <div style="background-color: #d4edda; color: #155724; padding: 0.75rem; margin-bottom: 1rem; border: 1px solid #c3e6cb;">
+  <div style="background-color:rgb(255, 255, 255); color:rgb(255, 255, 255); padding: 0.75rem; margin-bottom: 1rem; border: 1px solidrgb(255, 255, 255);">
      <section class="messages result ">
       <?php if ($Add_SuccessMsg): ?>
         <div class="success-message">
@@ -176,7 +178,6 @@ unset($_SESSION['Delete_ErrorMsg']);
                       <i class="fas fa-eye"></i>
                     </a>
 
-
                     <!-- Edit -->
                     <a href="editProduct.php?productID=<?php echo $product->productID; ?> &sizeID=<?php echo $product->sizeID; ?>" class="action-btn-edit" title="Edit Product">
                       <i class="fa-solid fa-pen-to-square"></i>
@@ -190,6 +191,15 @@ unset($_SESSION['Delete_ErrorMsg']);
                         <i class="fas fa-trash"></i>
                       </button>
                     </form>
+
+                    <button class="status-toggle-btn toggle-btn <?php echo $product->status === 'onsales' ? 'onsales' : 'notonsales'; ?>"
+                            data-product-id="<?php echo $product->productID; ?>"
+                            data-status="<?php echo $product->status; ?>">
+                      <i class="fas <?php echo $product->status === 'onsales' ? 'fa-toggle-on' : 'fa-toggle-off'; ?>"></i>
+                      <?php echo $product->status === 'onsales' ? 'On Sale' : 'Not On Sale'; ?>
+                    </button>
+
+                    
 
                 </td>
             </tr>
@@ -230,6 +240,45 @@ include "../../../admin_foot.php"
         e.preventDefault(); // Cancel submission
       }
     });
+
+  const button = document.getElementById('statusToggleBtn');
+
+  document.querySelectorAll('.status-toggle-btn').forEach(button => {
+
+    button.addEventListener('click', async () => {
+      const productID = button.dataset.productId;
+      const currentStatus = button.dataset.status;
+      const newStatus = currentStatus === 'onsales' ? 'notonsales' : 'onsales';
+
+      button.dataset.status = newStatus;
+      if (newStatus === 'onsales') {
+        button.classList.remove('notonsales');
+        button.classList.add('onsales');
+        button.innerHTML = `<i class="fas fa-toggle-on"></i> On Sale`;
+      } else {
+        button.classList.remove('onsales');
+        button.classList.add('notonsales');
+        button.innerHTML = `<i class="fas fa-toggle-off"></i> Not On Sale`;
+      }
+
+      try {
+        await fetch('/controller/productcController.php', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            productID: productID,
+            status: newStatus
+          })
+        });
+      } catch (error) {
+        console.error('Failed to update status:', error);
+        alert('Something went wrong updating the status.');
+      }
+    });
   });
+
+});
 </script>
 
