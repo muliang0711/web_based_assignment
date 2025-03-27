@@ -299,3 +299,16 @@ header{
     color: white;
   }
   
+
+.tb th a {
+    color: inherit;
+    display: block;
+    color:black;
+    text-decoration: none;
+}
+.tb th a.asc::after {
+    content: ' ▴';
+}
+.tb th a.desc::after {
+    content: ' ▾';
+}
