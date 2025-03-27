@@ -1,0 +1,5 @@
+1. filter function 
+2. page silde 
+3. add button move to top 
+4. add a status on  product (turn in to NOT ON SALES )
+5. delete function replace with delete product image 

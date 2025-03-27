@@ -174,11 +174,9 @@ class productDb{
         // fetch data 
         $productID = $productInformation['productId'];
         $productName = $productInformation['productName'];
-        $seriesID = $productInformation['seriesId'];
         $sizeID = $productInformation['sizeId'];
         $price = $productInformation['price'];
         $quantity = $productInformation['stock']; 
-        $oldSizeID = $productInformation['oldSizeID'];
         $introduction = $productInformation['introduction'];
         $playerInfo = $productInformation['playerInfo'];
 
@@ -454,7 +452,6 @@ class productDb{
         return $product;
     }
     
-<<<<<<< HEAD
     public function getSeriesID(){
         $sql = "SELECT seriesID FROM series ";
         $stmt = $this->pdo->query($sql);
@@ -467,24 +464,34 @@ class productDb{
         $stmt = $this->pdo->query($sql);
         $productNameList = $stmt->fetchAll();
         return  $productNameList; 
-=======
+    }
+
     public function search($searchText){
         // 1. search from the product table :
         // 2. search from the size table :
         // 3. search from the series table : 
 
-        $sql = "SELECT productName , productID FROM  product WHERE productName like ?  OR productID like ?  
-                UNION
-                SELECT seriesName , seriesID FROM series WHERE seriesName like ? OR seriesID like ? 
-                UNION 
-                SELECT sizeID FROM productsize WHERE sizeID like ?  "; 
+        $searchText ='%' . $searchText . '%';
+        
+        $sql = "SELECT 
+                p.productID, 
+                p.productName, 
+                p.price, 
+                p.seriesID, 
+                s.seriesName, 
+                ps.sizeID, 
+                ps.quantity AS total_stock 
+                FROM product p
+                JOIN series s ON p.seriesID = s.seriesID 
+                JOIN productSize ps ON p.productID = ps.productID 
+                WHERE p.productName LIKE ? OR s.seriesName LIKE  ? OR s.seriesID LIKE ? 
+            "; 
         $stmt = $this->pdo->prepare($sql);
-        $stmt->execute($searchText , $searchText , $searchText , $searchText , $searchText);
+        $stmt->execute([$searchText , $searchText , $searchText]);
 
-        $stmt->fetchAll();
+        
 
-        return $stmt ; 
->>>>>>> 74f6c50391b0a0f88fa527bf569b2002c0529b05
+        return $stmt->fetchAll();; 
     }
 
 
@@ -520,7 +527,7 @@ class productDb{
             $sql = "UPDATE product set productName = ? , price = ?  , introduction = ? , playerINfo = ?  
                     WHERE productID = ? " ;
             $stmt = $this->pdo->prepare($sql);
-            $stmt->execute([$productName , $price , $productID , $introduction , $playerInfo]);
+            $stmt->execute([$productName , $price , $introduction , $playerInfo , $productID]);
 
         }catch(Exception $e){
             throw new Exception("Error insert into product : " . $e->getMessage());

@@ -25,13 +25,9 @@ link_stylesheet($stylesheetArray);
     <div class="left-side box">
       <h3 class="section-title">Edit Product Info</h3>
 
-      <input type="hidden" name="productId" value="<?php echo $product['productID']; ?>" >
-
-      <input type="hidden" name="sizeId" value="<?php echo $product['sizeID']; ?>">
-
       <div class="form-group">
         <label>Product Id</label>
-        <input type="text" name="productName" value="<?php echo htmlspecialchars($product['productID']); ?>" readonly>
+        <input type="text" name="productId" value="<?php echo htmlspecialchars($product['productID']); ?>" readonly>
       </div>
 
       <div class="form-group">
@@ -39,16 +35,17 @@ link_stylesheet($stylesheetArray);
         <input type="text" name="productName" value="<?php echo htmlspecialchars($product['productName']); ?>" required>
       </div>
 
-
-      <div class="form-group">
-        <label>Series ID</label>
-        <input type="text" name="seriesName" value="<?php echo htmlspecialchars($product['seriesName']); ?>" readonly>
-      </div>
-
       <div class="form-group">
         <label>Series ID</label>
         <input type="text" name="seriesId" value="<?php echo htmlspecialchars($product['seriesID']); ?>" readonly>
       </div>
+      
+      <div class="form-group">
+        <label>Series Name</label>
+        <input type="text" name="seriesName" value="<?php echo htmlspecialchars($product['seriesName']); ?>" readonly>
+      </div>
+
+
 
       <div class="form-group">
         <label>Size ID</label>
@@ -104,7 +101,7 @@ link_stylesheet($stylesheetArray);
 
       <div class="form-group">
         <label>Upload New Product Images</label>
-        <input type="file" name="productImage[]" accept="image/*" multiple required>
+        <input type="file" name="productImage[]" accept="image/*" multiple >
       </div>
 
       <!-- Existing Player Images -->
@@ -120,7 +117,7 @@ link_stylesheet($stylesheetArray);
       <!-- Upload New Player Images -->
       <div class="form-group">
         <label>Upload New Player Images</label>
-        <input type="file" name="playerImage[]" accept="image/*" multiple required>
+        <input type="file" name="playerImage[]" accept="image/*" multiple >
       </div>
         
       <button type="button" class="back-btn" onclick="window.location.href='admin_product.php'">← Back</button>

@@ -90,4 +90,7 @@ body {
   background-color: #1630a5;
   color: white;
 }
-
+mark {
+  background-color: yellow;
+  font-weight: bold;
+}

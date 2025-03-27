@@ -15,9 +15,7 @@ $seriesIdList = $productController->getAllSeriesID();
 
 $productController = new ProductController($_db);
 $productNameList = $productController->getAllProductName();
-// Retrieve search results from session
-$searchProducts = $_SESSION['search_results'] ?? [];
-unset($_SESSION['search_results']);
+
 
 // Retrieve messages
 $Add_SuccessMsg = $_SESSION['Add_SuccessMsg'] ?? null;
@@ -46,54 +44,38 @@ unset($_SESSION['Delete_ErrorMsg']);
   <div style="margin-bottom: 1rem; display: flex ; justify-content : space-between ;">
 
     <form style="display: flex;" action="/controller/productController.php">
-
         <div style="flex: 1;">
 
               <div class="box">
-                  <form name="search" action="/controller/productController.php">
-                      <input type="text" class="input" name="searchText" onmouseout="this.value = ''; this.blur();" required>
+                  <form  action="/controller/productController.php">
+                      <input type="text" class="input" name="searchText" required>
+                      <button type="submit">submit</button>
                       <input type="hidden" name="action" value="search">
-                    </form>
-
-                  <i class="fas fa-search"></i>
+                  </form>
 
               </div>
         </div>
-
     </form>
           <!--filter bar or what right here -->
-<<<<<<< HEAD
-        <form action="/controller/productController.php" style="display: flex; ">
-          <label for="">Product Name</label>
-              <select style="padding: 0.5rem;">
-              <option></option>
-                <?php foreach($seriesIdList as $slist):  ?>
-             
-                <option><? echo $slist->seriesID?></option>
-                <??>
-              </select>
-          <label for="">Product Series ID</label>
-=======
-        <form action="" style="display: flex; ">
-          <input type="hidden" name="action" value="filter">
->>>>>>> 74f6c50391b0a0f88fa527bf569b2002c0529b05
-              <select style="padding: 0.5rem;">
-                <option>All Categories</option>
-                <option>Active</option>
-                <option>Pending</option>
-                <option>Archived</option>
-              </select>
-          <label for="">Product Size ID</label>
-              <select>
-                <option>All Categories</option>
-                <option>Active</option>
-                <option>Pending</option>
-                <option>Archived</option>
-              </select>
-              
-              <input type="number" step="25" name="minPrice" value="10" required>
-              <input type="number" step="25" name="maxPrice" value="25" required>
-        </form>
+    <form action="" style="display: flex; ">
+      <input type="hidden" name="action" value="filter">
+          <select style="padding: 0.5rem;">
+            <option>All Categories</option>
+            <option>Active</option>
+            <option>Pending</option>
+            <option>Archived</option>
+          </select>
+      <label for="">Product Size ID</label>
+          <select>
+            <option>All Categories</option>
+            <option>Active</option>
+            <option>Pending</option>
+            <option>Archived</option>
+          </select>
+            
+          <input type="number" step="25" name="minPrice" value="10" required>
+          <input type="number" step="25" name="maxPrice" value="25" required>
+    </form>
  
   </div>
 
@@ -217,8 +199,8 @@ unset($_SESSION['Delete_ErrorMsg']);
 
         </tbody>
       </table>
-
     </div>
+
   </div>
 
 

@@ -17,31 +17,35 @@ class ProductController{
         $this->track = new track($_pdo);
     }
 
-    public function handleRequest(){
-        if(!is_post()){
-            return; 
+    public function handleAction(){
+
+        $action = $_POST['action'] ?? $_GET['action'] ?? null;
+
+
+        if (!$action) {
+            $_SESSION['errors'] = 'No action specified';
+            return $this->redirectToAdmin();
         }
-        $action = $_POST['action'] ?? null;
-        switch ($action) {
-            case 'addProduct':
-                $this->addProduct(); // done 
-                break;
-            case 'updateProduct':
-                $this->updateProduct(); // done 
-                break;
-            case 'deleteProduct':
-                $this->deleteProduct(); // done 
-                break;
-            case 'filterProduct':
-                $this->filterProducts(); //done 
-                break;
-            case 'search' :
-                $this->searchProduct();
-            default:
-                $_SESSION['errors'] = 'Invalid action';
-                $this->redirectToAdmin();
-            }
+
+
+        $allowedActions = [
+            'addProduct'     => 'addProduct',
+            'updateProduct'  => 'updateProduct',
+            'deleteProduct'  => 'deleteProduct',
+            'filterProduct'  => 'filterProducts',
+            'search'         => 'searchProduct',
+        ];
+
+
+        if (array_key_exists($action, $allowedActions)) {
+            $method = $allowedActions[$action];
+            $this->$method(); 
+        } else {
+            $_SESSION['errors'] = 'Invalid action';
+            $this->redirectToAdmin();
+        }
     }
+
     public function getProductByIDAndSize($productID , $sizeID){
 
         $product = $this->productDb->getProductByIDAndSize($productID , $sizeID);
@@ -170,13 +174,15 @@ class ProductController{
         $productInformation = [
             'productId' => $_POST['productId'] ?? null,
             'productName' => $_POST['productName'] ?? null,
-            'seriesId' => $_POST['seriesId'] ?? null,
-            'seriesName' => $_POST['seriesName'] ?? null,
+            'seriesId'    => $_POST['seriesId'] ?? null,
+            'seriesName'  => $_POST['seriesName'] ?? null,
             'sizeId' => $_POST['sizeId'] ?? null,
             'stock' => $_POST['stock'] ?? null,
-            'price' => $_POST['price'] ?? null,
-            'oldSizeID' => $_POST['oldSizeID'] ?? null ,                
+            'price' => $_POST['price'] ?? null, 
+            'introduction' => $_POST['introduction'] ?? null, 
+            'playerInfo'   => $_POST['playerInfo'] ?? null,           
         ];
+        //var_dump($productInformation);
 
         // start validation : ----------------
 
@@ -218,7 +224,7 @@ class ProductController{
             $_SESSION['Update_ErrorMsg'] = ["Error: " . $e->getMessage()];
         }   
 
-        $this->redirectToAdmin();
+         $this->redirectToAdmin();
 
     }
 
@@ -355,7 +361,7 @@ class ProductController{
     private function searchProduct(){
 
         // 1. fetch data : 
-        $searchText = $_POST['searchText'];
+        $searchText = $_GET['searchText'];
 
         // 2. validation : future 
 
@@ -363,16 +369,20 @@ class ProductController{
         // 3.1 save result in session variable : 
 
         $searchResult = $this->productDb->search($searchText);
-        $encodeResult = urlencode(json_encode($searchResult));
 
-        // 4. direct to target page 
-        header("Location : ../pages/admin/product/searchResult.php?" . urldecode($searchText)
-                &result = $encodeResult) ;
+        // encode 
+        $encodeResult = urlencode(json_encode($searchResult));
+        $searchText = urlencode($searchText); 
+
+        // 3. direct to result page : 
+        header("Location: ../pages/admin/product/searchResult.php?search=" . $searchText . "&result=" . $encodeResult);
         exit();
 
     }
 //====================================================================================
 }
 $productController = new ProductController($_db);
-$productController->handleRequest();
+if (isset($_GET['action']) || isset($_POST['action'])) {
+    $productController->handleAction();
+}
 ?>
