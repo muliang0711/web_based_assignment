@@ -35,23 +35,12 @@ $(document).ready(function () {
                     })
                 });
 
-                const text = await response.text(); // 🔍 GET RAW TEXT
-                console.log("🔍 Raw response text:", text);
-
-
-                let result;
-                try {
-                    result = JSON.parse(text);
-                } catch (err) {
-                    console.error("❌ Failed to parse JSON:", err);
-                    throw new Error("Server returned invalid JSON");
-                }
+                const result = await response.json(); 
 
                 if (!response.ok || !result.success) {
                     throw new Error(result.error || 'Unknown error');
                 }
 
-                // ✅ If server confirms success, update UI
                 button.dataset.status = newStatus;
 
                 if (newStatus === 'onsales') {
