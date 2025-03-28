@@ -384,6 +384,9 @@ class ProductController{
 
     private function updateStatus(){
 
+        header('Content-Type: application/json');
+
+
         // FETCH DATA ： 
         $data = json_decode(file_get_contents('php://input'), true);
 
@@ -403,12 +406,15 @@ class ProductController{
         $result = $this->productDb->updateProductStatus($productID, $sizeID, $status);
 
         if ($result['success']) {
+            
             echo json_encode(['success' => true, 'message' => 'Status updated']);
+            exit();
+
         } else {
             http_response_code(500);
             echo json_encode(['error' => 'Failed to update status']);
         }
-        $this->redirectToAdmin();
+        exit();
     }
 
 //====================================================================================

@@ -195,10 +195,10 @@ unset($_SESSION['Delete_ErrorMsg']);
                     <button class="status-toggle-btn toggle-btn 
                       <?php echo $product->status === 'onsales' ? 'onsales' : 'notonsales'; ?>"
 
-                            data-productId="<?php echo $product->productID; ?>"
-                            data-sizeId="<?php echo $product->productID; ?>"
+                            data-productid="<?php echo $product->productID; ?>"
+                            data-sizeid="<?php echo $product->sizeID; ?>"
                             data-status="<?php echo $product->status; ?>"
-                            data-action="updateStatus">
+                            >
 
                       <i class="fas <?php echo $product->status === 'onsales' ? 'fa-toggle-on' : 'fa-toggle-off'; ?>"></i>
                       <?php echo $product->status === 'onsales' ? 'On Sale' : 'Not On Sale'; ?>
@@ -244,17 +244,47 @@ include "../../../admin_foot.php"
   const button = document.getElementById('statusToggleBtn');
 
   document.querySelectorAll('.status-toggle-btn').forEach(button => {
+  button.addEventListener('click', async () => {
+    const productID = button.dataset.productid;
+    const sizeID = button.dataset.sizeid;
 
-    button.addEventListener('click', async () => {
+    const currentStatus = button.dataset.status;
 
-      const productID = button.dataset.productId;
-      const sizeID = button.dataset.sizeId;
-      const currentStatus = button.dataset.status;
-      const action = button.dataset.action ;
+    const newStatus = currentStatus === 'onsales' ? 'notonsales' : 'onsales';
 
-      const newStatus = currentStatus === 'onsales' ? 'notonsales' : 'onsales';
 
+    try {
+      const response = await fetch('/controller/apiStatusSwtich.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          productID: productID,
+          sizeID: sizeID,
+          status: newStatus
+        })
+      });
+
+      const text = await response.text(); // 🔍 GET RAW TEXT
+      console.log("🔍 Raw response text:", text);
+
+
+      let result;
+      try {
+        result = JSON.parse(text);
+      } catch (err) {
+        console.error("❌ Failed to parse JSON:", err);
+        throw new Error("Server returned invalid JSON");
+      }
+
+      if (!response.ok || !result.success) {
+        throw new Error(result.error || 'Unknown error');
+      }
+
+      // ✅ If server confirms success, update UI
       button.dataset.status = newStatus;
+
       if (newStatus === 'onsales') {
         button.classList.remove('notonsales');
         button.classList.add('onsales');
@@ -265,25 +295,13 @@ include "../../../admin_foot.php"
         button.innerHTML = `<i class="fas fa-toggle-off"></i> Not On Sale`;
       }
 
-      try {
-        await fetch('/controller/productcController.php', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            action: "updateStatus", 
-            productID: productID,
-            sizeID: sizeID , 
-            status: newStatus
-          })
-        });
-      } catch (error) {
-        console.error('Failed to update status:', error);
-        alert('Something went wrong updating the status.');
-      }
-    });
+    } catch (error) {
+      console.error('Failed to update status:', error);
+      alert('Failed to update status. Please try again.');
+    }
   });
+});
+
 
 });
 </script>

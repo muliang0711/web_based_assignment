@@ -497,9 +497,14 @@ class productDb{
 
     public function updateProductStatus($productID, $sizeID, $status) {
         try {
-            $sql = "UPDATE products SET status = ?  WHERE productID = :productID AND sizeID = :sizeID";
+            $sql = "UPDATE productsize SET status = :status WHERE productID = :productID AND sizeID = :sizeID";
             $stmt = $this->pdo->prepare($sql);
-            $stmt->execute($status , $productID ,  $sizeID );
+            $stmt->execute([
+                ':status' => $status,
+                ':productID' => $productID,
+                ':sizeID' => $sizeID
+            ]);
+
     
             return ['success' => true];
         } catch (Exception $e) {
