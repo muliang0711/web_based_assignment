@@ -384,19 +384,31 @@ class ProductController{
 
     private function updateStatus(){
 
-        // fetch data : 
-        $data = json_decode(file_get_contents('php://input') , true );
+        // FETCH DATA ： 
+        $data = json_decode(file_get_contents('php://input'), true);
 
-        // validation  : 
-        $correctData =  isset($data['productID'], $data['status']) &&
-                        in_array($data['status'], ['onsales', 'notonsales']);
-      
-        // get data : 
-        $productID = $correctData['productID'];
-        $sizeID = $correctData['sizeID'];
-        $status = $correctData['status'];
-        $action = $correctData['action'];
+        // VALIDATION : 
+        if (!isset($data['productID'], $data['sizeID'], $data['status']) || 
+            !in_array($data['status'], ['onsales', 'notonsales'])) {
+            http_response_code(400);
+            echo json_encode(['error' => 'Invalid data']);
+            exit();
+        }
+        
+        $productID = $data['productID'];
+        $sizeID = $data['sizeID'];
+        $status = $data['status'];
+        
+        
+        $result = $this->productDb->updateProductStatus($productID, $sizeID, $status);
 
+        if ($result['success']) {
+            echo json_encode(['success' => true, 'message' => 'Status updated']);
+        } else {
+            http_response_code(500);
+            echo json_encode(['error' => 'Failed to update status']);
+        }
+        $this->redirectToAdmin();
     }
 
 //====================================================================================

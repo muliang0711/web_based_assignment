@@ -224,12 +224,7 @@ unset($_SESSION['Delete_ErrorMsg']);
 <?php
 include "../../../admin_foot.php"
 ?>
-<?php
-// TODO : 
-// 1. delete than just show a confirm message than delete 
-// 2. add than show user add_product page 
-// 3. 
-?> 
+
     
  
 
@@ -277,7 +272,7 @@ include "../../../admin_foot.php"
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            action: updateStatus, 
+            action: "updateStatus", 
             productID: productID,
             sizeID: sizeID , 
             status: newStatus

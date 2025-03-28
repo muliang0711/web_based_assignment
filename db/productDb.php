@@ -495,6 +495,19 @@ class productDb{
         return $stmt->fetchAll();; 
     }
 
+    public function updateProductStatus($productID, $sizeID, $status) {
+        try {
+            $sql = "UPDATE products SET status = ?  WHERE productID = :productID AND sizeID = :sizeID";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute($status , $productID ,  $sizeID );
+    
+            return ['success' => true];
+        } catch (Exception $e) {
+            return ['success' => false, 'error' => $e->getMessage()];
+        }
+    }
+    
+
 
 
     
@@ -640,6 +653,8 @@ class productDb{
         }   
        
     }
+
+    
 //==================================================================================================================================
 }
 
