@@ -3,19 +3,14 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 23, 2025 at 10:04 AM
+-- Generation Time: Mar 28, 2025 at 07:43 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
-
-
--- DROP DATABASE `web_based_assignment`
-
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
-CREATE DATABASE IF NOT EXISTS web_based_assignment;
-USE web_based_assignment;
+
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -32,36 +27,24 @@ USE web_based_assignment;
 -- Table structure for table `admin`
 --
 
-CREATE TABLE `admin` ( 
+CREATE TABLE `admin` (
   `id` varchar(10) NOT NULL,
   `position` varchar(20) NOT NULL,
   `passwordHash` varchar(255) NOT NULL,
-  `adminLevel` ENUM('main', 'staff') NOT NULL,
-  `status` ENUM('Active', 'Blocked') NOT NULL
-  -- PRIMARY KEY (`id`)
+  `adminLevel` enum('main','staff') NOT NULL,
+  `status` enum('Active','Blocked') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `admin`
 --
--- 
--- ('A001', 'HR Manager', 'pass123', 'main', 'Active'),
--- ('A002', 'IT Support', 'itpass', 'staff', 'Active'),
--- ('A003', 'Finance Head', 'finpass', 'main', 'Blocked'),
--- ('A004', 'Marketing Lead', 'mkpass', 'staff', 'Active'),
--- ('A005', 'Operations', 'oppass', 'staff', 'Blocked'),
--- ('A006', 'Sales Manager', 'salepass', 'main', 'Active'),
--- ('A007', 'Admin Assistant', 'admpass', 'staff', 'Blocked'),
--- ('A008', 'Project Manager', 'pm123', 'main', 'Active'),
--- ('A009', 'Customer Support', 'cspass', 'staff', 'Blocked'),
--- ('A010', 'Security', 'secpass', 'staff', 'Active');
+
 INSERT INTO `admin` (`id`, `position`, `passwordHash`, `adminLevel`, `status`) VALUES
 ('A001', 'HR Manager', '$2y$10$5Y2WIZtHCoElCeI6IXp94.4TiLKeTcbOK5AgTswY9oAwbFw9FViFi', 'main', 'Active'),
 ('A002', 'IT Support', '$2y$10$2ioQwFoTCz3dH1AjoKG7NuOAHqKjzmecG7b.8BPW5aGiuImR9oji2', 'staff', 'Active'),
 ('A003', 'Finance Head', '$2y$10$AeTa6/0xSoeDf2gz0.bXE.i1/kG56Alerke8pFPhe9NSVBVOKA3wi', 'main', 'Blocked'),
 ('A004', 'Marketing Lead', '$2y$10$rYBjsAfzbPMGCn4MANIZ.ef78dfu/MnSbq8RwOKHnY272KCo9h8gK', 'staff', 'Active'),
 ('A005', 'Operations', '$2y$10$.2ZxTbzEPRnm0H9EYwJQnOG2YBQL8plEmxN3K7WzIAJHO1FUUYVFW', 'staff', 'Blocked');
-
 
 -- --------------------------------------------------------
 
@@ -177,26 +160,27 @@ INSERT INTO `product` (`productID`, `productName`, `price`, `seriesID`, `product
 CREATE TABLE `productsize` (
   `productID` varchar(5) NOT NULL,
   `sizeID` varchar(4) NOT NULL,
-  `quantity` int(11) NOT NULL
+  `quantity` int(11) NOT NULL,
+  `status` enum('onsales','notonsales') NOT NULL DEFAULT 'notonsales'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `productsize`
 --
 
-INSERT INTO `productsize` (`productID`, `sizeID`, `quantity`) VALUES
-('R0001', '3UG5', 4),
-('R0001', '4UG5', 5),
-('R0002', '3UG5', 5),
-('R0002', '4UG5', 6),
-('R0003', '3UG5', 2),
-('R0003', '4UG5', 3),
-('R0004', '3UG5', 4),
-('R0004', '4UG5', 5),
-('R0005', '3UG5', 5),
-('R0005', '4UG5', 6),
-('R0006', '3UG5', 2),
-('R0006', '4UG5', 3);
+INSERT INTO `productsize` (`productID`, `sizeID`, `quantity`, `status`) VALUES
+('R0001', '3UG5', 4, 'notonsales'),
+('R0001', '4UG5', 5, 'notonsales'),
+('R0002', '3UG5', 5, 'notonsales'),
+('R0002', '4UG5', 6, 'notonsales'),
+('R0003', '3UG5', 2, 'notonsales'),
+('R0003', '4UG5', 3, 'notonsales'),
+('R0004', '3UG5', 4, 'notonsales'),
+('R0004', '4UG5', 5, 'notonsales'),
+('R0005', '3UG5', 5, 'notonsales'),
+('R0005', '4UG5', 6, 'notonsales'),
+('R0006', '3UG5', 2, 'notonsales'),
+('R0006', '4UG5', 3, 'notonsales');
 
 -- --------------------------------------------------------
 
@@ -216,7 +200,6 @@ CREATE TABLE `product_images` (
 -- Dumping data for table `product_images`
 --
 
-
 INSERT INTO `product_images` (`id`, `productID`, `image_path`, `image_type`, `created_at`) VALUES
 (1, 'R0001', 'product_R0001_1742917010.jpg', 'product', '2025-03-25 15:36:50'),
 (2, 'R0001', 'player_R0001_1742917010.jpg', 'player', '2025-03-25 15:36:50'),
@@ -230,7 +213,6 @@ INSERT INTO `product_images` (`id`, `productID`, `image_path`, `image_type`, `cr
 (10, 'R0005', 'player_R0005_1742918129.jpg', 'player', '2025-03-25 15:55:29'),
 (11, 'R0006', 'product_R0006_1742918288.jpg', 'product', '2025-03-25 15:58:08'),
 (12, 'R0006', 'player_R0006_1742918288.jpg', 'player', '2025-03-25 15:58:08');
-
 
 -- --------------------------------------------------------
 
@@ -249,9 +231,9 @@ CREATE TABLE `series` (
 
 INSERT INTO `series` (`seriesID`, `seriesName`) VALUES
 ('AS', 'AeroSharp'),
-('TST', 'ThunderStrike'),
 ('SHD', 'Shadow'),
-('TSM', 'TurboSmash');
+('TSM', 'TurboSmash'),
+('TST', 'ThunderStrike');
 
 -- --------------------------------------------------------
 
