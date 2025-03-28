@@ -95,3 +95,35 @@ mark {
   background-color: yellow;
   font-weight: bold;
 }
+.toggle-btn {
+  padding: 0.4rem 0.6rem; 
+  background: none; 
+  cursor: pointer; 
+  transition: background-color 0.3s ease;
+}
+
+.onsales {
+  border: 1px solid #17b824; 
+  color: #28a745;
+}
+
+.notonsales {
+  border: 1px solid #b81717; 
+  color: #dc3545;
+}
+.pagination a {
+  padding: 5px 10px;
+  background: #f1f1f1;
+  text-decoration: none;
+  border-radius: 3px;
+  color: #333;
+}
+
+.pagination a:hover {
+  background: #ddd;
+}
+.form-group {
+  margin-top: 20px;
+  margin-left: 620px;
+  margin-bottom: 15px;
+}

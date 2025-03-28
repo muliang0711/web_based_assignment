@@ -1,15 +1,28 @@
 <?php
 require_once "../../../_base.php";   
+require_once "../../../controller/productController.php";
 $stylesheetArray = ['../../../css/main.css'];
 link_stylesheet($stylesheetArray);
 
 
 
 $searchText = isset($_GET['search']) ? urldecode($_GET['search']) : '';
+
 $searchResultJson = isset($_GET['result']) ? $_GET['result'] : '';
+$searchResult = json_decode(urldecode($searchResultJson));
+
+$productsPerPage = 10;
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$startFrom = ($page - 1) * $productsPerPage;
+
+$totalProducts = count($searchResult); 
+$pagedProducts = array_slice($searchResult, $startFrom, $productsPerPage);
+
+$totalPages = ceil($totalProducts / $productsPerPage);
 
 $searchResult = json_decode(urldecode($searchResultJson));
-var_dump($searchResult);
+
+// var_dump($searchResult);
 
 if (empty($searchResult)) {
     echo "<p>No search results found for: <strong>" . htmlspecialchars($searchText) . "</strong></p>";
@@ -25,7 +38,6 @@ if (empty($searchResult)) {
     <title>Document</title>
 </head>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 <body>
 
     <div class="main-content">
@@ -33,7 +45,7 @@ if (empty($searchResult)) {
         <div class="container-table">
 
             <div class="tb-title">
-                <h5 style="margin: 0;"><i class="fas fa-table"></i> Product </h5>
+                <h5 style="margin: 0;"><i class="fas fa-table"></i> Product You Search </h5>
             </div>
 
 
@@ -54,7 +66,7 @@ if (empty($searchResult)) {
                 </thead>
 
                 <tbody>
-                        <?php foreach ($searchResult as $index => $product): ?>
+                        <?php foreach ($pagedProducts as $index => $product): ?>
 
                         <!-- Product Info -->
                         <tr>
@@ -85,6 +97,19 @@ if (empty($searchResult)) {
                                         <i class="fas fa-trash"></i>
                                     </button>
                                 </form>
+
+                                
+                                <button class="status-toggle-btn toggle-btn 
+                                <?php echo $product->status === 'onsales' ? 'onsales' : 'notonsales'; ?>"
+
+                                        data-productid="<?php echo $product->productID; ?>"
+                                        data-sizeid="<?php echo $product->sizeID; ?>"
+                                        data-status="<?php echo $product->status; ?>"
+                                        >
+
+                                <i class="fas <?php echo $product->status === 'onsales' ? 'fa-toggle-on' : 'fa-toggle-off'; ?>"></i>
+                                <?php echo $product->status === 'onsales' ? 'On Sale' : 'Not On Sale'; ?>
+                                </button>
                             </td>
                         </tr>
 
@@ -96,32 +121,31 @@ if (empty($searchResult)) {
             </div>
 
         </div>
+        <div class="pagination" style="text-align: center; margin-top: 1rem;">
+            <?php if ($page > 1): ?>
+                <a href="?page=<?php echo $page - 1; ?>&search=<?php echo urlencode($searchText); ?>&result=<?php echo urlencode($searchResultJson); ?>">&laquo; Prev</a>
+            <?php endif; ?>
 
+            <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                <a href="?page=<?php echo $i; ?>&search=<?php echo urlencode($searchText); ?>&result=<?php echo urlencode($searchResultJson); ?>" 
+                style="margin: 0 4px; <?php if ($i == $page) echo 'font-weight: bold;'; ?>">
+                <?php echo $i; ?>
+                </a>
+            <?php endfor; ?>
+
+            <?php if ($page < $totalPages): ?>
+                <a href="?page=<?php echo $page + 1; ?>&search=<?php echo urlencode($searchText); ?>&result=<?php echo urlencode($searchResultJson); ?>">Next &raquo;</a>
+            <?php endif; ?>
+        </div>    
+           
+        <div class="form-group">
+            <button type="button" class="back-btn" onclick="window.location.href='admin_product.php'">← Back</button>
+        </div>       
     </div>
+        
+
 </body>
 </html>
 
-<script>
-    // Get search query from URL
-    const params = new URLSearchParams(window.location.search);
-    const searchQuery = params.get("search");
-
-function highlightSearchTerm(term) {
-
-
-
-
-  if (!term) return;
-
-  const elementsToSearch = document.querySelectorAll(".searchtext");
-
-  elementsToSearch.forEach(element => {
-    const regex = new RegExp(`(${term})`, "gi");
-    element.innerHTML = element.innerHTML.replace(regex, '<mark>$1</mark>');
-  });
-}
-
-// Call the function
-highlightSearchTerm(searchQuery);
-
-</script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="/pages/admin/product/searchResult.js"></script>

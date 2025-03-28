@@ -7,13 +7,20 @@ include "../main.php";
 $stylesheetArray = ['../../../css/admin_product.css'];
 link_stylesheet($stylesheetArray);
 
-$productController = new ProductController($_db);
-$allProducts = $productController->getAllProducts();
+$productsPerPage = 10;
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$startFrom = ($page - 1) * $productsPerPage;
 
-$productController = new ProductController($_db);
+$allProductsList = $productController->getAllProducts();
+
+$totalProducts = count($allProductsList);
+$allProducts = array_slice($allProductsList, $startFrom, $productsPerPage);
+
+// Calculate total pages
+$totalPages = ceil($totalProducts / $productsPerPage);
+
 $seriesIdList = $productController->getAllSeriesID();
 
-$productController = new ProductController($_db);
 $productNameList = $productController->getAllProductName();
 
 
@@ -214,7 +221,21 @@ unset($_SESSION['Delete_ErrorMsg']);
     </div>
 
   </div>
+  <div class="pagination" style="text-align: center; margin-top: 1rem;">
+    <?php if ($page > 1): ?>
+      <a href="?page=<?php echo $page - 1; ?>">&laquo; Prev</a>
+    <?php endif; ?>
 
+    <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+      <a href="?page=<?php echo $i; ?>" style="margin: 0 4px; <?php if ($i == $page) echo 'font-weight: bold;'; ?>">
+        <?php echo $i; ?>
+      </a>
+    <?php endfor; ?>
+
+    <?php if ($page < $totalPages): ?>
+      <a href="?page=<?php echo $page + 1; ?>">Next &raquo;</a>
+    <?php endif; ?>
+  </div>`
 
 </div>
     

@@ -481,10 +481,11 @@ class productDb{
                 p.seriesID, 
                 s.seriesName, 
                 ps.sizeID, 
+                ps.status,
                 ps.quantity AS total_stock 
                 FROM product p
                 JOIN series s ON p.seriesID = s.seriesID 
-                JOIN productSize ps ON p.productID = ps.productID 
+                JOIN productsize ps ON p.productID = ps.productID 
                 WHERE p.productName LIKE ? OR s.seriesName LIKE  ? OR s.seriesID LIKE ? 
             "; 
         $stmt = $this->pdo->prepare($sql);
@@ -497,13 +498,9 @@ class productDb{
 
     public function updateProductStatus($productID, $sizeID, $status) {
         try {
-            $sql = "UPDATE productsize SET status = :status WHERE productID = :productID AND sizeID = :sizeID";
+            $sql = "UPDATE productsize SET status = ? WHERE productID = ? AND sizeID = ? ";
             $stmt = $this->pdo->prepare($sql);
-            $stmt->execute([
-                ':status' => $status,
-                ':productID' => $productID,
-                ':sizeID' => $sizeID
-            ]);
+            $stmt->execute([$status, $productID, $sizeID]);
 
     
             return ['success' => true];
