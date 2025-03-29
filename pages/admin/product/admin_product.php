@@ -21,7 +21,7 @@ $totalPages = ceil($totalProducts / $productsPerPage);
 
 $seriesIdList = $productController->getAllSeriesID();
 
-$productNameList = $productController->getAllProductName();
+$productIDList = $productController->getAllProductID();
 
 
 // Retrieve messages
@@ -58,30 +58,55 @@ unset($_SESSION['Delete_ErrorMsg']);
                       <button type="submit">submit</button>
                       <input type="hidden" name="action" value="search">
                   </form>
-
+                    
               </div>
         </div>
     </form>
           <!--filter bar or what right here -->
-    <form action="" style="display: flex; ">
-      <input type="hidden" name="action" value="filter">
-          <select style="padding: 0.5rem;">
-            <option>All Categories</option>
-            <option>Active</option>
-            <option>Pending</option>
-            <option>Archived</option>
-          </select>
-      <label for="">Product Size ID</label>
-          <select>
-            <option>All Categories</option>
-            <option>Active</option>
-            <option>Pending</option>
-            <option>Archived</option>
-          </select>
-            
-          <input type="number" step="25" name="minPrice" value="10" required>
-          <input type="number" step="25" name="maxPrice" value="25" required>
-    </form>
+          <form method="POST" action="/controller/productController.php">
+            <input type="hidden" name="action" value="filter">
+
+            <!-- Product ID -->
+            <label for="productId">Product ID</label>
+            <select name="productID" id="productID" style="padding: 0.5rem;">
+            <option value="">All categories</option>
+              <?php foreach ($productIDList as $IdList): ?>
+                <option value="<?= htmlspecialchars($IdList->productID) ?>">
+                  <?= htmlspecialchars($IdList->productID) ?>
+                </option>
+              <?php endforeach; ?>
+            </select>
+
+            <!-- Series ID -->
+            <label for="seriesID">Series ID</label>
+            <select name="seriesID" id="seriesID" style="padding: 0.5rem;">
+            <option value="">All categories</option>
+              <?php foreach ($seriesIdList as $series): ?>
+                <option value="<?= htmlspecialchars($series->seriesID) ?>">
+                  <?= htmlspecialchars($series->seriesID) ?>
+                </option>
+              <?php endforeach; ?>
+            </select>
+
+            <!-- Size ID -->
+            <label for="sizeID">Product Size ID</label>
+            <select name="sizeID" id="sizeID" style="padding: 0.5rem;">
+              <option value="">All categories</option>
+              <option value="3UG5">3UG5</option>
+              <option value="4GG5">4UG5</option>
+            </select>
+
+            <!-- Min Price -->
+            <label for="minPrice">Min Price</label>
+            <input type="number" name="minPrice" id="minPrice" placeholder="0" step="100" >
+
+            <!-- Max Price -->
+            <label for="maxPrice">Max Price</label>
+            <input type="number" name="maxPrice" id="maxPrice" placeholder="1000" step="100">
+
+            <br><br>
+            <button type="submit">Apply Filter</button>
+          </form>
  
   </div>
 
@@ -144,6 +169,8 @@ unset($_SESSION['Delete_ErrorMsg']);
 
     <div class="tb-title">
       <h5 style="margin: 0;"><i class="fas fa-table"></i> Product </h5>
+
+
     </div>
 
 

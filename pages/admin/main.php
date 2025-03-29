@@ -1,5 +1,5 @@
 <?php
-include '../../admin_login_guard.php';
+// include __DIR__ . '/../../admin_login_guard.php';
 ?> 
 
 <!DOCTYPE html>

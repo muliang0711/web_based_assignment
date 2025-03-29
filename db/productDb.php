@@ -56,21 +56,24 @@ class productDb{
                     p.seriesID, 
                     s.seriesName, 
                     ps.sizeID, 
+                    p.introduction,
+                    p.playerInfo,
+                    ps.status,
                     ps.quantity AS stock,
                     SUM(ps.quantity) OVER (PARTITION BY p.productID) AS total_stock
                 FROM product p
-                JOIN productsize ps ON p.productID = ps.productID
-                JOIN series s ON p.seriesID = s.seriesID
+                LEFT JOIN productsize ps ON p.productID = ps.productID
+                LEFT JOIN series s ON p.seriesID = s.seriesID
+
                 WHERE 1=1"; 
     
         $params = [];
-        $filterBySize = false;
-        $filterByNameOnly = !empty($filters['productName']) && empty($filters['sizeID']);
+        $filterByIDOnly = !empty($filters['productID']) && empty($filters['sizeID']);
     
-        // Product Name Filter
-        if (!empty($filters['productName'])) {
-            $sql .= " AND p.productName LIKE ?";
-            $params[] = "%" . $filters['productName'] . "%";
+        // Product id Filter
+        if (!empty($filters['productID'])) {
+            $sql .= " AND p.productID LIKE ?";
+            $params[] =   $filters['productID'] ;
         }
     
         // Series Filter
@@ -93,11 +96,9 @@ class productDb{
         if (!empty($filters['sizeID'])) {
             $sql .= " AND ps.sizeID = ?";
             $params[] = $filters['sizeID'];
-            $filterBySize = true;
         }
-    
-        // Ensure the correct grouping when searching by name only (returns all sizes)
-        if ($filterByNameOnly) {
+
+        if ($filterByIDOnly) {
             $sql .= " GROUP BY p.productID, ps.sizeID";
         }
     
@@ -460,11 +461,11 @@ class productDb{
         return  $seriesIdList; 
     }
 
-    public function getProductName(){
-        $sql = "SELECT productName FROM product ";
+    public function getProductID(){
+        $sql = "SELECT productID FROM product ";
         $stmt = $this->pdo->query($sql);
-        $productNameList = $stmt->fetchAll();
-        return  $productNameList; 
+        $productIDList = $stmt->fetchAll();
+        return  $productIDList; 
     }
 
     public function search($searchText){

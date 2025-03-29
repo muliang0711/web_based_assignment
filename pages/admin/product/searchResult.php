@@ -4,26 +4,34 @@ require_once "../../../controller/productController.php";
 $stylesheetArray = ['../../../css/main.css'];
 link_stylesheet($stylesheetArray);
 
-
-
+// 1. fetchh data and decode : 
+    // get data from url , if not present , empty string 
 $searchText = isset($_GET['search']) ? urldecode($_GET['search']) : '';
-
 $searchResultJson = isset($_GET['result']) ? $_GET['result'] : '';
+
+    // decode string to array 
 $searchResult = json_decode(urldecode($searchResultJson));
 
+// navigation program : 
+
+// 1. set max item in perpage 
 $productsPerPage = 10;
+
+    // get current page from url ; default to 1 if none 
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+    // calculate the item start from where 
 $startFrom = ($page - 1) * $productsPerPage;
-
+    // get total product number from result 
 $totalProducts = count($searchResult); 
+    // function to decide the page item start from where 
+    // 50 ; 10 ; 10 --> than that page will start from product id 10 to 20 
 $pagedProducts = array_slice($searchResult, $startFrom, $productsPerPage);
-
+    // ensure product page is enough
 $totalPages = ceil($totalProducts / $productsPerPage);
 
-$searchResult = json_decode(urldecode($searchResultJson));
 
 // var_dump($searchResult);
-
+    // handle error 
 if (empty($searchResult)) {
     echo "<p>No search results found for: <strong>" . htmlspecialchars($searchText) . "</strong></p>";
     exit();
@@ -40,7 +48,7 @@ if (empty($searchResult)) {
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <body>
 
-    <div class="main-content">
+    <div class="main-content ">
         
         <div class="container-table">
 
@@ -136,11 +144,9 @@ if (empty($searchResult)) {
             <?php if ($page < $totalPages): ?>
                 <a href="?page=<?php echo $page + 1; ?>&search=<?php echo urlencode($searchText); ?>&result=<?php echo urlencode($searchResultJson); ?>">Next &raquo;</a>
             <?php endif; ?>
-        </div>    
-           
-        <div class="form-group">
             <button type="button" class="back-btn" onclick="window.location.href='admin_product.php'">← Back</button>
-        </div>       
+        </div>    
+ 
     </div>
         
 

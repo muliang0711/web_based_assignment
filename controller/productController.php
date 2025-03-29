@@ -32,7 +32,7 @@ class ProductController{
             'addProduct'     => 'addProduct',
             'updateProduct'  => 'updateProduct',
             'deleteProduct'  => 'deleteProduct',
-            'filterProduct'  => 'filterProducts',
+            'filter'  => 'filterProducts',
             'search'         => 'searchProduct',
             'updateStatus'   => 'updateStatus',
         ];
@@ -52,6 +52,7 @@ class ProductController{
         $product = $this->productDb->getProductByIDAndSize($productID , $sizeID);
         return $product ;
     }
+
     public  function getAllProducts(){
         return  $this->productDb->getAllProducts();
     }
@@ -60,8 +61,8 @@ class ProductController{
         return  $this->productDb->getSeriesID();
     }
 
-    public  function getAllProductName(){
-        return  $this->productDb->getProductName();
+    public  function getAllProductID(){
+        return  $this->productDb->getProductID();
     }
 
 
@@ -70,7 +71,7 @@ class ProductController{
 
     private function filterProducts() {
         $filters = [
-            'productName' => $_POST['productName'] ?? null,
+            'productID' => $_POST['productID'] ?? null,
             'priceMin' => isset($_POST['minPrice']) ? (float) $_POST['minPrice'] : null,
             'priceMax' => isset($_POST['maxPrice']) ? (float) $_POST['maxPrice'] : null,
             'seriesID' => $_POST['seriesID'] ?? null,
@@ -103,7 +104,11 @@ class ProductController{
         //  product->productName ; 
         //  product->price ； 
         //}
-        $this->redirectToAdmin();
+
+    
+        header("Location: ../pages/admin/product/filterResult.php");
+        exit();
+
     }
 
     private function addProduct() {
