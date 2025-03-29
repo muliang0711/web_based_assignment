@@ -249,7 +249,7 @@ class productDb{
             $stmt->execute([$productName , $price , $introduction , $playerInfo , $productID]);
 
             // Update productSize
-            $sql = "UPDATE productsize SET quantity = ? WHERE productID = ? AND sizeID = ? alert_sent = 0 ";
+            $sql = "UPDATE productsize SET quantity = ? WHERE productID = ? AND sizeID = ?";
             $stmt = $this->pdo->prepare($sql);
             $stmt->execute([$quantity , $productID , $sizeID]);
 
