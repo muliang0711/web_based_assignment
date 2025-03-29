@@ -74,9 +74,9 @@ class CheckStock {
                 $updateStmt = $this->pdo->prepare($updateSql);
                 $updateStmt->execute([$productID, $sizeID]);
 
-                echo "✅ Alert sent for $productName (Stock: $stock)\n";
+                echo "Alert sent for $productName (Stock: $stock)\n";
             } else {
-                echo "❌ Failed to send email for $productName\n";
+                echo "Failed to send email for $productName\n";
             }
         }
     }
@@ -84,4 +84,14 @@ class CheckStock {
 // here is just for test ; 
 $check = new CheckStock($_db);
 $check->check_low_stock();
+
+// 1. where php
+// 2. copy this file path 
+// schtasks /Create /SC MINUTE /MO 30 /TN "CheckLowStock" /TR "\"--REPLACE WITH YOUR PHP FILE PATH--" \" --REPLACE WITH YOUR FILE PATH --"" /F
+
+// check : schtasks /Query /TN "CheckLowStock"
+// run : schtasks /Run /TN "CheckLowStock"
+// delete : schtasks /Delete /TN "CheckLowStock" /F
+
+
 ?>
