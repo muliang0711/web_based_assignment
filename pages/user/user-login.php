@@ -60,7 +60,7 @@ if (is_post()) {
         $u = $stm->fetch();
 
         // If username exists, and password is correct
-        if ($u && $password == $u->password) {
+        if ($u && $password == $u->passwordHash) {
             login($u->userID, "user");
             
             // temp('info', "Logged in as $u->username");

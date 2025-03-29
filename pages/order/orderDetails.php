@@ -160,7 +160,7 @@
         <div class="order-items">
             <?php foreach($orderItems as $item): ?>
                 <div class="item">
-                <img src="<?= $item->img ?>">
+                <img src="/File/<?= $item->img ?>">
                 <span class="product-name" ><?= $item->name ?></span>
                 <span class="product-quantity">x<?= $item->quantity ?></span>
                 <span class="product-subtotal">RM <?= $item->subtotal ?></span>
