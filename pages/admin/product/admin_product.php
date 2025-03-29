@@ -47,68 +47,62 @@ unset($_SESSION['Delete_ErrorMsg']);
 <div class="main-content">
     <!-- Example Search/Filter Section -->
 
-  <div style="margin-bottom: 1rem; display: flex ; justify-content : space-between ;">
+    <div class="filter-container">
 
-    <form style="display: flex;" action="/controller/productController.php">
-        <div style="flex: 1;">
+      <!-- Search Bar -->
+      <form class="search-box" method="GET" action="/controller/productController.php">
+        <input type="hidden" name="action" value="search">
+        <input type="text" name="searchText" placeholder="Search product..." required>
+        <button type="submit">Search</button>
+      </form>
 
-              <div class="box">
-                  <form  action="/controller/productController.php">
-                      <input type="text" class="input" name="searchText" required>
-                      <button type="submit">submit</button>
-                      <input type="hidden" name="action" value="search">
-                  </form>
-                    
-              </div>
-        </div>
-    </form>
-          <!--filter bar or what right here -->
-          <form method="POST" action="/controller/productController.php">
-            <input type="hidden" name="action" value="filter">
+      <!-- Filter Form -->
+      <form class="filter-form" method="POST" action="/controller/productController.php">
+        <input type="hidden" name="action" value="filter">
 
-            <!-- Product ID -->
-            <label for="productId">Product ID</label>
-            <select name="productID" id="productID" style="padding: 0.5rem;">
-            <option value="">All categories</option>
-              <?php foreach ($productIDList as $IdList): ?>
-                <option value="<?= htmlspecialchars($IdList->productID) ?>">
-                  <?= htmlspecialchars($IdList->productID) ?>
-                </option>
-              <?php endforeach; ?>
-            </select>
+        <label for="productID">Product ID</label>
+        <select name="productID" id="productID">
+          <option value="">All</option>
+          <?php foreach ($productIDList as $IdList): ?>
+            <option value="<?= htmlspecialchars($IdList->productID) ?>">
+              <?= htmlspecialchars($IdList->productID) ?>
+            </option>
+          <?php endforeach; ?>
+        </select>
 
-            <!-- Series ID -->
-            <label for="seriesID">Series ID</label>
-            <select name="seriesID" id="seriesID" style="padding: 0.5rem;">
-            <option value="">All categories</option>
-              <?php foreach ($seriesIdList as $series): ?>
-                <option value="<?= htmlspecialchars($series->seriesID) ?>">
-                  <?= htmlspecialchars($series->seriesID) ?>
-                </option>
-              <?php endforeach; ?>
-            </select>
+        <label for="seriesID">Series</label>
+        <select name="seriesID" id="seriesID">
+          <option value="">All</option>
+          <?php foreach ($seriesIdList as $series): ?>
+            <option value="<?= htmlspecialchars($series->seriesID) ?>">
+              <?= htmlspecialchars($series->seriesID) ?>
+            </option>
+          <?php endforeach; ?>
+        </select>
 
-            <!-- Size ID -->
-            <label for="sizeID">Product Size ID</label>
-            <select name="sizeID" id="sizeID" style="padding: 0.5rem;">
-              <option value="">All categories</option>
-              <option value="3UG5">3UG5</option>
-              <option value="4GG5">4UG5</option>
-            </select>
+        <label for="sizeID">Size</label>
+        <select name="sizeID" id="sizeID">
+          <option value="">All</option>
+          <option value="3UG5">3UG5</option>
+          <option value="4GG5">4UG5</option>
+        </select>
 
-            <!-- Min Price -->
-            <label for="minPrice">Min Price</label>
-            <input type="number" name="minPrice" id="minPrice" placeholder="0" step="100" >
+        <label for="minPrice">Min Price</label>
+        <input type="number" name="minPrice" id="minPrice" placeholder="0" step="100" min="100" value="100" >
 
-            <!-- Max Price -->
-            <label for="maxPrice">Max Price</label>
-            <input type="number" name="maxPrice" id="maxPrice" placeholder="1000" step="100">
+        <label for="maxPrice">Max Price</label>
+        <input type="number" name="maxPrice" id="maxPrice" placeholder="1000" step="100" min="100" value="100">
 
-            <br><br>
-            <button type="submit">Apply Filter</button>
-          </form>
- 
-  </div>
+        <button type="submit">Apply Filter</button>
+      </form>
+
+      <!-- Add Product -->
+      <a href="addProduct.php" class="action-btn-add" title="Add New Product">
+        <i class="fa-solid fa-plus"></i> Add Product
+      </a>
+
+</div>
+
 
           <!-- Alert -->
          <!-- Messages -->
@@ -169,8 +163,6 @@ unset($_SESSION['Delete_ErrorMsg']);
 
     <div class="tb-title">
       <h5 style="margin: 0;"><i class="fas fa-table"></i> Product </h5>
-
-
     </div>
 
 
@@ -200,9 +192,7 @@ unset($_SESSION['Delete_ErrorMsg']);
               <td class="td"><?php echo htmlspecialchars($product->total_stock); ?></td>
               <td class="td">
                       <!-- Add -->
-                    <a href="addProduct.php" class="action-btn-add" title="Add New Product">
-                      <i class="fa-solid fa-plus"></i>
-                    </a>
+                    
 
                     <!-- View Details -->
                     <a href="productDetails.php?productID=<?php echo $product->productID; ?>&sizeID=<?php echo $product->sizeID; ?>" class="action-btn-details">
