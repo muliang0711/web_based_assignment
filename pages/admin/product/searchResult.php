@@ -7,10 +7,9 @@ link_stylesheet($stylesheetArray);
 // 1. fetchh data and decode : 
     // get data from url , if not present , empty string 
 $searchText = isset($_GET['search']) ? urldecode($_GET['search']) : '';
-$searchResultJson = isset($_GET['result']) ? $_GET['result'] : '';
 
-    // decode string to array 
-$searchResult = json_decode(urldecode($searchResultJson));
+$searchResult = $_SESSION['searchResult'] ?? [];
+
 
 // navigation program : 
 

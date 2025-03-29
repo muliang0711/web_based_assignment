@@ -93,7 +93,7 @@ class ProductController{
             }
         */
         
-        $_SESSION['filterResult'] = $this->productDb->filterProduct($filters);
+        $_SESSION['$filterResult'] = $this->productDb->filterProduct($filters);
         // what is the result look like ？ ： array of object 
         // result = [ 
         // (object) ["productName" => "Laptop", "price" => 1200] 
@@ -375,14 +375,12 @@ class ProductController{
         // 3. call db service :
         // 3.1 save result in session variable : 
 
-        $searchResult = $this->productDb->search($searchText);
-
+        $_SESSION['searchResult'] = $this->productDb->search($searchText);
         // encode 
-        $encodeResult = urlencode(json_encode($searchResult));
         $searchText = urlencode($searchText); 
 
         // 3. direct to result page : 
-        header("Location: ../pages/admin/product/searchResult.php?search=" . $searchText . "&result=" . $encodeResult);
+        header("Location: ../pages/admin/product/searchResult.php?search=" . $searchText );
         exit();
 
     }
