@@ -1,37 +1,87 @@
 <?php 
 include_once __DIR__ . "/../db_connection.php";
+require __DIR__ . "/../vendor/autoload.php"; // Composer autoload
 
-class check{
-    private $pdo ;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
-    function __construct($pdo)
-    {
-        $this->$pdo = $pdo ;
+class CheckStock {
+    private $pdo;
+
+    function __construct($pdo) {
+        $this->pdo = $pdo; //
     }
 
-    public function check_low_stock(){
-        $sql = "SELECT * FROM productsize 
-        WHERE stock <= low_stock_threshold '
-        AND alert_sent = 0";
+    private function sendLowStockEmail($toEmail, $productName, $stock, $threshold) {
+        $mail = new PHPMailer(true);
 
-        $stmt = $this->pdo->prepare($sql);
+        try {
+            $mail->isSMTP();
+            $mail->Host = 'smtp.gmail.com';
+            $mail->SMTPAuth = true;
+            $mail->Username = 'puihy-wm24@student.tarc.edu.my';
+            $mail->Password = 'mqps lalr ujvo fbqx';  // App Password
+            $mail->SMTPSecure = 'tls';
+            $mail->Port = 587;
 
-        $stmt->execute();
+            $mail->setFrom('puihy-wm24@student.tarc.edu.my', 'Inventory Alert');
+            $mail->addAddress($toEmail);
 
-        $low_stock_product = $stmt->fetchAll();
+            $mail->isHTML(true);
+            $mail->Subject = "Low Stock Alert: $productName";
+            $mail->Body = "
+                <p><strong>Product:</strong> $productName</p>
+                <p><strong>Current Stock:</strong> $stock</p>
+                <p><strong>Threshold:</strong> $threshold</p>
+                <p>Please restock soon!</p>
+            ";
 
-        foreach($low_stock_product as $product){
-            $productID = $product->productID ;
-            $sizeID = $product->sizeID ; 
-            $theresold = $product->low_stock_threshold;
-
-            // gmail :
-            // sms : 
+            $mail->send();
+            return true;
+        } catch (Exception $e) {
+            error_log("Email error: " . $mail->ErrorInfo);
+            return false;
         }
-        
+    }
+
+    // 1. send sms ; 
+
+    public function check_low_stock() {
+        $sql = "SELECT * FROM productsize WHERE quantity <= low_stock_threshold AND alert_sent = 0";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        $low_stock_products = $stmt->fetchAll(); 
+
+        if (count($low_stock_products) === 0) {
+            return;
+        }
+
+        foreach ($low_stock_products as $product) {
+
+            $productID = $product->productID;
+            $sizeID = $product->sizeID;
+            $productName = $product->product_name?? "Product #$productID"; // fallback
+            $stock = $product->quantity;
+            $threshold = $product->low_stock_threshold;
+
+            $ownerEmail = 'puihy-wm24@student.tarc.edu.my'; // or load from DB/config
+
+            $emailSent = $this->sendLowStockEmail($ownerEmail, $productName, $stock, $threshold);
+
+            if ($emailSent) {
+
+                $updateSql = "UPDATE productsize SET alert_sent = 1 WHERE productID = ? AND sizeID = ?";
+                $updateStmt = $this->pdo->prepare($updateSql);
+                $updateStmt->execute([$productID, $sizeID]);
+
+                echo "✅ Alert sent for $productName (Stock: $stock)\n";
+            } else {
+                echo "❌ Failed to send email for $productName\n";
+            }
+        }
     }
 }
-
-$check = new check($_db);
-
+// here is just for test ; 
+$check = new CheckStock($_db);
+$check->check_low_stock();
 ?>

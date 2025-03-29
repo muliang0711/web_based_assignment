@@ -3,8 +3,6 @@
 require_once __DIR__ . "/../_base.php";
 require_once __DIR__ . "/../db_connection.php";
 require_once __DIR__ . "/../db/productDb.php";
-require_once __DIR__ . "/../db/productAnlysis.php";
-require_once __DIR__ . "/../db/trackAction.php";
 
 class ProductController{
 
@@ -105,6 +103,7 @@ class ProductController{
 
     
         header("Location: ../pages/admin/product/filterResult.php");
+        
         exit();
 
     }

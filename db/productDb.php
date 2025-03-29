@@ -125,18 +125,18 @@ class productDb{
         $s = $stmt->fetchAll();
 
     
-        echo "<pre>";
-        print_r($s);
-        echo "</pre>";
+        //echo "<pre>";
+        //print_r($s);
+        //echo "</pre>";
 
         return $s ; 
     }
     
-    public function addProductImage($porductID , $imagePath , $type){
+    public function addProductImage($productID , $imagePath , $type){
         try{
             $sql = "INSERT INTO product_images(productID , image_path ,  image_type ) VALUES (? , ? , ?)";
             $result = $this->pdo->prepare($sql);
-            $result->execute([$porductID , $imagePath , $type]); 
+            $result->execute([$productID , $imagePath , $type]); 
     
         }catch(Exception $e){
 
@@ -249,7 +249,7 @@ class productDb{
             $stmt->execute([$productName , $price , $introduction , $playerInfo , $productID]);
 
             // Update productSize
-            $sql = "UPDATE productsize SET quantity = ? WHERE productID = ? AND sizeID = ?";
+            $sql = "UPDATE productsize SET quantity = ? WHERE productID = ? AND sizeID = ? alert_sent = 0 ";
             $stmt = $this->pdo->prepare($sql);
             $stmt->execute([$quantity , $productID , $sizeID]);
 
