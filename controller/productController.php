@@ -9,12 +9,10 @@ require_once __DIR__ . "/../db/trackAction.php";
 class ProductController{
 
     private $productDb ; 
-    private $track ; 
 
     public function __construct($_pdo){
         $this->productDb = new productDb($_pdo);
         
-        $this->track = new track($_pdo);
     }
 
     public function handleAction(){

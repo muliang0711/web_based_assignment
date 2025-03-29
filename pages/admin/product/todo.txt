@@ -1,5 +1,7 @@
-1. filter function 
-2. page silde 
-3. add button move to top 
-4. add a status on  product (turn in to NOT ON SALES )
-5. delete function replace with delete product image 
+1. filter function // done 
+2. page silde // done 
+3. add button move to top // done  
+4. add a status on  product (turn in to NOT ON SALES ) // done 
+5. delete function replace with delete product image  
+6. top salse product on period time 
+7. low stock alert 

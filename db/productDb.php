@@ -46,6 +46,20 @@ class productDb{
         return $stmt->fetchAll();
     }
 
+    public function getSeriesID(){
+        $sql = "SELECT seriesID FROM series ";
+        $stmt = $this->pdo->query($sql);
+        $seriesIdList = $stmt->fetchAll();
+        return  $seriesIdList; 
+    }
+
+    public function getProductID(){
+        $sql = "SELECT productID FROM product ";
+        $stmt = $this->pdo->query($sql);
+        $productIDList = $stmt->fetchAll();
+        return  $productIDList; 
+    }
+
     public function filterProduct($filters) {
         
         // baseSql : 
@@ -160,10 +174,35 @@ class productDb{
             // 2.1 validate does the series already existing or not 
 
             // 2. Insert into series table
-            $this->insertSeries($seriesID, $seriesName);
+           // Insert Series (if not exists)
+            $checkSql = "SELECT seriesName FROM series WHERE seriesName = ? AND seriesID = ? LIMIT 1";
+            $check_stmt = $this->pdo->prepare($checkSql);
+            $check_stmt->execute([$seriesName, $seriesID]);
+            if (!$check_stmt->fetch()) {
+                $sql = "INSERT INTO series (seriesID, seriesName) VALUES (?, ?)";
+                $stmt = $this->pdo->prepare($sql);
+                $stmt->execute([$seriesID, $seriesName]);
+            }
 
-            // 3. Insert into product table
-            $this->insertProduct($productID, $productName, $price, $seriesID,$quantity,$sizeID,$playerInfo,$introduction);
+            // Insert Product (if not exists)
+            $checkSql = "SELECT productID FROM product WHERE productID = ? LIMIT 1";
+            $check_stmt = $this->pdo->prepare($checkSql);
+            $check_stmt->execute([$productID]);
+
+            if (!$check_stmt->fetch()) {
+                $sql = "INSERT INTO product (productID, productName, price, seriesID, introduction, playerInfo)
+                        VALUES (?, ?, ?, ?, ?, ?)";
+                $stmt = $this->pdo->prepare($sql);
+                $stmt->execute([$productID, $productName, $price, $seriesID, $introduction, $playerInfo]);
+            }
+
+            // Insert or Update Product Size
+            $sql = "INSERT INTO productsize (productID, sizeID, quantity) 
+                    VALUES (?, ?, ?)
+                    ON DUPLICATE KEY UPDATE quantity = quantity + VALUES(quantity)";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute([$productID, $sizeID, $quantity]);
+
             // inside this phase already call insertProductSize function
 
             // 4. Commit transaction
@@ -203,11 +242,17 @@ class productDb{
 
             //update product table : 
 
-            $this->updateProduct( $productName , $price , $productID , $introduction , $playerInfo);
+            // Update product table
+            $sql = "UPDATE product SET productName = ?, price = ?, introduction = ?, playerInfo = ?  
+            WHERE productID = ?";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute([$productName , $price , $introduction , $playerInfo , $productID]);
 
-            // update productsize :
+            // Update productSize
+            $sql = "UPDATE productsize SET quantity = ? WHERE productID = ? AND sizeID = ?";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute([$quantity , $productID , $sizeID]);
 
-            $this->updateProductSize($sizeID , $quantity ,  $productID );
 
             // delete old IMAGE for all :
 
@@ -293,139 +338,6 @@ class productDb{
         }
     }
     
-    public function totalsellTrack($filterData){
-        // function : total how many order has been make  : 
-
-        // furure upadte : hoe many profit we make 
-        // future update : lets user can choise a timeline // done 
-        // future update : lest user can choise to see data based on the status // done  
-        // future update : filter out the sizeID // ing
-
-        // Step 1 : fetch orderitem with status Deliverd first : --> clean data :
-        // select oi.orderID , oi.productID ,  oi.quantity , oi.subtotal from orderitems where oi.orderid = o.orderid ;     
-        
-        try {
-            // Fetch filter data (assuming frontend always sends values)
-            $startDate = $filterData['startDate'];
-            $endDate = $filterData['endDate'];
-            $status = $filterData['status'] ?? null;
-    
-            // Base SQL Query
-            $baseSql = "SELECT 
-                            oi.orderId, 
-                            SUM(oi.subtotal) AS total_revenue, 
-                            SUM(oi.quantity) AS total_quantity
-                        FROM order_items oi 
-                        JOIN orders o ON oi.orderId = o.orderId 
-                        WHERE o.orderDate BETWEEN ? AND ?";
-    
-            // Parameters for execution
-            $params = [$startDate, $endDate];
-    
-            // Add status filter
-            if ($status) {
-                $baseSql .= " AND o.status = ?";
-                $params[] = $status;
-            }
-    
-            // Grouping by productId
-            $baseSql .= " GROUP BY oi.productId ORDER BY total_quantity DESC";
-    
-            // Execute query
-            $stmt = $this->pdo->prepare($baseSql);
-            $stmt->execute($params);
-            $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    
-            // Check if data exists
-            if (!$data) {
-                return ["success" => false, "message" => "No sales data found"];
-            }
-    
-            return ["success" => true, "data" => $data];
-    
-        } catch (Exception $e) {
-            return ["success" => false, "error" => $e->getMessage()];
-        }
-    }
-
-    public function productSellTrack($filterData){
-        // function : show how many that product have been sell
-
-        // modify : 
-        // show productid , sizeid , seriesid (product , productsize) 
-        // show total_sales_quantity based (productid and gripId) quantity on the orderitem 
-        // show total_revune based on SUM the same subtotal with same productID and gripsize 
-        try {
-            // Fetch filters
-            $startDate = $filterData['startDate'];
-            $endDate = $filterData['endDate'];
-    
-            // SQL Query
-            $sql = "SELECT 
-                        p.productID,
-                        p.seriesID,
-                        ps.sizeID,
-                        SUM(oi.quantity) AS total_sales,
-                        SUM(oi.subtotal) AS total_revenue
-                    FROM product p
-                    JOIN productsize ps ON p.productID = ps.productID
-                    JOIN order_items oi ON ps.productID = oi.productId AND ps.sizeID = oi.gripSize
-                    JOIN orders o ON oi.orderId = o.orderId
-                    WHERE o.orderDate BETWEEN ? AND ?
-                    GROUP BY p.productID, p.seriesID, ps.sizeID
-                    ORDER BY total_sales DESC";
-    
-            // Execute query
-            $stmt = $this->pdo->prepare($sql);
-            $stmt->execute([$startDate, $endDate]);
-            $result = $stmt->fetchAll();
-    
-            // Check if data exists
-            if (!$result) {
-                return ["success" => false, "message" => "No sales data found."];
-            }
-    
-            return ["success" => true, "data" => $result];
-    
-        } catch (Exception $e) {
-            return ["success" => false, "error" => $e->getMessage()];
-        }
-    }
-
-    public function autoCalculateProductStock($orderProduct){
-        // e  verytime create a order record will auto run this function : 
-        try{
-
-            // 1. fetch data from the array (orderProduct) : 
-            $productID = $orderProduct['productID'] ; 
-            $quantity = $orderProduct['quantity'] ; 
-            $sizeID = $orderProduct['sizeID'];
-
-            // 2. auto - the quantity in the productsize based on the productID and quantity : 
-            $sql = "UPDATE productSize 
-                    SET quantity = quantity - ? 
-                    WHERE productID = ?  AND sizeID = ? ";
-            
-            // ready the params : 
-            $params = [];
-            $params = [$quantity , $productID , $sizeID] ; 
-
-            // execuet :
-            $result = $this->pdo->prepare($sql);
-            $result->execute($params);
-
-            // success : 
-            return ["success" => true, "message" => "Stock updated successfully."];
-
-        }catch(Exception $e){
-
-            // false 
-            return ["success" => false, "error" => $e->getMessage()];
-        }
-
-
-    }
-
     public function getProductByIDAndSize($productID, $sizeID) {
         $sql = "SELECT 
                     p.productID,
@@ -463,20 +375,6 @@ class productDb{
         return $product;
     }
     
-    public function getSeriesID(){
-        $sql = "SELECT seriesID FROM series ";
-        $stmt = $this->pdo->query($sql);
-        $seriesIdList = $stmt->fetchAll();
-        return  $seriesIdList; 
-    }
-
-    public function getProductID(){
-        $sql = "SELECT productID FROM product ";
-        $stmt = $this->pdo->query($sql);
-        $productIDList = $stmt->fetchAll();
-        return  $productIDList; 
-    }
-
     public function search($searchText){
         // 1. search from the product table :
         // 2. search from the size table :
@@ -519,120 +417,6 @@ class productDb{
         }
     }
     
-
-
-
-    
-//==================================== ALL Private function will be here : 
-
-    // =============================== Support Update Function ===================================================================
-
-    /*private function updateSeries($seriesName , $seriesID ,  $oldSeriesID ){
-        try{
-            // Check if the seriesID exists before updating
-            $sqlCheck = "SELECT COUNT(*) FROM series WHERE seriesID = ?";
-            $stmtCheck = $this->pdo->prepare($sqlCheck);
-            $stmtCheck->execute([$oldSeriesID]);
-            $exists = $stmtCheck->fetchColumn();
-    
-            if (!$exists) {
-                throw new Exception("seriesID $oldSeriesID does not exist in series table.");
-            }
-    
-            // Only update seriesName, do not change seriesID
-            $sql = "UPDATE series SET seriesName = ? ,  seriesID = ?  WHERE seriesID = ?";
-            $stmt = $this->pdo->prepare($sql);
-            $stmt->execute([$seriesName, $seriesID , $oldSeriesID]);
-    
-        }catch(Exception $e){
-            throw new Exception("Error updating series: " . $e->getMessage());
-      }    
-    } // can not change foreign key due to mysql rule */ 
-
-    private function updateProduct($productName , $price , $productID , $introduction , $playerInfo){
-        try{
-            $sql = "UPDATE product set productName = ? , price = ?  , introduction = ? , playerINfo = ?  
-                    WHERE productID = ? " ;
-            $stmt = $this->pdo->prepare($sql);
-            $stmt->execute([$productName , $price , $introduction , $playerInfo , $productID]);
-
-        }catch(Exception $e){
-            throw new Exception("Error insert into product : " . $e->getMessage());
-        }
-    }
-
-    private function updateProductSize($sizeID, $quantity, $productID ) {
-        try {
-            $sql = "UPDATE productsize SET quantity = ? WHERE productID = ? AND sizeID = ? ";
-            $stmt = $this->pdo->prepare($sql);
-            $stmt->execute([$quantity , $productID , $sizeID ,]);
-    
-        } catch (Exception $e) {
-            throw new Exception("Error updating productSize: " . $e->getMessage());
-        }
-    } 
-
-    //================================= Support Insert Function =================================================================
-
-    private function insertSeries($seriesID, $seriesName) {
-        // Check if the series exists
-        try{
-
-            $checkSql = "SELECT seriesName FROM series WHERE seriesName = ? AND seriesID = ? LIMIT 1";
-            $check_stmt = $this->pdo->prepare($checkSql);
-            $check_stmt->execute([$seriesName, $seriesID]);
-
-            // If not exists, insert it
-            if (!$check_stmt->fetch()) {
-                $sql = "INSERT INTO series (seriesID, seriesName) VALUES (?, ?)";
-                $stmt = $this->pdo->prepare($sql);
-                $stmt->execute([$seriesID, $seriesName]);
-            }
-
-        }catch(Exception $e){
-
-            error_log("Transaction failed: " . $e->getMessage());
-            return false;
-        }
-    }
-
-    private function insertProduct($productID, $productName, $price, $seriesID,$quantity,$sizeID ,$introduction , $playerInfo) {
-        try {
-            // product exis already : than skip this phase 
-            $checkSql = "SELECT productID FROM product WHERE productID = ? LIMIT 1";
-            $check_stmt = $this->pdo->prepare($checkSql);
-            $check_stmt->execute([$productID]);
-
-            if(!$check_stmt->fetch()){
-                // if not existing than insert data into product first :
-                $sql = "INSERT INTO product (productID, productName, price, seriesID , introduction , playerInfo) VALUES (?, ?, ?, ? , ? , ? )";
-                $stmt = $this->pdo->prepare($sql);
-                $stmt->execute([$productID, $productName, $price, $seriesID , $introduction , $playerInfo]);
-
-                $this->insertProductSize($productID, $sizeID, $quantity);
-            }else{
-                
-                $this->insertProductSize($productID, $sizeID, $quantity);
-            }
-        } catch (Exception $e) {
-            throw new Exception("Error inserting product: " . $e->getMessage());
-        }
-    }
-
-    private function insertProductSize($productID, $sizeID, $quantity) {
-        // at this phase the one product id can have two sizeID   
-        try {
-            // since we already check before so here we just need to insert 
-            $sql = "INSERT INTO productsize (productID, sizeID, quantity) VALUES (?, ?, ?)
-                    ON DUPLICATE KEY UPDATE quantity = quantity + VALUES(quantity)";
-            $stmt = $this->pdo->prepare($sql);
-            $stmt->execute([$productID, $sizeID, $quantity]);
-
-        } catch (Exception $e) {
-            throw new Exception("Error inserting product size: " . $e->getMessage());
-        }
-    }
-
     private function deleteImage($productID) {
         try{
             $stmt = $this->pdo->prepare("SELECT image_path FROM product_images WHERE productID = ?");
@@ -665,6 +449,7 @@ class productDb{
         }   
        
     }
+
 
     
 //==================================================================================================================================
