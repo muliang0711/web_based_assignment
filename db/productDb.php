@@ -68,11 +68,10 @@ class productDb{
                 WHERE 1=1"; 
     
         $params = [];
-        $filterByIDOnly = !empty($filters['productID']) && empty($filters['sizeID']);
     
         // Product id Filter
         if (!empty($filters['productID'])) {
-            $sql .= " AND p.productID LIKE ?";
+            $sql .= " AND p.productID =  ?";
             $params[] =   $filters['productID'] ;
         }
     
@@ -82,15 +81,16 @@ class productDb{
             $params[] = $filters['seriesID'];
         }
     
-        // Price Filters
-        if (!empty($filters['priceMin'])) {
+        if (isset($filters['priceMin'])) {
             $sql .= " AND p.price >= ?";
-            $params[] = $filters['priceMin']; 
+            $params[] = $filters['priceMin'];
         }
-        if (!empty($filters['priceMax'])) {
+        
+        if (isset($filters['priceMax'])) {
             $sql .= " AND p.price <= ?";
-            $params[] = $filters['priceMax']; 
+            $params[] = $filters['priceMax'];
         }
+        
     
         // Product Size Filter
         if (!empty($filters['sizeID'])) {
@@ -98,15 +98,23 @@ class productDb{
             $params[] = $filters['sizeID'];
         }
 
-        if ($filterByIDOnly) {
-            $sql .= " GROUP BY p.productID, ps.sizeID";
-        }
-    
+
+        
         $sql .= " ORDER BY p.productID, ps.sizeID";
-    
+        echo "<pre>SQL: $sql</pre>";
+        echo "<pre>Params: " . print_r($params, true) . "</pre>";
+
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute($params);
-        return $stmt->fetchAll();
+
+        $s = $stmt->fetchAll();
+
+    
+        echo "<pre>";
+        print_r($s);
+        echo "</pre>";
+
+        return $s ; 
     }
     
     public function addProductImage($porductID , $imagePath , $type){

@@ -92,8 +92,9 @@ class ProductController{
                 echo($name) /
             }
         */
-        
-        $_SESSION['$filterResult'] = $this->productDb->filterProduct($filters);
+        session_start();
+
+        $_SESSION['filterResult'] = $this->productDb->filterProduct($filters);
         // what is the result look like ？ ： array of object 
         // result = [ 
         // (object) ["productName" => "Laptop", "price" => 1200] 

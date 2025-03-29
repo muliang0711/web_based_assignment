@@ -64,51 +64,47 @@ $(document).ready(function () {
     const $minInput = $('#minPrice');
     const $maxInput = $('#maxPrice');
     const $form = $('.filter-form');
+    const $errorMsg = $('#priceError');
 
-    // 1. Set default min price if empty or less than 100
+    // Set default values if empty or out of range
     $minInput.on('blur', function () {
         let val = parseInt($(this).val());
-        if (isNaN(val) || val < 100) {
-            $(this).val(100);
+        if (isNaN(val) || val < 10) {
+            $(this).val(10);
         }
     });
 
-    // 2. Set default max price if less than 100
     $maxInput.on('blur', function () {
         let val = parseInt($(this).val());
         if (isNaN(val) || val < 100) {
             $(this).val(100);
+        } else if (val > 1000) {
+            $(this).val(1000);
         }
     });
 
-    // 3. Show formatted label below inputs
-    function updateFormattedPrice($input, target) {
-        let val = parseFloat($input.val());
-        if (!isNaN(val)) {
-            $(target).text('RM ' + val.toFixed(2));
-        } else {
-            $(target).text('');
-        }
-    }
-
-    $minInput.on('input', function () {
-        updateFormattedPrice($minInput, '#minPriceFormatted');
-    });
-
-    $maxInput.on('input', function () {
-        updateFormattedPrice($maxInput, '#maxPriceFormatted');
-    });
-
-    // 4. Validate min ≤ max before submit
+    // Validate before submit
     $form.on('submit', function (e) {
-        let min = parseFloat($minInput.val());
-        let max = parseFloat($maxInput.val());
+        const min = parseInt($minInput.val());
+        const max = parseInt($maxInput.val());
+        let error = "";
 
-        if (min > max) {
-            alert("Minimum price cannot be greater than maximum price.");
-            e.preventDefault();
+        if (isNaN(min) || isNaN(max)) {
+            error = "Both prices must be numbers.";
+        } else if (min < 10 || min > 1000) {
+            error = "Minimum price must be between 10 and 1000.";
+        } else if (max < 100 || max > 1000) {
+            error = "Maximum price must be between 100 and 1000.";
+        } else if (min > max) {
+            error = "Minimum price cannot be greater than maximum price.";
         }
 
+        if (error) {
+            $errorMsg.text(error).show();
+            e.preventDefault(); // stop submission
+        } else {
+            $errorMsg.hide(); // hide error if all good
+        }
     });
-    
+
 });
