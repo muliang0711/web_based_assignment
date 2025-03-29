@@ -89,11 +89,11 @@ unset($_SESSION['Delete_ErrorMsg']);
 
         <label for="minPrice">Min Price</label>
         <input type="number" name="minPrice" id="minPrice" 
-              min="10" max="1000" value="10" step="10">
+              min="10" max="1000" value="10" step="100">
 
         <label for="maxPrice">Max Price</label>
         <input type="number" name="maxPrice" id="maxPrice" 
-              min="100" max="1000" value="100" step="10">
+              min="100" max="1000" value="100" step="100">
 
         <small id="priceError" style="color: red; display: none;"></small>
 
@@ -260,57 +260,15 @@ unset($_SESSION['Delete_ErrorMsg']);
   </div>`
 
 </div>
-    
+
+
+
 <?php
 include "../../../admin_foot.php"
 ?>
 
 <script src="/pages/admin/product/product.js"></script>
-<script>
-    const $minInput = $('#minPrice');
-    const $maxInput = $('#maxPrice');
-    const $form = $('.filter-form');
-    const $errorMsg = $('#priceError');
 
-    // Set default values if empty or out of range
-    $minInput.on('blur', function () {
-        let val = parseInt($(this).val());
-        if (isNaN(val) || val < 10) {
-            $(this).val(10);
-        }
-    });
 
-    $maxInput.on('blur', function () {
-        let val = parseInt($(this).val());
-        if (isNaN(val) || val < 100) {
-            $(this).val(100);
-        } else if (val > 1000) {
-            $(this).val(1000);
-        }
-    });
 
-    // Validate before submit
-    $form.on('submit', function (e) {
-        const min = parseInt($minInput.val());
-        const max = parseInt($maxInput.val());
-        let error = "";
-
-        if (isNaN(min) || isNaN(max)) {
-            error = "Both prices must be numbers.";
-        } else if (min < 10 || min > 1000) {
-            error = "Minimum price must be between 10 and 1000.";
-        } else if (max < 100 || max > 1000) {
-            error = "Maximum price must be between 100 and 1000.";
-        } else if (min > max) {
-            error = "Minimum price cannot be greater than maximum price.";
-        }
-
-        if (error) {
-            $errorMsg.text(error).show();
-            e.preventDefault(); // stop submission
-        } else {
-            $errorMsg.hide(); // hide error if all good
-        }
-    });
-    </script>
 

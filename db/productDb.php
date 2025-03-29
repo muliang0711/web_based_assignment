@@ -101,8 +101,9 @@ class productDb{
 
         
         $sql .= " ORDER BY p.productID, ps.sizeID";
-        echo "<pre>SQL: $sql</pre>";
-        echo "<pre>Params: " . print_r($params, true) . "</pre>";
+        
+        //echo "<pre>SQL: $sql</pre>";
+        // echo "<pre>Params: " . print_r($params, true) . "</pre>";
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute($params);

@@ -92,7 +92,6 @@ class ProductController{
                 echo($name) /
             }
         */
-        session_start();
 
         $_SESSION['filterResult'] = $this->productDb->filterProduct($filters);
         // what is the result look like ？ ： array of object 
