@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 29, 2025 at 04:21 PM
+-- Generation Time: Mar 28, 2025 at 07:43 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -45,8 +45,8 @@ CREATE TABLE `admin` (
 INSERT INTO `admin` (`id`, `position`, `passwordHash`, `adminLevel`, `status`) VALUES
 ('A001', 'HR Manager', '$2y$10$5Y2WIZtHCoElCeI6IXp94.4TiLKeTcbOK5AgTswY9oAwbFw9FViFi', 'main', 'Active'),
 ('A002', 'IT Support', '$2y$10$2ioQwFoTCz3dH1AjoKG7NuOAHqKjzmecG7b.8BPW5aGiuImR9oji2', 'staff', 'Active'),
-('A003', 'Finance Head', '$2y$10$AeTa6/0xSoeDf2gz0.bXE.i1/kG56Alerke8pFPhe9NSVBVOKA3wi', 'main', 'Blocked'),
-('A004', 'Marketing Lead', '$2y$10$rYBjsAfzbPMGCn4MANIZ.ef78dfu/MnSbq8RwOKHnY272KCo9h8gK', 'staff', 'Active'),
+('A003', 'Finance Head', '$2y$10$AeTa6/0xSoeDf2gz0.bXE.i1/kG56Alerke8pFPhe9NSVBVOKA3wi', 'main', 'Active'),
+('A004', 'Marketing Lead', '$2y$10$rYBjsAfzbPMGCn4MANIZ.ef78dfu/MnSbq8RwOKHnY272KCo9h8gK', 'staff', 'Blocked'),
 ('A005', 'Operations', '$2y$10$.2ZxTbzEPRnm0H9EYwJQnOG2YBQL8plEmxN3K7WzIAJHO1FUUYVFW', 'staff', 'Blocked');
 
 -- --------------------------------------------------------
@@ -185,26 +185,28 @@ CREATE TABLE `productsize` (
   `productID` varchar(5) NOT NULL,
   `sizeID` varchar(4) NOT NULL,
   `quantity` int(11) NOT NULL,
-  `status` enum('onsales','notonsales') NOT NULL DEFAULT 'notonsales'
+  `status` enum('onsales','notonsales') NOT NULL DEFAULT 'notonsales',
+  `low_stock_threshold` int(11) DEFAULT 5,
+  `alert_sent` tinyint(1) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `productsize`
 --
 
-INSERT INTO `productsize` (`productID`, `sizeID`, `quantity`, `status`) VALUES
-('R0001', '3UG5', 4, 'notonsales'),
-('R0001', '4UG5', 5, 'notonsales'),
-('R0002', '3UG5', 5, 'notonsales'),
-('R0002', '4UG5', 6, 'notonsales'),
-('R0003', '3UG5', 2, 'notonsales'),
-('R0003', '4UG5', 3, 'notonsales'),
-('R0004', '3UG5', 4, 'notonsales'),
-('R0004', '4UG5', 5, 'notonsales'),
-('R0005', '3UG5', 5, 'notonsales'),
-('R0005', '4UG5', 6, 'notonsales'),
-('R0006', '3UG5', 2, 'notonsales'),
-('R0006', '4UG5', 3, 'notonsales');
+INSERT INTO `productsize` (`productID`, `sizeID`, `quantity`, `status`, `low_stock_threshold`, `alert_sent`) VALUES
+('R0001', '3UG5', 4, 'onsales', 5, 1),
+('R0001', '4UG5', 5, 'onsales', 5, 1),
+('R0002', '3UG5', 5, 'onsales', 5, 1),
+('R0002', '4UG5', 6, 'onsales', 5, 0),
+('R0003', '3UG5', 2, 'onsales', 5, 1),
+('R0003', '4UG5', 3, 'onsales', 5, 1),
+('R0004', '3UG5', 4, 'onsales', 5, 1),
+('R0004', '4UG5', 5, 'onsales', 5, 1),
+('R0005', '3UG5', 5, 'onsales', 5, 1),
+('R0005', '4UG5', 6, 'onsales', 5, 0),
+('R0006', '3UG5', 2, 'onsales', 5, 1),
+('R0006', '4UG5', 3, 'onsales', 5, 1);
 
 -- --------------------------------------------------------
 
@@ -226,8 +228,6 @@ CREATE TABLE `product_images` (
 --
 
 INSERT INTO `product_images` (`id`, `productID`, `image_path`, `image_type`, `created_at`) VALUES
-(1, 'R0001', 'product_R0001_1742917010.jpg', 'product', '2025-03-25 15:36:50'),
-(2, 'R0001', 'player_R0001_1742917010.jpg', 'player', '2025-03-25 15:36:50'),
 (3, 'R0002', 'product_R0002_1742917087.jpg', 'product', '2025-03-25 15:38:07'),
 (4, 'R0002', 'player_R0002_1742917087.jpg', 'player', '2025-03-25 15:38:07'),
 (5, 'R0003', 'product_R0003_1742917753.jpg', 'product', '2025-03-25 15:49:13'),
