@@ -150,7 +150,7 @@ CREATE TABLE `product` (
   `price` float(6,2) NOT NULL,
   `seriesID` varchar(3) DEFAULT NULL,
   `introduction` varchar(1000) NOT NULL,
-  `playerInfo` varchar(1000) NOT NULL,
+  `playerInfo` varchar(1000) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -217,7 +217,6 @@ CREATE TABLE `product_images` (
 -- Dumping data for table `product_images`
 --
 
-INSERT INTO `product_images` (`id`, `productID`, `image_path`, `image_type`, `created_at`) VALUES
 
 INSERT INTO `product_images` (`id`, `productID`, `image_path`, `image_type`, `created_at`) VALUES
 (1, 'R0001', 'product_R0001_1743343865.png', 'product', '2025-03-30 14:11:05'),
