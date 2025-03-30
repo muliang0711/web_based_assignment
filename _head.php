@@ -22,13 +22,14 @@ if (is_logged_in("user")) {
     // Reminder: userID is a NUMBER, therefore does not require single quotes
     $_user = $_db->query("SELECT * FROM user WHERE userID = {$_SESSION['userID']}")->fetch();
     $userID = $_user->userID;
-    $stm = $_db->prepare('SELECT COUNT(quantity) AS total FROM cartitem WHERE userID = ?');
-    $stm->execute([$userID]);
-    $total = $stm->fetch();
-    $totalItem = $total->total;
 }else{
     $userID = null;
 }
+
+$stm = $_db->prepare('SELECT SUM(quantity) AS total FROM cartitem WHERE userID = ?');
+$stm->execute([$userID]);
+$total = $stm->fetch();
+$totalItem = $total->total;
 
 // echo $_SERVER['REQUEST_URI']; // this line was for debugging.
 if (is_post()) {
@@ -130,7 +131,7 @@ function removeFromCart($productID, $sizeID, $userID): void {
             <?php if (is_logged_in("user")): ?>
 
                 <div class="cart-btn">
-                    <a onclick="onclick()" href="../product/cartPage.php" ?>
+                    <a onclick="onclick()" href="/pages/product/cartPage.php" ?>
                     <img src="/assets/img/icon-cart.png" alt="Cart" title="Cart" />
                     <div class="itemCount"><?php echo $totalItem ?></div>
             </a>

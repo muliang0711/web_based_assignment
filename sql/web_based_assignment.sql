@@ -218,8 +218,6 @@ CREATE TABLE `product_images` (
 --
 
 INSERT INTO `product_images` (`id`, `productID`, `image_path`, `image_type`, `created_at`) VALUES
-
-INSERT INTO `product_images` (`id`, `productID`, `image_path`, `image_type`, `created_at`) VALUES
 (1, 'R0001', 'product_R0001_1743343865.png', 'product', '2025-03-30 14:11:05'),
 (2, 'R0001', 'player_R0001_1743343865.png', 'player', '2025-03-30 14:11:05'),
 (3, 'R0002', 'product_R0002_1743343876.png', 'product', '2025-03-30 14:11:16'),
