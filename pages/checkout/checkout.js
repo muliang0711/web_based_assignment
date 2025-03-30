@@ -28,4 +28,72 @@ $(()=>{
         movborder(tg, true);
     })
 
+
+    var totalTraveled = 0;
+    var numberofTimes = 0;
+    // if more than 2 cards then we show butons
+    if($(".card").length>2){
+        $(".right").css("visibility","visible");
+    }
+
+    $(".right").on('click', e => {
+        e.preventDefault();
+        
+        
+        let slider = $(".addressSlider");
+        let card = $(".card").first();
+        let totravel = card.width()+30;
+        let timesCanClick = $(".card").length - 2;
+        
+
+        if(numberofTimes<timesCanClick){
+            slider.animate({marginLeft:totalTraveled-=totravel},400, function(){
+                $(".left").css("visibility","visible");
+                if(numberofTimes==timesCanClick){
+                    $(".right").css("visibility","hidden");
+                }
+            });
+            numberofTimes++;
+            
+        }
+        else {
+            return;
+        }
+        
+
+        
+    })
+
+    $(".left").on('click', e => {
+        e.preventDefault();
+        
+        let slider = $(".addressSlider");
+        let card = $(".card").first();
+        let totravel = card.width()+30;
+        let timesCanClick = $(".card").length - 2;
+        
+
+        if(numberofTimes>0){
+            slider.animate({marginLeft:totalTraveled+=totravel},400, function(){
+                $(".right").css("visibility","visible");
+                if(numberofTimes==0){
+                    $(".left").css("visibility","hidden");
+                }
+            });
+            numberofTimes--;
+            
+        }
+        else {
+            return;
+        }
+
+
+    })
+
+    $(".card").on('click', function(e){
+        $(".card").removeClass("selected");
+        $(this).addClass("selected");
+    })
+
+
 })

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 30, 2025 at 10:09 AM
+-- Generation Time: Mar 30, 2025 at 06:03 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -241,24 +241,26 @@ INSERT INTO `product_images` (`id`, `productID`, `image_path`, `image_type`, `cr
 
 CREATE TABLE `savedaddress` (
   `userID` int(11) NOT NULL,
-  `address` varchar(200) NOT NULL
+  `address` varchar(200) NOT NULL,
+  `phoneNo` varchar(15) NOT NULL,
+  `name` varchar(40) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `savedaddress`
 --
 
-INSERT INTO `savedaddress` (`userID`, `address`) VALUES
-(1, '18, Persiaran Gurney, 10250 George Town, Penang, Malaysia'),
-(1, '5, Lorong Tun Ismail 1, 25000 Kuantan, Pahang, Malaysia'),
-(1, '88, Jalan Wong Ah Fook, 80000 Johor Bahru, Johor, Malaysia'),
-(1, '9, Jalan Merdeka, 75000 Melaka, Malaysia'),
-(1, 'No. 15, Jalan Ampang, 50450 Kuala Lumpur, Malaysia'),
-(2, '12, Jalan Sutera Tanjung, 81300 Skudai, Johor, Malaysia'),
-(2, '22A, Jalan Bukit Bintang, 55100 Kuala Lumpur, Malaysia'),
-(2, '35, Jalan Gurney, 10250 George Town, Penang, Malaysia'),
-(2, '55, Jalan Tun Razak, 50400 Kuala Lumpur, Malaysia'),
-(2, '7, Jalan Tebrau, 80200 Johor Bahru, Johor, Malaysia');
+INSERT INTO `savedaddress` (`userID`, `address`, `phoneNo`, `name`) VALUES
+(1, '18, Persiaran Gurney, 10250 George Town, Penang, Malaysia', '012-6129291', 'Alexandra'),
+(1, '5, Lorong Tun Ismail 1, 25000 Kuantan, Pahang, Malaysia', '012-6129291', 'Alexandra'),
+(1, '88, Jalan Wong Ah Fook, 80000 Johor Bahru, Johor, Malaysia', '012-6129291', 'Alexandra'),
+(1, '9, Jalan Merdeka, 75000 Melaka, Malaysia', '012-6129291', 'Alexandra'),
+(1, 'No. 15, Jalan Ampang, 50450 Kuala Lumpur, Malaysia', '012-6129291', 'Alexandra'),
+(2, '12, Jalan Sutera Tanjung, 81300 Skudai, Johor, Malaysia', '012-1235521', 'Tester'),
+(2, '22A, Jalan Bukit Bintang, 55100 Kuala Lumpur, Malaysia', '012-1235521', 'Tester'),
+(2, '35, Jalan Gurney, 10250 George Town, Penang, Malaysia', '012-1235521', 'Tester'),
+(2, '55, Jalan Tun Razak, 50400 Kuala Lumpur, Malaysia', '012-1235521', 'Tester'),
+(2, '7, Jalan Tebrau, 80200 Johor Bahru, Johor, Malaysia', '012-1235521', 'Tester');
 
 -- --------------------------------------------------------
 
