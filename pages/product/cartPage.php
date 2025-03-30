@@ -3,14 +3,6 @@ $stylesheetArray = ['product.css', 'cartTable.css'];
 $title = 'Product List';
 require '../../_base.php';
 include '../../_head.php';
-$statement = $_db->prepare('SELECT * FROM cartitem JOIN product USING (productID) WHERE userID = ?');
-$statement->execute([$userID]);
-$cartItemArray = $statement->fetch();
-$cartQuantity = $cartItemArray->quantity;
-$stm = $_db->prepare('SELECT * FROM productSize');
-$stm->execute([]);
-$object = $stm->fetch();
-$stock = $object->quantity;
 ?>
 
 <?php

@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__  . "/_base.php";
+/*
 if (is_logged_in("user")) {
     global $_db;
     global $_user;
@@ -8,12 +9,12 @@ if (is_logged_in("user")) {
 }
 
 $userID = $_user->userID;
-$statement = $_db->prepare('SELECT * FROM cartitem JOIN productStock USING (productID) WHERE userID = ?');
+$statement = $_db->prepare('SELECT * FROM cartitem WHERE userID = ?');
 $statement->execute([$userID]);
 $cartItemArray = $statement->fetch();
 $stock = $cartItemArray->stock;
 $cartQuantity = $cartItemArray->quantity;
-
+*/
 
 // echo $_SERVER['REQUEST_URI']; // this line was for debugging.
 if (is_post()) {
@@ -54,19 +55,19 @@ if (is_post()) {
         }
         // $updateStmt = $_db->prepare('UPDATE cartitem SET ')
     } else if ($action === 'add') {
-        if ($stock > $cartQuantity) {
+     //   if ($stock > $cartQuantity) {
         $updateStmt = $_db->prepare('UPDATE cartitem SET quantity = quantity + 1 WHERE productID = :productID AND sizeID = :sizeID AND userID = :userID');
         $updateStmt->execute([
             'productID' => $productID,
             'sizeID' => $sizeID,
             'userID' => $userID,
         ]);
-        temp("info", "Added to cart Successfully!");
+  /*      temp("info", "Added to cart Successfully!");
       redirect("../product/productDetail.php?racket=$productObj->productID");
     } else {
       temp("error", "Stock unvailable! / Over limit!");
       redirect("../product/productDetail.php?racket=$productObject->productID");
-    }
+    }*/
     } else if ($action === 'delete') {
         removeFromCart($productID, $sizeID, $userID);
     }

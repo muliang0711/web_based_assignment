@@ -146,7 +146,7 @@ include '../../_head.php';
   </div>
 </form>
 <?php
-$size = $_db->prepare("SELECT * FROM productSize WHERE productID = ?");
+$size = $_db->prepare("SELECT * FROM productStock WHERE productID = ?");
 $size->execute([$productID]);
 $productObject = $size->fetchAll();
 ?>
