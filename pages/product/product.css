@@ -140,7 +140,7 @@ p{
   position: absolute;
   text-align: left;
   color: #222222;
-  right: 80px;
+  right: 13%;
   top: 150px;
   letter-spacing: 1px;
   padding-left: 30px;
@@ -162,16 +162,15 @@ p{
   top: 25%;
   font-family: Arial, sans-serif;
   padding: 40px;
-  background-color: #ecf1f4;
+  background-color: rgb(238, 238, 238);
   letter-spacing: 1px;
 }
 
 .information table{
   position: absolute;
   top: 40%;
-  right: 48%;
+  right: 50%;
   text-align: left;
-  background-color: #eef5ff;
   color: black;
   font-size: 20px;
 }
@@ -203,12 +202,12 @@ p{
 
 .playerPhoto{
   position: relative;
-  padding: 40px;
+  padding: 20px;
   text-align: left;
   font-size: 20px;
   color: black;
   width: 800px;
-  left:100px;
+  left:20%;
   background-color: #ecf1f4;
 }
 

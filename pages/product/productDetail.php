@@ -11,8 +11,17 @@ $_db = new PDO('mysql:dbname=web_based_assignment', 'root', '', [
 ]);
 
 $statement = $_db->prepare("SELECT * FROM product WHERE productID = ?");
-$statement->execute([$productID]); // make sure your $productID variable is declared - I don’t see it in the screenshot
+$statement->execute([$productID]); 
 $productObject = $statement->fetch();
+
+$stm = $_db->prepare("SELECT * FROM product_images WHERE productID = ? AND image_type = 'product'");
+$stm->execute([$productID]); 
+$productImg = $stm->fetch();
+
+$stmm = $_db->prepare("SELECT * FROM product_images WHERE productID = ? AND image_type = 'player'");
+$stmm->execute([$productID]); 
+$playerImg = $stmm->fetch();
+
 if (!$productObject) {
   echo "Error: Undefined racket";
   // redirect('/');
@@ -23,10 +32,10 @@ if (!$productObject) {
 $racketID = $productObject->productID;
 $racketName = $productObject->productName; // Get the productName attribute of the product object
 $price = $productObject->price; // Get the price attribute of the product object
-$imgUrl = $productObject->productImg;
+$imgUrl = $productImg->image_path;
 $intro = $productObject->introduction;
 $playerInfo = $productObject->playerInfo;
-$playerImg = $productObject->playerImage;
+$playerImg = $playerImg->image_path;
 
 $gripSize = get("gripSize");
 if (is_logged_in("user")) {
