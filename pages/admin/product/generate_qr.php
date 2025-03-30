@@ -13,7 +13,7 @@ function generateQRCode($pdo, $productID, $sizeID) {
     $stmt->execute([$productID, $sizeID]);
     $existing = $stmt->fetch();
 
-    if ($existing && !empty($existing['qr_token'])) {
+    if ($existing && !empty($existing->qr_token)) {
         echo "QR Code already exists for product $productID, size $sizeID\n";
         return;
     }
@@ -25,9 +25,9 @@ function generateQRCode($pdo, $productID, $sizeID) {
     $updateSql = "UPDATE productsize SET qr_token = ? WHERE productID = ? AND sizeID = ?";
     $updateStmt = $pdo->prepare($updateSql);
     $updateStmt->execute([$token, $productID, $sizeID]);
-
+    
     // 4. Build verification URL
-    $verifyUrl = "https://yourdomain.com/verify-stock.php?productID=$productID&sizeID=$sizeID&token=$token";
+    $verifyUrl = "http:/web_based_assignment/pages/admin/product/verify-stock.php?productID=$productID&sizeID=$sizeID&token=$token";
 
     // 5. Generate QR code
     $result = Builder::create()
@@ -39,11 +39,11 @@ function generateQRCode($pdo, $productID, $sizeID) {
         ->build();
 
     // 6. Save QR image
-    $filePath = __DIR__ . "/qrcode/product_{$productID}_size_{$sizeID}.png";
+    $filePath = __DIR__ . "/../../../qrcode/product_{$productID}_size_{$sizeID}.png";
     $result->saveToFile($filePath);
 
-    echo "✅ QR Code generated and saved: $filePath\n";
+    echo "QR Code generated and saved: $filePath\n";
 }
 $p = "R0001";
-$s = "3UG5";
+$s = "4UG5";
 generateQRCode($_db, $p , $s); // Example: productID=5, sizeID=2

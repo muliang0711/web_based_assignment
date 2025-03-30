@@ -179,18 +179,7 @@ header nav > a:hover::after {
 
 }
 
-.paymentBtn button{
-    background: radial-gradient(circle 280px at 0% 0%, #5ce973, #018a38);
-    border: none;
-    margin-top: 10px;
-    font-size: 30px;
-    padding-left: 10px;
-    padding-right: 10px;
-    color: #032d14;
-    border-radius: 3px;
-    font-family: "Lucida Console", "Courier New", monospace;
-    box-shadow: 0 0 10px rgb(6, 211, 54);
-}
+
 
 /***************************************************************
  ************* Styling for dropdown components *****************
@@ -605,3 +594,15 @@ span.error br {
     padding: 50px 0;
 }
 
+.itemCount{
+    position: absolute;
+    color: white;
+    background-color: rgb(255, 81, 0);
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    text-align: center;
+    font-size: 15px;
+    top: 15%;
+    right:185px;
+}

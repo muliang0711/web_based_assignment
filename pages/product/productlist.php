@@ -109,12 +109,9 @@ include '../../_head.php';
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
   ]);
 
-  $statement = $_db->prepare("SELECT * FROM product");
+  $statement = $_db->prepare("SELECT * FROM product JOIN product_images USING (productID) WHERE image_type = 'product'");
   $statement->execute([]);
   $productObjectArray = $statement->fetchAll();
-  $statementImg = $_db->prepare("SELECT * FROM product_images WHERE image_type = 'product'");
-  $statementImg->execute([]);
-  $productObjectArrayImg = $statementImg->fetchAll();
   ?>
 
   <div class="list" id="productList">
@@ -129,7 +126,7 @@ include '../../_head.php';
             <div class="true-card">
               <div class="picture-card">
                 <div class="picture">
-                  <img width="150px" height="250px" id="productImage" src="../../../File/<?php echo  $productObject->productImg; ?>" alt="Product Image" />
+                  <img width="150px" height="250px" id="productImage" src="../../../File/<?php echo  $productObject->image_path; ?>" alt="Product Image" />
                 </div>
               </div>
             </div>

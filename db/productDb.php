@@ -35,9 +35,9 @@ class productDb{
             s.seriesName, 
             ps.sizeID, 
             ps.status,
-            ps.quantity AS total_stock 
+            ps.stock AS total_stock 
             FROM product p
-            JOIN productsize ps ON p.productID = ps.productID
+            JOIN productstock ps ON p.productID = ps.productID
             JOIN series s ON p.seriesID = s.seriesID
             ORDER BY p.productID, ps.sizeID;";
 
@@ -73,10 +73,10 @@ class productDb{
                     p.introduction,
                     p.playerInfo,
                     ps.status,
-                    ps.quantity AS stock,
+                    ps.stock AS stock,
                     SUM(ps.quantity) OVER (PARTITION BY p.productID) AS total_stock
                 FROM product p
-                LEFT JOIN productsize ps ON p.productID = ps.productID
+                LEFT JOIN productstock ps ON p.productID = ps.productID
                 LEFT JOIN series s ON p.seriesID = s.seriesID
 
                 WHERE 1=1"; 
@@ -197,13 +197,13 @@ class productDb{
             }
 
             // Insert or Update Product Size
-            $sql = "INSERT INTO productsize (productID, sizeID, quantity) 
+            $sql = "INSERT INTO productstock (productID, sizeID, stock) 
                     VALUES (?, ?, ?)
-                    ON DUPLICATE KEY UPDATE quantity = quantity + VALUES(quantity)";
+                    ON DUPLICATE KEY UPDATE stock = stock + VALUES(stock)";
             $stmt = $this->pdo->prepare($sql);
             $stmt->execute([$productID, $sizeID, $quantity]);
 
-            // inside this phase already call insertProductSize function
+            // inside this phase already call insertProductStock function
 
             // 4. Commit transaction
             // $this->pdo->commit();
@@ -248,8 +248,8 @@ class productDb{
             $stmt = $this->pdo->prepare($sql);
             $stmt->execute([$productName , $price , $introduction , $playerInfo , $productID]);
 
-            // Update productSize
-            $sql = "UPDATE productsize SET quantity = ? WHERE productID = ? AND sizeID = ?";
+            // Update productStock
+            $sql = "UPDATE productstock SET stock = ? WHERE productID = ? AND sizeID = ?";
             $stmt = $this->pdo->prepare($sql);
             $stmt->execute([$quantity , $productID , $sizeID]);
 
@@ -302,11 +302,11 @@ class productDb{
 
     
             // Step 2: Delete this product-size entry
-            $deleteSizeStmt = $this->pdo->prepare("DELETE FROM productsize WHERE productID = ? AND sizeID = ?");
+            $deleteSizeStmt = $this->pdo->prepare("DELETE FROM productstock WHERE productID = ? AND sizeID = ?");
             $deleteSizeStmt->execute([$productID, $sizeID]);
     
             // Step 3: Check if the product has any remaining sizes
-            $remainingSizesStmt = $this->pdo->prepare("SELECT COUNT(*) FROM productsize WHERE productID = ?");
+            $remainingSizesStmt = $this->pdo->prepare("SELECT COUNT(*) FROM productstock WHERE productID = ?");
             $remainingSizesStmt->execute([$productID]);
             $remainingSizes = $remainingSizesStmt->fetchColumn();
     
@@ -348,11 +348,11 @@ class productDb{
                     p.seriesID,
                     s.seriesName,
                     ps.sizeID,
-                    ps.quantity AS total_stock,
+                    ps.stock AS total_stock,
                     GROUP_CONCAT(CASE WHEN pi.image_type = 'product' THEN pi.image_path END) AS product_images,
                     GROUP_CONCAT(CASE WHEN pi.image_type = 'player' THEN pi.image_path END) AS player_images
                 FROM product p
-                JOIN productsize ps ON p.productID = ps.productID
+                JOIN productstock ps ON p.productID = ps.productID
                 JOIN series s ON p.seriesID = s.seriesID
                 LEFT JOIN product_images pi ON p.productID = pi.productID
                 WHERE p.productID = :productID AND ps.sizeID = :sizeID
@@ -390,10 +390,10 @@ class productDb{
                 s.seriesName, 
                 ps.sizeID, 
                 ps.status,
-                ps.quantity AS total_stock 
+                ps.stock AS total_stock 
                 FROM product p
                 JOIN series s ON p.seriesID = s.seriesID 
-                JOIN productsize ps ON p.productID = ps.productID 
+                JOIN productstock ps ON p.productID = ps.productID 
                 WHERE p.productName LIKE ? OR s.seriesName LIKE  ? OR s.seriesID LIKE ? 
             "; 
         $stmt = $this->pdo->prepare($sql);
@@ -406,7 +406,7 @@ class productDb{
 
     public function updateProductStatus($productID, $sizeID, $status) {
         try {
-            $sql = "UPDATE productsize SET status = ? WHERE productID = ? AND sizeID = ? ";
+            $sql = "UPDATE productstock SET status = ? WHERE productID = ? AND sizeID = ? ";
             $stmt = $this->pdo->prepare($sql);
             $stmt->execute([$status, $productID, $sizeID]);
 

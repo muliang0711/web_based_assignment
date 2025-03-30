@@ -87,15 +87,22 @@
         let scannedData = null;
 
         function onScanSuccess(decodedText, decodedResult) {
+
             console.log(`QR Code scanned: ${decodedText}`);
+            
             html5QrcodeScanner.clear();
 
             // Send QR URL to backend for verification
+            // decode text sample : verify-stock.php?productID=...&sizeID=...&token=...
+
             $.getJSON(decodedText, function(data) {
+                // backend return sucess : IF FOUND URL 
                 if (data.success) {
+                    // 1. save the upload data 
                     scannedData = data;
+                    // 2. ouput product information 
                     $("#product-info").html(`
-                        <h3>✅ Product Found:</h3>
+                        <h3>Product Found:</h3>
                         <p><strong>Name:</strong> ${data.product_name}</p>
                         <p><strong>Size:</strong> ${data.size_label}</p>
                         <p><strong>Current Stock:</strong> ${data.quantity}</p>
@@ -103,19 +110,22 @@
 
                     $("#restock-form").fadeIn();
                 } else {
+                    // backend return fail : URL NOT FOUND 
                     $("#product-info").html(`<p style="color:red;">${data.message}</p>`).fadeIn();
                 }
+            // ERROR HANDLE 
             }).fail(function(err) {
+                console.log(decodedText);
                 console.error("Error verifying QR:", err);
                 $("#product-info").html(`<p style="color:red;">Verification failed.</p>`).fadeIn();
             });
         }
-
+        
         $("#restock-btn").on("click", function () {
             const newQty = $("#newQty").val();
-
+            console.log(scannedData);
             $.ajax({
-                url: 'update-stock.php',
+                url: '/web_based_assignment/pages/admin/product/update-stock.php', // PROCESS FILE 
                 method: 'POST',
                 contentType: 'application/json',
                 data: JSON.stringify({
@@ -131,7 +141,9 @@
         });
 
         const html5QrcodeScanner = new Html5QrcodeScanner(
+            // detect way ; i seconds 10 times ;  box size 
             "qr-reader", { fps: 10, qrbox: 250 });
+        // start detect : once detect qr than trigger fucntion 
         html5QrcodeScanner.render(onScanSuccess);
     </script>
 </body>
