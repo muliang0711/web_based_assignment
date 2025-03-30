@@ -1,17 +1,17 @@
 <?php
-  
-  require_once "../../../_base.php"; 
-  include "../main.php";
-  require_once "../../../db_connection.php";
 
-  $stylesheetArray = ['../../../css/adminProductAnlysis.css'];
-  link_stylesheet($stylesheetArray);
+require_once "../../../_base.php";
+include "../main.php";
+require_once "../../../db_connection.php";
+
+$stylesheetArray = ['../../../css/adminProductAnlysis.css'];
+link_stylesheet($stylesheetArray);
 ?>
 
-<div class="main-content xx"> 
-  <div class="contanier"> 
+<div class="main-content xx">
+  <div class="contanier">
 
-    <div class="upPart"> 
+    <div class="upPart">
 
       <!-- Top Bar -->
       <div class="top-bar">
@@ -22,26 +22,26 @@
       <div class="filter-bar">
         <form action="" class="filter-form">
           <label for="reportType">Report Type:</label>
-      <!--Product Name -->
+          <!--Product Name -->
           <select id="reportType">
             <option>All</option>
             <option></option>
             <option>Inventory</option>
           </select>
-      <!--Product SizeId -->
+          <!--Product SizeId -->
           <select id="reportType">
             <option>All</option>
             <option></option>
             <option>Inventory</option>
           </select>
 
-        <label for="fromDate">From:</label>
-        <input type="date" id="fromDate">
+          <label for="fromDate">From:</label>
+          <input type="date" id="fromDate">
 
-        <label for="toDate">To:</label>
-        <input type="date" id="toDate">
+          <label for="toDate">To:</label>
+          <input type="date" id="toDate">
 
-        <button class="sub-button" type="submit">Generate report</button>
+          <button class="sub-button" type="submit">Generate report</button>
 
         </form>
 
@@ -52,13 +52,13 @@
         <button>Clear Filters</button>
         <button>Save Template</button>
       </div>
-      
+
     </div>
 
     <div class="downpart">
 
       <!-- Preview Area -->
-       <div class="preview-container">
+      <div class="preview-container">
 
         <div class="preview">
           <h3>📄 Table Report Preview</h3>
@@ -75,8 +75,8 @@
           <p>Your report will appear here after generation...</p>
         </div>
 
-       </div>
-      
+      </div>
+
 
       <!-- Export / Download Buttons -->
       <div class="decision-bar" style="margin-top: 20px;">
@@ -87,9 +87,9 @@
 
     </div>
 
-  </div> 
+  </div>
 </div>
-    
+
 
 <?php
 include "../../../admin_foot.php"
