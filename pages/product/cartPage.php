@@ -27,7 +27,17 @@ if(!$userID){
                         $statement = $_db->prepare('SELECT * FROM cartitem JOIN product USING (productID) WHERE userID = ?');
                         $statement->execute([$userID]);
                         $cartItemArray = $statement->fetchAll();
-
+                        $stm = $_db->prepare('SELECT COUNT(quantity) AS total FROM cartitem WHERE userID = ?');
+                        $stm->execute([$userID]);
+                        $total = $stm->fetch();
+                        $totalItem = $total->total;
+                        $stmm = $_db->prepare('SELECT SUM(product.price * cartitem.quantity) AS amount 
+                                               FROM cartitem 
+                                               JOIN product ON cartitem.productID = product.productID 
+                                               WHERE cartitem.userID = ?');
+                        $stmm->execute([$userID]);
+                        $price = $stmm->fetch();
+                        $totalAmount = $price->amount;
                         ?>
                         
                         <?php if ($cartItemArray): ?>
@@ -41,11 +51,12 @@ if(!$userID){
                                     <th>Total Price</th>
                                 </tr>
                                 <?php foreach ($cartItemArray as $cartObject): ?>
+                                    <?php $price = $cartObject->price * $cartObject->quantity ?>
                                     <tr>
                                         <td> <?php echo $cartObject->productName ?> </td>
                                         <td> <?php echo $cartObject->sizeID ?> </td>
                                         <td> <?php echo $cartObject->quantity ?> </td>
-                                        <td>RM <?php echo "$cartObject->price" * "$cartObject->quantity" ?>.00</td>
+                                        <td>RM <?php echo $price ?>.00</td>
                                         <!-- Minus button -->
                                         <td>
                                             <form method="POST">
@@ -100,6 +111,9 @@ if(!$userID){
                             <a onclick="onclick()" class="paymentBtn">
                             <button>Proceed to Payment </button>
                             </a>
+                            
+                            <div class = "sum" ><p>Total Item(s): <?php echo $totalItem?></p>
+                            <p>Total Amount: RM <?php echo $totalAmount ?> .00</p></div>
                         <?php else: ?>
 
                             <p>Your cart is empty.</p>
