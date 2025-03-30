@@ -127,7 +127,7 @@ p{
 .product img{
   width: 40%;
   height: 20%;
-  background-color: #ebf0fb;
+  background-color: rgb(252, 252, 252);
   display:inline-block;
   gap: 50px;
   margin-top: 50px;
@@ -140,7 +140,7 @@ p{
   position: absolute;
   text-align: left;
   color: #222222;
-  right: 13%;
+  right: 7%;
   top: 150px;
   letter-spacing: 1px;
   padding-left: 30px;
@@ -169,7 +169,7 @@ p{
 .information table{
   position: absolute;
   top: 40%;
-  right: 50%;
+  right: 49%;
   text-align: left;
   color: black;
   font-size: 20px;

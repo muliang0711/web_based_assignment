@@ -52,7 +52,7 @@ $seriesArray = $seriesStatement->fetchAll();
     $_db = new PDO('mysql:dbname=web_based_assignment', 'root', '', [
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
     ]);
-    $statement = $_db->prepare("SELECT * FROM product WHERE productName LIKE ?");
+    $statement = $_db->prepare("SELECT * FROM product JOIN product_images USING (productID) WHERE image_type = 'product' AND productName LIKE ?");
     $statement->execute(["%$search%"]);
     $productObjectArray = $statement->fetchAll();
     ?>
@@ -68,7 +68,7 @@ $seriesArray = $seriesStatement->fetchAll();
             <div class="true-card">
               <div class="picture-card">
                 <div class="picture">
-                  <img width="150px" height="250px" id="productImage" src="../../../File/<?php echo $productObject->productImg ?>" alt="Product Image" />
+                <img width="150px" height="250px" id="productImage" src="../../../File/<?php echo  $productObject->image_path; ?>" alt="Product Image" />
                 </div>
               </div>
             </div>

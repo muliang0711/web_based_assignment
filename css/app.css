@@ -597,7 +597,12 @@ span.error br {
 .itemCount{
     position: absolute;
     color: white;
-    background-color: red;
-    padding: 10px;
+    background-color: rgb(255, 81, 0);
     border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    text-align: center;
+    font-size: 15px;
+    top: 15%;
+    right:185px;
 }
