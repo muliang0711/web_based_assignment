@@ -27,7 +27,7 @@ if(!$userID){
                         $statement = $_db->prepare('SELECT * FROM cartitem JOIN product USING (productID) WHERE userID = ?');
                         $statement->execute([$userID]);
                         $cartItemArray = $statement->fetchAll();
-                        $stm = $_db->prepare('SELECT COUNT(quantity) AS total FROM cartitem WHERE userID = ?');
+                        $stm = $_db->prepare('SELECT SUM(quantity) AS total FROM cartitem WHERE userID = ?');
                         $stm->execute([$userID]);
                         $total = $stm->fetch();
                         $totalItem = $total->total;
