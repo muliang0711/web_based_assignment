@@ -9,23 +9,28 @@
     --pending : rgba(255,177,0,1);
 }
 
+body {
+    overflow-x: hidden;
+    width: 100vw;
+}
+
 main {
-    padding: 35px;
+    padding-left: 35px;
     background-color: rgb(218, 218, 218);
+    width: 100%;
 }
 
 .giant-container{
-    width: 100%;
+    width: 1050px;
     display: flex;
 }
 .container {
+    align-self: flex-start;
     height: auto;
-    width: 100%;
     width: 600px;
     max-width: 800px;
-
     display: grid;
-    grid-template-columns: 100%;
+    grid-template-columns: 1fr;
     grid-template-rows: 0.6fr 0.2fr;
     grid-template-areas: 
     "address ordersum"
@@ -39,10 +44,9 @@ main {
 }
 
 .container2 {
-
     display: grid;
-    grid-template-columns: 100%;
-    grid-template-rows: 0.6fr 0.2fr ;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 0.3fr ;
     grid-template-areas: 
     "ordersum"
     "buttons";
@@ -108,11 +112,134 @@ main {
     grid-area: ordersum;
 
     width: 100%;
-    min-height: 500px;
+}
+
+.subtotal, .shipping-fee, .discount, .voucher{
+    display: flex;
+
+    > span:first-child {
+        color: var(--lessImportant);
+        font-weight: 500;
+        font-size: 15px;
+    }
+
+    > span:last-child {
+        margin-left: auto;
+        color: var(--lessImportant);
+        font-weight: 500;
+        font-size: 15px;
+    }
+}
+
+.voucher {
+    >span {
+        margin-top: auto;
+    }
+    > input {
+        margin-top: 15px;
+        height: 30px;
+        width: 120px;
+        margin-left: auto;
+
+        border-radius: 2px;
+        border: none;
+        border-bottom: 3px solid var(--lessImportant);
+        background-color: transparent;
+        outline: none;
+
+        font-weight: 1000;
+        color: var(--lessImportant);
+        text-align: center;
+    }
+
+    > button {
+        color: var(--lessImportant);
+        margin-left: 5px;
+        margin-top: auto;
+        border-radius: 5px;
+        border: 3px solid var(--lessImportant);
+        height: 30px;
+        width: 50px;
+        cursor: pointer;
+       
+    }
+}
+
+.subtotal {
+    > span:first-child {
+        color: var(--seclessImportant);
+        font-weight: 500;
+        font-size: 15px;
+    }
+}
+
+.shipping-fee {
+    margin-bottom: 10px;
 }
 
 
+.total {
+    display: flex;
 
+    > span:first-child {
+        align-content: center;
+        color: black;
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    > span:last-child {
+        margin-left: auto;
+        color: black;
+        font-weight: 500;
+        font-size: 26px;
+    }
+}
+
+
+.item {
+    display: grid;
+    margin-bottom: 10px;
+    grid-template-columns: 70px auto 50px 120px;
+    grid-template-rows: 0.3fr 0.1fr;
+
+    > img {
+        grid-row: span 2;
+        border-radius: 5px;
+        width: 70px;
+        height: 100px;
+    }
+
+    > span:nth-child(-n+4){
+        margin-top: 10px;
+    }
+
+    .product-name {
+        padding-right: 10px;
+        color: var(--seclessImportant);
+        font-weight: 500;
+        font-size: 18px;
+    }
+
+    .product-quantity {
+        color: var(--lessImportant);
+        font-weight: 400;
+        font-size: 15px;
+    }
+
+    .product-subtotal {
+        margin-left: auto;
+        color: var(--lessImportant);
+        font-weight: 500;
+        font-size: 15px;
+    }
+
+    .product-variation {
+        color: var(--lessImportant);
+        font-weight: 400;
+        font-size: 15px;
+    }
+}
 
 
 .shipping-address {
@@ -169,6 +296,7 @@ main {
     user-select: none;
     cursor: pointer;
     padding: 10px;
+    overflow: hidden;
 }
 
 .card.selected:not(:last-child)::after {
@@ -202,11 +330,49 @@ main {
 
 }
 
+
+.name {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--seclessImportant);
+}
+
+.phone {
+    font-weight: 600;
+    color: var(--seclessImportant);
+}
+
+.address {
+    font-weight: 600;
+    color: var(--lessImportant);
+}
+
 .buttons {
     background-color: var(--divColor);
     grid-area: buttons;
-
+    display: flex;
     min-width: 400px;
     height: 50px;
+    background: transparent;
+    justify-content: flex-end;
+
+    > button {
+        width: 200px;
+        border-radius: 10px;
+        border: 2px solid rgba(255, 130, 21, 1);;
+        cursor: pointer;
+        transform: translateX(10%);
+        background: rgba(255, 130, 21, 1);
+        color: rgb(233, 233, 233);;
+        font-weight: bold;
+        font-size: 15px;
+        transition: 0.4s ease;
+        
+    }
+    
+    > button:hover{
+        background:rgb(214, 111, 21);
+    }
 
 }
+
