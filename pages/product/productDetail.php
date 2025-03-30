@@ -49,16 +49,16 @@ if (is_logged_in("user")) {
 
 if ($gripSize) {
   if ($userID) {
-    $available = $_db->prepare("SELECT * FROM productSize WHERE productID = ? AND sizeID = ? AND quantity > 0");
+    $available = $_db->prepare("SELECT * FROM productstock WHERE productID = ? AND sizeID = ? AND stock > 0");
     $available->execute([$productID, $gripSize]);
     $productObj = $available->fetch();
-    $productQuantity = $productObj->quantity;
+    $productQuantity = $productObj->stock;
 
     $cartStatement = $_db->prepare("SELECT * FROM cartitem WHERE userID = ? AND productID = ? AND sizeID = ?");
     $cartStatement->execute([$userID, $productID, $gripSize]);
     $cartObject = $cartStatement->fetch();
     $cartQuantity = $cartObject->quantity;
-
+    
     if (!$cartQuantity) {
       $cartQuantity = 0;
     }

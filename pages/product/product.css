@@ -208,11 +208,11 @@ p{
   color: black;
   width: 800px;
   left:20%;
-  background-color: #ecf1f4;
+  background-color: rgb(252, 252, 252);
 }
 
 .HeadingIntro{
-  text-align: center;
+  text-align: left;
   font-size: 30px;
   font-weight: bold;
 }
