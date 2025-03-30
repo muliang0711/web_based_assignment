@@ -10,16 +10,16 @@ $productID = $_GET['productID'] ?? null;
 $sizeID = $_GET['sizeID'] ?? null;
 
 if (!$productID || !$sizeID) {
-    echo "Product not found.";
-    exit;
+  echo "Product not found.";
+  exit;
 }
 
 $productController = new ProductController($_db);
 $product = $productController->getProductByIDAndSize($productID, $sizeID);
 
 if (!$product) {
-    echo "Product not found.";
-    exit;
+  echo "Product not found.";
+  exit;
 }
 ?>
 
@@ -64,7 +64,7 @@ if (!$product) {
         <input type="text" value="<?php echo htmlspecialchars($product['total_stock']); ?>" disabled>
       </div>
 
-      
+
       <div class="form-group">
         <label>Introduction</label>
         <textarea name="introduction" rows="3" readonly><?php echo htmlspecialchars($product['introduction']); ?></textarea>
@@ -75,7 +75,7 @@ if (!$product) {
         <textarea name="playerInfo" rows="3" readonly><?php echo htmlspecialchars($product['playerInfo']); ?></textarea>
       </div>
 
-      
+
     </div>
 
     <!-- Right Side: Images -->
@@ -106,7 +106,7 @@ if (!$product) {
       <div class="form-group">
         <button type="button" class="back-btn" onclick="window.location.href='admin_product.php'">← Back</button>
       </div>
-      
+
     </div>
   </div>
 </div>
@@ -123,18 +123,18 @@ include "../../../admin_foot.php"
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-  $(document).ready(function () {
+  $(document).ready(function() {
     // Zoom modal logic
-    $(".zoomable-img").on("click", function () {
+    $(".zoomable-img").on("click", function() {
       $("#zoomedImage").attr("src", $(this).attr("src"));
       $("#imageModal").fadeIn();
     });
 
-    $(".close").on("click", function () {
+    $(".close").on("click", function() {
       $("#imageModal").fadeOut();
     });
 
-    $("#imageModal").on("click", function (e) {
+    $("#imageModal").on("click", function(e) {
       if (e.target === this) {
         $(this).fadeOut();
       }

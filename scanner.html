@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Product Restock Scanner</title>
+    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+    <style>
+        body {
+            font-family: Arial;
+            padding: 20px;
+        }
+
+        #qr-reader {
+            width: 300px;
+            margin-bottom: 20px;
+        }
+
+        #product-info,
+        #restock-form {
+            margin-top: 20px;
+        }
+
+        input[type="number"] {
+            width: 100px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>📦 Product Restock - QR Scanner</h2>
+    <div id="qr-reader"></div>
+
+    <div id="product-info"></div>
+    <div id="restock-form" style="display: none;">
+        <p>
+            <label for="newQty">New Quantity:</label>
+            <input type="number" id="newQty" min="1" required />
+            <button onclick="submitRestock()">Confirm Restock</button>
+        </p>
+        <p id="restock-status"></p>
+    </div>
+
+    <script>
+        let scannedData = null;
+
+        function onScanSuccess(decodedText, decodedResult) {
+            console.log(`QR Code scanned: ${decodedText}`);
+            html5QrcodeScanner.clear();
+
+            // Send QR URL to backend for verification
+            fetch(decodedText)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        scannedData = data;
+                        document.getElementById("product-info").innerHTML = `
+              <h3>✅ Product Found:</h3>
+              <p><strong>Name:</strong> ${data.product_name}</p>
+              <p><strong>Size:</strong> ${data.size_label}</p>
+              <p><strong>Current Stock:</strong> ${data.quantity}</p>
+            `;
+                        document.getElementById("restock-form").style.display = 'block';
+                    } else {
+                        document.getElementById("product-info").innerHTML = `<p style="color:red;">❌ ${data.message}</p>`;
+                    }
+                })
+                .catch(err => {
+                    console.error("Error verifying QR:", err);
+                    document.getElementById("product-info").innerHTML = `<p style="color:red;">❌ Verification failed.</p>`;
+                });
+        }
+
+        function submitRestock() {
+            const newQty = document.getElementById("newQty").value;
+
+            fetch('update-stock.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    productID: scannedData.productID,
+                    sizeID: scannedData.sizeID,
+                    token: scannedData.token,
+                    new_quantity: newQty
+                })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    document.getElementById("restock-status").innerText = data.message;
+                    if (data.success) {
+                        document.getElementById("restock-status").style.color = 'green';
+                    } else {
+                        document.getElementById("restock-status").style.color = 'red';
+                    }
+                });
+        }
+
+        let html5QrcodeScanner = new Html5QrcodeScanner(
+            "qr-reader", { fps: 10, qrbox: 250 });
+        html5QrcodeScanner.render(onScanSuccess);
+    </script>
+</body>
+
+</html>
