@@ -1,6 +1,6 @@
 <?php
-require __DIR__ . '/vendor/autoload.php'; // adjust path if needed
-include_once __DIR__ . '/db_connection.php'; // your existing DB connection
+require __DIR__ . '/../../../db_connection.php'; 
+include_once __DIR__ . '/../../../vendor/autoload.php'; 
 
 use Endroid\QrCode\Builder\Builder;
 use Endroid\QrCode\Encoding\Encoding;
