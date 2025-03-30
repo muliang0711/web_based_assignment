@@ -18,9 +18,12 @@ $(()=>{
     
     $(".paymentcontainer").on('click', function(e){
         //remove all selected then adding again
+        if($(e.target).hasClass("border")){
+            return
+        }
         $(this).children().removeClass("selected");
-        $(e.target).toggleClass("selected");
-        movborder(e.target);
+        $(e.target).closest("div").toggleClass("selected");
+        movborder(e.target.closest("div"));
     })
 
     $(window).on('resize', function(){

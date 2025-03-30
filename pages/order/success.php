@@ -3,19 +3,31 @@
     $title = 'Payment Success';
     $time = time();
     $stylesheetArray  = ["success.css?"];
-    include "../../_head.php";
 
-    // if(!isset($_SESSION['tempOrder'])){
-    //     redirect("/");
-    // }
+    if(!isset($_SESSION['tempOrder'])){
+        redirect("/");
+    }
 
     //create order in db
     $orderID = $_db->query("SELECT MAX(orderId) from orders")->fetchColumn();
     $orderID++;
+
     $details = $_SESSION['tempOrder'];
+    $items = $details->items;
 
-    $stm = $_db->prepare("INSERT into orders(orderId, userId, orderDate, status, orderAddress)")
+    $stm = $_db->prepare("INSERT into orders(orderId, userId, orderDate, status, orderAddress, orderName, orderPhone, deliveryMethod, discount)
+                             VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stm->execute([$orderID, $details->userId, $details->orderDate, "Pending", $details->orderAddress, $details->orderName, $details->orderPhone, "Standard", $details->discount]);
 
+    foreach($items as $i){
+        $stm = $_db->prepare("INSERT into order_items(orderId, productId, quantity, subtotal, gripSize)
+                             VALUES(?, ?, ?, ?, ?)");
+        $stm->execute([$orderID, $i->productID, $i->quantity, $i->subtotal, $i->sizeID]);
+    }
+    
+
+    //remove items from cart
+    include "../../_head.php";
 ?>
 
 <div class="container">
@@ -33,28 +45,32 @@
 
         <div>
             <span>Created at</span>
-            <span>date 123123</span>
+            <span><?= $details->orderDate ?></span>
         </div>
 
         <div>
             <span>Amount paid</span>
-            <span>RM 1234.00</span>
+            <span>RM <?= $details->total ?></span>
         </div>
 
         <div>
-            <span>Contant</span>
-            <span>0126289399</span>
+            <span>Contact</span>
+            <span><?= $details->orderPhone ?></span>
         </div>
 
     </div>
 
     <div class="buttoncontainer">
-        <button>Back to Homepage</button>
+        <button onclick="gohome()">Back to Homepage</button>
     </div>
 </div>
-<!--  -->
+<script>
+    function gohome(){
+        location = "/";
+    }
+</script>
 
 <?php 
-$scriptArray = ["success.js"];
-include '../../_foot.php'; 
+include '../../_foot.php';
+unset($_SESSION["tempOrder"]);
 ?>

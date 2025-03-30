@@ -64,7 +64,7 @@ main {
 
 
 .payment-methods {
-    background: transparent;
+    background: var(--divColor);
     grid-area: method;
 
     width: 100%;
@@ -86,14 +86,16 @@ main {
     > div {
         height: 100px;
         width: 100%;
-        background-color: var(--divColor);
+        background-color: rgb(218, 218, 218);
         border-radius: 10px;
         cursor: pointer;
         padding: 10px;
+        font-weight: 600;
+        color: var(--seclessImportant)
     }
 
     >.border {
-        width: calc(100%/3 - 5px);
+        width: calc(100%/2 - 5px);
         position: absolute;
         border: 5px solid rgba(68, 186, 255, 0.801);
         background: transparent;
@@ -243,7 +245,7 @@ main {
 
 
 .shipping-address {
-    background: transparent;
+    background: var(--divColor);
     grid-area: address;
 
     width: inherit;
@@ -289,7 +291,7 @@ main {
 .card {
     position: relative;
     border-radius: 10px;
-    background-color: var(--divColor);
+    background-color: rgb(218, 218, 218);
     width: 61.2%;
     height: 100%;
     flex-shrink: 0;

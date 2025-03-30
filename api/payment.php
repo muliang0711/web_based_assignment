@@ -1,7 +1,7 @@
 <?php
 
 require $_SERVER["DOCUMENT_ROOT"] . "/vendor/autoload.php";
-
+session_start();
 
 
 
@@ -31,8 +31,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         "orderPhone" => $address->phone,
         "deliveryMethod" => "Standard",
         "discount" => $discount,
-        "items" => $items
+        "items" => $items,
+        "total" => $total
     ];
+
 
 
     //if payment is stripe
@@ -90,6 +92,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         
 
         echo $checkout_session->url;
+    }
+
+
+    else if($payment == "Ewallet"){
+        echo "/api/tng.php";
     }
 };
 ?>

@@ -13,9 +13,11 @@
     $address->execute([$userID]);
     $address = $address->fetchAll();
 
-    $items = $_db->prepare("Select c.* , p.price as unitPrice, p.productName as name, p.productImg as img, (c.quantity * p.price) as subtotal
+    $items = $_db->prepare("Select c.* , p.price as unitPrice, p.productName as name, pi.image_path as img, (c.quantity * p.price) as subtotal
                             FROM cartitem c JOIN product p
-                            ON (c.productID = p.productID) WHERE c.userID = ?");
+                            ON (c.productID = p.productID) 
+                            JOIN product_images pi ON (p.productID = pi.productID)
+                            WHERE c.userID = ? AND pi.image_type = 'product'");
     $items->execute([$userID]);
     $items = $items->fetchAll();
 
@@ -59,9 +61,16 @@
     <div class="payment-methods">
         <h3>Payment Methods</h3>
         <div class="paymentcontainer">
-            <div class="selected">Credit Card</div>
-            <div>Paypal</div>
-            <div>Skirll</div>
+            <div class="selected" data-method="Credit Card">
+                <span>Credit Card</span><br>
+                <img width="80" height="50" src="/assets/img/visa.png">
+                <img width="60" height="45" src="/assets/img/mastercard.png">
+            </div>
+            <div data-method="Ewallet">
+                <span>E-Wallet</span><br>
+                <img width="60" height="60" src="/assets/img/tng.png">
+            </div>
+            
             <div class="border"></div>
         </div>
 
@@ -128,7 +137,7 @@
 <script>
 
     $("#paymentbutton").on('click', function(e){
-        let payMethod = $(".paymentcontainer").children(".selected")[0].innerText;
+        let payMethod = $(".selected[data-method]")[0].dataset.method;
         let addressSelect = $(".card.selected");
         let name = addressSelect.children(".name")[0].innerText;
         let phone= addressSelect.children(".phone")[0].innerText;;
