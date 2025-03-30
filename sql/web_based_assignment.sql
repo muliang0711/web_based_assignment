@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 30, 2025 at 06:03 AM
+-- Generation Time: Mar 30, 2025 at 04:35 PM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.0.30
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `web_based_assignment`
 --
+CREATE DATABASE IF NOT EXISTS `web_based_assignment` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `web_based_assignment`;
 
 -- --------------------------------------------------------
 
@@ -27,6 +29,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `admin`
 --
 
+DROP TABLE IF EXISTS `admin`;
 CREATE TABLE `admin` (
   `id` varchar(10) NOT NULL,
   `position` varchar(20) NOT NULL,
@@ -52,6 +55,7 @@ INSERT INTO `admin` (`id`, `position`, `passwordHash`, `adminLevel`, `status`) V
 -- Table structure for table `cartitem`
 --
 
+DROP TABLE IF EXISTS `cartitem`;
 CREATE TABLE `cartitem` (
   `userID` int(11) NOT NULL,
   `productID` varchar(5) NOT NULL,
@@ -81,12 +85,15 @@ INSERT INTO `cartitem` (`userID`, `productID`, `sizeID`, `quantity`) VALUES
 -- Table structure for table `orders`
 --
 
+DROP TABLE IF EXISTS `orders`;
 CREATE TABLE `orders` (
   `orderId` int(5) NOT NULL,
   `userId` int(11) NOT NULL,
   `orderDate` date NOT NULL,
   `status` varchar(10) NOT NULL,
   `orderAddress` varchar(150) NOT NULL,
+  `orderName` varchar(40) NOT NULL,
+  `orderPhone` varchar(15) NOT NULL,
   `deliveryMethod` varchar(20) NOT NULL,
   `deliveredDate` date DEFAULT NULL,
   `tracking` int(30) DEFAULT NULL,
@@ -97,13 +104,13 @@ CREATE TABLE `orders` (
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`orderId`, `userId`, `orderDate`, `status`, `orderAddress`, `deliveryMethod`, `deliveredDate`, `tracking`, `discount`) VALUES
-(12345, 1, '2024-10-25', 'Pending', '2 Jalan Port Dickson Langkawi, 72010, Kuala Lumpur', 'Standard', NULL, NULL, 0.00),
-(12346, 2, '2024-11-02', 'In Transit', '88, Lorong Bukit Jaya, 43000, Selangor', 'Standard', NULL, NULL, 0.00),
-(12347, 1, '2024-09-15', 'Delivered', '16, Jalan Taman Utama, 80000, Johor Bahru', 'Standard', '2024-09-18', NULL, 0.50),
-(12348, 2, '2024-08-30', 'Pending', '7, Jalan Ampang, 50450, Kuala Lumpur', 'Standard', NULL, NULL, 0.00),
-(12349, 1, '2024-12-10', 'In Transit', '22, Jalan Sutera Indah, 81100, Johor', 'Standard', NULL, NULL, 0.00),
-(12350, 2, '2024-07-20', 'Delivered', '5, Lorong Melati, 10460, Penang', 'Standard', '2024-07-23', NULL, 0.00);
+INSERT INTO `orders` (`orderId`, `userId`, `orderDate`, `status`, `orderAddress`, `orderName`, `orderPhone`, `deliveryMethod`, `deliveredDate`, `tracking`, `discount`) VALUES
+(12345, 1, '2024-10-25', 'Pending', '2 Jalan Port Dickson Langkawi, 72010, Kuala Lumpur', '', '', 'Standard', NULL, NULL, 0.00),
+(12346, 2, '2024-11-02', 'In Transit', '88, Lorong Bukit Jaya, 43000, Selangor', '', '', 'Standard', NULL, NULL, 0.00),
+(12347, 1, '2024-09-15', 'Delivered', '16, Jalan Taman Utama, 80000, Johor Bahru', '', '', 'Standard', '2024-09-18', NULL, 0.50),
+(12348, 2, '2024-08-30', 'Pending', '7, Jalan Ampang, 50450, Kuala Lumpur', '', '', 'Standard', NULL, NULL, 0.00),
+(12349, 1, '2024-12-10', 'In Transit', '22, Jalan Sutera Indah, 81100, Johor', '', '', 'Standard', NULL, NULL, 0.00),
+(12350, 2, '2024-07-20', 'Delivered', '5, Lorong Melati, 10460, Penang', '', '', 'Standard', '2024-07-23', NULL, 0.00);
 
 -- --------------------------------------------------------
 
@@ -111,6 +118,7 @@ INSERT INTO `orders` (`orderId`, `userId`, `orderDate`, `status`, `orderAddress`
 -- Table structure for table `order_items`
 --
 
+DROP TABLE IF EXISTS `order_items`;
 CREATE TABLE `order_items` (
   `orderId` int(5) NOT NULL,
   `productId` varchar(5) NOT NULL,
@@ -144,6 +152,7 @@ INSERT INTO `order_items` (`orderId`, `productId`, `quantity`, `subtotal`, `grip
 -- Table structure for table `product`
 --
 
+DROP TABLE IF EXISTS `product`;
 CREATE TABLE `product` (
   `productID` varchar(5) NOT NULL,
   `productName` varchar(100) NOT NULL,
@@ -157,7 +166,7 @@ CREATE TABLE `product` (
 -- Dumping data for table `product`
 --
 
-INSERT INTO `product` (`productID`, `productName`, `price`, `seriesID`,  `introduction`, `playerInfo`) VALUES
+INSERT INTO `product` (`productID`, `productName`, `price`, `seriesID`, `introduction`, `playerInfo`) VALUES
 ('R0001', 'AeroSharp 11', 499.00, 'AS', 'Precision meets mastery with the AeroSharp 11. Designed for players who dictate the pace of the game, this racket offers superior shuttle control, effortless net play, and unmatched accuracy. The ultra-thin shaft and aerodynamic frame reduce drag, ensuring maximum maneuverability for the smartest players on the court.', 'Ethan Cheng. A tactical genius, Ethan is known for his surgical net drops and pinpoint clears. He controls rallies with calm precision, forcing opponents into mistakes before delivering the final blow.'),
 ('R0002', 'TurboSmash 1000', 599.00, 'TSM', 'Speed redefined. The TurboSmash 1000 is built for lightning-fast reactions and rapid counterattacks. With an ultra-lightweight frame and enhanced repulsion technology, this racket enables players to unleash quick drives and rapid smashes with ease. Perfect for those who thrive on pace and aggression.', 'Kei Tanaka. With his lightning footwork and relentless attacking style, Kei overwhelms opponents before they can react. His signature double-tap drive keeps defenders scrambling to keep up.'),
 ('R0003', 'ThunderStrike 88 max', 459.00, 'TST', 'Pure dominance on the court. The ThunderStrike 88 Max is designed for explosive power, engineered with an extra-stiff shaft and head-heavy balance to deliver devastating smashes. Whether attacking from the baseline or finishing at the net, this racket turns every shot into a statement.', 'Aleksandr Ivanov. A powerhouse with a smash that echoes across arenas, Aleksandr thrives on brute force. His signature \"Iron Hammer\" smash has made him a feared opponent worldwide.'),
@@ -168,10 +177,11 @@ INSERT INTO `product` (`productID`, `productName`, `price`, `seriesID`,  `introd
 -- --------------------------------------------------------
 
 --
--- Table structure for table `productStock`
+-- Table structure for table `productstock`
 --
 
-CREATE TABLE `productStock` (
+DROP TABLE IF EXISTS `productstock`;
+CREATE TABLE `productstock` (
   `productID` varchar(5) NOT NULL,
   `sizeID` varchar(4) NOT NULL,
   `stock` int(11) NOT NULL,
@@ -182,10 +192,10 @@ CREATE TABLE `productStock` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `productStock`
+-- Dumping data for table `productstock`
 --
 
-INSERT INTO `productStock` (`productID`, `sizeID`, `stock`, `status`, `low_stock_threshold`, `alert_sent`, `qr_token`) VALUES
+INSERT INTO `productstock` (`productID`, `sizeID`, `stock`, `status`, `low_stock_threshold`, `alert_sent`, `qr_token`) VALUES
 ('R0001', '3UG5', 4, 'onsales', 5, 1, NULL),
 ('R0001', '4UG5', 1, 'onsales', 5, 1, '9e22411d04b7c9b04584a1339265e142'),
 ('R0002', '3UG5', 5, 'onsales', 5, 1, NULL),
@@ -205,6 +215,7 @@ INSERT INTO `productStock` (`productID`, `sizeID`, `stock`, `status`, `low_stock
 -- Table structure for table `product_images`
 --
 
+DROP TABLE IF EXISTS `product_images`;
 CREATE TABLE `product_images` (
   `id` int(11) NOT NULL,
   `productID` varchar(50) DEFAULT NULL,
@@ -216,7 +227,6 @@ CREATE TABLE `product_images` (
 --
 -- Dumping data for table `product_images`
 --
-
 
 INSERT INTO `product_images` (`id`, `productID`, `image_path`, `image_type`, `created_at`) VALUES
 (1, 'R0001', 'product_R0001_1743343865.png', 'product', '2025-03-30 14:11:05'),
@@ -232,13 +242,13 @@ INSERT INTO `product_images` (`id`, `productID`, `image_path`, `image_type`, `cr
 (11, 'R0006', 'product_R0006_1743343950.png', 'product', '2025-03-30 14:12:30'),
 (12, 'R0006', 'player_R0006_1743343950.png', 'player', '2025-03-30 14:12:30');
 
-
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `savedaddress`
 --
 
+DROP TABLE IF EXISTS `savedaddress`;
 CREATE TABLE `savedaddress` (
   `userID` int(11) NOT NULL,
   `address` varchar(200) NOT NULL,
@@ -268,6 +278,7 @@ INSERT INTO `savedaddress` (`userID`, `address`, `phoneNo`, `name`) VALUES
 -- Table structure for table `series`
 --
 
+DROP TABLE IF EXISTS `series`;
 CREATE TABLE `series` (
   `seriesID` varchar(3) NOT NULL,
   `seriesName` varchar(15) DEFAULT NULL
@@ -289,6 +300,7 @@ INSERT INTO `series` (`seriesID`, `seriesName`) VALUES
 -- Table structure for table `user`
 --
 
+DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `userID` int(11) NOT NULL,
   `username` varchar(255) NOT NULL,
@@ -351,9 +363,9 @@ ALTER TABLE `product`
   ADD KEY `seriesID` (`seriesID`);
 
 --
--- Indexes for table `productStock`
+-- Indexes for table `productstock`
 --
-ALTER TABLE `productStock`
+ALTER TABLE `productstock`
   ADD PRIMARY KEY (`productID`,`sizeID`),
   ADD UNIQUE KEY `qr_token` (`qr_token`);
 
@@ -416,7 +428,7 @@ ALTER TABLE `user`
 -- Constraints for table `cartitem`
 --
 ALTER TABLE `cartitem`
-  ADD CONSTRAINT `cartitem_ibfk_1` FOREIGN KEY (`productID`,`sizeID`) REFERENCES `productStock` (`productID`, `sizeID`);
+  ADD CONSTRAINT `cartitem_ibfk_1` FOREIGN KEY (`productID`,`sizeID`) REFERENCES `productstock` (`productID`, `sizeID`);
 
 --
 -- Constraints for table `orders`
@@ -429,7 +441,7 @@ ALTER TABLE `orders`
 --
 ALTER TABLE `order_items`
   ADD CONSTRAINT `order_items_ibfk_1` FOREIGN KEY (`orderId`) REFERENCES `orders` (`orderId`),
-  ADD CONSTRAINT `order_items_ibfk_2` FOREIGN KEY (`productId`,`gripSize`) REFERENCES `productStock` (`productID`, `sizeID`);
+  ADD CONSTRAINT `order_items_ibfk_2` FOREIGN KEY (`productId`,`gripSize`) REFERENCES `productstock` (`productID`, `sizeID`);
 
 --
 -- Constraints for table `product`
@@ -438,9 +450,9 @@ ALTER TABLE `product`
   ADD CONSTRAINT `product_ibfk_1` FOREIGN KEY (`seriesID`) REFERENCES `series` (`seriesID`);
 
 --
--- Constraints for table `productStock`
+-- Constraints for table `productstock`
 --
-ALTER TABLE `productStock`
+ALTER TABLE `productstock`
   ADD CONSTRAINT `productStock_ibfk_1` FOREIGN KEY (`productID`) REFERENCES `product` (`productID`);
 
 --
