@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 28, 2025 at 07:43 AM
+-- Generation Time: Mar 30, 2025 at 10:09 AM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- PHP Version: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,8 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `web_based_assignment`
 --
-CREATE DATABASE IF NOT EXISTS `web_based_assignment` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `web_based_assignment`;
 
 -- --------------------------------------------------------
 
@@ -29,7 +27,6 @@ USE `web_based_assignment`;
 -- Table structure for table `admin`
 --
 
-DROP TABLE IF EXISTS `admin`;
 CREATE TABLE `admin` (
   `id` varchar(10) NOT NULL,
   `position` varchar(20) NOT NULL,
@@ -55,7 +52,6 @@ INSERT INTO `admin` (`id`, `position`, `passwordHash`, `adminLevel`, `status`) V
 -- Table structure for table `cartitem`
 --
 
-DROP TABLE IF EXISTS `cartitem`;
 CREATE TABLE `cartitem` (
   `userID` int(11) NOT NULL,
   `productID` varchar(5) NOT NULL,
@@ -85,7 +81,6 @@ INSERT INTO `cartitem` (`userID`, `productID`, `sizeID`, `quantity`) VALUES
 -- Table structure for table `orders`
 --
 
-DROP TABLE IF EXISTS `orders`;
 CREATE TABLE `orders` (
   `orderId` int(5) NOT NULL,
   `userId` int(11) NOT NULL,
@@ -116,7 +111,6 @@ INSERT INTO `orders` (`orderId`, `userId`, `orderDate`, `status`, `orderAddress`
 -- Table structure for table `order_items`
 --
 
-DROP TABLE IF EXISTS `order_items`;
 CREATE TABLE `order_items` (
   `orderId` int(5) NOT NULL,
   `productId` varchar(5) NOT NULL,
@@ -150,7 +144,6 @@ INSERT INTO `order_items` (`orderId`, `productId`, `quantity`, `subtotal`, `grip
 -- Table structure for table `product`
 --
 
-DROP TABLE IF EXISTS `product`;
 CREATE TABLE `product` (
   `productID` varchar(5) NOT NULL,
   `productName` varchar(100) NOT NULL,
@@ -180,33 +173,33 @@ INSERT INTO `product` (`productID`, `productName`, `price`, `seriesID`, `product
 -- Table structure for table `productsize`
 --
 
-DROP TABLE IF EXISTS `productsize`;
 CREATE TABLE `productsize` (
   `productID` varchar(5) NOT NULL,
   `sizeID` varchar(4) NOT NULL,
   `quantity` int(11) NOT NULL,
   `status` enum('onsales','notonsales') NOT NULL DEFAULT 'notonsales',
   `low_stock_threshold` int(11) DEFAULT 5,
-  `alert_sent` tinyint(1) DEFAULT 0
+  `alert_sent` tinyint(1) DEFAULT 0,
+  `qr_token` varchar(64) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `productsize`
 --
 
-INSERT INTO `productsize` (`productID`, `sizeID`, `quantity`, `status`, `low_stock_threshold`, `alert_sent`) VALUES
-('R0001', '3UG5', 4, 'onsales', 5, 1),
-('R0001', '4UG5', 5, 'onsales', 5, 1),
-('R0002', '3UG5', 5, 'onsales', 5, 1),
-('R0002', '4UG5', 6, 'onsales', 5, 0),
-('R0003', '3UG5', 2, 'onsales', 5, 1),
-('R0003', '4UG5', 3, 'onsales', 5, 1),
-('R0004', '3UG5', 4, 'onsales', 5, 1),
-('R0004', '4UG5', 5, 'onsales', 5, 1),
-('R0005', '3UG5', 5, 'onsales', 5, 1),
-('R0005', '4UG5', 6, 'onsales', 5, 0),
-('R0006', '3UG5', 2, 'onsales', 5, 1),
-('R0006', '4UG5', 3, 'onsales', 5, 1);
+INSERT INTO `productsize` (`productID`, `sizeID`, `quantity`, `status`, `low_stock_threshold`, `alert_sent`, `qr_token`) VALUES
+('R0001', '3UG5', 4, 'onsales', 5, 1, NULL),
+('R0001', '4UG5', 1, 'onsales', 5, 1, '9e22411d04b7c9b04584a1339265e142'),
+('R0002', '3UG5', 5, 'onsales', 5, 1, NULL),
+('R0002', '4UG5', 6, 'onsales', 5, 0, NULL),
+('R0003', '3UG5', 2, 'onsales', 5, 1, NULL),
+('R0003', '4UG5', 3, 'onsales', 5, 1, NULL),
+('R0004', '3UG5', 4, 'onsales', 5, 1, NULL),
+('R0004', '4UG5', 5, 'onsales', 5, 1, NULL),
+('R0005', '3UG5', 5, 'onsales', 5, 1, NULL),
+('R0005', '4UG5', 6, 'onsales', 5, 0, NULL),
+('R0006', '3UG5', 2, 'onsales', 5, 1, NULL),
+('R0006', '4UG5', 3, 'onsales', 5, 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -214,7 +207,6 @@ INSERT INTO `productsize` (`productID`, `sizeID`, `quantity`, `status`, `low_sto
 -- Table structure for table `product_images`
 --
 
-DROP TABLE IF EXISTS `product_images`;
 CREATE TABLE `product_images` (
   `id` int(11) NOT NULL,
   `productID` varchar(50) DEFAULT NULL,
@@ -247,7 +239,6 @@ INSERT INTO `product_images` (`id`, `productID`, `image_path`, `image_type`, `cr
 -- Table structure for table `savedaddress`
 --
 
-DROP TABLE IF EXISTS `savedaddress`;
 CREATE TABLE `savedaddress` (
   `userID` int(11) NOT NULL,
   `address` varchar(200) NOT NULL
@@ -275,7 +266,6 @@ INSERT INTO `savedaddress` (`userID`, `address`) VALUES
 -- Table structure for table `series`
 --
 
-DROP TABLE IF EXISTS `series`;
 CREATE TABLE `series` (
   `seriesID` varchar(3) NOT NULL,
   `seriesName` varchar(15) DEFAULT NULL
@@ -297,7 +287,6 @@ INSERT INTO `series` (`seriesID`, `seriesName`) VALUES
 -- Table structure for table `user`
 --
 
-DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `userID` int(11) NOT NULL,
   `username` varchar(255) NOT NULL,
@@ -363,7 +352,8 @@ ALTER TABLE `product`
 -- Indexes for table `productsize`
 --
 ALTER TABLE `productsize`
-  ADD PRIMARY KEY (`productID`,`sizeID`);
+  ADD PRIMARY KEY (`productID`,`sizeID`),
+  ADD UNIQUE KEY `qr_token` (`qr_token`);
 
 --
 -- Indexes for table `product_images`
