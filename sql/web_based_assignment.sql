@@ -170,13 +170,13 @@ INSERT INTO `product` (`productID`, `productName`, `price`, `seriesID`, `product
 -- --------------------------------------------------------
 
 --
--- Table structure for table `productsize`
+-- Table structure for table `productStock`
 --
 
-CREATE TABLE `productsize` (
+CREATE TABLE `productStock` (
   `productID` varchar(5) NOT NULL,
   `sizeID` varchar(4) NOT NULL,
-  `quantity` int(11) NOT NULL,
+  `stock` int(11) NOT NULL,
   `status` enum('onsales','notonsales') NOT NULL DEFAULT 'notonsales',
   `low_stock_threshold` int(11) DEFAULT 5,
   `alert_sent` tinyint(1) DEFAULT 0,
@@ -184,10 +184,10 @@ CREATE TABLE `productsize` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `productsize`
+-- Dumping data for table `productStock`
 --
 
-INSERT INTO `productsize` (`productID`, `sizeID`, `quantity`, `status`, `low_stock_threshold`, `alert_sent`, `qr_token`) VALUES
+INSERT INTO `productStock` (`productID`, `sizeID`, `stock`, `status`, `low_stock_threshold`, `alert_sent`, `qr_token`) VALUES
 ('R0001', '3UG5', 4, 'onsales', 5, 1, NULL),
 ('R0001', '4UG5', 1, 'onsales', 5, 1, '9e22411d04b7c9b04584a1339265e142'),
 ('R0002', '3UG5', 5, 'onsales', 5, 1, NULL),
@@ -351,9 +351,9 @@ ALTER TABLE `product`
   ADD KEY `seriesID` (`seriesID`);
 
 --
--- Indexes for table `productsize`
+-- Indexes for table `productStock`
 --
-ALTER TABLE `productsize`
+ALTER TABLE `productStock`
   ADD PRIMARY KEY (`productID`,`sizeID`),
   ADD UNIQUE KEY `qr_token` (`qr_token`);
 
@@ -416,7 +416,7 @@ ALTER TABLE `user`
 -- Constraints for table `cartitem`
 --
 ALTER TABLE `cartitem`
-  ADD CONSTRAINT `cartitem_ibfk_1` FOREIGN KEY (`productID`,`sizeID`) REFERENCES `productsize` (`productID`, `sizeID`);
+  ADD CONSTRAINT `cartitem_ibfk_1` FOREIGN KEY (`productID`,`sizeID`) REFERENCES `productStock` (`productID`, `sizeID`);
 
 --
 -- Constraints for table `orders`
@@ -429,7 +429,7 @@ ALTER TABLE `orders`
 --
 ALTER TABLE `order_items`
   ADD CONSTRAINT `order_items_ibfk_1` FOREIGN KEY (`orderId`) REFERENCES `orders` (`orderId`),
-  ADD CONSTRAINT `order_items_ibfk_2` FOREIGN KEY (`productId`,`gripSize`) REFERENCES `productsize` (`productID`, `sizeID`);
+  ADD CONSTRAINT `order_items_ibfk_2` FOREIGN KEY (`productId`,`gripSize`) REFERENCES `productStock` (`productID`, `sizeID`);
 
 --
 -- Constraints for table `product`
@@ -438,10 +438,10 @@ ALTER TABLE `product`
   ADD CONSTRAINT `product_ibfk_1` FOREIGN KEY (`seriesID`) REFERENCES `series` (`seriesID`);
 
 --
--- Constraints for table `productsize`
+-- Constraints for table `productStock`
 --
-ALTER TABLE `productsize`
-  ADD CONSTRAINT `productSize_ibfk_1` FOREIGN KEY (`productID`) REFERENCES `product` (`productID`);
+ALTER TABLE `productStock`
+  ADD CONSTRAINT `productStock_ibfk_1` FOREIGN KEY (`productID`) REFERENCES `product` (`productID`);
 
 --
 -- Constraints for table `product_images`
