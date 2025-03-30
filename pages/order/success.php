@@ -27,6 +27,7 @@
     
 
     //remove items from cart
+    $_db->query("DELETE FROM cartitem WHERE userID = $details->userId");
     include "../../_head.php";
 ?>
 

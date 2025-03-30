@@ -109,7 +109,7 @@ if(!$userID){
                             ?>
 
                             <a onclick="onclick()" class="paymentBtn">
-                            <button>Proceed to Payment </button>
+                            <button onclick="location='/pages/checkout/checkout.php?' ">Proceed to Payment </button>
                             </a>
                             
                             <div class = "sum" ><p>Total Item(s): <?php echo $totalItem?></p>
