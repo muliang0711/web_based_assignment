@@ -594,3 +594,10 @@ span.error br {
     padding: 50px 0;
 }
 
+.itemCount{
+    position: absolute;
+    color: white;
+    background-color: red;
+    padding: 10px;
+    border-radius: 50%;
+}

@@ -47,7 +47,7 @@ class CheckStock {
     // 1. send sms ; 
 
     public function check_low_stock() {
-        $sql = "SELECT * FROM productsize WHERE quantity <= low_stock_threshold AND alert_sent = 0";
+        $sql = "SELECT * FROM productstock WHERE stock <= low_stock_threshold AND alert_sent = 0";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute();
         $low_stock_products = $stmt->fetchAll(); 
@@ -61,7 +61,7 @@ class CheckStock {
             $productID = $product->productID;
             $sizeID = $product->sizeID;
             $productName = $product->product_name?? "Product #$productID"; // fallback
-            $stock = $product->quantity;
+            $stock = $product->stock;
             $threshold = $product->low_stock_threshold;
 
             $ownerEmail = 'puihy-wm24@student.tarc.edu.my'; // or load from DB/config
@@ -70,7 +70,7 @@ class CheckStock {
 
             if ($emailSent) {
 
-                $updateSql = "UPDATE productsize SET alert_sent = 1 WHERE productID = ? AND sizeID = ?";
+                $updateSql = "UPDATE productstock SET alert_sent = 1 WHERE productID = ? AND sizeID = ?";
                 $updateStmt = $this->pdo->prepare($updateSql);
                 $updateStmt->execute([$productID, $sizeID]);
 
