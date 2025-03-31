@@ -51,7 +51,7 @@ main {
     display: block;
     margin-bottom: 10px;
 }
-.form-group input[type=text], .form-group textarea {
+.form-group input[type=text], .form-group textarea , .form-group select{
     background-color: #f0f0f0;
     border: 1px solid var(--semitransparent-gray);
     border-radius: 5px;

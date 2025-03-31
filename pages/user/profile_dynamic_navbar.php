@@ -4,6 +4,7 @@ $paths = [
     'personal.php' => 'Personal details',
     'account.php' => 'Account settings',
     'privacy.php' => 'Privacy settings',
+    'address.php' => 'Saved address'
 ];
 $current_path = basename($_SERVER['PHP_SELF']);
 $current_title = $paths[$current_path];

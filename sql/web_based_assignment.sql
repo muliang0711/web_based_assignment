@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 30, 2025 at 04:35 PM
+-- Generation Time: Mar 31, 2025 at 08:40 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -68,11 +68,6 @@ CREATE TABLE `cartitem` (
 --
 
 INSERT INTO `cartitem` (`userID`, `productID`, `sizeID`, `quantity`) VALUES
-(1, 'R0001', '3UG5', 2),
-(1, 'R0002', '3UG5', 5),
-(1, 'R0003', '3UG5', 1),
-(1, 'R0004', '3UG5', 1),
-(1, 'R0005', '3UG5', 4),
 (2, 'R0001', '4UG5', 2),
 (2, 'R0002', '4UG5', 3),
 (2, 'R0003', '4UG5', 3),
@@ -110,7 +105,9 @@ INSERT INTO `orders` (`orderId`, `userId`, `orderDate`, `status`, `orderAddress`
 (12347, 1, '2024-09-15', 'Delivered', '16, Jalan Taman Utama, 80000, Johor Bahru', '', '', 'Standard', '2024-09-18', NULL, 0.50),
 (12348, 2, '2024-08-30', 'Pending', '7, Jalan Ampang, 50450, Kuala Lumpur', '', '', 'Standard', NULL, NULL, 0.00),
 (12349, 1, '2024-12-10', 'In Transit', '22, Jalan Sutera Indah, 81100, Johor', '', '', 'Standard', NULL, NULL, 0.00),
-(12350, 2, '2024-07-20', 'Delivered', '5, Lorong Melati, 10460, Penang', '', '', 'Standard', '2024-07-23', NULL, 0.00);
+(12350, 2, '2024-07-20', 'Delivered', '5, Lorong Melati, 10460, Penang', '', '', 'Standard', '2024-07-23', NULL, 0.00),
+(12351, 1, '2025-03-31', 'Pending', '9, Jalan Merdeka, 75000 Melaka, Malaysia', 'Alexandra', '012-6129291', 'Standard', NULL, NULL, 2018.10),
+(12352, 1, '2025-03-31', 'Pending', 'No. 15, Jalan Ampang, 50450 Kuala Lumpur, Malaysia', 'Alexandra', '012-6129291', 'Standard', NULL, NULL, 0.00);
 
 -- --------------------------------------------------------
 
@@ -144,7 +141,14 @@ INSERT INTO `order_items` (`orderId`, `productId`, `quantity`, `subtotal`, `grip
 (12348, 'R0003', 1, 15.99, '3UG5'),
 (12349, 'R0002', 1, 12.99, '3UG5'),
 (12349, 'R0003', 2, 19.98, '3UG5'),
-(12350, 'R0001', 1, 13.99, '4UG5');
+(12350, 'R0001', 1, 13.99, '4UG5'),
+(12351, 'R0001', 2, 998.00, '3UG5'),
+(12351, 'R0002', 5, 2995.00, '3UG5'),
+(12351, 'R0003', 1, 459.00, '3UG5'),
+(12351, 'R0004', 1, 679.00, '3UG5'),
+(12351, 'R0005', 4, 1596.00, '3UG5'),
+(12352, 'R0001', 1, 499.00, '3UG5'),
+(12352, 'R0002', 1, 599.00, '4UG5');
 
 -- --------------------------------------------------------
 
@@ -253,24 +257,20 @@ CREATE TABLE `savedaddress` (
   `userID` int(11) NOT NULL,
   `address` varchar(200) NOT NULL,
   `phoneNo` varchar(15) NOT NULL,
-  `name` varchar(40) NOT NULL
+  `name` varchar(40) NOT NULL,
+  `defaultAdd` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `savedaddress`
 --
 
-INSERT INTO `savedaddress` (`userID`, `address`, `phoneNo`, `name`) VALUES
-(1, '18, Persiaran Gurney, 10250 George Town, Penang, Malaysia', '012-6129291', 'Alexandra'),
-(1, '5, Lorong Tun Ismail 1, 25000 Kuantan, Pahang, Malaysia', '012-6129291', 'Alexandra'),
-(1, '88, Jalan Wong Ah Fook, 80000 Johor Bahru, Johor, Malaysia', '012-6129291', 'Alexandra'),
-(1, '9, Jalan Merdeka, 75000 Melaka, Malaysia', '012-6129291', 'Alexandra'),
-(1, 'No. 15, Jalan Ampang, 50450 Kuala Lumpur, Malaysia', '012-6129291', 'Alexandra'),
-(2, '12, Jalan Sutera Tanjung, 81300 Skudai, Johor, Malaysia', '012-1235521', 'Tester'),
-(2, '22A, Jalan Bukit Bintang, 55100 Kuala Lumpur, Malaysia', '012-1235521', 'Tester'),
-(2, '35, Jalan Gurney, 10250 George Town, Penang, Malaysia', '012-1235521', 'Tester'),
-(2, '55, Jalan Tun Razak, 50400 Kuala Lumpur, Malaysia', '012-1235521', 'Tester'),
-(2, '7, Jalan Tebrau, 80200 Johor Bahru, Johor, Malaysia', '012-1235521', 'Tester');
+INSERT INTO `savedaddress` (`userID`, `address`, `phoneNo`, `name`, `defaultAdd`) VALUES
+(1, '18, Persiaran Gurney, 10250 George Town, Penang, Malaysia', '012-6129291', 'Alexandra', 0),
+(1, '5, Lorong Tun Ismail 1, 25000 Kuantan, Pahang, Malaysia', '012-6129291', 'Alexandra', 0),
+(1, 'No. 15, Jalan Ampang, 50450 Kuala Lumpur, Malaysia', '012-6129291', 'Alexandra', 0),
+(2, '35, Jalan Gurney, 10250 George Town, Penang, Malaysia', '012-1235521', 'Tester', 0),
+(2, '7, Jalan Tebrau, 80200 Johor Bahru, Johor, Malaysia', '012-1235521', 'Tester', 0);
 
 -- --------------------------------------------------------
 
@@ -406,7 +406,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `orderId` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12352;
+  MODIFY `orderId` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12355;
 
 --
 -- AUTO_INCREMENT for table `product_images`
