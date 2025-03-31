@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 31, 2025 at 01:38 PM
+-- Generation Time: Mar 31, 2025 at 03:33 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -100,14 +100,7 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`orderId`, `userId`, `orderDate`, `status`, `orderAddress`, `orderName`, `orderPhone`, `deliveryMethod`, `deliveredDate`, `tracking`, `discount`) VALUES
-(12345, 1, '2024-10-25', 'Pending', '2 Jalan Port Dickson Langkawi, 72010, Kuala Lumpur', '', '', 'Standard', NULL, NULL, 0.00),
-(12346, 2, '2024-11-02', 'In Transit', '88, Lorong Bukit Jaya, 43000, Selangor', '', '', 'Standard', NULL, NULL, 0.00),
-(12347, 1, '2024-09-15', 'Delivered', '16, Jalan Taman Utama, 80000, Johor Bahru', '', '', 'Standard', '2024-09-18', NULL, 0.50),
-(12348, 2, '2024-08-30', 'Pending', '7, Jalan Ampang, 50450, Kuala Lumpur', '', '', 'Standard', NULL, NULL, 0.00),
-(12349, 1, '2024-12-10', 'In Transit', '22, Jalan Sutera Indah, 81100, Johor', '', '', 'Standard', NULL, NULL, 0.00),
-(12350, 2, '2024-07-20', 'Delivered', '5, Lorong Melati, 10460, Penang', '', '', 'Standard', '2024-07-23', NULL, 0.00),
-(12351, 1, '2025-03-31', 'Pending', '9, Jalan Merdeka, 75000 Melaka, Malaysia', 'Alexandra', '012-6129291', 'Standard', NULL, NULL, 2018.10),
-(12352, 1, '2025-03-31', 'Pending', 'No. 15, Jalan Ampang, 50450 Kuala Lumpur, Malaysia', 'Alexandra', '012-6129291', 'Standard', NULL, NULL, 0.00);
+(1, 1, '2025-03-31', 'Pending', 'PV18 RESIDENCE, JALAN LANGKAWI, 53000, Kuala Lumpur', 'Wayne Gan', '60126289399', 'Standard', NULL, NULL, 119.70);
 
 -- --------------------------------------------------------
 
@@ -129,26 +122,7 @@ CREATE TABLE `order_items` (
 --
 
 INSERT INTO `order_items` (`orderId`, `productId`, `quantity`, `subtotal`, `gripSize`) VALUES
-(12345, 'R0001', 1, 15.99, '3UG5'),
-(12345, 'R0001', 1, 15.99, '4UG5'),
-(12345, 'R0002', 1, 9.99, '3UG5'),
-(12346, 'R0001', 1, 25.00, '4UG5'),
-(12346, 'R0002', 1, 15.99, '3UG5'),
-(12346, 'R0003', 2, 31.98, '3UG5'),
-(12347, 'R0003', 1, 16.50, '3UG5'),
-(12348, 'R0001', 2, 32.00, '4UG5'),
-(12348, 'R0002', 1, 10.00, '3UG5'),
-(12348, 'R0003', 1, 15.99, '3UG5'),
-(12349, 'R0002', 1, 12.99, '3UG5'),
-(12349, 'R0003', 2, 19.98, '3UG5'),
-(12350, 'R0001', 1, 13.99, '4UG5'),
-(12351, 'R0001', 2, 998.00, '3UG5'),
-(12351, 'R0002', 5, 2995.00, '3UG5'),
-(12351, 'R0003', 1, 459.00, '3UG5'),
-(12351, 'R0004', 1, 679.00, '3UG5'),
-(12351, 'R0005', 4, 1596.00, '3UG5'),
-(12352, 'R0001', 1, 499.00, '3UG5'),
-(12352, 'R0002', 1, 599.00, '4UG5');
+(1, 'R0005', 1, 399.00, '3UG5');
 
 -- --------------------------------------------------------
 
@@ -267,7 +241,7 @@ CREATE TABLE `savedaddress` (
 --
 
 INSERT INTO `savedaddress` (`userID`, `address`, `phoneNo`, `name`, `defaultAdd`, `addressIndex`) VALUES
-(1, 'PV18 RESIDENCE, JALAN LANGKAWI, 53000, Kuala Lumpur', '60126289399', 'Mr Wayne', 1, 1);
+(1, 'PV18 RESIDENCE, JALAN LANGKAWI, 53000, Kuala Lumpur', '60126289399', 'Wayne Gan', 1, 4);
 
 -- --------------------------------------------------------
 
@@ -416,7 +390,7 @@ ALTER TABLE `product_images`
 -- AUTO_INCREMENT for table `savedaddress`
 --
 ALTER TABLE `savedaddress`
-  MODIFY `addressIndex` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `addressIndex` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `user`

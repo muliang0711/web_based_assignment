@@ -1,12 +1,12 @@
 <?php 
     $root = $_SERVER["DOCUMENT_ROOT"];
     session_start();
-    if(!isset($_SESSION["tempOrder"])){
-        header("Location: /");
-        exit();
-    }
-    $details = $_SESSION["tempOrder"];
-    unset($_SESSION["tempOrder"]);
+    // if(!isset($_SESSION["tempOrder"])){
+    //     header("Location: /");
+    //     exit();
+    // }
+    // $details = $_SESSION["tempOrder"];
+    // unset($_SESSION["tempOrder"]);
 ?>
 
 <!DOCTYPE html>
@@ -26,22 +26,24 @@
         }
 
         .container {
+            border: 2px solid red;
             position: relative;
             display: flex;
             justify-content: center;
             align-items: center;
-            width: 600px;
-            height: 800px;
+            width: 80vw;
+            height: 80vh;
 
             >img:first-child{
-                scale: 1.5;
+                height: 100%;
             }
 
             >img:last-child{
+
                 position: absolute;
-                scale: 0.42;
-                bottom:-68px;
-                left:-32px;
+                scale: 0.3;
+                bottom:0px;
+                left:0px;
                 border-radius: 20px;
             }
         }
@@ -63,7 +65,7 @@
     </style>
 </head>
 <body>
-    <h1>Amount : RM <?= $details->total ?></h1>
+    <!-- <h1>Amount : RM <?= $details->total ?></h1> -->
     <div class="container">
         <img src="/assets/img/standee.png">
         <img src="/assets/img/qrcode.jpg">

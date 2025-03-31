@@ -114,35 +114,35 @@ include 'profile_dynamic_navbar.php';
         <section class="left-col">
                 <form method="post" id="addressForm">
                     <div class="form-group">
-                        <label>Name</label>
+                        <label>Name</label><br>
                         <?= input_text('name', "placeholder='example: Alex Marc'") ?>
                     </div>
 
                     <div class="form-group">
-                        <label>Phone Number</label>
+                        <label>Phone Number</label><br>
                         <?= input_text('number', "placeholder='example: 60126289399'") ?>
                         <span id="errmsg2" style="color: red; font-size: 15px;" hidden>⚠️ Incorrect Format!</span>
                     </div>
 
                     <div class="form-group">
-                        <label>Unit Number and Building Name</label>
+                        <label>Unit Number and Building Name</label><br>
                         <?= input_text('building', "placeholder='example: 12 Taman Tarumt'") ?>
                     </div>
 
                     <div class="form-group">
-                        <label>Street Address</label>
+                        <label>Street Address</label><br>
                         <?= input_text('street',"placeholder='example: Jalan Langkawi'") ?>
                     </div>
 
                     
 
                     <div class="form-group">
-                        <label>Country</label>
-                        <input type="text" value="Malaysia" readonly style="width:82px; pointer-events:none">
+                        <label>Country</label><br>
+                        <input type="text" value="Malaysia" readonly style="width:85px; pointer-events:none">
                     </div>
 
                     <div class="form-group">
-                        <label>State</label>
+                        <label>State</label><br>
                         <select name="states" id="states" style="width: 160px;">
                                 <?php foreach($states as $s): ?>
                                 <option value="<?= $s ?>" <?= (isset($state) &&  $s == $state) ? "selected" : "" ?>><?= $s ?></option>
@@ -156,7 +156,7 @@ include 'profile_dynamic_navbar.php';
                         <input id="postcode" name="postcode" type="text"style="width:80px;" maxlength="5" value="<?= isset($postcode)?$postcode:"" ?>">
                         <span id="errmsg" style="color: red; font-size: 15px;" hidden>⚠️ Incorrect Postcode!</span>
                     </div>
-
+                    <button class="btn-simple btn-green" id="cancel" style="background-color:rgb(255, 136, 25)">Discard changes</button>                    
                     <button 
                         type="button"
                         id="submit2"
@@ -172,6 +172,12 @@ include 'profile_dynamic_navbar.php';
 
 
 <script>
+
+    $("button#cancel").on('click', function(e){
+        e.preventDefault();
+        location = "address.php";
+        
+    })
 
     const name = document.getElementById("name");
     const number = document.getElementById("number");

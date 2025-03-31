@@ -5,13 +5,10 @@
     $stylesheetArray  = ["order.css?"];
     include "../../_head.php";
 
-    //getting session info;
-    $userId = $_SESSION['userID'] ?? '';
-    
-    //if userId not logged in then redirect to homepage
-    if(!is_logged_in("user")){
-        redirect("/");
-    }
+    include '../../_login_guard.php';
+    extract((array)$_user);
+   
+    $userId = $_user->userID;
     //defining some colors to be used to display the progress of delivery
     $colorStatusBar = "linear-gradient(90deg, rgba(29,204,29,1) 0%, rgba(255,177,0,1) 77%)";
     $colorStatusDefault = "rgba(221, 214, 214, 0.514)";
@@ -52,7 +49,9 @@
     catch (PDOException $e){
         die(":( Couldn't Find What You're Looking For");
     }
-
+    if(count($orders) == 0){
+        die("No orders yet");
+    }
 ?>
 
 

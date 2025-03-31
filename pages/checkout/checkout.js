@@ -16,6 +16,10 @@ $(()=>{
         });
     }
     
+    $("#addaddr").on('click', function(e){
+        location="/pages/user/address.php";
+    });
+
     $(".paymentcontainer").on('click', function(e){
         //remove all selected then adding again
         if($(e.target).hasClass("border")){

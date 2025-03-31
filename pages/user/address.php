@@ -94,35 +94,35 @@ include 'profile_dynamic_navbar.php';
         <section class="left-col">
                 <form method="post" id="addressForm" hidden>
                     <div class="form-group">
-                        <label>Name</label>
+                        <label>Name</label><br>
                         <?= input_text('name', "placeholder='example: Alex Marc'") ?>
                     </div>
 
                     <div class="form-group">
-                        <label>Phone Number</label>
+                        <label>Phone Number</label><br>
                         <?= input_text('number', "placeholder='example: 60126289399'") ?>
                         <span id="errmsg2" style="color: red; font-size: 15px;" hidden>⚠️ Incorrect Format!</span>
                     </div>
 
                     <div class="form-group">
-                        <label>Unit Number and Building Name</label>
+                        <label>Unit Number and Building Name</label><br>
                         <?= input_text('building', "placeholder='example: 12 Taman Tarumt'") ?>
                     </div>
 
                     <div class="form-group">
-                        <label>Street Address</label>
+                        <label>Street Address</label><br>
                         <?= input_text('street',"placeholder='example: Jalan Langkawi'") ?>
                     </div>
 
                     
 
                     <div class="form-group">
-                        <label>Country</label>
-                        <input type="text" value="Malaysia" readonly style="width:82px; pointer-events:none">
+                        <label>Country</label><br>
+                        <input type="text" value="Malaysia" readonly style="width:85px; pointer-events:none">
                     </div>
 
                     <div class="form-group">
-                        <label>State</label>
+                        <label>State</label><br>
                         <select name="states" id="states" style="width: 160px;">
                                 <?php foreach($states as $s): ?>
                                 <option value="<?= $s ?>"><?= $s ?></option>
@@ -136,7 +136,9 @@ include 'profile_dynamic_navbar.php';
                         <input id="postcode" name="postcode" type="text"style="width:80px;" maxlength="5">
                         <span id="errmsg" style="color: red; font-size: 15px;" hidden>⚠️ Incorrect Postcode!</span>
                     </div>
-
+                     
+                    
+                    <button class="btn-simple btn-green" id="cancel" style="background-color:rgb(255, 136, 25)">Cancel</button>
                     <button 
                         type="button"
                         id="submitbutton"
@@ -169,6 +171,7 @@ include 'profile_dynamic_navbar.php';
     const states = document.getElementById("states");
     const errmsg = document.getElementById("errmsg");
     const errmsg2 = document.getElementById("errmsg2");
+    const form =document.getElementById("addressForm");
     var error = false;
     var error2 = false;
     const postcodes = {
@@ -286,7 +289,7 @@ include 'profile_dynamic_navbar.php';
 
             if(name.value.length>0 && street.value.length>0 && building.value.length>0 && postcode.value.length>0 && number.value.length>=11){
                 try{
-                    document.getElementById("addressForm").submit();
+                    form.submit();
                 }catch (error){
                     console.log(error);
                 }
@@ -321,6 +324,14 @@ include 'profile_dynamic_navbar.php';
         }
     })
 
+    $("button#cancel").on('click', function(e){
+        e.preventDefault();
+        let container = document.getElementsByClassName("container")[0];
+        $(form).prop("hidden","true");
+        container.style.display = "grid";
+        
+    })
+
     $(".edit[data-card]").on("click", function(e){
         let addressIndex = this.dataset.card;
         location = "editaddress.php?edit=" + addressIndex;
@@ -330,7 +341,19 @@ include 'profile_dynamic_navbar.php';
 
     $(".delete[data-card]").on("click", function(e){
         let addressIndex = this.dataset.card;
-        //delete here
+        $.ajax({
+            url: "deleteaddress.php",
+            type: "POST",
+            data: {
+                "indexToDelete" : addressIndex
+            },
+            success: function(res){
+                console.log(res);
+                if(res=="success"){
+                    $(".delete[data-card]").parent("div").parent("div").remove();
+                }
+            }
+        });
     })
 </script>
 

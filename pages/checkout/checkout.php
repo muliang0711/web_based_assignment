@@ -5,11 +5,12 @@
     $dateToday = date("Y-m-d");
     $stylesheetArray  = ["checkout.css"];
     
+    include '../../_login_guard.php';
+    extract((array)$_user);
+   
+    $userID = $_user->userID;
     
-    include $_SERVER["DOCUMENT_ROOT"] . "/_head.php";
-
-    
-    $address = $_db->prepare("Select * from savedaddress WHERE userID = ?");
+    $address = $_db->prepare("Select * from savedaddress WHERE userID = ? order by addressIndex desc");
     $address->execute([$userID]);
     $address = $address->fetchAll();
 
@@ -21,13 +22,17 @@
     $items->execute([$userID]);
     $items = $items->fetchAll();
 
+    if(count($items) == 0){
+        redirect("/");
+    }
+
     $_SESSION["subtotal"] = 0.00;
     $_SESSION["discount"] = 0.00;
 
 
     $i = 0;
 
-    
+    include $_SERVER["DOCUMENT_ROOT"] . "/_head.php";
 ?>
 <h1>Cart Review</h1>
 <div class="giant-container">
@@ -48,7 +53,7 @@
                     </div>
                     <?php endforeach ?>
                     <div class="card">
-                        <button><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="rgb(39, 39, 39)"><path d="M440-280h80v-160h160v-80H520v-160h-80v160H280v80h160v160Zm40 200q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/></svg></button>
+                        <button id="addaddr"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="rgb(39, 39, 39)"><path d="M440-280h80v-160h160v-80H520v-160h-80v160H280v80h160v160Zm40 200q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/></svg></button>
                         <span>Add Address</span>
                     </div> 
                 </div>
@@ -139,6 +144,15 @@
     $("#paymentbutton").on('click', function(e){
         let payMethod = $(".selected[data-method]")[0].dataset.method;
         let addressSelect = $(".card.selected");
+        if(addressSelect.length==0){
+            //display error msg;
+            let stuff = $(".info-container.warn").children("span");
+            stuff.text("Please Select an Address!");
+            setTimeout(function(){
+                $(".info-container.warn").children("span").text("");
+            },3000);
+            return;
+        }
         let name = addressSelect.children(".name")[0].innerText;
         let phone= addressSelect.children(".phone")[0].innerText;;
         let address= addressSelect.children(".address")[0].innerText;
