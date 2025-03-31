@@ -368,19 +368,6 @@ function pwMatch($pw, $hashedpw){
     return password_verify($pw, $hashedpw);
 }
 
-function auth_admin($adminLevel) {
-    // Do nothing if an admin isn't logged in
-    if (!is_logged_in("admin")) {
-        return;
-    }
-
-    // If an admin is logged in, but not of the specified adminLevel, redirect them to the admin home page.
-    if (!is_logged_in("admin", $adminLevel)) {
-        temp('info', "This page is not accessible to $adminLevel admins.");
-        redirect('/pages/admin/admin_home.php');
-    }
-}
-
 // Authenticate user / admin
 // If auth("user"), redirect to user login page if not logged in as user.
 // If auth("admin"), redirect to admin login page if not logged in as admin.
