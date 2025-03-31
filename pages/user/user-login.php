@@ -61,6 +61,10 @@ if (is_post()) {
 
         // If username exists, and password is correct
         if ($u && pwMatch($password, $u->passwordHash)) {
+            if (is_blocked($u->userID)) {
+                redirect('blocked.php');
+            }
+
             login($u->userID, "user");
             
             // temp('info', "Logged in as $u->username");

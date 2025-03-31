@@ -357,6 +357,15 @@ function is_logged_in($role, $adminLevel = null): bool {
 // Testing the is_logged_in() function
 // var_dump(is_logged_in("user", "main"));
 
+// Is the user blocked?
+function is_blocked($userID): bool {
+    global $_db;
+    $stm = $_db->prepare('SELECT memberStatus FROM user WHERE userID = :userID');
+    $stm->execute(['userID' => $userID]);
+    $memberStatus = $stm->fetchColumn();
+    return $memberStatus == 'Blocked';
+}
+
 //password hashing
 function pwHash($pw){
     return password_hash($pw, PASSWORD_DEFAULT);
@@ -402,6 +411,16 @@ function auth($role, $adminLevel = null) {
 function adminMain($adminLevel = "main") {
 
 
+}
+
+function admin_is_level($adminLevel) {
+    global $_admin;
+    // Return void if $_admin is undefined (which means no admin is logged in)
+    if (!$_admin) {
+        return;
+    }
+    // If an admin is logged in, return true if currently logged in admin is of the specified adminLevel, otherwise false.
+    return $_admin->adminLevel == $adminLevel;
 }
 
 
