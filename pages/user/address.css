@@ -1,0 +1,74 @@
+.container {
+    width: 80%;
+    height: auto;
+
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 300px));
+    justify-content: center;
+    gap: 15px;
+    >div {
+    
+        display: flex;
+        position: relative;
+        flex-direction: column;
+        padding: 0px 15px;
+        padding-bottom: 10px;
+        border-radius: 15px;
+        height: 200px;
+        background-color: rgba(209, 209, 209, 0.486);
+
+       >h3 {
+        margin-right: 50px;
+
+       }
+        >span {
+            width: 100%;
+            height: auto;
+        }
+
+        >i {
+            position: absolute;
+            right: 10px;
+            top: 15px;
+            font-size: 15px;
+            font-weight: 600;
+        }
+    }
+
+    >div:last-child{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: transparent;
+
+        >button {
+            border: none;
+            cursor: pointer;
+            background: transparent;
+        }
+
+        >span {
+            text-align: center;
+        }
+    }
+}
+
+
+.btncontainer {
+    display: flex;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    > button:first-child{
+        margin-left: auto;
+    }
+    > button {
+        border: none;
+        background: transparent;
+        cursor: pointer;
+    }
+
+    > button:hover{
+        scale: 1.08;
+    }
+}

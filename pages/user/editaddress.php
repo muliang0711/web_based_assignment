@@ -1,4 +1,4 @@
-<?php
+<?php 
 require '../../_base.php';
 
 /********* You can change these to suit the specific needs of your page *********/
@@ -29,7 +29,43 @@ $states = [
 ];
 
 
+if(is_get()){
+
+    if(isset($_GET["edit"])){
+        $indexToEdit = $_GET["edit"];
+        //check if index belongs to user
+        $stm = $_db->prepare("SELECT addressIndex from savedaddress WHERE userID = ?");
+        $stm->execute([$userID]);
+        $indexArr = $stm->fetchAll(PDO::FETCH_COLUMN);
+    
+        if(!in_array($indexToEdit, $indexArr)){
+            redirect("address.php");
+        }
+
+        //fetch the card information from db
+        $stm = $_db->prepare("SELECT * from savedaddress WHERE userID = ? AND addressIndex = ?");
+        $stm->execute([$userID, $indexToEdit]);
+        $info = $stm->fetchAll();
+
+        $name = $info[0]->name;
+        $address = $info[0]->address;
+        $number = $info[0]->phoneNo;
+        $default = $info[0]->defaultAdd;
+
+
+        $address = explode(",",$address);
+        $building = $address[0];
+        $street = trim($address[1]);
+        $state = trim($address[3]);
+        $postcode = trim($address[2]);
+
+    }
+    
+}
+
+
 if(is_post()){
+    $indexToEdit = $_GET["edit"];
 
     $name = $_POST["name"];
     $number = $_POST["number"];
@@ -40,59 +76,38 @@ if(is_post()){
     $address = $unit . ", " . $street . ", " . $postcode . ", " . $state;
     $default = isset($_POST["default"]) ? $_POST["default"] : 0;
 
+    //update the address in database and go back to saved address page
+
+
+
     if(isset($_POST["default"])){
         $_db->query("UPDATE savedaddress set defaultAdd = 0 WHERE userID = $userID");
     }
-    //add to database
-    $stm = $_db->prepare("INSERT into savedaddress(userID,address,phoneNo,name,defaultAdd) VALUES(?,?,?,?,?)")
-    ->execute([$userID, $address, $number, $name, $default]);
+
+    $stm = $_db->prepare("UPDATE savedaddress SET address = ? , phoneNo = ? , name = ?, defaultAdd = ? WHERE userID = ? AND addressIndex = ?");
+    $stm->execute([$address, $number, $name, $default ,$userID, $indexToEdit]);
+
+    redirect("address.php");
 }
-
-//get list of saved addrsses
-$stm2 = $_db->query("SELECT * FROM savedaddress WHERE userID = $userID order by defaultAdd desc")->fetchAll();
-
-
 
 
 include '../../_head.php';
 
 include 'profile_dynamic_navbar.php';
-
 ?>
 
 <div class="main">
-    <section class="info-boxes">
+
+<section class="info-boxes">
         <div role="alert" class="info-box success"><?= temp('info') ?></div>
         <div role="alert" class="info-box error"><?= temp('error') ?></div>
-    </section>
-    <h1 class="heading"><?= $current_title ?></h1>
-    <div class="container">
-        <?php foreach($stm2 as $a): ?>
-        <div class="card">
-            <?php
-            if($a->defaultAdd == 1){
-                echo "<i>Default</i>";
-            }
-            ?>
-            <h3><?= $a->name ?></h3>
-            <span><?= $a->phoneNo ?></span>
-            <span><?= $a->address ?></span>
-            <div class="btncontainer">
-                <button class="edit" data-card="<?= $a->addressIndex ?>"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="rgb(29, 20, 20)"><path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"/></svg></button>
-                <button class="delete" data-card="<?= $a->addressIndex ?>"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="rgb(252, 101, 31)"><path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/></svg></button>
-            </div>
-            
-        </div>
-        <?php endforeach ?>
+</section>
+<h1 class="heading"><?= $current_title ?></h1>
 
-        <div><button onclick="addAddress()"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="rgb(39, 39, 39)"><path d="M440-280h80v-160h160v-80H520v-160h-80v160H280v80h160v160Zm40 200q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/></svg></button>
-        <span>Add Address</span></div>
-    </div>
 
-    
-    <div class="section-container">
+<div class="section-container">
         <section class="left-col">
-                <form method="post" id="addressForm" hidden>
+                <form method="post" id="addressForm">
                     <div class="form-group">
                         <label>Name</label>
                         <?= input_text('name', "placeholder='example: Alex Marc'") ?>
@@ -125,7 +140,7 @@ include 'profile_dynamic_navbar.php';
                         <label>State</label>
                         <select name="states" id="states" style="width: 160px;">
                                 <?php foreach($states as $s): ?>
-                                <option value="<?= $s ?>"><?= $s ?></option>
+                                <option value="<?= $s ?>" <?= (isset($state) &&  $s == $state) ? "selected" : "" ?>><?= $s ?></option>
                                 <?php endforeach ?>
                         </select>
                         
@@ -133,39 +148,32 @@ include 'profile_dynamic_navbar.php';
 
                     <div class="form-group">
                         <label">Postcode</label><br>
-                        <input id="postcode" name="postcode" type="text"style="width:80px;" maxlength="5">
+                        <input id="postcode" name="postcode" type="text"style="width:80px;" maxlength="5" value="<?= isset($postcode)?$postcode:"" ?>">
                         <span id="errmsg" style="color: red; font-size: 15px;" hidden>⚠️ Incorrect Postcode!</span>
                     </div>
 
                     <button 
                         type="button"
-                        id="submitbutton"
+                        id="submit2"
                         class="btn-simple btn-green"
-                    >Save address</button>
-                    <input type="checkbox" name="default" value="1"><span style="font-size: 13px;">Save as default?</span>
+                    >Save changes</button>
+                    <input type="checkbox" name="default" value="1" <?= (isset($default) && $default == 1)? "checked":"" ?>><span style="font-size: 13px;">Save as default?</span>
                 </form>
         </section>
     </div>
+
+
 </div>
 
 
 <script>
-    function addAddress(){
-        let container = document.getElementsByClassName("container")[0];
-        let form = document.getElementById("addressForm");
-        //if clicked we hide container and show form;
-        container.style.display = "none";
-        form.removeAttribute("hidden");
-    }
-
-
 
     const name = document.getElementById("name");
     const number = document.getElementById("number");
     const street = document.getElementById("street");
     const building = document.getElementById("building");
     const postcode = document.getElementById("postcode");
-    const button = document.getElementById("submitbutton");
+    const button = document.getElementById("submit2");
     const states = document.getElementById("states");
     const errmsg = document.getElementById("errmsg");
     const errmsg2 = document.getElementById("errmsg2");
@@ -285,12 +293,7 @@ include 'profile_dynamic_navbar.php';
         if(!error && !error2){
 
             if(name.value.length>0 && street.value.length>0 && building.value.length>0 && postcode.value.length>0 && number.value.length>=11){
-                try{
-                    document.getElementById("addressForm").submit();
-                }catch (error){
-                    console.log(error);
-                }
-                
+                document.getElementById("addressForm").submit();
             }else{
                 if(!name.value.length>0){
                     name.style.outline = "2px solid red";
@@ -320,19 +323,9 @@ include 'profile_dynamic_navbar.php';
             }
         }
     })
-
-    $(".edit[data-card]").on("click", function(e){
-        let addressIndex = this.dataset.card;
-        location = "editaddress.php?edit=" + addressIndex;
-
-    })
-
-
-    $(".delete[data-card]").on("click", function(e){
-        let addressIndex = this.dataset.card;
-        //delete here
-    })
 </script>
+
+
 
 <?php
 include '../../_foot.php';
