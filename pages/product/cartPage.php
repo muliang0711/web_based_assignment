@@ -14,7 +14,7 @@ if (is_logged_in("user")) {
     $_user = $_db->query("SELECT * FROM user WHERE userID = {$_SESSION['userID']}")->fetch();
 }
 if(!$userID){
-    redirect("http://localhost:8000/pages/user/user-login.php");
+    // redirect("http://localhost:8000/pages/user/user-login.php");
 }
 
 

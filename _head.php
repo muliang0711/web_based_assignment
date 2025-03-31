@@ -47,46 +47,46 @@ if (is_post()) {
         $productID = post('productID');
         $sizeID = post('sizeID');
         $userID = $_user->userID;
-    }
-
-    if ($action === 'minus') {
-        $selectStmt = $_db->prepare('SELECT quantity FROM cartitem WHERE productID = :productID AND sizeID = :sizeID AND userID = :userID');
-        $selectStmt->execute([
-            'productID' => $productID,
-            'sizeID' => $sizeID,
-            'userID' => $userID,
-        ]);
-        $oldQuantity = $selectStmt->fetchColumn();
-
-        if ($oldQuantity === 1) {
-            removeFromCart($productID, $sizeID, $userID);
-        } else {
-            $updateStmt = $_db->prepare('UPDATE cartitem SET quantity = quantity - 1 WHERE productID = :productID AND sizeID = :sizeID AND userID = :userID');
+        if ($action === 'minus') {
+            $selectStmt = $_db->prepare('SELECT quantity FROM cartitem WHERE productID = :productID AND sizeID = :sizeID AND userID = :userID');
+            $selectStmt->execute([
+                'productID' => $productID,
+                'sizeID' => $sizeID,
+                'userID' => $userID,
+            ]);
+            $oldQuantity = $selectStmt->fetchColumn();
+    
+            if ($oldQuantity === 1) {
+                removeFromCart($productID, $sizeID, $userID);
+            } else {
+                $updateStmt = $_db->prepare('UPDATE cartitem SET quantity = quantity - 1 WHERE productID = :productID AND sizeID = :sizeID AND userID = :userID');
+                $updateStmt->execute([
+                    'productID' => $productID,
+                    'sizeID' => $sizeID,
+                    'userID' => $userID,
+                ]);
+            }
+            // $updateStmt = $_db->prepare('UPDATE cartitem SET ')
+        } else if ($action === 'add') {
+         //   if ($stock > $cartQuantity) {
+            $updateStmt = $_db->prepare('UPDATE cartitem SET quantity = quantity + 1 WHERE productID = :productID AND sizeID = :sizeID AND userID = :userID');
             $updateStmt->execute([
                 'productID' => $productID,
                 'sizeID' => $sizeID,
                 'userID' => $userID,
             ]);
+      /*      temp("info", "Added to cart Successfully!");
+          redirect("../product/productDetail.php?racket=$productObj->productID");
+        } else {
+          temp("error", "Stock unvailable! / Over limit!");
+          redirect("../product/productDetail.php?racket=$productObject->productID");
+        }*/
+        } else if ($action === 'delete') {
+            removeFromCart($productID, $sizeID, $userID);
         }
-        // $updateStmt = $_db->prepare('UPDATE cartitem SET ')
-    } else if ($action === 'add') {
-     //   if ($stock > $cartQuantity) {
-        $updateStmt = $_db->prepare('UPDATE cartitem SET quantity = quantity + 1 WHERE productID = :productID AND sizeID = :sizeID AND userID = :userID');
-        $updateStmt->execute([
-            'productID' => $productID,
-            'sizeID' => $sizeID,
-            'userID' => $userID,
-        ]);
-  /*      temp("info", "Added to cart Successfully!");
-      redirect("../product/productDetail.php?racket=$productObj->productID");
-    } else {
-      temp("error", "Stock unvailable! / Over limit!");
-      redirect("../product/productDetail.php?racket=$productObject->productID");
-    }*/
-    } else if ($action === 'delete') {
-        removeFromCart($productID, $sizeID, $userID);
+        redirect("../product/cartPage.php");
     }
-    redirect("../product/cartPage.php");
+    
 }
 
 function removeFromCart($productID, $sizeID, $userID): void {
@@ -262,7 +262,7 @@ function removeFromCart($productID, $sizeID, $userID): void {
                         
             <?php else: ?>
 
-                <a href="/pages/user/user-login.php">Log in</a>
+                <a href="/pages/user/user-login.php?fromPage=<?= $_SERVER['REQUEST_URI'] ?>">Log in</a>
                 <a class="signup" href="/pages/user/user-signup.php">Sign up</a>
 
             <?php endif ?>

@@ -60,7 +60,7 @@ if (is_post()) {
         $u = $stm->fetch();
 
         // If username exists, and password is correct
-        if ($u && $password == $u->passwordHash) {
+        if ($u && pwMatch($password, $u->passwordHash)) {
             login($u->userID, "user");
             
             // temp('info', "Logged in as $u->username");
@@ -72,7 +72,8 @@ if (is_post()) {
             // the user here, e.g. the user profile page, if accessed by an unsigned-in user, 
             // redirects them here, prompting them to sign in, and upon successful login, the user
             // will be redirected back to the user profile page, like a boomerang!),
-            if ($fromPage = temp('fromPage')) {
+            $fromPage = temp('fromPage') ?? req('fromPage');
+            if ($fromPage) {
                 redirect($fromPage);
             } 
             // Else, just redirect user to product page.
@@ -81,7 +82,7 @@ if (is_post()) {
             }
         }
 
-        $_errors['username'] = ' '; // This serves no functional purpose other than to force autofocus to focus on username (bc it selects the first input that is a sibling of .error). The value has to be ' ' (a space), not '' (empty string), because an empty string evaluates to false, so the error() function always executed the else block, which prints a <span> without a class. Somehow an empty string produces a <span> with no class. 
+        $_errors['username'] = ' '; // This serves no functional purpose other than to force autofocus to focus on username (bc it selects the first input that is a sibling of .error). The value has to be ' ' (a space), not '' (empty string), because an empty string evaluates to false, so the error() function always executes the else block, which prints a <span> without a class. Somehow an empty string produces a <span> with no class. 
         $_errors['password'] = 'Wrong username or password';
     }
 }
