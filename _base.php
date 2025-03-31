@@ -299,7 +299,7 @@ function is_logged_in($role, $adminLevel = null): bool {
     validateRole($role);
 
     // Is logged in as customer?
-    if ($role == "user") {
+    if ($role == "user" ) {
         return isset($_SESSION['userID']);
     }
     // Is logged in as admin?
@@ -397,6 +397,14 @@ function auth($role, $adminLevel = null) {
 
     // Do nothing if $role is neither user nor admin.
 }
+
+
+function adminMain($adminLevel = "main") {
+
+
+}
+
+
 
 // TODO (low-priority, might as well just leave this as is)
 // Generate login prompt with a link to user login page

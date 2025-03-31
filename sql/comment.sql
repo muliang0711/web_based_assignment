@@ -1,0 +1,6 @@
+-- INSERT INTO `admin` (`id`, `position`, `password`, `adminLevel`, `status`) VALUES
+-- ('A001', 'HR Manager', 'pass123', 'main', 'Active'),
+-- ('A002', 'IT Support', 'itpass', 'staff', 'Active'),
+-- ('A003', 'Finance Head', 'finpass', 'main', 'Blocked'),
+-- ('A004', 'Marketing Lead', 'mkpass', 'staff', 'Active'),
+-- ('A005', 'Operations', 'oppass', 'staff', 'Blocked'),
