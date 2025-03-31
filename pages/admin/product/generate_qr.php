@@ -27,7 +27,7 @@ function generateQRCode($pdo, $productID, $sizeID) {
     $updateStmt->execute([$token, $productID, $sizeID]);
     
     // 4. Build verification URL
-    $verifyUrl = "http://wbproject.local/pages/admin/product/verify-stock.php?productID=$productID&sizeID=$sizeID&token=$token";
+    $verifyUrl = "https://wbproject.local/pages/admin/product/verify-stock.php?productID=$productID&sizeID=$sizeID&token=$token";
 
     // 5. Generate QR code
     $result = Builder::create()
