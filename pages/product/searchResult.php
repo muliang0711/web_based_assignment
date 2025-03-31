@@ -24,12 +24,12 @@ $seriesArray = $seriesStatement->fetchAll();
             <hr>
             <h>Price Sorting</h>
             <hr>
-            <form method="get" action="../product/searchResult.php?price=LowToHigh">
-            <p>Low  ->  High</p>
-            </form>
-            <form method="get" action="../product/searchResult.php?price=HighToLow">
-            <p>High ->  Low</p>
-            </form>
+            <a onclick="onclick()" href="../product/searchResult.php?price=asc&search=<?php echo $search ?>">
+             <p>Low to High</p>
+            </a>
+           <a onclick="onclick()" href="../product/searchResult.php?price=desc&search=<?php echo $search ?>">
+            <p>High to Low</p>
+           </a>
             <hr>
         </ul>
     </div>
@@ -45,6 +45,8 @@ $seriesArray = $seriesStatement->fetchAll();
         </div>
     </form>
 
+    <?php $order = isset($_GET['price']) && $_GET['price'] == 'desc' ? 'DESC' : 'ASC'; ?>
+
     <?php
     if (!$search) {
         echo "Invalid input!";
@@ -52,7 +54,7 @@ $seriesArray = $seriesStatement->fetchAll();
     $_db = new PDO('mysql:dbname=web_based_assignment', 'root', '', [
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
     ]);
-    $statement = $_db->prepare("SELECT * FROM product JOIN product_images USING (productID) WHERE image_type = 'product' AND productName LIKE ?");
+    $statement = $_db->prepare("SELECT * FROM product JOIN product_images USING (productID) WHERE image_type = 'product' AND productName LIKE ? ORDER BY price $order");
     $statement->execute(["%$search%"]);
     $productObjectArray = $statement->fetchAll();
     ?>
