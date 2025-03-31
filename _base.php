@@ -373,25 +373,29 @@ function pwMatch($pw, $hashedpw){
 // If auth("admin"), redirect to admin login page if not logged in as admin.
 // If auth("admin", "main"), redirect to admin HOME page if not logged in as a main admin (even if logged in as staff admin).
 function auth($role, $adminLevel = null) {
-    if (!is_logged_in($role, $adminLevel)) {
-        // If authenticating user, redirect to user login page if not logged in as user.
-        if ($role == "user") {
-            temp('warn', 'You must log in first!');
-            temp('fromPage', $_SERVER['REQUEST_URI']); // this ensures that after user logs in, they'll be redirected back to this page. 
-            redirect('/pages/user/user-login.php');
+    // If authenticating user, redirect to user login page if not logged in as user.
+    if ($role == "user" && !is_logged_in("user")) {
+        temp('warn', 'You must log in first!');
+        temp('fromPage', $_SERVER['REQUEST_URI']); // this ensures that after user logs in, they'll be redirected back to this page. 
+        redirect('/pages/user/user-login.php');
+    }
+
+    if ($role == "admin") {
+        // If authenticating admin, redirect to admin login page if not logged in as admin.
+        if (!is_logged_in("admin")) {
+            temp('info', "You must log in first!");
+            redirect('/pages/admin/admin_login.php');
         }
-        else if ($role == "admin") {
-            // If authenticating admin without specifying what admin level, redirect to admin login page if not logged in as admin.
-            if (!$adminLevel) {
-                temp('info', "You must log in first!");
-                redirect('/pages/admin/admin_login.php');
-            }
-            // If authenticating a certain level of admin, only redirect to admin HOME page if the logged in admin isn't that specified level.
+
+        // Okay, an admin is logged in. 
+        // If $adminLevel is specified and the logged in admin is NOT that specified level, redirect to admin HOME page. Otherwise, do nothing.
+        if ($adminLevel && !is_logged_in("admin", $adminLevel)) {
             temp('info', "This page is only restricted to $adminLevel admins.");
             redirect('/pages/admin/admin_home.php');
         }
-        // Do nothing if $role is neither user nor admin
     }
+
+    // Do nothing if $role is neither user nor admin.
 }
 
 // TODO (low-priority, might as well just leave this as is)
