@@ -80,14 +80,14 @@
 
             <label>Price</label><br>
                 <div class="pricediv">
-                <div><input type="radio" value="desc" name="price" id="pricedesc" <?= $price=="desc"? "checked":"" ?>> <label for="pricedesc">Highest</label></div>
-                <div><input type="radio" value="asc" name="price" id="priceasc" <?= $price=="asc"? "checked":"" ?>> <label for="priceasc">Lowest</label></div>
+                <div><input class="radio" type="radio" value="desc" name="price" id="pricedesc" <?= $price=="desc"? "checked":"" ?>><label for="pricedesc">Highest</label></div>
+                <div><input class="radio" type="radio" value="asc" name="price" id="priceasc" <?= $price=="asc"? "checked":"" ?>><label for="priceasc">Lowest</label></div>
                 </div>
             
             <label>Status</label><br>
 
                 <div class="statusdiv">
-                    <div><input type="checkbox" name="status[]" id="all" <?= $showOnlyStatus=="'Pending', 'In Transit', 'Delivered'"? "checked":"" ?>> <label for="all" class="statuslabel all">All</label></div> 
+                    <div><input type="checkbox" name="status[]" id="all" <?= $showOnlyStatus=="'Pending', 'In Transit', 'Delivered'"? "checked":"" ?>><label for="all" class="statuslabel all">All</label></div> 
                     <div><input type="checkbox" name="status[]"  value="Delivered" id="delivered" <?= strpos($showOnlyStatus,"Delivered") ? "checked" : "" ?> ><label for="delivered" class="statuslabel delivered">Delivered</label></div>
                     <div><input type="checkbox" name="status[]" value="In Transit" id="intransit"<?= strpos($showOnlyStatus,"In Transit") ? "checked" : "" ?> ><label for="intransit" class="statuslabel intransit">In Transit</label></div>
                     <div><input type="checkbox" name="status[]"  value="Pending" id="pending" <?= strpos($showOnlyStatus,"Pending") ? "checked" : "" ?> ><label for="pending" class="statuslabel pending">Pending</label></div>
@@ -97,8 +97,8 @@
 
             <label>Date</label><br>
                 <div class="datediv">
-                <div><input type="radio" name="date" value="desc" id="latestDate" <?= $sort=="desc"? "checked":"" ?>> <label for="latestDate">Latest</label></div> 
-                <div><input type="radio" name="date" value="asc" id="oldestDate" <?= $sort=="asc"? "checked":"" ?>><label for="oldestDate">Oldest</label></div> 
+                <div><input class="radio" type="radio" name="date" value="desc" id="latestDate" <?= $sort=="desc"? "checked":"" ?>><label for="latestDate">Latest</label></div> 
+                <div><input class="radio" type="radio" name="date" value="asc" id="oldestDate" <?= $sort=="asc"? "checked":"" ?>><label for="oldestDate">Oldest</label></div> 
                 </div>
 
 

@@ -84,12 +84,9 @@ form {
                 display:inline-block;
                 text-align: center;
                 color: white;
+                user-select: none;
+                margin-left: 5px;
             }
-        }
-        input{
-            width: 15px;
-            height: 15px;
-            outline: none;
         }
     }
 
@@ -101,14 +98,13 @@ form {
         > div {
             margin-bottom: 10px;
             >label {
+                
                 display:inline-block;
                 text-align: center;
                 color: white;
+                user-select: none;
+                margin-left: 5px;
             }
-        }
-        input{
-            width: 15px;
-            height: 15px;
         }
     }
 
@@ -216,6 +212,37 @@ form {
         margin-left: 10px;
     }
 
+    .radio {
+        width: 17px;
+        height: 17px;
+        outline: none;
+        appearance: none;
+        border: 2px solid rgb(255, 255, 255);
+        border-radius: 100%;
+        position: relative;
+        transform: translateY(2px);
+    }
+
+    .radio::after{
+        content: "";
+        position:absolute;
+        top:50%;
+        left:50%;
+        width: 7px;
+        height: 7px;
+        border-radius: 100%;
+        transform: translate(-50%, -50%) scale(0);
+        transition: transform 0.3s ease;
+    }
+
+    .radio:checked::after{
+        width: 7px;
+        height: 7px;
+        background-color: rgb(255, 255, 255);;
+        border-radius: 100%;
+        transform: translate(-50%, -50%) scale(1);
+        transform-origin: center;
+    }
 }
 
 .orders-container {
