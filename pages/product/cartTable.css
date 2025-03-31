@@ -33,6 +33,24 @@
     right: 5%;
 }
 
+.paymentBtn button:hover{
+    position: absolute;
+    background: radial-gradient(circle 280px at 0% 0%, #fef601, #fd9801);
+    border: none;
+    margin-top: 10px;
+    font-size: 30px;
+    padding: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+    color: #032d14;
+    border-radius: 3px;
+    font-family: "Lucida Console", "Courier New", monospace;
+    box-shadow: 0 0 10px rgb(255, 200, 0);
+    bottom: 10%;
+    right: 5%;
+    cursor: pointer;
+}
+
 .sum{
     position: absolute;
     right:28%;

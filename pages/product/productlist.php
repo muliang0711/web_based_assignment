@@ -50,12 +50,14 @@ include '../../_head.php';
       <hr>
       <h>Price Sorting</h>
       <hr>
+      <div class="sorting" ?>
       <a onclick="onclick()" href="../product/productlist.php?price=asc">
         <p>Low to High</p>
       </a>
       <a onclick="onclick()" href="../product/productlist.php?price=desc">
         <p>High to Low</p>
       </a>
+      </div>
       <hr>
     </ul>
   </div>
