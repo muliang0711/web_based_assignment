@@ -14,11 +14,11 @@
     <li>
       <a href="/pages/admin/view_customer.php"><i class="fas fa-users"></i> Customer</a>
     </li>
-    <?php if(adminMain()):?>
+    <?php if(admin_is_level(adminLevel:"main")):?>
     <li>
       <a href="/pages/admin/admin_Management.php"><i class="fas fa-users"></i> Admin</a>
     </li>
-    <?php endif;?>
+    <?php endif?>
     <li>
       <a href="/pages/admin/product/admin_product.php"><i class="fas fa-boxes"></i> Products</a>
     </li>
