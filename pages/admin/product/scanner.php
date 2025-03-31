@@ -125,7 +125,7 @@
             const newQty = $("#newQty").val();
 
             $.ajax({
-                url: '/web_based_assignment/pages/admin/product/update-stock.php', // PROCESS FILE 
+                url: '/pages/admin/product/update-stock.php', // PROCESS FILE 
                 method: 'POST',
                 contentType: 'application/json',
                 data: JSON.stringify({
