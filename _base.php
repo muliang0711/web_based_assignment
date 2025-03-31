@@ -376,7 +376,7 @@ function auth($role, $adminLevel = null) {
     // If authenticating user, redirect to user login page if not logged in as user.
     if ($role == "user" && !is_logged_in("user")) {
         temp('warn', 'You must log in first!');
-        temp('fromPage', $_SERVER['REQUEST_URI']); // this ensures that after user logs in, they'll be redirected back to this page. 
+        temp('fromPage', $_SERVER['REQUEST_URI']); // this ensures that after user logs in, they'll be redirected back to the page where they came from. 
         redirect('/pages/user/user-login.php');
     }
 
