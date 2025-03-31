@@ -79,6 +79,30 @@ function redirect($url = null) {
     exit();
 }
 
+// Obtain uploaded file --> cast to object
+function get_file($key) {
+    $f = $_FILES[$key] ?? null;
+    
+    if ($f && $f['error'] == 0) {
+        return (object)$f;
+    }
+
+    return null;
+}
+
+// Crop, resize and save photo
+function save_photo($f, $folder, $width = 200, $height = 200) {
+    $photo = uniqid() . '.jpg';
+    
+    require_once 'lib/SimpleImage.php';
+    $img = new SimpleImage();
+    $img->fromFile($f->tmp_name)
+        ->thumbnail($width, $height)
+        ->toFile("$folder/$photo", 'image/jpeg');
+
+    return $photo;
+}
+
 
 // ============================================================================
 // HTML Helpers
@@ -278,6 +302,26 @@ if (is_logged_in("admin")) {
     // Reminder: admin's id column is a VARCHAR, therefore requires single quotes
     $_admin = $_db->query("SELECT * FROM `admin` WHERE id = '{$_SESSION['adminID']}'")->fetch();
 }
+
+// TODO: clean up
+function admin_level_is($adminLevel): bool {
+    global $admin;
+    return $admin->adminLevel === $adminLevel;
+}
+
+// TODO: clean up
+function auth_admin($adminLevel) {
+    if (!is_logged_in("admin")) {
+        return;
+    }
+
+    if (!admin_level_is($adminLevel)) {
+        temp('info', "This page is restricted for $adminLevel admins.");
+        redirect('/pages/admin/admin_home.php');
+    }
+}
+
+
 
 // TODO
 // Generate login prompt using temp()

@@ -2,6 +2,7 @@
 $stylesheetArray = ['product.css', 'cartTable.css'];
 $title = 'Product List';
 require '../../_base.php';
+include '../../_login_guard.php';
 
 function removeFromCart($productID, $sizeID, $userID): void {
     global $_db;
@@ -83,15 +84,16 @@ include '../../_head.php';
 
 <?php
 
-if (is_logged_in("user")) {
-    global $_db;
-    global $_user;
-    // Reminder: userID is a NUMBER, therefore does not require single quotes
-    $_user = $_db->query("SELECT * FROM user WHERE userID = {$_SESSION['userID']}")->fetch();
-}
-if(!$userID){
-    // redirect("http://localhost:8000/pages/user/user-login.php");
-}
+// if (is_logged_in("user")) {
+//     global $_db;
+//     global $_user;
+//     // Reminder: userID is a NUMBER, therefore does not require single quotes
+//     $_user = $_db->query("SELECT * FROM user WHERE userID = {$_SESSION['userID']}")->fetch();
+// }
+// // Note from lh: This if block has logic error!
+// if(!$userID){
+//     // redirect("http://localhost:8000/pages/user/user-login.php");
+// }
 
 
 

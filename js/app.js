@@ -2,7 +2,18 @@
 // General Functions
 // ============================================================================
 
+// Open and close popup
+function openPopup(activationTriggerElement) {
+    const targetPopupId = activationTriggerElement.dataset.popupId;
+    const $targetPopup = $('#' + targetPopupId);
 
+    $targetPopup.addClass("show");
+
+    // click event handler for closing popup
+    $targetPopup.find('.close-popup').on('click', e => {
+        $targetPopup.removeClass("show");
+    });
+}
 
 // ============================================================================
 // Page Load (jQuery)
@@ -51,6 +62,41 @@ $(() => {
         f.method = 'POST';
         f.action = url;
         f.submit();
+    });
+
+    // Also initiate POST request -- except this is the real deal, no GET requests in disguise ;)
+    // there's also an added functionality: you can define the id of the <form> created, so as to link to <input>s outside the <form> with the same form id
+    $('[data-real-post]').on('click', e => {
+        e.preventDefault();
+        const button = e.target.closest('button');
+        const url = button?.dataset.realPost;
+        if (!url) return;
+    
+        const [action, queryString] = url.split('?', 2);
+        const formId = button.dataset.formId;
+
+        const $form = $("<form>", {
+            method: "POST", 
+            action: action ?? null,
+            id: formId ?? null
+        });
+
+        if (queryString) {
+            const params = new URLSearchParams(queryString);
+            console.log(params);
+            params.forEach((value, key) => {
+                $("<input>", {
+                    type: "hidden",
+                    name: key,
+                    value: value
+                }).appendTo($form); 
+            });
+        }
+
+        $form.appendTo("body");
+
+        console.log($form);
+        $form.submit();
     });
     
 
@@ -165,5 +211,7 @@ $(() => {
             $('.cart-popup .content').removeClass('slide-down');
         });
     });
+
+    
     
 });
