@@ -13,6 +13,7 @@
     $orderID++;
 
     $details = $_SESSION['tempOrder'];
+    unset($_SESSION['tempOrder']);
     $items = $details->items;
 
     $stm = $_db->prepare("INSERT into orders(orderId, userId, orderDate, status, orderAddress, orderName, orderPhone, deliveryMethod, discount)

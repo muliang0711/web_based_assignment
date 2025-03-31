@@ -4,13 +4,10 @@
     $stylesheetArray  = ["orderDetails.css?"];
 
 
-    //getting session info;
-    $userId = $_SESSION['userID'] ?? '';
-    
-    //if userId not logged in then redirect to homepage
-    if(!is_logged_in("user")){
-        redirect("/");
-    }
+    include '../../_login_guard.php';
+    extract((array)$_user);
+   
+    $userId = $_user->userID;
 
     $orderId = $_GET["id"] ?? "";
 

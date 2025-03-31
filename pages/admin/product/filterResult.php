@@ -3,7 +3,7 @@ require_once "../../../_base.php";
 require_once "../../../controller/productController.php";
 $stylesheetArray = ['../../../css/main.css'];
 link_stylesheet($stylesheetArray);
-
+include '../../admin_login_guard.php';
 
 $filterResult = $_SESSION['filterResult'] ?? [];
 

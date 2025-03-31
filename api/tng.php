@@ -26,28 +26,29 @@
         }
 
         .container {
-            position: relative;
-            display: flex;
+            
             justify-content: center;
             align-items: center;
-            width: 600px;
-            height: 800px;
+            width: auto;
+            height: auto;
+            position: relative;
 
             >img:first-child{
-                scale: 1.5;
+                scale: 1;
             }
 
             >img:last-child{
                 position: absolute;
-                scale: 0.42;
-                bottom:-68px;
-                left:-32px;
+                left:56px;
+                bottom:46px;
+                transform: scale(0.28);
                 border-radius: 20px;
+                transform-origin: bottom left;
             }
         }
 
         .buttons {
-            width: 500px;
+            width: 20%;
             display: flex;
 
             >button:first-child{

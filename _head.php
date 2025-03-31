@@ -36,7 +36,7 @@ if (is_post()) {
     // Handle logout request
     $logout = post('logout');
     if ($logout) { // If $logout has a truthy value (e.g. non-empty string, non-null values)
-        logout();
+        logout('user');
         header('Location: /');
     }    
 }

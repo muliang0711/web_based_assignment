@@ -9,22 +9,27 @@ $(() => {
         let oid = this.dataset.orderId;
         location = "orderDetails.php?id=" + oid;
     })
-
-    $("#pricemin").on("input", function(e) {
-        $("#labelpricemin").text("Price (min) RM " + this.value);
-        $("#pricemax").attr({
-            min:+this.value
-        });
-    });
-
-
-    $("#pricemax").on("input", function(e) {
-        $("#labelpricemax").text("Price (max) RM " + this.value);
-
-    });
     
     $(".resetbutton").on('click', e => {
-        location = "order.php?pricemin=0&pricemax=10000&stat=&sort=desc";
+        location = "order.php?";
     });
+
+    //if the check all button is clicked then we need check all other checkboxes
+    $("#all").on('click', function(e){
+        const checkboxes = $("input[type='checkbox']");
+        if($(this).prop("checked")){
+            checkboxes.not($(this)).prop("checked", true);
+        }else{
+            checkboxes.prop("checked", false);
+        }
+
+    })
+
+    $("input[type='checkbox']").on('click', function(e){
+        let all = $("#all");
+        if($(this).prop("checked") == false){
+            all.prop("checked",false);
+        }
+    })
 
 })

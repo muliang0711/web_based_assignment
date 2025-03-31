@@ -28,6 +28,10 @@ main {
   font-size: 20px;
 }
 
+.sidebarFont p:hover{
+  color: rgb(0, 187, 255);
+}
+
 .sidebarFont p{
   cursor: pointer;
   color: white;
@@ -443,7 +447,7 @@ p{
       background-color: #e0544b;
     }
     
-    .product-card {
+.product-card {
   position: relative;
   overflow: hidden;
   transition: all 0.3s ease;
@@ -461,3 +465,4 @@ p{
   transform: translateY(0);
   opacity: 1;
 }
+

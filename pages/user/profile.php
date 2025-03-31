@@ -6,7 +6,7 @@ $title = 'Profile';
 $stylesheetArray = ['profile.css']; // Put CSS files that are specific to this page here. If you want to change the styling of the header and the footer, go to /css/app.cs
 $scriptArray = ['profilePic.js'];      // Put JS files that are specific to this page here. If you want to change the JavaScript for the header and the footer, go to /js/app.js
 
-include '../../_login_guard.php';
+auth("user");
 
 extract((array)$_user);
 // echo $bio;

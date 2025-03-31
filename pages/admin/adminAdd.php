@@ -6,7 +6,7 @@ require 'selection.php';
 $title = 'Add a new admin';
 $stylesheetArray = ['/css/admin_management.css',];   // 注意：这边只放特定于此页面的 .css file(s)。所有 admin 页面都会用到的 .css files 应放在 /css/admin.css
 require_once  "../admin/main.php";
-
+include '../../admin_login_guard.php';
 $scriptArray = ['/js/app.js'];       // 注意：这边只放特定于此页面的 .js file(s)。所有 admin 页面都会用到的 .js files 应放在 /js/admin.js
 
 // Functions to generate random id and password

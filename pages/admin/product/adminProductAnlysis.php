@@ -3,7 +3,7 @@
 require_once "../../../_base.php";
 include "../main.php";
 require_once "../../../db_connection.php";
-
+include '../../admin_login_guard.php';
 $stylesheetArray = ['../../../css/adminProductAnlysis.css'];
 link_stylesheet($stylesheetArray);
 ?>
