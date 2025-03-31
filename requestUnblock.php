@@ -3,51 +3,11 @@ require '../../_base.php';
 
 require 'selection.php';
 
-$title = 'Add a new admin';
+$title = 'Request Unblock';
 $stylesheetArray = ['/css/admin_management.css',];   // 注意：这边只放特定于此页面的 .css file(s)。所有 admin 页面都会用到的 .css files 应放在 /css/admin.css
 require_once  "../admin/main.php";
-include '../../admin_login_guard.php';
+
 $scriptArray = ['/js/app.js'];       // 注意：这边只放特定于此页面的 .js file(s)。所有 admin 页面都会用到的 .js files 应放在 /js/admin.js
-
-// Functions to generate random id and password
-function random_password()
-{
-    $n = rand(10, 15);
-
-    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    $randomPassword = '';
-
-    for ($i = 0; $i < $n; $i++) {
-        $index = random_int(0, strlen($characters) - 1);
-        $randomPassword .= $characters[$index];
-    }
-
-    return $randomPassword;
-}
-
-function random_id()
-{
-    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    $randomId = '';
-
-    for ($i = 0; $i < 6; $i++) {
-        $index = random_int(0, strlen($characters) - 1);
-        $randomId .= $characters[$index];
-    }
-
-    return $randomId;
-}
-
-// handle random id and password generation
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['generate'])) {
-    $_SESSION['id'] = random_id();
-    $_SESSION['password'] = random_password();
-    header("Location: " . $_SERVER['PHP_SELF']); // 刷新页面，避免重复提交
-    exit();
-}
-
-$id = $_SESSION['id'] ?? 'click to generate';
-$password = $_SESSION['password'] ?? 'click to generate';
 
 
 // Handle POST request
@@ -62,17 +22,6 @@ if (is_post()) {
         $_errors['id'] = 'Required';
     }
 
-    // NOTE BY COOKIE: no need for this else block; it does the same thing as the else if block.
-    // else { 
-
-    //     $stm = $_db->prepare("SELECT COUNT(*) FROM admin WHERE id = ?");
-    //     $stm->execute([$id]);
-
-    //     if($stm->fetchColumn() > 0)
-    //     {
-    //         $_errors['id'] = 'Duplicated';
-    //     }
-    // }  
 
     // Validate position
     if ($position == '') {

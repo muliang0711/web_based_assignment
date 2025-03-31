@@ -35,7 +35,8 @@ CREATE TABLE `admin` (
   `position` varchar(20) NOT NULL,
   `passwordHash` varchar(255) NOT NULL,
   `adminLevel` enum('main','staff') NOT NULL,
-  `status` enum('Active','Blocked') NOT NULL
+  `status` enum('Active','Blocked') NOT NULL,
+  `blockedStatus` varchar(10)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
