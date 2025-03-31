@@ -35,15 +35,32 @@
 
     //setting the filter
     //by default, show all status type and from newest order date to oldest
-    $showOnlyStatus = $_GET["stat"] ?? "";
-    $sort = $_GET["sort"] ?? "desc"; 
-    $pricemin = $_GET["pricemin"] ?? "0"; 
-    $pricemax = $_GET["pricemax"] ?? "10000"; 
-    
+    $showOnlyStatus = $_GET["status"] ?? "'Pending', 'In Transit', 'Delivered'";
+    $sort = $_GET["date"] ?? "desc"; 
+    $price = $_GET["price"] ?? "desc"; 
+
+    if(isset($_GET["date"])){
+        $sort = ($_GET["date"]=="desc" || $_GET["date"]=="asc") ? $_GET["date"] : "desc";
+    }
+
+    if(isset($_GET["price"])){
+        $sort = ($_GET["price"]=="desc" || $_GET["price"]=="asc") ? $_GET["price"] : "desc";
+    }
+
+    if(isset($_GET["status"])){
+        $showOnlyStatus = '"' . implode('", "', $_GET["status"]) . '"';
+        
+    }
     //fetching data
     try{
-        $orders = $_db->query("Select o.*, sum(oi.subtotal) as total_price from
-                                orders o JOIN order_items oi ON (o.orderId = oi.orderId) WHERE o.userId = $userId GROUP BY o.orderId HAVING total_price BETWEEN $pricemin AND $pricemax ORDER BY o.orderDate $sort;")->fetchAll();
+        $sql = "Select o.*, sum(oi.subtotal) as total_price from
+                                orders o JOIN order_items oi ON (o.orderId = oi.orderId) 
+                                WHERE o.userId = $userId AND o.status in ($showOnlyStatus)
+                                GROUP BY o.orderId ORDER BY o.orderDate $sort, total_price $price";
+        $orders = $_db->prepare($sql);
+
+       $orders->execute();
+        $orders = $orders->fetchAll();
 
     }
     catch (PDOException $e){
@@ -55,39 +72,45 @@
 ?>
 
 
-<h1>My Order</h1>
-
-<div id="filter-menu">
-        <form method="GET">
-            <label id="labelpricemin" for="pricemin">Price (min)  RM <?= $pricemin ?></label>
-            <input type="range" name="pricemin" min="0" max="10000" value="<?= $pricemin ?>" class="slider" id="pricemin" step='100'><br><br>
-            
-            <label id="labelpricemax" for="pricemax">Price (max)  RM <?= $pricemax ?></label>
-            <input type="range" name="pricemax" min="0" max="10000" value="<?= $pricemax ?>" class="slider" id="pricemax" step='100'><br><br>
-            
-            
-            <label for="Status">Status</label><br>
-            <select id='selectStatus' name="stat">
-                <option value="">All</option>
-                <option value="delivered" <?= $showOnlyStatus=="delivered" ? "selected" : "" ?> >Delivered</option>
-                <option value="intransit" <?= $showOnlyStatus=="intransit" ? "selected" : "" ?> >In Transit</option>
-                <option value="pending" <?= $showOnlyStatus=="pending" ? "selected" : "" ?> >Pending</option>
-            </select><br><br>
 
 
-            <label for="Date">Date</label><br>
-            <select id='selectDate' name="sort">
-                <option value="desc" <?= $sort=="desc" ? "selected" : "" ?> >Latest</option>
-                <option value="asc" <?= $sort=="asc" ? "selected" : "" ?> >Oldest</option>
-            </select><br><br>
+<ul class="filtermenu">
+    <form method="GET">
+            
+
+            <label>Price</label><br>
+                <div class="pricediv">
+                <div><input type="radio" value="desc" name="price" id="pricedesc" <?= $price=="desc"? "checked":"" ?>> <label for="pricedesc">Highest</label></div>
+                <div><input type="radio" value="asc" name="price" id="priceasc" <?= $price=="asc"? "checked":"" ?>> <label for="priceasc">Lowest</label></div>
+                </div>
+            
+            <label>Status</label><br>
+
+                <div class="statusdiv">
+                    <div><input type="checkbox" name="status[]" id="all" <?= $showOnlyStatus=="'Pending', 'In Transit', 'Delivered'"? "checked":"" ?>> <label for="all" class="statuslabel all">All</label></div> 
+                    <div><input type="checkbox" name="status[]"  value="Delivered" id="delivered" <?= strpos($showOnlyStatus,"Delivered") ? "checked" : "" ?> ><label for="delivered" class="statuslabel delivered">Delivered</label></div>
+                    <div><input type="checkbox" name="status[]" value="In Transit" id="intransit"<?= strpos($showOnlyStatus,"In Transit") ? "checked" : "" ?> ><label for="intransit" class="statuslabel intransit">In Transit</label></div>
+                    <div><input type="checkbox" name="status[]"  value="Pending" id="pending" <?= strpos($showOnlyStatus,"Pending") ? "checked" : "" ?> ><label for="pending" class="statuslabel pending">Pending</label></div>
+                </div>
+                
+
+
+            <label>Date</label><br>
+                <div class="datediv">
+                <div><input type="radio" name="date" value="desc" id="latestDate" <?= $sort=="desc"? "checked":"" ?>> <label for="latestDate">Latest</label></div> 
+                <div><input type="radio" name="date" value="asc" id="oldestDate" <?= $sort=="asc"? "checked":"" ?>><label for="oldestDate">Oldest</label></div> 
+                </div>
+
 
             <div id="form-button-container">
-                <button class = "resetbutton" type="reset">Reset</button>
-                <button type="submit">Filter</button>
+                <button class = "resetbutton" type="reset">Clear</button>
+                <button type="submit">Apply</button>
             </div>
             
-        </form>
-</div>
+    </form>
+</ul>
+
+<h1>My Order</h1>
 
 <div class="order-header">
         <span>Order ID</span>
@@ -104,22 +127,13 @@
 
         <?php
             if($o->status === "Pending"){
-                //if status parameter is set and if the parameter is not pending then skip
-                if(!empty($showOnlyStatus) and strtolower($showOnlyStatus) !== "pending")
-                    continue;
                 $index = 0;
             }
                 
             else if ($o->status === "In Transit"){
-                //if status parameter is set and if the parameter is not intransit then skip
-                if(!empty($showOnlyStatus) and strtolower($showOnlyStatus)!== "intransit")
-                    continue;
                 $index = 1;
             }
             else {
-                //if status parameter is set and if the parameter is not delivered then skip
-                if(!empty($showOnlyStatus) and strtolower($showOnlyStatus)!== "delivered")
-                    continue;
                 $index = 2;
             }
 

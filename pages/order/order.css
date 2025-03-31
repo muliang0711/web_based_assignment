@@ -34,45 +34,144 @@ h1 {
 }
 
 form {
-    >.slider {
-        -webkit-appearance: none;
-        appearance: none;
-        height: 10px;
-        width: 95%;
-        border-radius: 10px;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    padding-left: 20px;
 
-    }
 
-    >.slider:focus {
-        outline:none;
-    }
-
-    >.slider::-webkit-slider-thumb {
-        -webkit-appearance: none; 
-        appearance: none;
-        width: 18px; 
-        height: 18px; 
-        background: var(--barColor);
-        cursor: pointer; 
-        border-radius: 10px;
-    }
-
-    > select {
-        width: 95%;
-        height: 20px;
-        border: none;
-    }
-
-    > select:focus {
-        outline: none;
-    }
 
     > #form-button-container {
         display:flex;
         width: 95%;
-        justify-content: flex-end;
         gap: 5px;
+
+        >button {
+            border: 2px solid rgba(118, 118, 118, 0.485);
+            border-radius: 5px;
+            height: 30px;
+            width: 50%;
+            cursor: pointer;
+            font-weight: 600;
+            background: white;
+            color: var(--lessImportant);
+        }
+
+        >button:last-child{
+            margin-left: auto;
+            background: rgba(255, 130, 21, 1);
+            color: white;
+        }
     }
+
+    > label {
+        display: inline-block;
+        color: white;
+        text-align: center;
+        margin-top: 25px;
+        font-weight: bold;
+        margin-bottom: 16px;
+    }
+
+    
+    .pricediv{
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        > div {
+            margin-bottom: 10px;
+            >label {
+                display:inline-block;
+                text-align: center;
+                color: white;
+            }
+        }
+        input{
+            width: 15px;
+            height: 15px;
+            outline: none;
+        }
+    }
+
+
+    .datediv{
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        > div {
+            margin-bottom: 10px;
+            >label {
+                display:inline-block;
+                text-align: center;
+                color: white;
+            }
+        }
+        input{
+            width: 15px;
+            height: 15px;
+        }
+    }
+
+    .statusdiv{
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        > div {
+            margin-bottom: 10px;
+            >label {
+                display:inline-block;
+                text-align: center;
+            }
+        }
+
+        input{
+            width: 15px;
+            height: 15px;
+            outline: none;
+        }
+    }
+
+
+    .statuslabel.all{
+        padding: 2px 10px;
+        border: 2px solid rgb(48, 121, 255);
+        color: rgb(48, 121, 255);
+        background-color: rgba(48, 121, 255,0.2);
+        border-radius: 30px;
+        width: 70px;
+        margin-left: 10px;
+    }
+
+    .statuslabel.delivered{
+        padding: 2px 10px;
+        border: 2px solid rgb(51, 255, 10);
+        color:rgb(51, 255, 10);
+        background-color: rgba(51, 255, 10, 0.2);
+        border-radius: 30px;
+        min-width: 50px;
+        margin-left: 10px;
+    }
+
+    .statuslabel.intransit{
+        padding: 2px 10px;
+        border: 2px solid rgb(227, 16, 255);
+        color: rgb(227, 16, 255);
+        background-color: rgba(148, 16, 255,0.2);
+        border-radius: 30px;
+        min-width: 50px;
+        margin-left: 10px;
+    }
+
+    .statuslabel.pending{
+        padding: 2px 10px;
+        border: 2px solid rgb(255, 156, 8);
+        color:rgb(255, 156, 8);
+        background-color: rgba(255, 156, 8, 0.2);
+        border-radius: 30px;
+        min-width: 50px;
+        margin-left: 10px;
+    }
+
 }
 
 .orders-container {
@@ -121,31 +220,29 @@ form {
 }
 
 
-
-
-#filter-menu {
-    position: fixed;
-    left: 1130px;
-    top: 257px;
-    width: 200px;
-    height: 300px;
-    background: rgba(211, 210, 210, 0.747);
-    border-radius: 5px;
-
-    padding-left: 10px;
-    padding-top: 10px;
-
-    overflow:hidden;
-}
-
-
-
 .dropdown {
     height: 100%;
     border: none;
     background: transparent;
     cursor: pointer;
     padding-top: 10px;
+}
+
+
+
+main{
+    margin-left: 220px;
+}
+
+.filtermenu{
+    position: fixed;
+    left:0px;
+    height: calc(100vh - 80px - 80px);
+    width: 220px;
+    background-color: rgb(0, 0, 0);
+    
+    margin: 0;
+    padding: 0px 0px;
 }
 
 .order svg{
