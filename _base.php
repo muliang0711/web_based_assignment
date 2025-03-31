@@ -263,24 +263,6 @@ function logout() {
     session_destroy();
 }
 
-// Is logged in?
-function is_logged_in($role) {
-    validateRole($role);
-    
-    return $role === "user" ? isset($_SESSION['userID']) : isset($_SESSION['adminID']);
-}
-
-//password hashing
-function pwHash($pw){
-    return password_hash($pw, PASSWORD_DEFAULT);
-}
-
-
-//password matching
-function pwMatch($pw, $hashedpw){
-    return password_verify($pw, $hashedpw);
-}
-
 // global user object
 $_user;
 
@@ -303,29 +285,128 @@ if (is_logged_in("admin")) {
     $_admin = $_db->query("SELECT * FROM `admin` WHERE id = '{$_SESSION['adminID']}'")->fetch();
 }
 
-// TODO: clean up
-function admin_level_is($adminLevel): bool {
-    global $admin;
-    return $admin->adminLevel === $adminLevel;
+/**
+ * Check if a user(customer) / admin is logged in. 
+ * <br>If $role = "user", $adminLevel is ignored and this function returns true if a user (customer) is logged in.
+ * <br>If $role = "admin", $adminLevel = null, this function returns true if an admin (of any level) is logged in.
+ * <br>If $role = "admin", $adminLevel != null, this function returns true if an admin of the specified level is logged in. Throws an error if the specified $adminLevel is invalid.
+ * @param string $role This value can only be "user" or "admin".
+ * @param string $adminLevel If $role is "user", this parameter is ignored. If $role is "admin", this parameter can only be "main" or "staff".
+ * @return bool
+ * @throws \InvalidArgumentException
+ */
+function is_logged_in($role, $adminLevel = null): bool {
+    validateRole($role);
+
+    // Is logged in as customer?
+    if ($role == "user") {
+        return isset($_SESSION['userID']);
+    }
+    // Is logged in as admin?
+    else if ($role == "admin") {
+        // No adminID session variable set? Not logged in as an admin.
+        if (!isset($_SESSION['adminID'])) {
+            return false;
+        }
+
+        // If no adminLevel is specified, just return true as an admin (of any type) must be logged in at this point
+        if (!$adminLevel) {
+            return true;
+        }
+    
+        // Is the currently logged in admin a $adminLevel admin?
+        // 1. Get the enum set of `admin`.`adminLevel` as an array.
+        global $_db;
+        $levelsEnum = $_db->query('
+            SELECT COLUMN_TYPE 
+            FROM INFORMATION_SCHEMA.COLUMNS 
+            WHERE TABLE_NAME = "admin" 
+            AND COLUMN_NAME = "adminLevel";
+        ')->fetchColumn();
+        
+        $levelsArr = [];
+        if ($levelsEnum) {
+            // Find strings that match the pattern, and store matched text in $matches.
+            //   $matches[0] contains text that matched the full pattern, and $matches[1] contains text that matched the first captured parenthesized subpattern, and so on.
+            //   In this case, $matches[1] will contain text inside the parentheses of "enum( ... )", e.g. "'main', 'staff'".
+            preg_match("/^enum\((.*)\)$/", $levelsEnum, $matches);
+            // var_dump($matches);
+    
+            if (isset($matches[1])) {
+                // Convert the string ("'item1', 'item2'") into an array (['item1', 'item2']);
+                $levelsArr = str_getcsv($matches[1], ",", "'");
+            }
+            // var_dump($levels);
+        }
+    
+        // 2. Throw error if specified $adminLevel is not a valid adminLevel value.
+        global $_admin;
+        if (!in_array($adminLevel, $levelsArr)) {
+            throw new InvalidArgumentException("Invalid adminLevel value passed in the function `is_logged_in(\"admin\", \"$adminLevel\")`. According to the database, valid values are: " . json_encode($levelsArr) . ".");
+        }
+        
+        // 3. Is the currently logged in admin a $adminLevel admin?
+        return $_admin->adminLevel == $adminLevel;
+    }
+    // The specified $role is not user nor admin. Just return false. 
+    else {
+        return false;
+    }
 }
 
-// TODO: clean up
+// Testing the is_logged_in() function
+// var_dump(is_logged_in("user", "main"));
+
+//password hashing
+function pwHash($pw){
+    return password_hash($pw, PASSWORD_DEFAULT);
+}
+
+
+//password matching
+function pwMatch($pw, $hashedpw){
+    return password_verify($pw, $hashedpw);
+}
+
 function auth_admin($adminLevel) {
+    // Do nothing if an admin isn't logged in
     if (!is_logged_in("admin")) {
         return;
     }
 
-    if (!admin_level_is($adminLevel)) {
-        temp('info', "This page is restricted for $adminLevel admins.");
+    // If an admin is logged in, but not of the specified adminLevel, redirect them to the admin home page.
+    if (!is_logged_in("admin", $adminLevel)) {
+        temp('info', "This page is not accessible to $adminLevel admins.");
         redirect('/pages/admin/admin_home.php');
     }
 }
 
+// Authenticate user / admin
+// If auth("user"), redirect to user login page if not logged in as user.
+// If auth("admin"), redirect to admin login page if not logged in as admin.
+// If auth("admin", "main"), redirect to admin HOME page if not logged in as a main admin (even if logged in as staff admin).
+function auth($role, $adminLevel = null) {
+    if (!is_logged_in($role, $adminLevel)) {
+        if ($role == "user") {
+            temp('warn', 'You must log in first!');
+            temp('fromPage', $_SERVER['REQUEST_URI']); // this ensures that after user logs in, they'll be redirected back to this page. 
+            redirect('/pages/user/user-login.php');
+        }
+        else if ($role == "admin") {
+            if (!$adminLevel) {
+                temp('info', "You must log in first!");
+                redirect('/pages/admin/admin_login.php');
+            }
+            temp('info', "This page is only restricted to $adminLevel admins.");
+            redirect('/pages/admin/admin_home.php');
+        }
+        // Do nothing if $role is neither user nor admin
+    }
+}
 
-
-// TODO
-// Generate login prompt using temp()
-function prompt_login($customPrompt = null) {
+// TODO (low-priority, might as well just leave this as is)
+// Generate login prompt with a link to user login page
+function prompt_user_login($customPrompt = null) {
     $customPrompt ??= 'You are not logged in.';
     $customPrompt .= ' <a href="/pages/user/user-login.php?fromPage=' . urlencode($_SERVER['REQUEST_URI']) . '">Log in</a>';
     temp('warn', $customPrompt);
