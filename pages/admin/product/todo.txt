@@ -10,6 +10,7 @@
     // 8.2 when hover or click pop up a div for qr scanning 
 9. delete edit stock from the edit page ; ensure append stock can have more complex process (more validation)? 
 
+11. composer download ;
 <VirtualHost *:80>
     DocumentRoot "C:/code/Project/"
     ServerName myproject.local

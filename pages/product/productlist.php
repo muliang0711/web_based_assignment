@@ -50,17 +50,18 @@ include '../../_head.php';
       <hr>
       <h>Price Sorting</h>
       <hr>
-      <form method="get" action="../product/searchResult.php?price=LowToHigh">
-        <p>Low -> High</p>
-      </form>
-      <form method="get" action="../product/searchResult.php?price=HighToLow">
-        <p>High -> Low</p>
-      </form>
+      <a onclick="onclick()" href="../product/productlist.php?price=asc">
+        <p>Low to High</p>
+      </a>
+      <a onclick="onclick()" href="../product/productlist.php?price=desc">
+        <p>High to Low</p>
+      </a>
       <hr>
     </ul>
   </div>
 </div>
 
+<?php $order = isset($_GET['price']) && $_GET['price'] == 'desc' ? 'DESC' : 'ASC'; ?>
 
 <div class="main-container">
   <form method="get" action="../product/searchResult.php?search=?">
@@ -109,7 +110,7 @@ include '../../_head.php';
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
   ]);
 
-  $statement = $_db->prepare("SELECT * FROM product JOIN product_images USING (productID) WHERE image_type = 'product'");
+  $statement = $_db->prepare("SELECT * FROM product JOIN product_images USING (productID) WHERE image_type = 'product' ORDER BY price $order");
   $statement->execute([]);
   $productObjectArray = $statement->fetchAll();
   ?>

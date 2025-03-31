@@ -28,7 +28,7 @@ class ProductController{
             'addProduct'     => 'addProduct',
             'updateProduct'  => 'updateProduct',
             'deleteProduct'  => 'deleteProduct',
-            'filter'  => 'filterProducts',
+            'filter'         => 'filterProducts',
             'search'         => 'searchProduct',
             'updateStatus'   => 'updateStatus',
         ];

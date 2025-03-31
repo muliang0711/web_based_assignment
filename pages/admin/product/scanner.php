@@ -125,7 +125,7 @@
             const newQty = $("#newQty").val();
             console.log(scannedData);
             $.ajax({
-                url: '/web_based_assignment/pages/admin/product/update-stock.php', // PROCESS FILE 
+                url: 'https://wbproject.local/pages/admin/product/update-stock.php', // PROCESS FILE 
                 method: 'POST',
                 contentType: 'application/json',
                 data: JSON.stringify({
