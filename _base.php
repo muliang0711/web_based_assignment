@@ -419,7 +419,7 @@ function admin_is_level($adminLevel) {
     if (!$_admin) {
         return;
     }
-    // If an admin is logged in, return true if currently logged in admin is of the specified adminLevel, otherwise false.
+    // If an admin is logged in, return true if the currently logged in admin is of the specified adminLevel; otherwise return false.
     return $_admin->adminLevel == $adminLevel;
 }
 
