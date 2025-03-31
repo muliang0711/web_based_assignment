@@ -38,75 +38,7 @@ if (is_post()) {
     if ($logout) { // If $logout has a truthy value (e.g. non-empty string, non-null values)
         logout();
         header('Location: /');
-    }
-
-    // Handle minus/delete operations on the cart
-    $action = post('action');
-
-    if ($action) {
-        $productID = post('productID');
-        $sizeID = post('sizeID');
-        $userID = $_user->userID;
-    }
-
-    if ($action === 'minus') {
-        $selectStmt = $_db->prepare('SELECT quantity FROM cartitem WHERE productID = :productID AND sizeID = :sizeID AND userID = :userID');
-        $selectStmt->execute([
-            'productID' => $productID,
-            'sizeID' => $sizeID,
-            'userID' => $userID,
-        ]);
-        $oldQuantity = $selectStmt->fetchColumn();
-
-        if ($oldQuantity === 1) {
-            removeFromCart($productID, $sizeID, $userID);
-        } else {
-            $updateStmt = $_db->prepare('UPDATE cartitem SET quantity = quantity - 1 WHERE productID = :productID AND sizeID = :sizeID AND userID = :userID');
-            $updateStmt->execute([
-                'productID' => $productID,
-                'sizeID' => $sizeID,
-                'userID' => $userID,
-            ]);
-        }
-        
-        redirect("../product/cartPage.php");
-        // $updateStmt = $_db->prepare('UPDATE cartitem SET ')
-    } else if ($action === 'add') {
-     //   if ($stock > $cartQuantity) {
-        $updateStmt = $_db->prepare('UPDATE cartitem SET quantity = quantity + 1 WHERE productID = :productID AND sizeID = :sizeID AND userID = :userID');
-        $updateStmt->execute([
-            'productID' => $productID,
-            'sizeID' => $sizeID,
-            'userID' => $userID,
-        ]);
-        redirect("../product/cartPage.php");
-  /*      temp("info", "Added to cart Successfully!");
-      redirect("../product/productDetail.php?racket=$productObj->productID");
-    } else {
-      temp("error", "Stock unvailable! / Over limit!");
-      redirect("../product/productDetail.php?racket=$productObject->productID");
-    }*/
-    } else if ($action === 'delete') {
-        removeFromCart($productID, $sizeID, $userID);
-        redirect("../product/cartPage.php");
-    }
-    //redirect("../product/cartPage.php");
-}
-
-function removeFromCart($productID, $sizeID, $userID): void {
-    global $_db;
-    $deleteStmt = $_db->prepare('DELETE FROM cartitem WHERE productID = :productID AND sizeID = :sizeID AND userID = :userID');
-    $deleteStmt->execute([
-        'productID' => $productID,
-        'sizeID' => $sizeID,
-        'userID' => $userID,
-    ]);
-
-    if ($deleteStmt->rowCount() > 0) {
-        temp('info', "Successfully removed item from cart.");
-    } else {
-        temp('error', "Failed to remove item from cart.");
-    }
+    }    
 }
 ?>
 

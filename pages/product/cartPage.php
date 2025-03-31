@@ -2,6 +2,81 @@
 $stylesheetArray = ['product.css', 'cartTable.css'];
 $title = 'Product List';
 require '../../_base.php';
+
+function removeFromCart($productID, $sizeID, $userID): void {
+    global $_db;
+    $deleteStmt = $_db->prepare('DELETE FROM cartitem WHERE productID = :productID AND sizeID = :sizeID AND userID = :userID');
+    $deleteStmt->execute([
+        'productID' => $productID,
+        'sizeID' => $sizeID,
+        'userID' => $userID,
+    ]);
+
+    if ($deleteStmt->rowCount() > 0) {
+        temp('info', "Successfully removed item from cart.");
+    } else {
+        temp('error', "Failed to remove item from cart.");
+    }
+}
+
+if (is_post()) {
+    // Handle minus/add/delete operations on the cart
+    $actionGroup = post('actionGroup');
+    $action = post('action');
+
+    if (isset($actionGroup) && $actionGroup == 'cart') {
+
+        $productID = post('productID');
+        $sizeID = post('sizeID');
+        $userID = $_user->userID;
+        if ($action === 'minus') {
+            $selectStmt = $_db->prepare('SELECT quantity FROM cartitem WHERE productID = :productID AND sizeID = :sizeID AND userID = :userID');
+            $selectStmt->execute([
+                'productID' => $productID,
+                'sizeID' => $sizeID,
+                'userID' => $userID,
+            ]);
+            $oldQuantity = $selectStmt->fetchColumn();
+        
+            if ($oldQuantity === 1) {
+                removeFromCart($productID, $sizeID, $userID);
+            } else {
+                $updateStmt = $_db->prepare('UPDATE cartitem SET quantity = quantity - 1 WHERE productID = :productID AND sizeID = :sizeID AND userID = :userID');
+                $updateStmt->execute([
+                    'productID' => $productID,
+                    'sizeID' => $sizeID,
+                    'userID' => $userID,
+                ]);
+            }
+            
+            // $updateStmt = $_db->prepare('UPDATE cartitem SET ')
+        } else if ($action === 'add') {
+         //   if ($stock > $cartQuantity) {
+            $updateStmt = $_db->prepare('UPDATE cartitem SET quantity = quantity + 1 WHERE productID = :productID AND sizeID = :sizeID AND userID = :userID');
+            $updateStmt->execute([
+                'productID' => $productID,
+                'sizeID' => $sizeID,
+                'userID' => $userID,
+            ]);
+        /*      temp("info", "Added to cart Successfully!");
+          redirect("../product/productDetail.php?racket=$productObj->productID");
+        } else {
+          temp("error", "Stock unvailable! / Over limit!");
+          redirect("../product/productDetail.php?racket=$productObject->productID");
+        }*/
+        } else if ($action === 'delete') {
+            removeFromCart($productID, $sizeID, $userID);
+        }
+
+        redirect("../product/cartPage.php");
+    }
+    
+
+    
+
+}
+
+
 include '../../_head.php';
 ?>
 
@@ -16,6 +91,8 @@ if (is_logged_in("user")) {
 if(!$userID){
     // redirect("http://localhost:8000/pages/user/user-login.php");
 }
+
+
 
 
 ?>
@@ -60,6 +137,7 @@ if(!$userID){
                                         <!-- Minus button -->
                                         <td>
                                             <form method="POST">
+                                                <input type="hidden" name="actionGroup" value="cart"/> 
                                                 <input type="hidden" name="action" value="minus"/> 
                                                 <input type="hidden" name="productID" value="<?= $cartObject->productID ?>" />
                                                 <input type="hidden" name="sizeID" value="<?= $cartObject->sizeID ?>" />
@@ -73,6 +151,7 @@ if(!$userID){
                                         <!-- Add button -->
                                         <td>
                                             <form method="POST">
+                                                <input type="hidden" name="actionGroup" value="cart"/> 
                                                 <input type="hidden" name="action" value="add"/> 
                                                 <input type="hidden" name="productID" value="<?= $cartObject->productID ?>" />
                                                 <input type="hidden" name="sizeID" value="<?= $cartObject->sizeID ?>" />
@@ -82,6 +161,7 @@ if(!$userID){
                                         <!-- Delete button -->
                                         <td>
                                             <form method="POST">
+                                                <input type="hidden" name="actionGroup" value="cart"/> 
                                                 <input type="hidden" name="action" value="delete" />
                                                 <input type="hidden" name="productID" value="<?= $cartObject->productID ?>" />
                                                 <input type="hidden" name="sizeID" value="<?= $cartObject->sizeID ?>" />
