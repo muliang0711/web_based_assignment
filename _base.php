@@ -374,16 +374,19 @@ function pwMatch($pw, $hashedpw){
 // If auth("admin", "main"), redirect to admin HOME page if not logged in as a main admin (even if logged in as staff admin).
 function auth($role, $adminLevel = null) {
     if (!is_logged_in($role, $adminLevel)) {
+        // If authenticating user, redirect to user login page if not logged in as user.
         if ($role == "user") {
             temp('warn', 'You must log in first!');
             temp('fromPage', $_SERVER['REQUEST_URI']); // this ensures that after user logs in, they'll be redirected back to this page. 
             redirect('/pages/user/user-login.php');
         }
         else if ($role == "admin") {
+            // If authenticating admin without specifying what admin level, redirect to admin login page if not logged in as admin.
             if (!$adminLevel) {
                 temp('info', "You must log in first!");
                 redirect('/pages/admin/admin_login.php');
             }
+            // If authenticating a certain level of admin, only redirect to admin HOME page if the logged in admin isn't that specified level.
             temp('info', "This page is only restricted to $adminLevel admins.");
             redirect('/pages/admin/admin_home.php');
         }
