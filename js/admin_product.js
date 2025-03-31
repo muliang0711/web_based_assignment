@@ -86,6 +86,8 @@ $(document).ready(function() {
         deleteForm.submit(); // Submit the hidden form
       }
     });
+
+    
   
   });
   

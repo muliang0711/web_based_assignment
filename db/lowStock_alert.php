@@ -64,7 +64,7 @@ class CheckStock {
             $stock = $product->stock;
             $threshold = $product->low_stock_threshold;
 
-            $ownerEmail = 'puihy-wm24@student.tarc.edu.my'; // or load from DB/config
+            $ownerEmail = 'puihy-wm24@student.tarc.edu.my'; 
 
             $emailSent = $this->sendLowStockEmail($ownerEmail, $productName, $stock, $threshold);
 

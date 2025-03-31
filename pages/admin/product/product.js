@@ -1,9 +1,7 @@
 
-console.log("✅ product.js loaded!");
-
 
 $(document).ready(function () {
-    console.log("✅ product.js loaded!");
+    console.log("product.js loaded!");
     const $minInput = $('#minPrice');
     const $maxInput = $('#maxPrice');
     const $form = $('.filter-form');
