@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 31, 2025 at 01:33 PM
+-- Generation Time: Mar 31, 2025 at 01:38 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -258,8 +258,16 @@ CREATE TABLE `savedaddress` (
   `address` varchar(200) NOT NULL,
   `phoneNo` varchar(15) NOT NULL,
   `name` varchar(40) NOT NULL,
-  `defaultAdd` tinyint(1) NOT NULL DEFAULT 0
+  `defaultAdd` tinyint(1) NOT NULL DEFAULT 0,
+  `addressIndex` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `savedaddress`
+--
+
+INSERT INTO `savedaddress` (`userID`, `address`, `phoneNo`, `name`, `defaultAdd`, `addressIndex`) VALUES
+(1, 'PV18 RESIDENCE, JALAN LANGKAWI, 53000, Kuala Lumpur', '60126289399', 'Mr Wayne', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -369,7 +377,8 @@ ALTER TABLE `product_images`
 -- Indexes for table `savedaddress`
 --
 ALTER TABLE `savedaddress`
-  ADD PRIMARY KEY (`userID`,`address`);
+  ADD PRIMARY KEY (`addressIndex`),
+  ADD KEY `userID` (`userID`);
 
 --
 -- Indexes for table `series`
@@ -402,6 +411,12 @@ ALTER TABLE `orders`
 --
 ALTER TABLE `product_images`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT for table `savedaddress`
+--
+ALTER TABLE `savedaddress`
+  MODIFY `addressIndex` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `user`
