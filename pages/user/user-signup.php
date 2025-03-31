@@ -44,11 +44,13 @@ if (is_post()) {
     // }
 
     if (!$_errors) {
-        $stm = $_db->prepare('INSERT INTO user (username, email, password, memberStatus) VALUES(:username, :email, :password, :memberStatus)');
+        $passwordHash = pwHash($password);
+
+        $stm = $_db->prepare('INSERT INTO user (username, email, passwordHash, memberStatus) VALUES(:username, :email, :passwordHash, :memberStatus)');
         $stm->execute([
             ':username' => $username,
             ':email' => $email,
-            ':password' => $password,
+            ':passwordHash' => $passwordHash,
             ':memberStatus' => 'Inactive',
         ]);
 
