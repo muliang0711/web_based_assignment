@@ -34,9 +34,14 @@ if(is_get()){
     if(isset($_GET["edit"])){
         $indexToEdit = $_GET["edit"];
         //check if index belongs to user
-        $stm = $_db->prepare("SELECT addressIndex from savedaddress WHERE userID = ?");
-        $stm->execute([$userID]);
-        $indexArr = $stm->fetchAll(PDO::FETCH_COLUMN);
+        try{
+            $stm = $_db->prepare("SELECT addressIndex from savedaddress WHERE userID = ?");
+            $stm->execute([$userID]);
+            $indexArr = $stm->fetchAll(PDO::FETCH_COLUMN);
+        }catch(PDOException){
+            redirect("address.php");
+        }
+        
     
         if(!in_array($indexToEdit, $indexArr)){
             redirect("address.php");
