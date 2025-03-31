@@ -1,8 +1,8 @@
 <?php
-require_once "../../../db_connection.php";
+require_once __DIR__ . "/../../../db_connection.php";
 require_once "../../../controller/productController.php";
 require_once "../../../_base.php";
-include "../main.php";
+include __DIR__ . "/../main.php";
 // Include CSS
 $stylesheetArray = ['../../../css/admin_product.css'];
 link_stylesheet($stylesheetArray);
