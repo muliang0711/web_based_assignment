@@ -74,7 +74,7 @@ class productDb{
                     p.playerInfo,
                     ps.status,
                     ps.stock AS stock,
-                    SUM(ps.quantity) OVER (PARTITION BY p.productID) AS total_stock
+                    SUM(ps.stock) OVER (PARTITION BY p.productID) AS total_stock
                 FROM product p
                 LEFT JOIN productstock ps ON p.productID = ps.productID
                 LEFT JOIN series s ON p.seriesID = s.seriesID
@@ -166,7 +166,7 @@ class productDb{
             $sizeID = $productInformation['sizeId'];
             $seriesName = $productInformation['seriesName'];
             $price = $productInformation['price'];
-            $quantity = $productInformation['stock'];
+            $stock = $productInformation['stock'];
             $introduction = $productInformation['introduction'];
             $playerInfo = $productInformation['playerInfo'];
             
@@ -201,7 +201,7 @@ class productDb{
                     VALUES (?, ?, ?)
                     ON DUPLICATE KEY UPDATE stock = stock + VALUES(stock)";
             $stmt = $this->pdo->prepare($sql);
-            $stmt->execute([$productID, $sizeID, $quantity]);
+            $stmt->execute([$productID, $sizeID, $stock]);
 
             // inside this phase already call insertProductStock function
 
@@ -226,7 +226,7 @@ class productDb{
         $productName = $productInformation['productName'];
         $sizeID = $productInformation['sizeId'];
         $price = $productInformation['price'];
-        $quantity = $productInformation['stock']; 
+        $stock = $productInformation['stock']; 
         $introduction = $productInformation['introduction'];
         $playerInfo = $productInformation['playerInfo'];
 
@@ -251,7 +251,7 @@ class productDb{
             // Update productStock
             $sql = "UPDATE productstock SET stock = ? WHERE productID = ? AND sizeID = ?";
             $stmt = $this->pdo->prepare($sql);
-            $stmt->execute([$quantity , $productID , $sizeID]);
+            $stmt->execute([$stock , $productID , $sizeID]);
 
 
             // delete old IMAGE for all :
