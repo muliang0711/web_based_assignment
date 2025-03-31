@@ -1,427 +1,438 @@
 <?php
-
 require_once __DIR__ . "/../_base.php";
 require_once __DIR__ . "/../db_connection.php";
 require_once __DIR__ . "/../db/productDb.php";
 
-class ProductController{
+class ProductController
+{
+    private $productDb;
 
-    private $productDb ; 
-
-    public function __construct($_pdo){
+    public function __construct($_pdo)
+    {
         $this->productDb = new productDb($_pdo);
-        
     }
 
-    public function handleAction(){
-
+    public function handleAction()
+    {
         $action = $_POST['action'] ?? $_GET['action'] ?? null;
-
-
         if (!$action) {
-            $_SESSION['errors'] = 'No action specified';
-            return $this->redirectToAdmin();
+            $this->addErrorAndRedirect('No action specified.');
         }
-
 
         $allowedActions = [
-            'addProduct'     => 'addProduct',
-            'updateProduct'  => 'updateProduct',
-            'deleteProduct'  => 'deleteProduct',
-            'filter'         => 'filterProducts',
-            'search'         => 'searchProduct',
-            'updateStatus'   => 'updateStatus',
+            'addProduct'    => 'addProduct',
+            'updateProduct' => 'updateProduct',
+            'deleteProduct' => 'deleteProduct',
+            'filter'        => 'filterProducts',
+            'search'        => 'searchProduct',
+            'updateStatus'  => 'updateStatus',
         ];
 
-
-        if (array_key_exists($action, $allowedActions)) {
-            $method = $allowedActions[$action];
-            $this->$method(); 
-        } else {
-            $_SESSION['errors'] = 'Invalid action';
-            $this->redirectToAdmin();
+        if (!array_key_exists($action, $allowedActions)) {
+            $this->addErrorAndRedirect('Invalid action specified.');
         }
+
+        $method = $allowedActions[$action];
+        $this->$method();
     }
 
-    public function getProductByIDAndSize($productID , $sizeID){
-
-        $product = $this->productDb->getProductByIDAndSize($productID , $sizeID);
-        return $product ;
+    // ----------------------- Public  -----------------------
+    public function getProductByIDAndSize($productID, $sizeID)
+    {
+        return $this->productDb->getProductByIDAndSize($productID, $sizeID);
     }
 
-    public  function getAllProducts(){
-        return  $this->productDb->getAllProducts();
-    }
-    
-    public  function getAllSeriesID(){
-        return  $this->productDb->getSeriesID();
+    public function getAllProducts()
+    {
+        return $this->productDb->getAllProducts();
     }
 
-    public  function getAllProductID(){
-        return  $this->productDb->getProductID();
+    public function getAllSeriesID()
+    {
+        return $this->productDb->getSeriesID();
     }
 
+    public function getAllProductID()
+    {
+        return $this->productDb->getProductID();
+    }
 
+    // ----------------------- Private Controller Methods ------------------------------
+    private function filterProducts()
+    {
+        // Minimal validation logic for filter
+        $minPrice = isset($_POST['minPrice']) && $_POST['minPrice'] !== '' ? (float)$_POST['minPrice'] : null;
+        $maxPrice = isset($_POST['maxPrice']) && $_POST['maxPrice'] !== '' ? (float)$_POST['maxPrice'] : null;
 
-    //====================== All Private Function : 
+        // Price sanity check
+        if ($minPrice !== null && $maxPrice !== null && $minPrice > $maxPrice) {
+            $_SESSION['errors'] = ["Minimum price cannot exceed maximum price."];
+            header("Location: ../pages/admin/product/filterResult.php");
+            exit();
+        }
 
-    private function filterProducts() {
         $filters = [
             'productID' => $_POST['productID'] ?? null,
-            'priceMin' => isset($_POST['minPrice']) ? (float) $_POST['minPrice'] : null,
-            'priceMax' => isset($_POST['maxPrice']) ? (float) $_POST['maxPrice'] : null,
-            'seriesID' => $_POST['seriesID'] ?? null,
-            'sizeID' => $_POST['sizeID'] ?? null, 
+            'priceMin'  => $minPrice,
+            'priceMax'  => $maxPrice,
+            'seriesID'  => $_POST['seriesID'] ?? null,
+            'sizeID'    => $_POST['sizeID'] ?? null,
         ];
-        /* when process the data send from frontend , data will loke likes this : associative array:
-        [
-            "productName" => "Gaming Laptop",
-            "priceMin" => "50",
-            "priceMax" => "500",
-            "seriesID" => "S01"
-        ]
 
-        we use filters['variavblename'] to get sepcific value ：gaming laptop 
-
-        when the value is a array ? "productName" => ["Gaming Laptop","xd"]        filters['productName'] :
-            foreach($productName as name){
-                echo($name) /
-            }
-        */
-
-        $_SESSION['filterResult'] = $this->productDb->filterProduct($filters);
-        // what is the result look like ？ ： array of object 
-        // result = [ 
-        // (object) ["productName" => "Laptop", "price" => 1200] 
-        // (obkect) ["productName" => "gamming laptop , price => 100]
-        //  ]
-        // how we fetch data ?
-        // foreach($result as product ){
-        //  product->productName ; 
-        //  product->price ； 
-        //}
-
-    
-        header("Location: ../pages/admin/product/filterResult.php");
-        
-        exit();
-
+        try {
+            $_SESSION['filterResult'] = $this->productDb->filterProduct($filters);
+            header("Location: ../pages/admin/product/filterResult.php");
+            exit();
+        } catch (Exception $e) {
+            $this->addErrorAndRedirect("Error filtering products: " . $e->getMessage());
+        }
     }
 
-    private function addProduct() {
+    private function addProduct()
+    {
         $productInformation = [
-            'productId'   => $_POST['productId'] ?? null,
-            'productName' => $_POST['productName'] ?? null,
-            'seriesId'    => $_POST['seriesId'] ?? null,
-            'seriesName'  => $_POST['seriesName'] ?? null,
-            'sizeId'      => $_POST['sizeId'] ?? null,  
-            'stock'       => $_POST['stock'] ?? null,
-            'price'       => $_POST['price'] ?? null,
-            'playerInfo'  => $_POST['playerInfo'] ?? null, 
-            'introduction'=> $_POST['introduction'] ?? null, 
+            'productId'    => $_POST['productId'] ?? null,
+            'productName'  => $_POST['productName'] ?? null,
+            'seriesId'     => $_POST['seriesId'] ?? null,
+            'seriesName'   => $_POST['seriesName'] ?? null,
+            'sizeId'       => $_POST['sizeId'] ?? null,
+            'stock'        => $_POST['stock'] ?? null,
+            'price'        => $_POST['price'] ?? null,
+            'playerInfo'   => $_POST['playerInfo'] ?? null,
+            'introduction' => $_POST['introduction'] ?? null,
         ];
-    
+
+        // Validate user input
         $errors = $this->validation($productInformation);
-    
-        // Check if product ID already exists
-        $products = $this->getAllProducts();
-        foreach ($products as $product) {
-            if ($productInformation['productId'] == $product->productID && 
-                $productInformation['seriesId'] == $product->seriesID) {
-                $errors[] = "Product ID already exists.";
-                break;
-            }
-        }
-    
         if (!empty($errors)) {
             $_SESSION['Add_ErrorMsg'] = $errors;
             $this->redirectToAdmin();
         }
-        // ----------validatio  false return errors 
 
-    
+        // Check if productID & seriesID combination already exists
+        $products = $this->getAllProducts();
+        foreach ($products as $product) {
+            if (
+                $productInformation['productId'] == $product->productID &&
+                $productInformation['seriesId'] == $product->seriesID
+            ) {
+                $errors[] = "Product ID already exists with the same series.";
+                break;
+            }
+        }
+
+        if (!empty($errors)) {
+            $_SESSION['Add_ErrorMsg'] = $errors;
+            $this->redirectToAdmin();
+        }
+
         try {
             $this->productDb->beginTransaction();
 
-            // 1. Insert product into the database**
+            // 1. Insert product into the DB
             $result = $this->productDb->addProduct($productInformation);
-    
             if (!$result['success']) {
                 throw new Exception("Failed to add product: " . $result['error']);
             }
-    
-            // 2. Process images 
-            $uploadErrors = $this->processImages($_FILES['productImage'] ?? null, $_POST['productId'], "product");
-            if (!empty($uploadErrors)) {
-                throw new Exception(implode(", ", $uploadErrors));
+
+            // 2. Process images
+            $uploadErrors1 = $this->processImages($_FILES['productImage'] ?? null, $productInformation['productId'], "product");
+            if (!empty($uploadErrors1)) {
+                throw new Exception(implode(", ", $uploadErrors1));
             }
-    
-            $uploadErrors = $this->processImages($_FILES['playerImage'] ?? null, $_POST['productId'], "player");
-            if (!empty($uploadErrors)) {
-                throw new Exception(implode(", ", $uploadErrors));
+
+            $uploadErrors2 = $this->processImages($_FILES['playerImage'] ?? null, $productInformation['productId'], "player");
+            if (!empty($uploadErrors2)) {
+                throw new Exception(implode(", ", $uploadErrors2));
             }
-    
+
             $this->productDb->commitTransaction();
-    
+
             $_SESSION['Add_SuccessMsg'] = "Product '{$productInformation['productName']}' (ID: {$productInformation['productId']}) added successfully!";
         } catch (Exception $e) {
-
             $this->productDb->rollbackTransaction();
-    
             $_SESSION['Add_ErrorMsg'] = ["Error: " . $e->getMessage()];
         }
-    
+
         $this->redirectToAdmin();
     }
-    
-    private function updateProduct() {
+
+    private function updateProduct()
+    {
         $productInformation = [
-            'productId' => $_POST['productId'] ?? null,
-            'productName' => $_POST['productName'] ?? null,
-            'seriesId'    => $_POST['seriesId'] ?? null,
-            'seriesName'  => $_POST['seriesName'] ?? null,
-            'sizeId' => $_POST['sizeId'] ?? null,
-            'stock' => $_POST['stock'] ?? null,
-            'price' => $_POST['price'] ?? null, 
-            'introduction' => $_POST['introduction'] ?? null, 
-            'playerInfo'   => $_POST['playerInfo'] ?? null,           
+            'productId'    => $_POST['productId'] ?? null,
+            'productName'  => $_POST['productName'] ?? null,
+            'seriesId'     => $_POST['seriesId'] ?? null,
+            'seriesName'   => $_POST['seriesName'] ?? null,
+            'sizeId'       => $_POST['sizeId'] ?? null,
+            'stock'        => $_POST['stock'] ?? null,
+            'price'        => $_POST['price'] ?? null,
+            'introduction' => $_POST['introduction'] ?? null,
+            'playerInfo'   => $_POST['playerInfo'] ?? null,
         ];
-        //var_dump($productInformation);
-
-        // start validation : ----------------
-
-        $errors = [];
 
         $errors = $this->validation($productInformation);
-
-        if(!empty($errors)){
+        if (!empty($errors)) {
             $_SESSION['Update_ErrorMsg'] = $errors;
             $this->redirectToAdmin();
         }
-        
-        // end validation : --------------------------
 
-        try{
-        // start process image 
-
+        try {
             $this->productDb->beginTransaction();
 
+            // Update main product and stock
             $this->productDb->updateProducts($productInformation);
 
-            $uploadErrors = $this->processImages($_FILES['productImage'] ?? null, $_POST['productId'], "product");
-            if (!empty($uploadErrors)) {
-                throw new Exception(implode(", ", $uploadErrors));
-                }
-                
-            $uploadErrors = $this->processImages($_FILES['playerImage'] ?? null, $_POST['productId'], "player");
-            if (!empty($uploadErrors)) {
-                throw new Exception(implode(", ", $uploadErrors));
-                }
+            // Update images (and remove old ones). If no new images, no changes
+            $uploadErrors1 = $this->processImages($_FILES['productImage'] ?? null, $productInformation['productId'], "product");
+            if (!empty($uploadErrors1)) {
+                throw new Exception(implode(", ", $uploadErrors1));
+            }
+            $uploadErrors2 = $this->processImages($_FILES['playerImage'] ?? null, $productInformation['productId'], "player");
+            if (!empty($uploadErrors2)) {
+                throw new Exception(implode(", ", $uploadErrors2));
+            }
 
             $this->productDb->commitTransaction();
 
-            $_SESSION['Update_SuccessMsg'] = "Product '{$productInformation['productName']}' (ID: {$productInformation['productId']}) has been successfully updated!";
-
-        }catch(Exception $e){
+            $_SESSION['Update_SuccessMsg'] = "Product '{$productInformation['productName']}' (ID: {$productInformation['productId']}) updated successfully!";
+        } catch (Exception $e) {
             $this->productDb->rollbackTransaction();
-    
             $_SESSION['Update_ErrorMsg'] = ["Error: " . $e->getMessage()];
-        }   
+        }
 
-         $this->redirectToAdmin();
-
+        $this->redirectToAdmin();
     }
 
-    private function deleteProduct() {
-
+    private function deleteProduct()
+    {
         $productInformation = [
             'productId' => $_POST['productId'] ?? null,
-            'sizeId' => $_POST['sizeId'] ?? null,
-
+            'sizeId'    => $_POST['sizeId'] ?? null,
         ];
 
-        // $errors = [];
-        // $errors = $this->validation($productInformation);
-
-        if(!empty($errors)){
-            $_SESSION['Delete_ErrorMsg'] = $errors;
+        // Basic check. If you want more advanced checks, do them here.
+        if (empty($productInformation['productId']) || empty($productInformation['sizeId'])) {
+            $_SESSION['Delete_ErrorMsg'] = ["Product ID and Size ID are required for deletion."];
             $this->redirectToAdmin();
         }
 
-        // else the data is clean so we call out the sql service :
-        // save the sql result in variavble : 
         $result = $this->productDb->deleteProduct($productInformation);
 
-        // validate if the error happend : for debug issue 
-
-        if($result['success']){
-            // save the sccess msg and return :
-            $_SESSION['Delete_SuccessMsg'] = 'sucess delete';
-        }else{
-            // else return error msg : 
-            $_SESSION['Delete_ErrorMsg'] = ['Failed delete ' . $result['message']];
+        if ($result['success']) {
+            $_SESSION['Delete_SuccessMsg'] = $result['message'] ?? 'Successfully deleted.';
+        } else {
+            $_SESSION['Delete_ErrorMsg'] = ['Failed to delete: ' . $result['message']];
         }
         $this->redirectToAdmin();
     }
 
-    private function redirectToAdmin() {
+    private function searchProduct()
+    {
+        // Minimal check for search input
+        if (empty($_GET['searchText'])) {
+            $_SESSION['errors'] = ["Search text cannot be empty."];
+            header("Location: ../pages/admin/product/searchResult.php");
+            exit();
+        }
+
+        $searchText = $_GET['searchText'];
+
+        try {
+            $_SESSION['searchResult'] = $this->productDb->search($searchText);
+            $encoded = urlencode($searchText);
+            header("Location: ../pages/admin/product/searchResult.php?search=" . $encoded);
+            exit();
+        } catch (Exception $e) {
+            $this->addErrorAndRedirect("Error searching products: " . $e->getMessage());
+        }
+    }
+
+    private function updateStatus()
+    {
+        header('Content-Type: application/json');
+
+        $data = json_decode(file_get_contents('php://input'), true);
+        if (
+            !isset($data['productID'], $data['sizeID'], $data['status']) ||
+            !in_array($data['status'], ['onsales', 'notonsales'])
+        ) {
+            http_response_code(400);
+            echo json_encode(['error' => 'Invalid data for updateStatus.']);
+            exit();
+        }
+
+        try {
+            $result = $this->productDb->updateProductStatus($data['productID'], $data['sizeID'], $data['status']);
+            if ($result['success']) {
+                echo json_encode(['success' => true, 'message' => 'Status updated']);
+            } else {
+                http_response_code(500);
+                echo json_encode(['error' => 'Failed to update status']);
+            }
+            exit();
+        } catch (Exception $e) {
+            http_response_code(500);
+            echo json_encode(['error' => 'Exception updating status: ' . $e->getMessage()]);
+            exit();
+        }
+    }
+
+    // ----------------------- Validation & File Processing ----------------------------
+
+    private function validation($productInformation)
+    {
+        $errors = [];
+
+        // Validate productId
+        if (empty($productInformation['productId'])) {
+            $errors[] = "Product ID cannot be null!";
+        } elseif (strlen($productInformation['productId']) > 5) {
+            $errors[] = "Product ID cannot exceed 5 characters.";
+        }
+
+        // Validate productName
+        if (empty($productInformation['productName'])) {
+            $errors[] = "Product name cannot be null!";
+        } elseif (strlen($productInformation['productName']) > 100) {
+            $errors[] = "Product name cannot exceed 100 characters.";
+        }
+
+        // Validate seriesId
+        if (empty($productInformation['seriesId'])) {
+            $errors[] = "Series ID cannot be null!";
+        } elseif (strlen($productInformation['seriesId']) > 3) {
+            $errors[] = "Series ID cannot exceed 3 characters.";
+        }
+
+        // Validate seriesName
+        if (empty($productInformation['seriesName'])) {
+            $errors[] = "Series Name cannot be null!";
+        } elseif (strlen($productInformation['seriesName']) > 15) {
+            $errors[] = "Series Name cannot exceed 15 characters.";
+        }
+
+        // Validate price
+        if ($productInformation['price'] === '' || $productInformation['price'] === null) {
+            $errors[] = "Price must have a value!";
+        } elseif (!is_numeric($productInformation['price']) || (float)$productInformation['price'] < 0) {
+            $errors[] = "Price must be a non-negative number!";
+        }
+
+        // Validate stock
+        if ($productInformation['stock'] === '' || $productInformation['stock'] === null) {
+            $errors[] = "Stock must have a value!";
+        } elseif (!is_numeric($productInformation['stock']) || (int)$productInformation['stock'] < 0) {
+            $errors[] = "Stock must be a non-negative integer!";
+        }
+
+        // Validate sizeId
+        if (empty($productInformation['sizeId'])) {
+            $errors[] = "Size ID cannot be null!";
+        } elseif (strlen($productInformation['sizeId']) > 4) {
+            $errors[] = "Size ID cannot exceed 4 characters.";
+        }
+
+        // Optional: Validate introduction length
+        if (!empty($productInformation['introduction']) && strlen($productInformation['introduction']) > 2000) {
+            $errors[] = "Introduction cannot exceed 2000 characters.";
+        }
+
+        // Optional: Validate playerInfo length
+        if (!empty($productInformation['playerInfo']) && strlen($productInformation['playerInfo']) > 2000) {
+            $errors[] = "Player Info cannot exceed 2000 characters.";
+        }
+
+        return $errors;
+    }
+
+    private function processImages($files, $productId, $type)
+    {
+        if (!$files || empty($files['name'][0])) {
+            return []; // No file(s) uploaded
+        }
+
+        $uploadDir = realpath(__DIR__ . '/../File');
+        $allowedTypes = ["jpg", "jpeg", "png"];
+        $fileCount = count($files['name']);
+        $uploadErrors = [];
+
+        for ($i = 0; $i < $fileCount; $i++) {
+            // Catch standard PHP file upload errors
+            if ($files['error'][$i] !== UPLOAD_ERR_OK) {
+                $uploadErrors[] = $this->codeToMessage($files['error'][$i]);
+                continue;
+            }
+
+            $fileTmpPath = $files['tmp_name'][$i];
+            $fileName = $files['name'][$i];
+            $fileExt = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
+
+            if (!in_array($fileExt, $allowedTypes)) {
+                $uploadErrors[] = "Invalid file type '{$fileExt}' for {$fileName}. Allowed: jpg, jpeg, png.";
+                continue;
+            }
+
+            // Double-check it was uploaded via HTTP POST
+            if (!is_uploaded_file($fileTmpPath)) {
+                $uploadErrors[] = "Possible file upload attack detected for {$fileName}.";
+                continue;
+            }
+
+            $newFileName = "{$type}_{$productId}_" . time() . "." . $fileExt;
+            $targetPath = $uploadDir . '/' . $newFileName;
+
+            if (!move_uploaded_file($fileTmpPath, $targetPath)) {
+                $uploadErrors[] = "Failed to move uploaded file: {$fileName}";
+                continue;
+            }
+
+            // If all good, record in DB
+            try {
+                $this->productDb->addProductImage($productId, $newFileName, $type);
+            } catch (Exception $e) {
+                $uploadErrors[] = "Error storing image path in DB for {$fileName}: " . $e->getMessage();
+            }
+        }
+
+        return $uploadErrors;
+    }
+
+    private function codeToMessage($code)
+    {
+        switch ($code) {
+            case UPLOAD_ERR_INI_SIZE:
+            case UPLOAD_ERR_FORM_SIZE:
+                return "File is too large.";
+            case UPLOAD_ERR_PARTIAL:
+                return "File was only partially uploaded.";
+            case UPLOAD_ERR_NO_FILE:
+                return "No file was uploaded.";
+            case UPLOAD_ERR_NO_TMP_DIR:
+                return "Missing a temporary folder.";
+            case UPLOAD_ERR_CANT_WRITE:
+                return "Failed to write file to disk.";
+            case UPLOAD_ERR_EXTENSION:
+                return "File upload stopped by extension.";
+            default:
+                return "Unknown file upload error.";
+        }
+    }
+
+    private function redirectToAdmin()
+    {
         header('Location: ../pages/admin/product/admin_product.php');
         exit();
     }
 
-    private function validation($productInformation){
-        // Initialize an empty error array
-        $errors = [];
-        // validate product id 
-        if (empty($productInformation['productId'])) {
-            $errors[] = "ProductId cannot be null!";
-            // need to add on validation number cannot more than 5
-        }elseif (strlen($productInformation['productId']) > 5) {
-           $errors[] = " Product ID cannot exceed 5 characters.";
-       }
-        // Validate product name     
-        if (empty($productInformation['productName'])) {
-            $errors[] = "Product name cannot be null!";
-        }
-    
-        // Validate series ID
-        if (empty($productInformation['seriesId'])) {
-            $errors[] = "Series ID cannot be null!";
-        // need to add on validation number cannot more than 3
-        }elseif (strlen($productInformation['seriesId']) > 3) {
-           $errors[] = " Series ID cannot exceed 3 characters.";
-       }
-        //need to add on one : seriesName 
-        if (empty($productInformation['seriesName'])) {
-        $errors[] = "SeriesName cannot be null!";
-        // need to add on validation number cannot more than 15 
-        }elseif (strlen($productInformation['seriesName']) > 15) {
-           $errors[] = "Series Name cannot exceed 15 characters.";
-       }
-    
-        // Validate price
-        if (!isset($productInformation['price']) || $productInformation['price'] === '') {
-            $errors[] = "Price must have a value!";
-        } elseif (!is_numeric($productInformation['price'])) {
-            $errors[] = "Price must be a number!";
-        }
-    
-        // Validate stock
-        if (!isset($productInformation['stock']) || $productInformation['stock'] === '') {
-            $errors[] = "Stock must have a value!";
-        } elseif (!is_numeric($productInformation['stock'])) {
-            $errors[] = "Stock must be a number!";
-        }
-
-        // Validate size ID
-        if (empty($productInformation['sizeId'])) {
-           $errors[] = " sizeID cannot be null!";
-        // need to add on validation number cannot more than 3
-        }elseif (strlen($productInformation['sizeId']) > 4) {
-           $errors[] = " Size ID cannot exceed 4 characters.";
-       }
-       return $errors ;
+    private function addErrorAndRedirect($msg)
+    {
+        $_SESSION['errors'] = [$msg];
+        $this->redirectToAdmin();
     }
-
-    private function processImages($files, $productId, $type) {
-        if (!$files || empty($files['name'][0])) {
-            return []; // No file uploaded
-        }
-        $uploadDir = realpath(__DIR__ . '/../File');
-
-        $allowedTypes = ["jpg", "jpeg", "png"];
-    
-        // Validate and move each file
-        $fileCount = count($files['name']);
-        for ($i = 0; $i < $fileCount; $i++) {
-            $fileTmpPath = $files['tmp_name'][$i];
-            $fileName = $files['name'][$i];
-            $fileExt = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
-    
-            // Check if file type is valid
-            if (!in_array($fileExt, $allowedTypes)) {
-                return ["Invalid file type '{$fileExt}' detected. Allowed: jpg, jpeg, png. Upload aborted."];
-            }
-    
-            // Ensure file exists before moving
-            if (!file_exists($fileTmpPath)) {
-                return ["Error: Temporary file does not exist: {$fileName}"];
-            }
-    
-            $newFileName = "$type"  .  "_"  . "$productId"  .  "_"  .time()  .  "."  ."$fileExt";
-            $targetPath = $uploadDir . '/' . $newFileName;
-    
-            if (!move_uploaded_file($fileTmpPath, $targetPath)) {
-                return ["Failed to move uploaded file: {$fileName}"];
-            }
-    
-            // Save image to database
-            $this->productDb->addProductImage($productId, $newFileName , $type);
-        }
-    
-        return []; // No errors
-    }
-
-    private function searchProduct(){
-
-        // 1. fetch data : 
-        $searchText = $_GET['searchText'];
-
-        // 2. validation : future 
-
-        // 3. call db service :
-        // 3.1 save result in session variable : 
-
-        $_SESSION['searchResult'] = $this->productDb->search($searchText);
-        // encode 
-        $searchText = urlencode($searchText); 
-
-        // 3. direct to result page : 
-        header("Location: ../pages/admin/product/searchResult.php?search=" . $searchText );
-        exit();
-
-    }
-
-    private function updateStatus(){
-
-        header('Content-Type: application/json');
-
-
-        // FETCH DATA ： 
-        $data = json_decode(file_get_contents('php://input'), true);
-
-        // VALIDATION : 
-        if (!isset($data['productID'], $data['sizeID'], $data['status']) || 
-            !in_array($data['status'], ['onsales', 'notonsales'])) {
-            http_response_code(400);
-            echo json_encode(['error' => 'Invalid data']);
-            exit();
-        }
-        
-        $productID = $data['productID'];
-        $sizeID = $data['sizeID'];
-        $status = $data['status'];
-        
-        
-        $result = $this->productDb->updateProductStatus($productID, $sizeID, $status);
-
-        if ($result['success']) {
-            
-            echo json_encode(['success' => true, 'message' => 'Status updated']);
-            exit();
-
-        } else {
-            http_response_code(500);
-            echo json_encode(['error' => 'Failed to update status']);
-        }
-        exit();
-    }
-
-//====================================================================================
 }
+
 $productController = new ProductController($_db);
 if (isset($_GET['action']) || isset($_POST['action'])) {
     $productController->handleAction();
 }
-
-?>
