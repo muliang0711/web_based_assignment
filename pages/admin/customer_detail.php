@@ -6,6 +6,7 @@ $stylesheetArray = ['/css/admin_customer_detail.css','/css/admin_customer.css'];
 $scriptArray = ['/js/app.js', '/js/admin.js'];
 
 require_once  "../admin/main.php";
+include '../../admin_login_guard.php';
 ?>
 
 <?php

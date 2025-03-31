@@ -1,7 +1,7 @@
 <?php
 require_once "../../../db_connection.php";
 require_once "../../../controller/productController.php";
-
+include '../../admin_login_guard.php';
 $productID = $_GET['productID'] ?? '';
 $sizeID = $_GET['sizeID'] ?? '';
 
