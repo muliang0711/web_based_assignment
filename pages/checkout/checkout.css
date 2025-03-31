@@ -9,26 +9,49 @@
     --pending : rgba(255,177,0,1);
 }
 
-main {
-    padding: 35px;
-    background-color: rgb(218, 218, 218);
+body {
+    overflow-x: hidden;
+    width: 100vw;
 }
 
-
-.container {
-    height: auto;
+main {
+    padding-left: 35px;
+    background-color: rgb(218, 218, 218);
     width: 100%;
-    min-width: 900px;
-    max-width: 1500px;
+}
 
+.giant-container{
+    width: 1050px;
+    display: flex;
+}
+.container {
+    align-self: flex-start;
+    height: auto;
+    width: 600px;
+    max-width: 800px;
     display: grid;
-    grid-template-columns: 1fr 0.4fr;
-    grid-template-rows: 0.6fr 0.2fr 0.1fr;
+    grid-template-columns: 1fr;
+    grid-template-rows: 0.6fr 0.2fr;
     grid-template-areas: 
     "address ordersum"
     "method buttons";
     gap: 20px;
 
+    >div {
+        padding: 5px 15px;
+        border-radius: 10px;
+    }
+}
+
+.container2 {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 0.3fr ;
+    grid-template-areas: 
+    "ordersum"
+    "buttons";
+    gap: 20px;
+    padding-left: 20px;
     >div {
         padding: 5px 15px;
         border-radius: 10px;
@@ -41,10 +64,10 @@ main {
 
 
 .payment-methods {
-    background: transparent;
+    background: var(--divColor);
     grid-area: method;
 
-    min-width: 600px;
+    width: 100%;
     height: 200px;
     gap: 20px;
     
@@ -63,15 +86,18 @@ main {
     > div {
         height: 100px;
         width: 100%;
-        background-color: var(--divColor);
+        background-color: rgb(218, 218, 218);
         border-radius: 10px;
         cursor: pointer;
+        padding: 10px;
+        font-weight: 600;
+        color: var(--seclessImportant)
     }
 
     >.border {
-        width: calc(100%/3 - 7px);
+        width: calc(100%/2 - 5px);
         position: absolute;
-        border: 3px solid rgba(68, 186, 255, 0.801);
+        border: 5px solid rgba(68, 186, 255, 0.801);
         background: transparent;
         transition: 0.3s ease;
         left: 0;
@@ -87,41 +113,268 @@ main {
     background-color: var(--divColor);
     grid-area: ordersum;
 
-    min-width: 400px;
-    min-height: 300px;
-    max-height: 600px;
+    width: 100%;
+}
+
+.subtotal, .shipping-fee, .discount, .voucher{
+    display: flex;
+
+    > span:first-child {
+        color: var(--lessImportant);
+        font-weight: 500;
+        font-size: 15px;
+    }
+
+    > span:last-child {
+        margin-left: auto;
+        color: var(--lessImportant);
+        font-weight: 500;
+        font-size: 15px;
+    }
+}
+
+.voucher {
+    >span {
+        margin-top: auto;
+    }
+    > input {
+        margin-top: 15px;
+        height: 30px;
+        width: 120px;
+        margin-left: auto;
+
+        border-radius: 2px;
+        border: none;
+        border-bottom: 3px solid var(--lessImportant);
+        background-color: transparent;
+        outline: none;
+
+        font-weight: 1000;
+        color: var(--lessImportant);
+        text-align: center;
+    }
+
+    > button {
+        color: var(--lessImportant);
+        margin-left: 5px;
+        margin-top: auto;
+        border-radius: 5px;
+        border: 3px solid var(--lessImportant);
+        height: 30px;
+        width: 50px;
+        cursor: pointer;
+       
+    }
+}
+
+.subtotal {
+    > span:first-child {
+        color: var(--seclessImportant);
+        font-weight: 500;
+        font-size: 15px;
+    }
+}
+
+.shipping-fee {
+    margin-bottom: 10px;
 }
 
 
+.total {
+    display: flex;
 
+    > span:first-child {
+        align-content: center;
+        color: black;
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    > span:last-child {
+        margin-left: auto;
+        color: black;
+        font-weight: 500;
+        font-size: 26px;
+    }
+}
+
+
+.item {
+    display: grid;
+    margin-bottom: 10px;
+    grid-template-columns: 70px auto 50px 120px;
+    grid-template-rows: 0.3fr 0.1fr;
+
+    > img {
+        grid-row: span 2;
+        border-radius: 5px;
+        width: 70px;
+        height: 100px;
+    }
+
+    > span:nth-child(-n+4){
+        margin-top: 10px;
+    }
+
+    .product-name {
+        padding-right: 10px;
+        color: var(--seclessImportant);
+        font-weight: 500;
+        font-size: 18px;
+    }
+
+    .product-quantity {
+        color: var(--lessImportant);
+        font-weight: 400;
+        font-size: 15px;
+    }
+
+    .product-subtotal {
+        margin-left: auto;
+        color: var(--lessImportant);
+        font-weight: 500;
+        font-size: 15px;
+    }
+
+    .product-variation {
+        color: var(--lessImportant);
+        font-weight: 400;
+        font-size: 15px;
+    }
+}
 
 
 .shipping-address {
-    background-color: var(--divColor);
+    background: var(--divColor);
     grid-area: address;
 
-    min-width: 400px;
+    width: inherit;
     min-height: 300px;
-    height: 500px;
+    height: auto;
 
 
 }
 
+.sliderContainer {
+    display: flex;
+    justify-content: center;
 
-.savedAddress {
-    border:2px solid red;
-    width: 100%;
-    height: 100px;
+
+    > button {
+        background: transparent;
+        display: block;
+        height:auto;
+        font-size: 30px;
+        align-self: center;
+        z-index: 111;
+        visibility: hidden;
+        border:none;
+        cursor: pointer;
+    }
+}
+
+.viewbox{
+    width: 80%;
+    height: 150px;
+    overflow: hidden;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.addressSlider {
+    display: flex;
+    width: 80%;
+    height: 150px;
+    gap: 10px;
+}
+
+.card {
+    position: relative;
+    border-radius: 10px;
+    background-color: rgb(218, 218, 218);
+    width: 61.2%;
+    height: 100%;
+    flex-shrink: 0;
+    user-select: none;
+    cursor: pointer;
+    padding: 10px;
+    overflow: hidden;
+}
+
+.card.selected:not(:last-child)::after {
+    content:"";
+    position: absolute;
+    top:0;
+    left:0;
+    width: 96%;
+    height: 94%;
+    border-radius: 10px;
+    border: 5px solid rgba(68, 186, 255, 0.801);
+}
+
+.card:last-child{
+    cursor: default;
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    >button{
+        background: transparent;
+        border:none;
+        cursor: pointer;
+    }
+    >span {
+        font-weight: 600;
+        color: var(--lessImportant);
+    }
+
 }
 
 
+.name {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--seclessImportant);
+}
+
+.phone {
+    font-weight: 600;
+    color: var(--seclessImportant);
+}
+
+.address {
+    font-weight: 600;
+    color: var(--lessImportant);
+}
 
 .buttons {
     background-color: var(--divColor);
     grid-area: buttons;
-
-
+    display: flex;
     min-width: 400px;
     height: 50px;
+    background: transparent;
+    justify-content: flex-end;
+
+    > button {
+        width: 200px;
+        border-radius: 10px;
+        border: 2px solid rgba(255, 130, 21, 1);;
+        cursor: pointer;
+        transform: translateX(10%);
+        background: rgba(255, 130, 21, 1);
+        color: rgb(233, 233, 233);;
+        font-weight: bold;
+        font-size: 15px;
+        transition: 0.4s ease;
+        
+    }
+    
+    > button:hover{
+        background:rgb(214, 111, 21);
+    }
 
 }
+

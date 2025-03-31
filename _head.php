@@ -1,5 +1,36 @@
 <?php
 require_once __DIR__  . "/_base.php";
+/*
+if (is_logged_in("user")) {
+    global $_db;
+    global $_user;
+    // Reminder: userID is a NUMBER, therefore does not require single quotes
+    $_user = $_db->query("SELECT * FROM user WHERE userID = {$_SESSION['userID']}")->fetch();
+}
+
+$userID = $_user->userID;
+$statement = $_db->prepare('SELECT * FROM cartitem WHERE userID = ?');
+$statement->execute([$userID]);
+$cartItemArray = $statement->fetch();
+$stock = $cartItemArray->stock;
+$cartQuantity = $cartItemArray->quantity;
+*/
+
+if (is_logged_in("user")) {
+    global $_db;
+    global $_user;
+    // Reminder: userID is a NUMBER, therefore does not require single quotes
+    $_user = $_db->query("SELECT * FROM user WHERE userID = {$_SESSION['userID']}")->fetch();
+    $userID = $_user->userID;
+}else{
+    $userID = null;
+}
+
+$stm = $_db->prepare('SELECT SUM(quantity) AS total FROM cartitem WHERE userID = ?');
+$stm->execute([$userID]);
+$total = $stm->fetch();
+$totalItem = $total->total;
+
 // echo $_SERVER['REQUEST_URI']; // this line was for debugging.
 if (is_post()) {
     // Handle logout request
@@ -37,17 +68,29 @@ if (is_post()) {
                 'userID' => $userID,
             ]);
         }
+        
+        redirect("../product/cartPage.php");
         // $updateStmt = $_db->prepare('UPDATE cartitem SET ')
     } else if ($action === 'add') {
+     //   if ($stock > $cartQuantity) {
         $updateStmt = $_db->prepare('UPDATE cartitem SET quantity = quantity + 1 WHERE productID = :productID AND sizeID = :sizeID AND userID = :userID');
         $updateStmt->execute([
             'productID' => $productID,
             'sizeID' => $sizeID,
             'userID' => $userID,
         ]);
+        redirect("../product/cartPage.php");
+  /*      temp("info", "Added to cart Successfully!");
+      redirect("../product/productDetail.php?racket=$productObj->productID");
+    } else {
+      temp("error", "Stock unvailable! / Over limit!");
+      redirect("../product/productDetail.php?racket=$productObject->productID");
+    }*/
     } else if ($action === 'delete') {
         removeFromCart($productID, $sizeID, $userID);
+        redirect("../product/cartPage.php");
     }
+    //redirect("../product/cartPage.php");
 }
 
 function removeFromCart($productID, $sizeID, $userID): void {
@@ -92,8 +135,11 @@ function removeFromCart($productID, $sizeID, $userID): void {
             <?php if (is_logged_in("user")): ?>
 
                 <div class="cart-btn">
+                    <a onclick="onclick()" href="/pages/product/cartPage.php" ?>
                     <img src="/assets/img/icon-cart.png" alt="Cart" title="Cart" />
-                </div>
+                    <div class="itemCount"><?php echo $totalItem ?></div>
+            </a>
+                </div> 
 
                 <div class="account dropdown">
                     <div class="dropdown-label">
@@ -131,19 +177,19 @@ function removeFromCart($productID, $sizeID, $userID): void {
                         </div>
                     </div>
                 </div>
-
+<!--
                 <div class="cart-popup">
                     <div class="content">
                         <span class="close-popup">&times;</span>
                         <h2>Shopping Cart</h2>
-
-                        <?php
+                                    -->
+                       <?php 
                         $userID = $_user->userID;
                         $statement = $_db->prepare('SELECT * FROM cartitem JOIN product USING (productID) WHERE userID = ?');
                         $statement->execute([$userID]);
                         $cartItemArray = $statement->fetchAll();
                         ?>
-                        <?php if ($cartItemArray): ?>
+                        <?php /*if ($cartItemArray): ?>
                             <?php $status = 0 ?>
 
                             <table>
@@ -216,8 +262,8 @@ function removeFromCart($productID, $sizeID, $userID): void {
 
                         <?php endif ?>
                     </div>
-                </div>
-
+                </div> */ ?>
+                        
             <?php else: ?>
 
                 <a href="/pages/user/user-login.php">Log in</a>

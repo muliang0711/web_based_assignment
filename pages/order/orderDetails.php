@@ -32,8 +32,10 @@
             redirect("/pages/order/order.php");
         }
 
-        $orderItems = $_db->prepare("SELECT oi.*, p.productName as name, p.productImg as img FROM order_items oi JOIN product p
-                                    ON (oi.productId = p.productID) WHERE orderId=?");
+        $orderItems = $_db->prepare("SELECT oi.*, p.productName as name, pi.image_path as img FROM order_items oi JOIN product p
+                                    ON (oi.productId = p.productID) 
+                                    JOIN product_images pi ON (p.productID = pi.productID)
+                                    WHERE orderId=? AND pi.image_type = 'product' ");
         $orderItems->execute([$orderId]);
         $orderItems = $orderItems->fetchAll();
     }

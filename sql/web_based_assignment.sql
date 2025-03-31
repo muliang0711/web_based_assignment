@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 28, 2025 at 07:43 AM
+-- Generation Time: Mar 31, 2025 at 08:40 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -68,11 +68,6 @@ CREATE TABLE `cartitem` (
 --
 
 INSERT INTO `cartitem` (`userID`, `productID`, `sizeID`, `quantity`) VALUES
-(1, 'R0001', '3UG5', 2),
-(1, 'R0002', '3UG5', 5),
-(1, 'R0003', '3UG5', 1),
-(1, 'R0004', '3UG5', 1),
-(1, 'R0005', '3UG5', 4),
 (2, 'R0001', '4UG5', 2),
 (2, 'R0002', '4UG5', 3),
 (2, 'R0003', '4UG5', 3),
@@ -92,6 +87,8 @@ CREATE TABLE `orders` (
   `orderDate` date NOT NULL,
   `status` varchar(10) NOT NULL,
   `orderAddress` varchar(150) NOT NULL,
+  `orderName` varchar(40) NOT NULL,
+  `orderPhone` varchar(15) NOT NULL,
   `deliveryMethod` varchar(20) NOT NULL,
   `deliveredDate` date DEFAULT NULL,
   `tracking` int(30) DEFAULT NULL,
@@ -102,13 +99,15 @@ CREATE TABLE `orders` (
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`orderId`, `userId`, `orderDate`, `status`, `orderAddress`, `deliveryMethod`, `deliveredDate`, `tracking`, `discount`) VALUES
-(12345, 1, '2024-10-25', 'Pending', '2 Jalan Port Dickson Langkawi, 72010, Kuala Lumpur', 'Standard', NULL, NULL, 0.00),
-(12346, 2, '2024-11-02', 'In Transit', '88, Lorong Bukit Jaya, 43000, Selangor', 'Standard', NULL, NULL, 0.00),
-(12347, 1, '2024-09-15', 'Delivered', '16, Jalan Taman Utama, 80000, Johor Bahru', 'Standard', '2024-09-18', NULL, 0.50),
-(12348, 2, '2024-08-30', 'Pending', '7, Jalan Ampang, 50450, Kuala Lumpur', 'Standard', NULL, NULL, 0.00),
-(12349, 1, '2024-12-10', 'In Transit', '22, Jalan Sutera Indah, 81100, Johor', 'Standard', NULL, NULL, 0.00),
-(12350, 2, '2024-07-20', 'Delivered', '5, Lorong Melati, 10460, Penang', 'Standard', '2024-07-23', NULL, 0.00);
+INSERT INTO `orders` (`orderId`, `userId`, `orderDate`, `status`, `orderAddress`, `orderName`, `orderPhone`, `deliveryMethod`, `deliveredDate`, `tracking`, `discount`) VALUES
+(12345, 1, '2024-10-25', 'Pending', '2 Jalan Port Dickson Langkawi, 72010, Kuala Lumpur', '', '', 'Standard', NULL, NULL, 0.00),
+(12346, 2, '2024-11-02', 'In Transit', '88, Lorong Bukit Jaya, 43000, Selangor', '', '', 'Standard', NULL, NULL, 0.00),
+(12347, 1, '2024-09-15', 'Delivered', '16, Jalan Taman Utama, 80000, Johor Bahru', '', '', 'Standard', '2024-09-18', NULL, 0.50),
+(12348, 2, '2024-08-30', 'Pending', '7, Jalan Ampang, 50450, Kuala Lumpur', '', '', 'Standard', NULL, NULL, 0.00),
+(12349, 1, '2024-12-10', 'In Transit', '22, Jalan Sutera Indah, 81100, Johor', '', '', 'Standard', NULL, NULL, 0.00),
+(12350, 2, '2024-07-20', 'Delivered', '5, Lorong Melati, 10460, Penang', '', '', 'Standard', '2024-07-23', NULL, 0.00),
+(12351, 1, '2025-03-31', 'Pending', '9, Jalan Merdeka, 75000 Melaka, Malaysia', 'Alexandra', '012-6129291', 'Standard', NULL, NULL, 2018.10),
+(12352, 1, '2025-03-31', 'Pending', 'No. 15, Jalan Ampang, 50450 Kuala Lumpur, Malaysia', 'Alexandra', '012-6129291', 'Standard', NULL, NULL, 0.00);
 
 -- --------------------------------------------------------
 
@@ -142,7 +141,14 @@ INSERT INTO `order_items` (`orderId`, `productId`, `quantity`, `subtotal`, `grip
 (12348, 'R0003', 1, 15.99, '3UG5'),
 (12349, 'R0002', 1, 12.99, '3UG5'),
 (12349, 'R0003', 2, 19.98, '3UG5'),
-(12350, 'R0001', 1, 13.99, '4UG5');
+(12350, 'R0001', 1, 13.99, '4UG5'),
+(12351, 'R0001', 2, 998.00, '3UG5'),
+(12351, 'R0002', 5, 2995.00, '3UG5'),
+(12351, 'R0003', 1, 459.00, '3UG5'),
+(12351, 'R0004', 1, 679.00, '3UG5'),
+(12351, 'R0005', 4, 1596.00, '3UG5'),
+(12352, 'R0001', 1, 499.00, '3UG5'),
+(12352, 'R0002', 1, 599.00, '4UG5');
 
 -- --------------------------------------------------------
 
@@ -156,57 +162,56 @@ CREATE TABLE `product` (
   `productName` varchar(100) NOT NULL,
   `price` float(6,2) NOT NULL,
   `seriesID` varchar(3) DEFAULT NULL,
-  `productImg` varchar(1000) NOT NULL,
   `introduction` varchar(1000) NOT NULL,
-  `playerInfo` varchar(1000) NOT NULL,
-  `playerImage` varchar(500) NOT NULL
+  `playerInfo` varchar(1000) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `product`
 --
 
-INSERT INTO `product` (`productID`, `productName`, `price`, `seriesID`, `productImg`, `introduction`, `playerInfo`, `playerImage`) VALUES
-('R0001', 'AeroSharp 11', 499.00, 'AS', 'product_R0001_1743265563.png', 'Precision meets mastery with the AeroSharp 11. Designed for players who dictate the pace of the game, this racket offers superior shuttle control, effortless net play, and unmatched accuracy. The ultra-thin shaft and aerodynamic frame reduce drag, ensuring maximum maneuverability for the smartest players on the court.', 'Ethan Cheng. A tactical genius, Ethan is known for his surgical net drops and pinpoint clears. He controls rallies with calm precision, forcing opponents into mistakes before delivering the final blow.', 'player_R0001_1743265563.png'),
-('R0002', 'TurboSmash 1000', 599.00, 'TSM', 'product_R0002_1743265579.png', 'Speed redefined. The TurboSmash 1000 is built for lightning-fast reactions and rapid counterattacks. With an ultra-lightweight frame and enhanced repulsion technology, this racket enables players to unleash quick drives and rapid smashes with ease. Perfect for those who thrive on pace and aggression.', 'Kei Tanaka. With his lightning footwork and relentless attacking style, Kei overwhelms opponents before they can react. His signature double-tap drive keeps defenders scrambling to keep up.', 'player_R0002_1743265579.png'),
-('R0003', 'ThunderStrike 88 max', 459.00, 'TST', 'product_R0003_1743265590.png', 'Pure dominance on the court. The ThunderStrike 88 Max is designed for explosive power, engineered with an extra-stiff shaft and head-heavy balance to deliver devastating smashes. Whether attacking from the baseline or finishing at the net, this racket turns every shot into a statement.', 'Aleksandr Ivanov. A powerhouse with a smash that echoes across arenas, Aleksandr thrives on brute force. His signature \"Iron Hammer\" smash has made him a feared opponent worldwide.', 'player_R0003_1743265590.png'),
-('R0004', 'ThunderStrike 100', 679.00, 'TST', 'product_R0004_1743265620.png', 'For those who demand control over raw power, the ThunderStrike 100 balances explosive smashes with excellent shot placement. The reinforced T-joint and optimized frame weight create a racket that delivers controlled aggression, allowing powerful yet precise play.', 'Leo Park. A relentless attacker with a strategic mind, Leo mixes powerful smashes with deceptive drop shots, making him unpredictable and deadly in any rally.', 'player_R0004_1743265620.png'),
-('R0005', 'Shadow Z', 399.00, 'SHD', 'product_R0005_1743265643.png', 'A perfect fusion of speed and strength, the Shadow Z is built for aggressive players who need both lightning-fast reactions and crushing power. With a revolutionary hybrid frame and reinforced carbon core, this racket ensures rapid-fire play without sacrificing stability.', 'Nathan Cole. A bold, risk-taking player, Nathan’s agility and attacking prowess keep opponents constantly guessing. His signature \"Phantom Smash\"—a deceptive half-smash disguised as a full-power shot—has won him countless matches.', 'player_R0005_1743265643.png'),
-('R0006', 'ThunderStrike 99 max', 519.00, 'TST', 'product_R0006_1743265658.png', 'The evolution of power. The ThunderStrike 99 is crafted for relentless attackers who aim to dominate the game. Its high-tension frame and reinforced shaft provide the ultimate combination of stability and power, making it the ultimate weapon for smash-heavy players.', 'Rajat Sharma, known as the \"Wall Breaker,\" Rajat’s smashes have been recorded at over 400 km/h. His aggressive baseline game and ruthless net kills make him an unstoppable force.', 'player_R0006_1743265658.png');
+INSERT INTO `product` (`productID`, `productName`, `price`, `seriesID`, `introduction`, `playerInfo`) VALUES
+('R0001', 'AeroSharp 11', 499.00, 'AS', 'Precision meets mastery with the AeroSharp 11. Designed for players who dictate the pace of the game, this racket offers superior shuttle control, effortless net play, and unmatched accuracy. The ultra-thin shaft and aerodynamic frame reduce drag, ensuring maximum maneuverability for the smartest players on the court.', 'Ethan Cheng. A tactical genius, Ethan is known for his surgical net drops and pinpoint clears. He controls rallies with calm precision, forcing opponents into mistakes before delivering the final blow.'),
+('R0002', 'TurboSmash 1000', 599.00, 'TSM', 'Speed redefined. The TurboSmash 1000 is built for lightning-fast reactions and rapid counterattacks. With an ultra-lightweight frame and enhanced repulsion technology, this racket enables players to unleash quick drives and rapid smashes with ease. Perfect for those who thrive on pace and aggression.', 'Kei Tanaka. With his lightning footwork and relentless attacking style, Kei overwhelms opponents before they can react. His signature double-tap drive keeps defenders scrambling to keep up.'),
+('R0003', 'ThunderStrike 88 max', 459.00, 'TST', 'Pure dominance on the court. The ThunderStrike 88 Max is designed for explosive power, engineered with an extra-stiff shaft and head-heavy balance to deliver devastating smashes. Whether attacking from the baseline or finishing at the net, this racket turns every shot into a statement.', 'Aleksandr Ivanov. A powerhouse with a smash that echoes across arenas, Aleksandr thrives on brute force. His signature \"Iron Hammer\" smash has made him a feared opponent worldwide.'),
+('R0004', 'ThunderStrike 100', 679.00, 'TST', 'For those who demand control over raw power, the ThunderStrike 100 balances explosive smashes with excellent shot placement. The reinforced T-joint and optimized frame weight create a racket that delivers controlled aggression, allowing powerful yet precise play.', 'Leo Park. A relentless attacker with a strategic mind, Leo mixes powerful smashes with deceptive drop shots, making him unpredictable and deadly in any rally.'),
+('R0005', 'Shadow Z', 399.00, 'SHD', 'A perfect fusion of speed and strength, the Shadow Z is built for aggressive players who need both lightning-fast reactions and crushing power. With a revolutionary hybrid frame and reinforced carbon core, this racket ensures rapid-fire play without sacrificing stability.', 'Nathan Cole. A bold, risk-taking player, Nathan’s agility and attacking prowess keep opponents constantly guessing. His signature \"Phantom Smash\"—a deceptive half-smash disguised as a full-power shot—has won him countless matches.'),
+('R0006', 'ThunderStrike 99 max', 519.00, 'TST', 'The evolution of power. The ThunderStrike 99 is crafted for relentless attackers who aim to dominate the game. Its high-tension frame and reinforced shaft provide the ultimate combination of stability and power, making it the ultimate weapon for smash-heavy players.', 'Rajat Sharma, known as the \"Wall Breaker,\" Rajat’s smashes have been recorded at over 400 km/h. His aggressive baseline game and ruthless net kills make him an unstoppable force.');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `productsize`
+-- Table structure for table `productstock`
 --
 
-DROP TABLE IF EXISTS `productsize`;
-CREATE TABLE `productsize` (
+DROP TABLE IF EXISTS `productstock`;
+CREATE TABLE `productstock` (
   `productID` varchar(5) NOT NULL,
   `sizeID` varchar(4) NOT NULL,
-  `quantity` int(11) NOT NULL,
+  `stock` int(11) NOT NULL,
   `status` enum('onsales','notonsales') NOT NULL DEFAULT 'notonsales',
   `low_stock_threshold` int(11) DEFAULT 5,
-  `alert_sent` tinyint(1) DEFAULT 0
+  `alert_sent` tinyint(1) DEFAULT 0,
+  `qr_token` varchar(64) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `productsize`
+-- Dumping data for table `productstock`
 --
 
-INSERT INTO `productsize` (`productID`, `sizeID`, `quantity`, `status`, `low_stock_threshold`, `alert_sent`) VALUES
-('R0001', '3UG5', 4, 'onsales', 5, 1),
-('R0001', '4UG5', 5, 'onsales', 5, 1),
-('R0002', '3UG5', 5, 'onsales', 5, 1),
-('R0002', '4UG5', 6, 'onsales', 5, 0),
-('R0003', '3UG5', 2, 'onsales', 5, 1),
-('R0003', '4UG5', 3, 'onsales', 5, 1),
-('R0004', '3UG5', 4, 'onsales', 5, 1),
-('R0004', '4UG5', 5, 'onsales', 5, 1),
-('R0005', '3UG5', 5, 'onsales', 5, 1),
-('R0005', '4UG5', 6, 'onsales', 5, 0),
-('R0006', '3UG5', 2, 'onsales', 5, 1),
-('R0006', '4UG5', 3, 'onsales', 5, 1);
+INSERT INTO `productstock` (`productID`, `sizeID`, `stock`, `status`, `low_stock_threshold`, `alert_sent`, `qr_token`) VALUES
+('R0001', '3UG5', 4, 'onsales', 5, 1, NULL),
+('R0001', '4UG5', 1, 'onsales', 5, 1, '9e22411d04b7c9b04584a1339265e142'),
+('R0002', '3UG5', 5, 'onsales', 5, 1, NULL),
+('R0002', '4UG5', 6, 'onsales', 5, 0, NULL),
+('R0003', '3UG5', 2, 'onsales', 5, 1, NULL),
+('R0003', '4UG5', 3, 'onsales', 5, 1, NULL),
+('R0004', '3UG5', 4, 'onsales', 5, 1, NULL),
+('R0004', '4UG5', 5, 'onsales', 5, 1, NULL),
+('R0005', '3UG5', 5, 'onsales', 5, 1, NULL),
+('R0005', '4UG5', 6, 'onsales', 5, 0, NULL),
+('R0006', '3UG5', 2, 'onsales', 5, 1, NULL),
+('R0006', '4UG5', 3, 'onsales', 5, 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -228,18 +233,18 @@ CREATE TABLE `product_images` (
 --
 
 INSERT INTO `product_images` (`id`, `productID`, `image_path`, `image_type`, `created_at`) VALUES
-(1, 'R0001', 'product_R0001_1743265563.png', 'product', '2025-03-29 16:26:03'),
-(2, 'R0001', 'player_R0001_1743265563.png', 'player', '2025-03-29 16:26:03'),
-(3, 'R0002', 'product_R0002_1743265579.png', 'product', '2025-03-29 16:26:19'),
-(4, 'R0002', 'player_R0002_1743265579.png', 'player', '2025-03-29 16:26:19'),
-(5, 'R0003', 'product_R0003_1743265590.png', 'product', '2025-03-29 16:26:30'),
-(6, 'R0003', 'player_R0003_1743265590.png', 'player', '2025-03-29 16:26:30'),
-(7, 'R0004', 'product_R0004_1743265620.png', 'product', '2025-03-29 16:27:00'),
-(8, 'R0004', 'player_R0004_1743265620.png', 'player', '2025-03-29 16:27:00'),
-(9, 'R0005', 'product_R0005_1743265643.png', 'product', '2025-03-29 16:27:23'),
-(10, 'R0005', 'player_R0005_1743265643.png', 'player', '2025-03-29 16:27:23'),
-(11, 'R0006', 'product_R0006_1743265658.png', 'product', '2025-03-29 16:27:38'),
-(12, 'R0006', 'player_R0006_1743265658.png', 'player', '2025-03-29 16:27:38');
+(1, 'R0001', 'product_R0001_1743343865.png', 'product', '2025-03-30 14:11:05'),
+(2, 'R0001', 'player_R0001_1743343865.png', 'player', '2025-03-30 14:11:05'),
+(3, 'R0002', 'product_R0002_1743343876.png', 'product', '2025-03-30 14:11:16'),
+(4, 'R0002', 'player_R0002_1743343876.png', 'player', '2025-03-30 14:11:16'),
+(5, 'R0003', 'product_R0003_1743343896.png', 'product', '2025-03-30 14:11:36'),
+(6, 'R0003', 'player_R0003_1743343896.png', 'player', '2025-03-30 14:11:36'),
+(7, 'R0004', 'product_R0004_1743343915.png', 'product', '2025-03-30 14:11:55'),
+(8, 'R0004', 'player_R0004_1743343915.png', 'player', '2025-03-30 14:11:55'),
+(9, 'R0005', 'product_R0005_1743343932.png', 'product', '2025-03-30 14:12:12'),
+(10, 'R0005', 'player_R0005_1743343932.png', 'player', '2025-03-30 14:12:12'),
+(11, 'R0006', 'product_R0006_1743343950.png', 'product', '2025-03-30 14:12:30'),
+(12, 'R0006', 'player_R0006_1743343950.png', 'player', '2025-03-30 14:12:30');
 
 -- --------------------------------------------------------
 
@@ -250,24 +255,22 @@ INSERT INTO `product_images` (`id`, `productID`, `image_path`, `image_type`, `cr
 DROP TABLE IF EXISTS `savedaddress`;
 CREATE TABLE `savedaddress` (
   `userID` int(11) NOT NULL,
-  `address` varchar(200) NOT NULL
+  `address` varchar(200) NOT NULL,
+  `phoneNo` varchar(15) NOT NULL,
+  `name` varchar(40) NOT NULL,
+  `defaultAdd` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `savedaddress`
 --
 
-INSERT INTO `savedaddress` (`userID`, `address`) VALUES
-(1, '18, Persiaran Gurney, 10250 George Town, Penang, Malaysia'),
-(1, '5, Lorong Tun Ismail 1, 25000 Kuantan, Pahang, Malaysia'),
-(1, '88, Jalan Wong Ah Fook, 80000 Johor Bahru, Johor, Malaysia'),
-(1, '9, Jalan Merdeka, 75000 Melaka, Malaysia'),
-(1, 'No. 15, Jalan Ampang, 50450 Kuala Lumpur, Malaysia'),
-(2, '12, Jalan Sutera Tanjung, 81300 Skudai, Johor, Malaysia'),
-(2, '22A, Jalan Bukit Bintang, 55100 Kuala Lumpur, Malaysia'),
-(2, '35, Jalan Gurney, 10250 George Town, Penang, Malaysia'),
-(2, '55, Jalan Tun Razak, 50400 Kuala Lumpur, Malaysia'),
-(2, '7, Jalan Tebrau, 80200 Johor Bahru, Johor, Malaysia');
+INSERT INTO `savedaddress` (`userID`, `address`, `phoneNo`, `name`, `defaultAdd`) VALUES
+(1, '18, Persiaran Gurney, 10250 George Town, Penang, Malaysia', '012-6129291', 'Alexandra', 0),
+(1, '5, Lorong Tun Ismail 1, 25000 Kuantan, Pahang, Malaysia', '012-6129291', 'Alexandra', 0),
+(1, 'No. 15, Jalan Ampang, 50450 Kuala Lumpur, Malaysia', '012-6129291', 'Alexandra', 0),
+(2, '35, Jalan Gurney, 10250 George Town, Penang, Malaysia', '012-1235521', 'Tester', 0),
+(2, '7, Jalan Tebrau, 80200 Johor Bahru, Johor, Malaysia', '012-1235521', 'Tester', 0);
 
 -- --------------------------------------------------------
 
@@ -360,10 +363,11 @@ ALTER TABLE `product`
   ADD KEY `seriesID` (`seriesID`);
 
 --
--- Indexes for table `productsize`
+-- Indexes for table `productstock`
 --
-ALTER TABLE `productsize`
-  ADD PRIMARY KEY (`productID`,`sizeID`);
+ALTER TABLE `productstock`
+  ADD PRIMARY KEY (`productID`,`sizeID`),
+  ADD UNIQUE KEY `qr_token` (`qr_token`);
 
 --
 -- Indexes for table `product_images`
@@ -402,7 +406,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `orderId` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12352;
+  MODIFY `orderId` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12355;
 
 --
 -- AUTO_INCREMENT for table `product_images`
@@ -424,7 +428,7 @@ ALTER TABLE `user`
 -- Constraints for table `cartitem`
 --
 ALTER TABLE `cartitem`
-  ADD CONSTRAINT `cartitem_ibfk_1` FOREIGN KEY (`productID`,`sizeID`) REFERENCES `productsize` (`productID`, `sizeID`);
+  ADD CONSTRAINT `cartitem_ibfk_1` FOREIGN KEY (`productID`,`sizeID`) REFERENCES `productstock` (`productID`, `sizeID`);
 
 --
 -- Constraints for table `orders`
@@ -437,7 +441,7 @@ ALTER TABLE `orders`
 --
 ALTER TABLE `order_items`
   ADD CONSTRAINT `order_items_ibfk_1` FOREIGN KEY (`orderId`) REFERENCES `orders` (`orderId`),
-  ADD CONSTRAINT `order_items_ibfk_2` FOREIGN KEY (`productId`,`gripSize`) REFERENCES `productsize` (`productID`, `sizeID`);
+  ADD CONSTRAINT `order_items_ibfk_2` FOREIGN KEY (`productId`,`gripSize`) REFERENCES `productstock` (`productID`, `sizeID`);
 
 --
 -- Constraints for table `product`
@@ -446,10 +450,10 @@ ALTER TABLE `product`
   ADD CONSTRAINT `product_ibfk_1` FOREIGN KEY (`seriesID`) REFERENCES `series` (`seriesID`);
 
 --
--- Constraints for table `productsize`
+-- Constraints for table `productstock`
 --
-ALTER TABLE `productsize`
-  ADD CONSTRAINT `productSize_ibfk_1` FOREIGN KEY (`productID`) REFERENCES `product` (`productID`);
+ALTER TABLE `productstock`
+  ADD CONSTRAINT `productStock_ibfk_1` FOREIGN KEY (`productID`) REFERENCES `product` (`productID`);
 
 --
 -- Constraints for table `product_images`

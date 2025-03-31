@@ -11,8 +11,17 @@ $_db = new PDO('mysql:dbname=web_based_assignment', 'root', '', [
 ]);
 
 $statement = $_db->prepare("SELECT * FROM product WHERE productID = ?");
-$statement->execute([$productID]); // make sure your $productID variable is declared - I don’t see it in the screenshot
+$statement->execute([$productID]); 
 $productObject = $statement->fetch();
+
+$stm = $_db->prepare("SELECT * FROM product_images WHERE productID = ? AND image_type = 'product'");
+$stm->execute([$productID]); 
+$productImg = $stm->fetch();
+
+$stmm = $_db->prepare("SELECT * FROM product_images WHERE productID = ? AND image_type = 'player'");
+$stmm->execute([$productID]); 
+$playerImg = $stmm->fetch();
+
 if (!$productObject) {
   echo "Error: Undefined racket";
   // redirect('/');
@@ -23,10 +32,10 @@ if (!$productObject) {
 $racketID = $productObject->productID;
 $racketName = $productObject->productName; // Get the productName attribute of the product object
 $price = $productObject->price; // Get the price attribute of the product object
-$imgUrl = $productObject->productImg;
+$imgUrl = $productImg->image_path;
 $intro = $productObject->introduction;
 $playerInfo = $productObject->playerInfo;
-$playerImg = $productObject->playerImage;
+$playerImg = $playerImg->image_path;
 
 $gripSize = get("gripSize");
 if (is_logged_in("user")) {
@@ -40,16 +49,16 @@ if (is_logged_in("user")) {
 
 if ($gripSize) {
   if ($userID) {
-    $available = $_db->prepare("SELECT * FROM productSize WHERE productID = ? AND sizeID = ? AND quantity > 0");
+    $available = $_db->prepare("SELECT * FROM productstock WHERE productID = ? AND sizeID = ? AND stock > 0");
     $available->execute([$productID, $gripSize]);
     $productObj = $available->fetch();
-    $productQuantity = $productObj->quantity;
+    $productQuantity = $productObj->stock;
 
     $cartStatement = $_db->prepare("SELECT * FROM cartitem WHERE userID = ? AND productID = ? AND sizeID = ?");
     $cartStatement->execute([$userID, $productID, $gripSize]);
     $cartObject = $cartStatement->fetch();
     $cartQuantity = $cartObject->quantity;
-
+    
     if (!$cartQuantity) {
       $cartQuantity = 0;
     }
@@ -146,7 +155,7 @@ include '../../_head.php';
   </div>
 </form>
 <?php
-$size = $_db->prepare("SELECT * FROM productSize WHERE productID = ?");
+$size = $_db->prepare("SELECT * FROM productStock WHERE productID = ?");
 $size->execute([$productID]);
 $productObject = $size->fetchAll();
 ?>

@@ -27,8 +27,7 @@ function generateQRCode($pdo, $productID, $sizeID) {
     $updateStmt->execute([$token, $productID, $sizeID]);
     
     // 4. Build verification URL
-    $verifyUrl = "http://web_based_assignment/pages/admin/product/verify-stock.php?productID=$productID&sizeID=$sizeID&token=$token";
-
+    $verifyUrl = "http:/web_based_assignment/pages/admin/product/verify-stock.php?productID=$productID&sizeID=$sizeID&token=$token";
 
     // 5. Generate QR code
     $result = Builder::create()
@@ -45,6 +44,6 @@ function generateQRCode($pdo, $productID, $sizeID) {
 
     echo "QR Code generated and saved: $filePath\n";
 }
-$p = "R0005";
-$s = "3UG5";
+$p = "R0001";
+$s = "4UG5";
 generateQRCode($_db, $p , $s); // Example: productID=5, sizeID=2

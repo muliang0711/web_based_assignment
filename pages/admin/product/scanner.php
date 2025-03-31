@@ -97,7 +97,7 @@
 
             $.getJSON(decodedText, function(data) {
                 // backend return sucess : IF FOUND URL 
-                if (data.success) { 
+                if (data.success) {
                     // 1. save the upload data 
                     scannedData = data;
                     // 2. ouput product information 
@@ -123,9 +123,9 @@
         
         $("#restock-btn").on("click", function () {
             const newQty = $("#newQty").val();
-
+            console.log(scannedData);
             $.ajax({
-                url: '/pages/admin/product/update-stock.php', // PROCESS FILE 
+                url: '/web_based_assignment/pages/admin/product/update-stock.php', // PROCESS FILE 
                 method: 'POST',
                 contentType: 'application/json',
                 data: JSON.stringify({

@@ -127,7 +127,7 @@ p{
 .product img{
   width: 40%;
   height: 20%;
-  background-color: #ebf0fb;
+  background-color: rgb(252, 252, 252);
   display:inline-block;
   gap: 50px;
   margin-top: 50px;
@@ -140,7 +140,7 @@ p{
   position: absolute;
   text-align: left;
   color: #222222;
-  right: 80px;
+  right: 7%;
   top: 150px;
   letter-spacing: 1px;
   padding-left: 30px;
@@ -162,16 +162,15 @@ p{
   top: 25%;
   font-family: Arial, sans-serif;
   padding: 40px;
-  background-color: #ecf1f4;
+  background-color: rgb(238, 238, 238);
   letter-spacing: 1px;
 }
 
 .information table{
   position: absolute;
   top: 40%;
-  right: 48%;
+  right: 49%;
   text-align: left;
-  background-color: #eef5ff;
   color: black;
   font-size: 20px;
 }
@@ -203,17 +202,17 @@ p{
 
 .playerPhoto{
   position: relative;
-  padding: 40px;
+  padding: 20px;
   text-align: left;
   font-size: 20px;
   color: black;
   width: 800px;
-  left:100px;
-  background-color: #ecf1f4;
+  left:20%;
+  background-color: rgb(252, 252, 252);
 }
 
 .HeadingIntro{
-  text-align: center;
+  text-align: left;
   font-size: 30px;
   font-weight: bold;
 }
@@ -279,79 +278,6 @@ p{
   background: radial-gradient(circle 280px at 0% 0%, #7300ff, #0048ff);
   cursor: pointer;
 }
-
-
-/*
-.sizeSelect{
-  display: none;
-  position: fixed;
-  top: 20%;
-  left: 600px;
-  width: 300px;
-  height: 400px;
-}
-
-.sizeSelect h2{
-  font-size: 30px;
-  width:300px;
-}
-
-
-.popup {
-  display: none;
-  position: absolute;
-  text-align: center;
-  width: 100%;
-  height: 100%;
-  background-color: #444444;
-  color: whitesmoke;
-  padding: 10px;
-  margin: 30px;
-  border-radius: 20px;
-}
-
-.popup button{
-  border: none;
-  border-radius: 2px;
-  width: 100px;
-  font-size: 30px;
-  margin: 30px;
-  box-shadow: 0 0 10px black;
-  font-family: "Lucida Console", "Courier New", monospace;
-  background: radial-gradient(circle 280px at 0% 0%, rgb(216, 248, 254), #27c8f4);
-  box-shadow: 0 0 10px rgb(82, 82, 252);
-}
-
-*/
-/* .info:not(:empty){
-  border: green 2px solid;
-  color:rgb(1, 72, 9);
-  background-color: rgb(197, 212, 197);
-  width: 200px; 
-  font-size: 20px;
-  margin-top: 10px;
-  padding:10px;
-  text-align: center;
-  position: absolute;
-  left: 30px;
-  font-family: "Lucida Console", "Courier New", monospace;
-  box-shadow: 0 0 10px rgba(7, 90, 1, 0.505);
-} */
-
-/* .error:not(:empty){
-  border: rgb(128, 0, 0) 2px solid;
-  color:rgb(72, 2, 1);
-  background-color: rgb(215, 88, 56);
-  width: 200px; 
-  font-size: 20px;
-  margin-top: 10px;
-  padding:10px;
-  text-align: center;
-  position: absolute;
-  left: 30px;
-  font-family: "Lucida Console", "Courier New", monospace;
-  box-shadow: 0 0 10px rgb(70, 3, 3);
-} */
 
 .attention{
   position: absolute;
