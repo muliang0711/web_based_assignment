@@ -258,9 +258,18 @@ function login($userOrAdminID, $role) {
 }
 
 // Log out 
-function logout() {
-    // Destroy the session completely
-    session_destroy();
+function logout($role) {
+    validateRole($role);
+
+    if ($role == 'user') {
+        unset($_SESSION['userID']);
+    }
+    else if ($role == 'admin') {
+        unset($_SESSION['adminID']);
+    }
+
+    // Destroy the session completely (CANNOT do this because we dont want to log out the admin too when a user logs out, or vice versa)
+    // session_destroy();
 }
 
 // global user object

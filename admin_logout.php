@@ -1,5 +1,5 @@
 <?php
 require '_base.php';
 
-logout();
+logout('admin');
 redirect('/pages/admin/admin_login.php');

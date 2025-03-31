@@ -1,5 +1,5 @@
 <?php
 require '_base.php';
 
-logout();
+logout('user');
 redirect('/');

@@ -6,8 +6,8 @@ if (is_post()) {
     // If logout button is clicked
     if (isset($_POST['logout'])) {
 
-        // Destory user object session variable
-        logout();
+        // Destroy user object session variable
+        logout('user');
 
         temp('info', 'Successfully logged out');
         // Reload page
