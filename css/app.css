@@ -223,6 +223,10 @@ header nav > a:hover::after {
     transform: translateY(0);
 }
 
+.dropdown-item * {
+    cursor: inherit;
+}
+
 /***************************************************************
                         FLASH MESSAGES (testing only)
 ***************************************************************/
@@ -411,6 +415,37 @@ footer{
 .info-box:empty {
     display: none;
 }
+
+/***************************************************************
+                        POP UPS
+***************************************************************/
+.popup-container {
+    z-index: 99999;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #000a;
+    overflow: scroll;
+
+    display: none;
+}
+.popup-container.show {
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+}
+.popup-main {
+    margin: 50px auto;
+    height: fit-content;
+    width: 500px;
+    border-radius: 10px;
+    padding: 20px;
+    background-color: white;
+}
+
+
 
 /***************************************************************
                         BUTTONS

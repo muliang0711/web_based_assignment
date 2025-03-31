@@ -4,12 +4,12 @@ require '../../_base.php';
 /********* You can change these to suit the specific needs of your page *********/
 $title = 'Profile';
 $stylesheetArray = ['profile.css']; // Put CSS files that are specific to this page here. If you want to change the styling of the header and the footer, go to /css/app.cs
-$scriptArray = [];      // Put JS files that are specific to this page here. If you want to change the JavaScript for the header and the footer, go to /js/app.js
+$scriptArray = ['profilePic.js'];      // Put JS files that are specific to this page here. If you want to change the JavaScript for the header and the footer, go to /js/app.js
 
 include '../../_login_guard.php';
 
 extract((array)$_user);
-echo $bio;
+// echo $bio;
 
 $_genders = [
     'F' => 'Female',
@@ -17,9 +17,69 @@ $_genders = [
     'R' => 'Rather not say',
 ];
 
+$_profilePicDir = '/File/user-profile-pics/';
+
 // TODO
 // - handle request to update profile
 if (is_post()) {
+    $action = post('action');
+    if ($action == 'removeProfPic') {
+        // TODO: remove photo from server
+        $stm = $_db->prepare('
+            UPDATE user
+            SET profilePic = null
+            WHERE userID = :userID
+        ');
+        $stm->execute([
+            'userID' => $_user->userID,
+        ]);
+
+        temp('info', 'Profile picture removed');
+        redirect();
+    }
+
+    // Handle profile photo uploads
+    // $f = get_file('profilePic');
+    // var_dump($f);
+
+    // // Validate: photo (file)
+    // if ($f == null) {
+    //     $_err['photo'] = 'Required';
+    // }
+    // else if (!str_starts_with($f->type, 'image/')) { // TODO
+    //     $_err['photo'] = 'Must be image';
+    // }
+    // else if ($f->size > 1 * 1024 * 1024) { // TODO
+    //     $_err['photo'] = 'Maximum 1MB';
+    // }
+
+    if ($action == "changeProfPic") {
+        // move_uploaded_file($f->tmp_name, "uploads/$f->name");
+        // $profilePicPath = save_photo($f, "/File/user-profile-pics");
+
+        $f = get_file('profilePic');
+        
+        $photo = uniqid() . '.jpg';
+
+        require_once '../../lib/SimpleImage.php';
+        $img = new SimpleImage();
+        $img->fromFile($f->tmp_name)
+            ->thumbnail(200, 200)
+            ->toFile("../../File/user-profile-pics/$photo", 'image/jpeg');
+
+        $stm = $_db->prepare('
+            UPDATE user
+            SET profilePic = :profilePicPath
+            WHERE userID = :userID
+        ');
+        $stm->execute([
+            'profilePicPath' => $photo,
+            'userID' => $_user->userID,
+        ]);
+
+        temp('info', 'Profile picture updated');
+        redirect();
+    }
     // $fields = ['username', 'email', 'bio', 'gender'];
 
     
@@ -35,28 +95,28 @@ if (is_post()) {
             // }
             
     // TODO: need to use JS to check which fields have changed, then insert data-confirm into the Update profile button dynamically.
-    $username = post('username');
-    $email = post('email');
-    $bio = post('bio');
-    $gender = post('gender');
-    $userID = $_user->userID;
+    // $username = post('username');
+    // $email = post('email');
+    // $bio = post('bio');
+    // $gender = post('gender');
+    // $userID = $_user->userID;
 
-    // Update db
-    $stm = $_db->prepare('
-        UPDATE user 
-        SET username = :username, email = :email, bio = :bio, gender = :gender 
-        WHERE userID = :userID
-    ');
-    $stm->execute([
-        'username' => $username,
-        'email' => $email,
-        'bio' => $bio,
-        'gender' => $gender,
-        'userID' => $userID,
-    ]);
+    // // Update db
+    // $stm = $_db->prepare('
+    //     UPDATE user 
+    //     SET username = :username, email = :email, bio = :bio, gender = :gender 
+    //     WHERE userID = :userID
+    // ');
+    // $stm->execute([
+    //     'username' => $username,
+    //     'email' => $email,
+    //     'bio' => $bio,
+    //     'gender' => $gender,
+    //     'userID' => $userID,
+    // ]);
 
-    temp('info', 'Profile updated');
-    redirect();
+    // temp('info', 'Profile updated');
+    // redirect();
 
 }
 
@@ -77,22 +137,22 @@ include 'profile_dynamic_navbar.php';
             <!-- <div role="alert" class="info-box warning">You have unsaved changes!</div> -->
             <form method="post">
                 <div class="form-group">
-                    <label>Username</label>
+                    <label class="label">Username</label>
                     <?= input_text('username') ?>
                 </div>
 
                 <div class="form-group">
-                    <label>Email</label>
+                    <label class="label">Email</label>
                     <?= input_text('email') ?>
                 </div>
 
                 <div class="form-group">
-                    <label>Bio</label>
+                    <label class="label">Bio</label>
                     <?= html_textarea('bio', 'placeholder="Tell us something interesting about yourself"') ?>
                 </div>
 
-                <div class="form-group">
-                    <label>Gender</label>
+                <div class="form-group gender">
+                    <label class="label">Gender</label>
                     <?= input_radios('gender', $_genders) ?>
                 </div>
 
@@ -105,14 +165,47 @@ include 'profile_dynamic_navbar.php';
         </section>
 
         <section class="right-col">
-            <div class="form-group profile-pic">
-                <label>Profile picture</label>
-                <label class="profile-pic-button">
-                    <?= html_file('photo', 'image/*', 'hidden'); ?>
-                    <img src="/assets/img/profile-default-icon-light.svg" alt="Profile picture">
+            <div class="form-group profile-pic dropdown">
+                <div class="label">Profile picture</div>
+                <div class="errorMsg" style="color: var(--color-error-text);margin-bottom:5px;"></div>
+                <div class="profile-pic-button dropdown-label" id="profile-pic-button">
+                    <img src="<?= $_user->profilePic ? "/File/user-profile-pics/{$_user->profilePic}" : '/assets/img/profile-default-icon-light.svg' ?>" alt="Profile picture">
+                    <!-- <img src="/assets/img/profile-default-icon-light.svg" alt="Profile picture"> -->
                     <!-- <img src="/assets/img/logo.jpg" alt="Profile picture"> -->
                     <div class="edit-label">Edit</div>
-                </l>
+                </div>
+                <ul class="profile-pic-dropdown dropdown-content">
+                    <li class="dropdown-item"><button id="viewPhotoBtn">View photo (TODO)</button></li>
+                    <!-- <li class="dropdown-item">Take photo (TODO)</li> -->
+
+                    <li>
+                        <form method="POST" enctype="multipart/form-data" id="profilePicForm">
+                            <input type="hidden" name="action" value="changeProfPic"/>
+                            <label class="dropdown-item"> <!-- Applied the .dropdown-item class to <label> instead of the containing <li> because this makes the clickable area bigger. -->
+                                <?= html_file('profilePic', 'image/*', 'data-popup-id="crop-profile-popup"'); ?>
+                                Upload photo
+                            </label>
+                        </form>
+                    </li>
+
+                    <li class="dropdown-item">
+                        <button 
+                            data-real-post="?action=removeProfPic" 
+                            data-confirm="Are you sure you want to remove your profile picture?"
+                        >Remove photo</button>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="crop-profile-popup popup-container" id="crop-profile-popup">
+                <div class="crop-profile-main popup-main">
+
+                    <img src="/assets/img/profile-default-icon-light.svg" alt="Profile picture">
+
+                    <button class="btn-simple close-popup" id="cancelBtn">Cancel</button>
+                    <!-- This submit button is linked to the form with the id "#profilePicForm" via the [form] attribute. Clicking on this submits that form. -->
+                    <button type="submit" form="profilePicForm" class="btn-simple btn-green">Confirm</input>
+                </div>
             </div>
             
         </section>
