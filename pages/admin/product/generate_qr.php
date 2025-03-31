@@ -8,7 +8,7 @@ use Endroid\QrCode\Writer\PngWriter;
 
 function generateQRCode($pdo, $productID, $sizeID) {
     // 1. Check if QR token already exists
-    $checkSql = "SELECT qr_token FROM productsize WHERE productID = ? AND sizeID = ?";
+    $checkSql = "SELECT qr_token FROM productstock WHERE productID = ? AND sizeID = ?";
     $stmt = $pdo->prepare($checkSql);
     $stmt->execute([$productID, $sizeID]);
     $existing = $stmt->fetch();
@@ -22,12 +22,12 @@ function generateQRCode($pdo, $productID, $sizeID) {
     $token = bin2hex(random_bytes(16)); // 32-character token
 
     // 3. Save token into DB
-    $updateSql = "UPDATE productsize SET qr_token = ? WHERE productID = ? AND sizeID = ?";
+    $updateSql = "UPDATE productstock SET qr_token = ? WHERE productID = ? AND sizeID = ?";
     $updateStmt = $pdo->prepare($updateSql);
     $updateStmt->execute([$token, $productID, $sizeID]);
     
     // 4. Build verification URL
-    $verifyUrl = "http:/web_based_assignment/pages/admin/product/verify-stock.php?productID=$productID&sizeID=$sizeID&token=$token";
+    $verifyUrl = "http://wbproject.local/pages/admin/product/verify-stock.php?productID=$productID&sizeID=$sizeID&token=$token";
 
     // 5. Generate QR code
     $result = Builder::create()
@@ -44,6 +44,6 @@ function generateQRCode($pdo, $productID, $sizeID) {
 
     echo "QR Code generated and saved: $filePath\n";
 }
-$p = "R0001";
-$s = "4UG5";
+$p = "R0005";
+$s = "3UG5";
 generateQRCode($_db, $p , $s); // Example: productID=5, sizeID=2

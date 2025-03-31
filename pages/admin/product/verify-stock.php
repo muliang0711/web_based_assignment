@@ -15,8 +15,8 @@ if (!$productID || !$sizeID || !$token) {
     exit;
 }
 
-$sql = "SELECT p.productName, ps.sizeID, ps.quantity
-        FROM productsize ps
+$sql = "SELECT p.productName, ps.sizeID, ps.stock
+        FROM productstock ps
         JOIN product p ON p.productID = ps.productID
         WHERE ps.productID = ? AND ps.sizeID = ? AND ps.qr_token = ?";
 $stmt = $_db->prepare($sql);
@@ -30,7 +30,7 @@ if ($product) {
         'token' => $token,
         'product_name' => $product['productName'],
         'size_label' => $product['sizeID'],
-        'quantity' => $product['quantity']
+        'stock' => $product['stock']
     ]);
 } else {
     echo json_encode([

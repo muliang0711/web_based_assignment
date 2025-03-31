@@ -18,7 +18,7 @@ if (!$productID || !$sizeID || !$token || !$newQty || $newQty < 0) {
     exit;
 }
 
-$sql = "SELECT * FROM productsize WHERE productID = ? AND sizeID = ? AND qr_token = ?";
+$sql = "SELECT * FROM productstock WHERE productID = ? AND sizeID = ? AND qr_token = ?";
 $stmt = $_db->prepare($sql);
 $stmt->execute([$productID, $sizeID, $token]);
 $record = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -31,7 +31,7 @@ if (!$record) {
     exit;
 }
 
-$updateSql = "UPDATE productsize SET quantity = ? WHERE productID = ? AND sizeID = ?";
+$updateSql = "UPDATE productstock SET stock = ? WHERE productID = ? AND sizeID = ?";
 $updateStmt = $_db->prepare($updateSql);
 $updateStmt->execute([$newQty, $productID, $sizeID]);
 
