@@ -68,7 +68,8 @@ if (is_post()) {
             removeFromCart($productID, $sizeID, $userID);
         }
 
-        redirect("../product/cartPage.php");
+        // Reload cart page after updating cart
+        redirect();
     }
     
 
