@@ -45,7 +45,7 @@ class CheckStock {
     }
 
     // 1. send sms ; 
-
+    
     public function check_low_stock() {
         $sql = "SELECT * FROM productstock WHERE stock <= low_stock_threshold AND alert_sent = 0";
         $stmt = $this->pdo->prepare($sql);
