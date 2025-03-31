@@ -68,6 +68,8 @@ if (is_post()) {
                 'userID' => $userID,
             ]);
         }
+        
+        redirect("../product/cartPage.php");
         // $updateStmt = $_db->prepare('UPDATE cartitem SET ')
     } else if ($action === 'add') {
      //   if ($stock > $cartQuantity) {
@@ -77,6 +79,7 @@ if (is_post()) {
             'sizeID' => $sizeID,
             'userID' => $userID,
         ]);
+        redirect("../product/cartPage.php");
   /*      temp("info", "Added to cart Successfully!");
       redirect("../product/productDetail.php?racket=$productObj->productID");
     } else {
@@ -85,8 +88,9 @@ if (is_post()) {
     }*/
     } else if ($action === 'delete') {
         removeFromCart($productID, $sizeID, $userID);
+        redirect("../product/cartPage.php");
     }
-    redirect("../product/cartPage.php");
+    //redirect("../product/cartPage.php");
 }
 
 function removeFromCart($productID, $sizeID, $userID): void {
