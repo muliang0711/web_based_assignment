@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 31, 2025 at 08:40 AM
+-- Generation Time: Mar 31, 2025 at 01:33 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -260,17 +260,6 @@ CREATE TABLE `savedaddress` (
   `name` varchar(40) NOT NULL,
   `defaultAdd` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `savedaddress`
---
-
-INSERT INTO `savedaddress` (`userID`, `address`, `phoneNo`, `name`, `defaultAdd`) VALUES
-(1, '18, Persiaran Gurney, 10250 George Town, Penang, Malaysia', '012-6129291', 'Alexandra', 0),
-(1, '5, Lorong Tun Ismail 1, 25000 Kuantan, Pahang, Malaysia', '012-6129291', 'Alexandra', 0),
-(1, 'No. 15, Jalan Ampang, 50450 Kuala Lumpur, Malaysia', '012-6129291', 'Alexandra', 0),
-(2, '35, Jalan Gurney, 10250 George Town, Penang, Malaysia', '012-1235521', 'Tester', 0),
-(2, '7, Jalan Tebrau, 80200 Johor Bahru, Johor, Malaysia', '012-1235521', 'Tester', 0);
 
 -- --------------------------------------------------------
 
