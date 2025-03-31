@@ -22,7 +22,7 @@
           <a href="#"><i class="fas fa-user-cog"></i> Profile</a>
         </li>
         <li>
-          <a href="#"><i class="fas fa-sign-out-alt"></i> Logout</a>
+          <a href="/admin_logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
         </li>
       </ul>
     </div>

@@ -156,7 +156,7 @@ include '../../_head.php';
                 <div class="btn"><button class="btn">Buy</button></div>
                 <div class="btn"><button class="btn" onclick="window.location.href='../product/productDetail.php?racket=<?php echo $productObject->productID ?>'">View Details</button></div>
                 <!--<?php if (!$userID) {
-                      prompt_login("Please log in to add to cart.");
+                      prompt_user_login("Please log in to add to cart.");
                     }
                     ?> -->
               </div>

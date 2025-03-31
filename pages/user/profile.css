@@ -46,7 +46,7 @@ main {
 .form-group:first-child {
     margin: 0 auto;
 }
-.form-group label {
+.form-group .label {
     font-weight: var(--text-weight-semibold);
     display: block;
     margin-bottom: 10px;
@@ -91,7 +91,8 @@ main {
 .side-nav a.isActive::before {
     content: "";
     position: absolute;
-    top: 0;
+    top: 50%;
+    transform: translateY(-50%);
     left: 0;
     height: 100%;
     width: 5px;
@@ -104,11 +105,11 @@ main {
 .profile-pic-button {
     position: relative;
     cursor: pointer;
+    display: inline-block;
 }
 
 .profile-pic img {
     width: 200px;
-    height: 200px;
     border-radius: 50%;
     /* border: 1px solid black; */
     object-fit: cover;
@@ -122,8 +123,66 @@ main {
     border: 2px solid #555;
     border-radius: 5px;
     color: #555;
-    line-height: 1em;
     background-color: #eee;
 }
 
+.profile-pic-dropdown {
+    background-color: #333;
+    color: #ddd;
+    padding: 5px 5px;
+    border-radius: 5px;
+    width: fit-content;
+}
 
+.profile-pic-dropdown button {
+    all: unset;
+}
+
+.dropdown-item {
+    list-style: none;
+    cursor: pointer;
+}
+
+.profile-pic-dropdown .dropdown-item {
+    padding: 4px 5px;
+    padding-right: 20px;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    /* Override default <button> styles */
+    /* background-color: none;
+    border: none;
+    color: inherit; */
+}
+.profile-pic-dropdown .dropdown-item:hover {
+    background-color: rgb(255,255,255,0.2);
+}
+.profile-pic-dropdown .dropdown-item span img {
+    width: 20px;
+    vertical-align: text-bottom;
+    /* position: absolute; */
+}
+
+.crop-profile-main img {
+    width: 100%;
+}
+.crop-profile-popup .close-popup {
+    position: static;
+}
+
+input[type=file] {
+    display: none;
+}
+
+
+/* gender radio buttons */
+.gender span {
+    display: flex;
+    flex-direction: column;
+    /* by default `align-items` is `stretch`, causing the radio button labels to take up the full width of the container. 
+       `align-items: flex-start` prevents this. */
+    align-items: flex-start; 
+    gap: 10px;
+}

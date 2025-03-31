@@ -79,7 +79,7 @@ if ($gripSize) {
       redirect("../product/productDetail.php?racket=$productObject->productID");
     }
   } else {
-    prompt_login("Please log in to add to cart.");
+    prompt_user_login("Please log in to add to cart.");
     // temp('warn', 'Please login before add item to cart');
   }
 }
