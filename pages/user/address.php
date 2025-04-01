@@ -131,7 +131,8 @@ include 'profile_dynamic_navbar.php';
                     <div class="form-group">
                         <label">Postcode</label><br>
                         <input id="postcode" name="postcode" type="text"style="width:80px;" maxlength="5">
-                        <span id="errmsg" style="color: red; font-size: 15px;" hidden>⚠️ Incorrect Postcode!</span>
+                        <span id="errmsg" style="color: red; font-size: 15px;" hidden>⚠️ Incorrect Postcode!</span><br>
+                        <input type="checkbox" name="default" value="1"><span style="font-size: 13px;">Save as default?</span>
                     </div>
                      
                     
@@ -141,7 +142,7 @@ include 'profile_dynamic_navbar.php';
                         id="submitbutton"
                         class="btn-simple btn-green"
                     >Save address</button>
-                    <input type="checkbox" name="default" value="1"><span style="font-size: 13px;">Save as default?</span>
+                    
                 </form>
         </section>
     </div>
