@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 01, 2025 at 08:38 AM
+-- Generation Time: Apr 01, 2025 at 12:55 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -20,8 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `web_based_assignment`
 --
-CREATE DATABASE IF NOT EXISTS `web_based_assignment` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `web_based_assignment`;
 
 -- --------------------------------------------------------
 
@@ -29,26 +27,38 @@ USE `web_based_assignment`;
 -- Table structure for table `admin`
 --
 
-DROP TABLE IF EXISTS `admin`;
 CREATE TABLE `admin` (
   `id` varchar(10) NOT NULL,
   `position` varchar(20) NOT NULL,
   `passwordHash` varchar(255) NOT NULL,
   `adminLevel` enum('main','staff') NOT NULL,
-  `status` enum('Active','Blocked') NOT NULL,
-  `blockedStatus` varchar(10) DEFAULT NULL
+  `status` enum('Active','Blocked') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `admin`
 --
 
-INSERT INTO `admin` (`id`, `position`, `passwordHash`, `adminLevel`, `status`, `blockedStatus`) VALUES
-('A001', 'HR Manager', '$2y$10$5Y2WIZtHCoElCeI6IXp94.4TiLKeTcbOK5AgTswY9oAwbFw9FViFi', 'main', 'Active', ''),
-('A002', 'IT Support', '$2y$10$2ioQwFoTCz3dH1AjoKG7NuOAHqKjzmecG7b.8BPW5aGiuImR9oji2', 'staff', 'Active', ''),
-('A003', 'Finance Head', '$2y$10$AeTa6/0xSoeDf2gz0.bXE.i1/kG56Alerke8pFPhe9NSVBVOKA3wi', 'main', 'Active', ''),
-('A004', 'Marketing Lead', '$2y$10$rYBjsAfzbPMGCn4MANIZ.ef78dfu/MnSbq8RwOKHnY272KCo9h8gK', 'staff', 'Blocked', ''),
-('A005', 'Operations', '$2y$10$.2ZxTbzEPRnm0H9EYwJQnOG2YBQL8plEmxN3K7WzIAJHO1FUUYVFW', 'staff', 'Blocked', '');
+INSERT INTO `admin` (`id`, `position`, `passwordHash`, `adminLevel`, `status`) VALUES
+('A001', 'HR Manager', '$2y$10$5Y2WIZtHCoElCeI6IXp94.4TiLKeTcbOK5AgTswY9oAwbFw9FViFi', 'main', 'Active'),
+('A002', 'IT Support', '$2y$10$2ioQwFoTCz3dH1AjoKG7NuOAHqKjzmecG7b.8BPW5aGiuImR9oji2', 'staff', 'Active'),
+('A003', 'Finance Head', '$2y$10$AeTa6/0xSoeDf2gz0.bXE.i1/kG56Alerke8pFPhe9NSVBVOKA3wi', 'main', 'Active'),
+('A004', 'Marketing Lead', '$2y$10$rYBjsAfzbPMGCn4MANIZ.ef78dfu/MnSbq8RwOKHnY272KCo9h8gK', 'staff', 'Blocked'),
+('A005', 'Operations', '$2y$10$.2ZxTbzEPRnm0H9EYwJQnOG2YBQL8plEmxN3K7WzIAJHO1FUUYVFW', 'staff', 'Blocked');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `blockeduser`
+--
+
+CREATE TABLE `blockeduser` (
+  `blockedUserID` varchar(15) NOT NULL,
+  `role` enum('user','staff') NOT NULL,
+  `blockedReason` varchar(30) DEFAULT NULL,
+  `status` enum('-','reject','request') NOT NULL,
+  `appealReason` varchar(30) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -56,7 +66,6 @@ INSERT INTO `admin` (`id`, `position`, `passwordHash`, `adminLevel`, `status`, `
 -- Table structure for table `cartitem`
 --
 
-DROP TABLE IF EXISTS `cartitem`;
 CREATE TABLE `cartitem` (
   `userID` int(11) NOT NULL,
   `productID` varchar(5) NOT NULL,
@@ -81,7 +90,6 @@ INSERT INTO `cartitem` (`userID`, `productID`, `sizeID`, `quantity`) VALUES
 -- Table structure for table `orders`
 --
 
-DROP TABLE IF EXISTS `orders`;
 CREATE TABLE `orders` (
   `orderId` int(5) NOT NULL,
   `userId` int(11) NOT NULL,
@@ -109,7 +117,6 @@ INSERT INTO `orders` (`orderId`, `userId`, `orderDate`, `status`, `orderAddress`
 -- Table structure for table `order_items`
 --
 
-DROP TABLE IF EXISTS `order_items`;
 CREATE TABLE `order_items` (
   `orderId` int(5) NOT NULL,
   `productId` varchar(5) NOT NULL,
@@ -131,7 +138,6 @@ INSERT INTO `order_items` (`orderId`, `productId`, `quantity`, `subtotal`, `grip
 -- Table structure for table `product`
 --
 
-DROP TABLE IF EXISTS `product`;
 CREATE TABLE `product` (
   `productID` varchar(5) NOT NULL,
   `productName` varchar(100) NOT NULL,
@@ -159,7 +165,6 @@ INSERT INTO `product` (`productID`, `productName`, `price`, `seriesID`, `introdu
 -- Table structure for table `productstock`
 --
 
-DROP TABLE IF EXISTS `productstock`;
 CREATE TABLE `productstock` (
   `productID` varchar(5) NOT NULL,
   `sizeID` varchar(4) NOT NULL,
@@ -194,7 +199,6 @@ INSERT INTO `productstock` (`productID`, `sizeID`, `stock`, `status`, `low_stock
 -- Table structure for table `product_images`
 --
 
-DROP TABLE IF EXISTS `product_images`;
 CREATE TABLE `product_images` (
   `id` int(11) NOT NULL,
   `productID` varchar(50) DEFAULT NULL,
@@ -227,7 +231,6 @@ INSERT INTO `product_images` (`id`, `productID`, `image_path`, `image_type`, `cr
 -- Table structure for table `savedaddress`
 --
 
-DROP TABLE IF EXISTS `savedaddress`;
 CREATE TABLE `savedaddress` (
   `userID` int(11) NOT NULL,
   `address` varchar(200) NOT NULL,
@@ -250,7 +253,6 @@ INSERT INTO `savedaddress` (`userID`, `address`, `phoneNo`, `name`, `defaultAdd`
 -- Table structure for table `series`
 --
 
-DROP TABLE IF EXISTS `series`;
 CREATE TABLE `series` (
   `seriesID` varchar(3) NOT NULL,
   `seriesName` varchar(15) DEFAULT NULL
@@ -272,7 +274,6 @@ INSERT INTO `series` (`seriesID`, `seriesName`) VALUES
 -- Table structure for table `user`
 --
 
-DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `userID` int(11) NOT NULL,
   `username` varchar(255) NOT NULL,
@@ -284,17 +285,16 @@ CREATE TABLE `user` (
   `gender` enum('F','M','R') NOT NULL DEFAULT 'R' COMMENT 'F: Female. \r\nM: Male.\r\nR: Rather not say',
   `profilePic` varchar(255) DEFAULT NULL,
   `bio` varchar(1000) DEFAULT NULL,
-  `memberStatus` enum('Active','Inactive','Blocked') NOT NULL,
-  `blockedStatus` varchar(10) DEFAULT NULL
+  `memberStatus` enum('Active','Inactive','Blocked') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`userID`, `username`, `passwordHash`, `address`, `birthdate`, `email`, `phoneNo`, `gender`, `profilePic`, `bio`, `memberStatus`, `blockedStatus`) VALUES
-(1, 'cookie', '$2y$10$82Iz4eXE.Ar4s99CF11A2u8tIiOQd3Qr65apYOZ1lVsNimp8oumwG', NULL, NULL, 'cookie@mail.com', '012-3456789', 'R', NULL, 'I love cookies, as you may have already guessed', 'Inactive', ''),
-(2, 'icecream', '$2y$10$HN1VCP3xMBQkkD4fsxUMUe4Ri/ujjDaoJ9u1vZTdibF8yyXjfQ3LG', NULL, NULL, 'icecream@mail.com', '012-9876543', 'R', NULL, 'I love ice cream!', 'Inactive', '');
+INSERT INTO `user` (`userID`, `username`, `passwordHash`, `address`, `birthdate`, `email`, `phoneNo`, `gender`, `profilePic`, `bio`, `memberStatus`) VALUES
+(1, 'cookie', '$2y$10$82Iz4eXE.Ar4s99CF11A2u8tIiOQd3Qr65apYOZ1lVsNimp8oumwG', NULL, NULL, 'cookie@mail.com', '012-3456789', 'R', NULL, 'I love cookies, as you may have already guessed', 'Inactive'),
+(2, 'icecream', '$2y$10$HN1VCP3xMBQkkD4fsxUMUe4Ri/ujjDaoJ9u1vZTdibF8yyXjfQ3LG', NULL, NULL, 'icecream@mail.com', '012-9876543', 'R', NULL, 'I love ice cream!', 'Inactive');
 
 -- --------------------------------------------------------
 
@@ -302,7 +302,6 @@ INSERT INTO `user` (`userID`, `username`, `passwordHash`, `address`, `birthdate`
 -- Table structure for table `vouchers`
 --
 
-DROP TABLE IF EXISTS `vouchers`;
 CREATE TABLE `vouchers` (
   `voucherCode` varchar(15) NOT NULL,
   `amount` int(3) NOT NULL,
@@ -327,6 +326,12 @@ INSERT INTO `vouchers` (`voucherCode`, `amount`, `issuedBy`, `allowedUsage`, `to
 --
 ALTER TABLE `admin`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `blockeduser`
+--
+ALTER TABLE `blockeduser`
+  ADD PRIMARY KEY (`blockedUserID`);
 
 --
 -- Indexes for table `cartitem`
@@ -486,3 +491,4 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
