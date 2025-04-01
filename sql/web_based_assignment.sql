@@ -50,6 +50,16 @@ INSERT INTO `admin` (`id`, `position`, `passwordHash`, `adminLevel`, `status`, `
 ('A004', 'Marketing Lead', '$2y$10$rYBjsAfzbPMGCn4MANIZ.ef78dfu/MnSbq8RwOKHnY272KCo9h8gK', 'staff', 'Blocked', ''),
 ('A005', 'Operations', '$2y$10$.2ZxTbzEPRnm0H9EYwJQnOG2YBQL8plEmxN3K7WzIAJHO1FUUYVFW', 'staff', 'Blocked', '');
 
+
+
+CREATE TABLE `blockeduser` (
+  `blockedUserID` varchar(15) NOT NULL,
+  `role` enum('user','staff') NOT NULL,
+  `blockedReason` varchar(30) DEFAULT NULL,
+  `status` enum('-','reject','request') NOT NULL,
+  `appealReason` varchar(30) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 -- --------------------------------------------------------
 
 --
@@ -327,6 +337,10 @@ INSERT INTO `vouchers` (`voucherCode`, `amount`, `issuedBy`, `allowedUsage`, `to
 --
 ALTER TABLE `admin`
   ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `blockeduser`
+  ADD PRIMARY KEY (`blockedUserID`);
+COMMIT;
 
 --
 -- Indexes for table `cartitem`
