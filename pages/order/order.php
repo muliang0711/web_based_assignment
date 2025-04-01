@@ -91,6 +91,7 @@
                     <div><input type="checkbox" name="status[]"  value="Delivered" id="delivered" <?= strpos($showOnlyStatus,"Delivered") ? "checked" : "" ?> ><label for="delivered" class="statuslabel delivered">Delivered</label></div>
                     <div><input type="checkbox" name="status[]" value="In Transit" id="intransit"<?= strpos($showOnlyStatus,"In Transit") ? "checked" : "" ?> ><label for="intransit" class="statuslabel intransit">In Transit</label></div>
                     <div><input type="checkbox" name="status[]"  value="Pending" id="pending" <?= strpos($showOnlyStatus,"Pending") ? "checked" : "" ?> ><label for="pending" class="statuslabel pending">Pending</label></div>
+                    <div><input type="checkbox" name="status[]"  value="Canceled" id="canceled" <?= strpos($showOnlyStatus,"Canceled") ? "checked" : "" ?> ><label for="canceled" class="statuslabel canceled">Canceled</label></div>
                 </div>
                 
 
