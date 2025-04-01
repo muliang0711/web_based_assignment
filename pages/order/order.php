@@ -44,12 +44,11 @@
     }
 
     if(isset($_GET["price"])){
-        $sort = ($_GET["price"]=="desc" || $_GET["price"]=="asc") ? $_GET["price"] : "desc";
+        $price = ($_GET["price"]=="desc" || $_GET["price"]=="asc") ? $_GET["price"] : "desc";
     }
 
     if(isset($_GET["status"])){
         $showOnlyStatus = '"' . implode('", "', $_GET["status"]) . '"';
-        
     }
     //fetching data
     try{
@@ -65,9 +64,6 @@
     }
     catch (PDOException $e){
         die(":( Couldn't Find What You're Looking For");
-    }
-    if(count($orders) == 0){
-        die("No orders yet");
     }
 ?>
 
@@ -87,7 +83,7 @@
             <label>Status</label><br>
 
                 <div class="statusdiv">
-                    <div><input type="checkbox" name="status[]" id="all" <?= $showOnlyStatus=="'Pending', 'In Transit', 'Delivered', 'Canceled'"? "checked":"" ?>><label for="all" class="statuslabel all">All</label></div> 
+                    <div><input type="checkbox" name="status[]" id="all" <?= (strpos($showOnlyStatus,"Delivered") && strpos($showOnlyStatus,"In Transit") && strpos($showOnlyStatus,"Pending") && strpos($showOnlyStatus,"Canceled"))? "checked":"" ?>><label for="all" class="statuslabel all">All</label></div> 
                     <div><input type="checkbox" name="status[]"  value="Delivered" id="delivered" <?= strpos($showOnlyStatus,"Delivered") ? "checked" : "" ?> ><label for="delivered" class="statuslabel delivered">Delivered</label></div>
                     <div><input type="checkbox" name="status[]" value="In Transit" id="intransit"<?= strpos($showOnlyStatus,"In Transit") ? "checked" : "" ?> ><label for="intransit" class="statuslabel intransit">In Transit</label></div>
                     <div><input type="checkbox" name="status[]"  value="Pending" id="pending" <?= strpos($showOnlyStatus,"Pending") ? "checked" : "" ?> ><label for="pending" class="statuslabel pending">Pending</label></div>
@@ -111,8 +107,9 @@
     </form>
 </ul>
 
-<h1>My Order</h1>
+<h1><?= count($orders) == 0 ? "No Orders Found" : "My Orders" ?></h1>
 
+<?php if(count($orders) > 0): ?>
 <div class="order-header">
         <span>Order ID</span>
         <span>Address</span>
@@ -120,6 +117,7 @@
         <span>Status</span>
         <span></span>
 </div>
+<?php endif ?>
 
 
 <div class="orders-container">

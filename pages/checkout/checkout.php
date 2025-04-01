@@ -119,7 +119,7 @@
 
         <div class="voucher">
             <span>Voucher</span>
-            <input type="text" name="vcr" placeholder="Voucher Code" maxlength="12" autocomplete="false">
+            <input type="text" name="vcr" placeholder="Voucher Code" maxlength="12" autocomplete="off">
             <button id="appVcr">Apply</button>
         </div>
 

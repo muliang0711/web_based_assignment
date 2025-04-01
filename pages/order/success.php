@@ -30,6 +30,13 @@
     //remove items from cart
     $_db->query("DELETE FROM cartitem WHERE userID = $details->userId");
     include "../../_head.php";
+
+    //increase voucher usage
+    if(isset($_SESSION["vcrcode"])){
+        $code = $_SESSION["vcrcode"];
+        $_db->prepare("UPDATE vouchers SET totalUsage = totalUsage+1 WHERE voucherCode = ?")->execute([$code]);
+        unset($_SESSION["vcrcode"]);
+    }
 ?>
 
 <div class="container">
