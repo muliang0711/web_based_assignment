@@ -105,7 +105,7 @@ include '../../_head.php';
    <?php
    $page = req('page',1);
    require_once 'D:\user\Documents\web_based_assignment\pages\product\SimplePager.php';
-   $p = new SimplePager('SELECT * FROM product',[],6,$page);
+   $p = new SimplePager("SELECT * FROM product JOIN product_images USING (productID) WHERE image_type = 'product' ORDER BY price $order",[],3,$page);
    $arr = $p->result;
    ?>
 
