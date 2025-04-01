@@ -12,7 +12,6 @@ if (is_post()) {
         'userID' => $userID,
         
     ]);
-    logout('user');
     temp('info','the user has been BLOCKED');
 }
 redirect('view_customer.php');
