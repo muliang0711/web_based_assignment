@@ -89,64 +89,7 @@
         align-items: center;
       }
     }
-    .product-card {
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  transition: transform 0.2s ease;
-}
-
-.product-card:hover {
-  transform: translateY(-4px);
-}
-
-.card-top img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-}
-
-.card-middle {
-  padding: 1rem;
-  flex-grow: 1;
-}
-
-.card-middle h3 {
-  margin: 0 0 0.5rem 0;
-  font-size: 1.2rem;
-  color: #333;
-}
-
-.card-middle p {
-  margin: 0.3rem 0;
-  font-size: 0.95rem;
-  color: #666;
-}
-
-.card-bottom {
-  display: flex;
-  justify-content: space-around;
-  padding: 1rem;
-  border-top: 1px solid #eee;
-}
-
-.btn-card {
-  padding: 0.5rem 1rem;
-  background: #007bff;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  font-size: 0.9rem;
-  cursor: pointer;
-  transition: background 0.2s ease;
-}
-
-.btn-card:hover {
-  background: #0056b3;
-}
+  
 
   </style>
 </head>
@@ -202,7 +145,7 @@
         alertBar.innerText = "✅ No product in low stock";
       }
     }
-    
+
     window.onload = initAlertBar;
   </script>
 </body>
