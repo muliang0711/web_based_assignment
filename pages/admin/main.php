@@ -16,7 +16,6 @@
   <link rel="stylesheet" href="/css/sidebar.css">
   <link rel="stylesheet" href="/css/admin.css">
 
-
   <?php link_stylesheet($stylesheetArray ?? ''); ?>
   
 </head>

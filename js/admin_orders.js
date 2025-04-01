@@ -13,4 +13,107 @@ $(()=>{
         }
     });
 
+
+    var formdiv = $(".formwrapper");
+    var form = formdiv.children(".updateform");
+    var formOrderId = form.children("span");
+    var formStatus = form.children("select");
+    var formTracking  = form.children("input[type='text']");
+    var formDelivered = form.children("input[type='date']");
+    var orderid;
+
+    $("[data-update]").on('click', function(e){
+         orderid = $(this)[0].dataset.update;
+        let status = $(`td.stat.${orderid}`);
+        let tracking = $(`td.tracking.${orderid}`);
+        let date = $(`td.delivered.${orderid}`);
+
+        //before showing the form, we fill in the columsn with the current data;
+        formOrderId.text("Order #"+orderid);
+        formStatus.val(status.text());
+
+        formTracking.val(tracking.text() == "Null" ? null : tracking.text());
+
+        if(date.text()!="Null"){
+            formDelivered.val(date.text());
+        }else{
+            formDelivered.val("");
+        }
+        
+
+        formdiv.css("display","flex");
+
+    })
+
+
+    $(".exitButton").on('click', function(e){
+        formdiv.css("display","none");
+    });
+
+    $("#editSave").on('click', function(e){
+
+
+        // if status is in transit
+        //tracking cant be empty
+        // delivered date must be empty or just dont submit the value
+        if(formStatus.val()=="In Transit" && (formTracking.val().length < 1 || isNaN(formTracking.val()))){
+            alert("Please Enter A Tracking Number");
+        }
+
+        else if(formStatus.val()=="In Transit" && formDelivered.val() != ""){
+            alert("Please Clear The Date");
+        }
+
+        // if status is delivered
+        //tracking cant be empty
+        // delivered date cannot be empty
+        else if(formStatus.val()=="Delivered"
+    && ((formTracking.val().length < 1 || isNaN(formTracking.val())) || (formDelivered.val() == ""))){
+            alert("Please Enter Tracking Number and Date Delivered");
+        }
+
+
+        else {
+            //if no error we submit the data using ajax;
+            let stat = formStatus.val()
+            let track = (stat == "Pending"? null : formTracking.val());
+            let date = (stat == "Pending"? null : formDelivered.val());
+            date = (formDelivered.val()==""? null:formDelivered.val());
+
+            let datas = {
+                id : orderid,
+                status : stat,
+                tracking : track,
+                deliveredDate : date
+            };
+
+            $.ajax({
+                url: "/pages/admin/admin_order_update.php",
+                type: "POST",
+                data: datas,
+                success: function(res){
+                    if(res=="success"){
+                        //close the form and show success and edit the value;
+                        // console.log(res);
+                        formdiv.css("display","none");
+                        let status = $(`td.stat.${orderid}`);
+                        let tracking = $(`td.tracking.${orderid}`);
+                        let dates = $(`td.delivered.${orderid}`);
+                       
+                        status.text(stat);
+                        tracking.text(track==null?"Null":track);
+                        dates.text(date==null?"Null":date);
+
+                        $("#info-text").text("Order edited!");
+                        setTimeout(function(){
+                            $("#info-text").text("");
+                        },3000);
+                    }
+                }
+            });
+        }
+
+        
+    })
+
 });
