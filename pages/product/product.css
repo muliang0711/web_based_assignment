@@ -23,9 +23,11 @@ main {
   position: fixed;
   left: 0;
   width: var(--sidebar-width);
+  top:8%;
   height: 100%;
   background-color: rgb(50, 50, 50);
-  font-size: 20px;
+  font-size: 25px;
+  padding-top: 20px;
 }
 
 .sidebarFont p:hover{
@@ -256,8 +258,8 @@ p{
 .searchButton button{
   display: flex;
   position: absolute;
-  left: 470px;
-  top: 95px;
+  right:6%;
+  top: 10%;
   height: 39px;
   width: 39px;
   border: none;

@@ -1,7 +1,7 @@
 <?php
 require '../../_base.php';
 
-$stylesheetArray = ['product.css'];
+$stylesheetArray = ['product.css','pager.css'];
 $title = 'Product List';
 
 // function link_stylesheet($stylesheetArray) {
@@ -27,6 +27,8 @@ $productObjectArray = $statement->fetchAll();
 $seriesStatement = $_db->prepare("SELECT * FROM series");
 $seriesStatement->execute([]);
 $seriesArray = $seriesStatement->fetchAll();
+
+// Verify user
 if (is_logged_in("user")) {
   global $_db;
   global $_user;
@@ -35,11 +37,14 @@ if (is_logged_in("user")) {
 } else {
   $userID = null;
 }
+
 include '../../_head.php';
 ?>
+
+
+<!-- Side bar -->
 <div class="sidebar">
   <div class="sidebarFont">
-    <ul>
       <h>Series</h>
       <hr>
       <?php foreach ($seriesArray as $s): ?>
@@ -59,49 +64,27 @@ include '../../_head.php';
       </a>
       </div>
       <hr>
-    </ul>
   </div>
 </div>
 
+<!-- ascending for product list -->
 <?php $order = isset($_GET['price']) && $_GET['price'] == 'desc' ? 'DESC' : 'ASC'; ?>
-
+<!-- ========================== -->
+ 
 <div class="main-container">
   <form method="get" action="../product/searchResult.php?search=?">
     <div class="searchContainer">
       <input type="text" id="search" name="search" maxlength="30" class="input" placeholder="S E A R C H">
-    </div>
     <div class="searchButton">
       <button><img src="illustration-magnifying-glass-icon.png"></button>
+    </div>
     </div>
   </form>
 
 
-  <!-- TopSide Menu -->
-  <!-- <div class="menu">
-        <nav>
-            <div class="top-sideMenu">
-                <ul>
-                    <div class="logo">
-                    <img src="logo.jpg" width="125px">
-                    </div>
-                    <li><a onclick ="onClick()" href="../product/product.php"><strong>Home</strong></a></li>
-                    <li><a onclick ="onClick()" href="../product/productlist.php"><strong>Products</strong></a></li>
-                    <li><a href="#popup"><div id="cart"><img id="open-popup" src="illustration-shopping-online.png" alt="Cart" width="50" style="cursor: pointer;"></div></a></li>
-                </ul>
-            </div>
-            <div id="popup" class="popup">
-                <div class="popup-content">
-                    <a href="#" class="close">&times;</a>
-                    <h2>Shopping Cart</h2>
-                    <p>Your cart is empty.</p>
-                </div>
-            </div>
-        </nav>
-    </div> -->
-
-  <!-- Nanoflare 1000z image -->
+  <!-- ad image -->
   <div class="image-box">
-    <img src="aerosharp ad2.jpg" alt="Nanoflare 700 RISING">
+    <img src="aerosharp ad2.jpg" alt="Ad image">
   </div>
 
   <hr>
@@ -114,12 +97,34 @@ include '../../_head.php';
 
   $statement = $_db->prepare("SELECT * FROM product JOIN product_images USING (productID) WHERE image_type = 'product' ORDER BY price $order");
   $statement->execute([]);
-  $productObjectArray = $statement->fetchAll();
+  $productObjectArray = $statement->fetchAll();   
   ?>
 
+<!-- ============== -->
+<!--   pagination   -->
+   <?php
+   $page = req('page',1);
+   require_once 'D:\user\Documents\web_based_assignment\pages\product\SimplePager.php';
+   $p = new SimplePager("SELECT * FROM product JOIN product_images USING (productID) WHERE image_type = 'product' ORDER BY price $order",[],3,$page);
+   $arr = $p->result;
+   ?>
+
+   <p>  
+      <?= $p->count ?> of <?= $p->item_count ?> record(s) |
+      Page <?= $p->page ?> of <?= $p->page_count ?>
+   </p>
+   <br>
+   <?= $p->html() ?>
+<!-- ============== -->
+
+
+
+
+<!-- =============== -->
+<!-- product listing -->
+<!-- =============== -->
   <div class="list" id="productList">
     <?php
-  
       foreach ($productObjectArray as $productObject): ?>
         <!-- start -->
         <div class="container">
@@ -152,13 +157,22 @@ include '../../_head.php';
           <div class="bottom-side">
             <div class="true-card">
               <div class="function">
-                <div class="btn"><button class="btn">Add to Cart</button></div>
-                <div class="btn"><button class="btn">Buy</button></div>
+           <!-- <div class="btn"><button class="btn">Add to Cart</button></div>
+                <div class="btn"><button class="btn">Buy</button></div> -->
                 <div class="btn"><button class="btn" onclick="window.location.href='../product/productDetail.php?racket=<?php echo $productObject->productID ?>'">View Details</button></div>
+<<<<<<< HEAD
+
+                <?php /*if (!$userID) {
+                      prompt_user_login("Please log in to add to cart.");
+                    }*/
+                    ?> 
+
+=======
                 <!--<?php //if (!$userID) {
                       //prompt_user_login("Please log in to add to cart.");
                     //}
                     ?> -->
+>>>>>>> 78b77f6f73a7b68227440e470baaecb229f49bee
               </div>
             </div>
           </div>
