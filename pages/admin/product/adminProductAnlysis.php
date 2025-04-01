@@ -57,8 +57,8 @@ link_stylesheet($stylesheetArray);
       <!-- Export / Download Buttons -->
       <div class="decision-bar" style="margin-top: 20px;">
         <button type="button" onclick="exportChartToPDF()">Export as PDF</button>
-        <button type="button">Export as Excel</button>
-        <button type="button">Send to Email</button>
+        <button type="button" onclick="exportDataToExcel(window.lastReportData, window.lastReportType)">Export as Excel</button>
+        <button type="button" onclick="exportDataToCSV(window.lastReportData, window.lastReportType)">Export as CSV</button>
       </div>
 
     </div>
@@ -91,7 +91,7 @@ link_stylesheet($stylesheetArray);
       // 3. fect data (value)
       const reportType = reportTypeInput.value;
       const from = fromInput.value;
-      const to = toInput.value; 
+      const to = toInput.value;
 
       // 4. validation 
       if (!reportType) {
@@ -114,7 +114,7 @@ link_stylesheet($stylesheetArray);
   });
 
   async function fetchReportData(reportType, from, to) {
-    
+
     // 1. target proccess file path : 
     const url = `/controller/apiReport.php?reportType=${encodeURIComponent(reportType)}&from=${from}&end=${to}`;
 
@@ -167,8 +167,8 @@ link_stylesheet($stylesheetArray);
       if (window.salesChartInstance) window.salesChartInstance.destroy();
 
       // 7. use chart to draw diagram 
-        window.salesChartInstance = new Chart(ctxSales, {
-        
+      window.salesChartInstance = new Chart(ctxSales, {
+
         // mention the diagram type
         type: 'bar',
         data: {
@@ -199,6 +199,10 @@ link_stylesheet($stylesheetArray);
       });
     }
 
+    // save global data for csv and excel used
+    window.lastReportData = data;
+    window.lastReportType = reportType;
+
   }
 
   function showChartMessage(message) {
@@ -217,7 +221,7 @@ link_stylesheet($stylesheetArray);
   }
 
   async function exportChartToPDF() {
-    
+
     // 1. select previewq area 
     const chartContainer = document.querySelector('.preview');
 
@@ -230,7 +234,9 @@ link_stylesheet($stylesheetArray);
 
     // 4. jsPDF is  a thiry part library aloowed us make a pdf in browswer 
     // 4.1 use window.jspdf to get tools inside the jsPDF 
-    const {jsPDF} = window.jspdf;
+    const {
+      jsPDF
+    } = window.jspdf;
 
     // 5. make a empty pdfpage modify as A4 size 
     const pdf = new jsPDF();
@@ -243,5 +249,65 @@ link_stylesheet($stylesheetArray);
     pdf.addImage(imgData, 'PNG', 15, 20, imgWidth, imgHeight);
     // 8. save 
     pdf.save("report.pdf");
+  }
+
+  function exportDataToCSV(data, reportType) {
+    let rows = [];
+    let headers = [];
+
+    if (reportType === "Sales") {
+      headers = ["Product ID", "Product Name", "Total Sold", "Total Revenue"];
+      data.sales.forEach(item => {
+        rows.push([item.productID, item.productName, item.total_sold, item.total_revenue]);
+      });
+    }
+
+    let csv = [headers, ...rows].map(row => row.join(",")).join("\n");
+
+    const blob = new Blob([csv], {
+      type: "text/csv"
+    });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "report.csv";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+
+  function exportDataToExcel(data, reportType) {
+    let rows = [];
+    let headers = [];
+
+    if (reportType === "Sales" || reportType === "All") {
+      headers = ["Product ID", "Product Name", "Total Sold", "Total Revenue"];
+      data.sales.forEach(item => {
+        rows.push([item.productID, item.productName, item.total_sold, item.total_revenue]);
+      });
+    }
+
+    if (reportType === "Inventory" || reportType === "All") {
+      headers = ["Product ID", "Product Name", "Inventory"];
+      data.inventory.forEach(item => {
+        rows.push([item.productID, item.productName, item.inventory]);
+      });
+    }
+
+    let table = [headers, ...rows];
+    let content = table.map(row => row.join("\t")).join("\n");
+    let blob = new Blob([content], {
+      type: "application/vnd.ms-excel"
+    });
+
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "report.xls";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+
+  function sendToemail(){
+    
   }
 </script>

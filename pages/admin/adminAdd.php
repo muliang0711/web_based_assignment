@@ -98,11 +98,12 @@ if (is_post()) {
     // If no error, insert data into db and reload page
     if (!$_errors) {
         // echo "helloooo\n";
+        
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
         $stm = $_db->prepare('INSERT INTO admin
                             (id, position, passwordHash, adminLevel)
                             VALUES(?, ?, ?, ?)');
-        $stm->execute([$id, $position, $password, $level]);
+        $stm->execute([$id, $position, $hashed_password, $level]);
 
         // Destory id and password SESSION variables
         unset($_SESSION['id']);

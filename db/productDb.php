@@ -371,4 +371,5 @@ class productDb
             throw new Exception("Error when deleting images: " . $e->getMessage());
         }
     }
+    
 }
