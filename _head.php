@@ -16,20 +16,27 @@ $stock = $cartItemArray->stock;
 $cartQuantity = $cartItemArray->quantity;
 */
 
-if (is_logged_in("user")) {
-    global $_db;
-    global $_user;
-    // Reminder: userID is a NUMBER, therefore does not require single quotes
-    $_user = $_db->query("SELECT * FROM user WHERE userID = {$_SESSION['userID']}")->fetch();
+// if (is_logged_in("user")) {
+//     global $_db;
+//     global $_user;
+//     // Reminder: userID is a NUMBER, therefore does not require single quotes
+//     $_user = $_db->query("SELECT * FROM user WHERE userID = {$_SESSION['userID']}")->fetch();
+//     $userID = $_user->userID;
+// }else{
+//     $userID = null;
+// }
+
+logout_and_redirect_if_blocked();
+
+if ($_user) {
     $userID = $_user->userID;
-}else{
-    $userID = null;
+    
+    $stm = $_db->prepare('SELECT SUM(quantity) AS total FROM cartitem WHERE userID = ?');
+    $stm->execute([$userID]);
+    $total = $stm->fetch();
+    $totalItem = $total->total;
 }
 
-$stm = $_db->prepare('SELECT SUM(quantity) AS total FROM cartitem WHERE userID = ?');
-$stm->execute([$userID]);
-$total = $stm->fetch();
-$totalItem = $total->total;
 
 // echo $_SERVER['REQUEST_URI']; // this line was for debugging.
 if (is_post()) {

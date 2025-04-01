@@ -62,7 +62,7 @@ if (is_post()) {
         // If username exists, and password is correct
         if ($u && pwMatch($password, $u->passwordHash)) {
             // If the user is blocked, redirect them to a page that notifies them as such and allows them to make an appeal
-            if (is_blocked($u->userID)) {
+            if (is_blocked("user", $u->userID)) {
                 redirect('blocked.php'); // TODO
             }
 

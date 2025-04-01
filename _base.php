@@ -366,13 +366,39 @@ function is_logged_in($role, $adminLevel = null): bool {
 // Testing the is_logged_in() function
 // var_dump(is_logged_in("user", "main"));
 
-// Is the user blocked?
-function is_blocked($userID): bool {
+/** Checks if a user(customer) / admin is blocked given their ID.
+ * <br>Example usage:
+ * <br>- `is_blocked("admin", $_admin->id)` checks if the currently logged in admin has been blocked.
+ * <br>- `is_blocked("admin", $someID)` checks if the admin with `id = $someID` has been blocked.
+ */
+function is_blocked($role, $userOrAdminID): bool {
+    validateRole($role);
+
     global $_db;
-    $stm = $_db->prepare('SELECT memberStatus FROM user WHERE userID = :userID');
-    $stm->execute(['userID' => $userID]);
-    $memberStatus = $stm->fetchColumn();
-    return $memberStatus == 'Blocked';
+    if ($role == 'user') {
+        $stm = $_db->prepare("SELECT memberStatus FROM user WHERE userID = :userID");
+        $stm->execute(['userID' => $userOrAdminID]);
+    }
+    else if ($role == 'admin') {
+        $stm = $_db->prepare("SELECT `status` FROM `admin` WHERE id = :id");
+        $stm->execute(['id' => $userOrAdminID]);
+    }
+    $status = $stm->fetchColumn();
+    return $status == 'Blocked';
+}
+
+/** Log out and redirect to a page for request unblock if currently logged in user has been blocked
+ *
+ */
+function logout_and_redirect_if_blocked() {
+    global $_user;
+    if (!$_user) {
+        return;
+    }
+    if (is_blocked("user", $_user->userID)) {
+        logout("user");
+        redirect('/pages/user/blocked.php');
+    }
 }
 
 //password hashing

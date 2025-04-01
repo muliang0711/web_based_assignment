@@ -160,10 +160,17 @@ include '../../_head.php';
            <!-- <div class="btn"><button class="btn">Add to Cart</button></div>
                 <div class="btn"><button class="btn">Buy</button></div> -->
                 <div class="btn"><button class="btn" onclick="window.location.href='../product/productDetail.php?racket=<?php echo $productObject->productID ?>'">View Details</button></div>
+<<<<<<< HEAD
                 <?php /*if (!$userID) {
                       prompt_user_login("Please log in to add to cart.");
                     }*/
                     ?> 
+=======
+                <!--<?php //if (!$userID) {
+                      //prompt_user_login("Please log in to add to cart.");
+                    //}
+                    ?> -->
+>>>>>>> 85f36fc5cf3aea22cc9ecc81090b1e3bbbe9bf88
               </div>
             </div>
           </div>
