@@ -11,7 +11,7 @@ auth("admin","main");
 ?>
 
 <?php
-$arr = $_db->query('SELECT * FROM admin')->fetchAll();
+$arr = $_db->query('SELECT * FROM admin where adminLevel ="staff"')->fetchAll();
 ?>
 
 <div class="main-content">
