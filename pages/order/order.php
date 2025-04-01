@@ -35,7 +35,7 @@
 
     //setting the filter
     //by default, show all status type and from newest order date to oldest
-    $showOnlyStatus = $_GET["status"] ?? "'Pending', 'In Transit', 'Delivered'";
+    $showOnlyStatus = $_GET["status"] ?? "'Pending', 'In Transit', 'Delivered', 'Canceled'";
     $sort = $_GET["date"] ?? "desc"; 
     $price = $_GET["price"] ?? "desc"; 
 
@@ -87,10 +87,11 @@
             <label>Status</label><br>
 
                 <div class="statusdiv">
-                    <div><input type="checkbox" name="status[]" id="all" <?= $showOnlyStatus=="'Pending', 'In Transit', 'Delivered'"? "checked":"" ?>><label for="all" class="statuslabel all">All</label></div> 
+                    <div><input type="checkbox" name="status[]" id="all" <?= $showOnlyStatus=="'Pending', 'In Transit', 'Delivered', 'Canceled'"? "checked":"" ?>><label for="all" class="statuslabel all">All</label></div> 
                     <div><input type="checkbox" name="status[]"  value="Delivered" id="delivered" <?= strpos($showOnlyStatus,"Delivered") ? "checked" : "" ?> ><label for="delivered" class="statuslabel delivered">Delivered</label></div>
                     <div><input type="checkbox" name="status[]" value="In Transit" id="intransit"<?= strpos($showOnlyStatus,"In Transit") ? "checked" : "" ?> ><label for="intransit" class="statuslabel intransit">In Transit</label></div>
                     <div><input type="checkbox" name="status[]"  value="Pending" id="pending" <?= strpos($showOnlyStatus,"Pending") ? "checked" : "" ?> ><label for="pending" class="statuslabel pending">Pending</label></div>
+                    <div><input type="checkbox" name="status[]"  value="Canceled" id="canceled" <?= strpos($showOnlyStatus,"Canceled") ? "checked" : "" ?> ><label for="canceled" class="statuslabel canceled">Canceled</label></div>
                 </div>
                 
 
@@ -126,7 +127,7 @@
     <?php foreach($orders as $o): ?>
 
         <?php
-            if($o->status === "Pending"){
+            if($o->status === "Pending" || $o->status === "Canceled"){
                 $index = 0;
             }
                 

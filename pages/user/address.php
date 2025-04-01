@@ -46,6 +46,7 @@ if(is_post()){
     //add to database
     $stm = $_db->prepare("INSERT into savedaddress(userID,address,phoneNo,name,defaultAdd) VALUES(?,?,?,?,?)")
     ->execute([$userID, $address, $number, $name, $default]);
+    temp('info', "Address added!");
 }
 
 //get list of saved addrsses
@@ -61,10 +62,6 @@ include 'profile_dynamic_navbar.php';
 ?>
 
 <div class="main">
-    <section class="info-boxes">
-        <div role="alert" class="info-box success"><?= temp('info') ?></div>
-        <div role="alert" class="info-box error"><?= temp('error') ?></div>
-    </section>
     <h1 class="heading"><?= $current_title ?></h1>
     <div class="container">
         <?php foreach($stm2 as $a): ?>
@@ -134,7 +131,8 @@ include 'profile_dynamic_navbar.php';
                     <div class="form-group">
                         <label">Postcode</label><br>
                         <input id="postcode" name="postcode" type="text"style="width:80px;" maxlength="5">
-                        <span id="errmsg" style="color: red; font-size: 15px;" hidden>⚠️ Incorrect Postcode!</span>
+                        <span id="errmsg" style="color: red; font-size: 15px;" hidden>⚠️ Incorrect Postcode!</span><br>
+                        <input type="checkbox" name="default" value="1"><span style="font-size: 13px;">Save as default?</span>
                     </div>
                      
                     
@@ -144,7 +142,7 @@ include 'profile_dynamic_navbar.php';
                         id="submitbutton"
                         class="btn-simple btn-green"
                     >Save address</button>
-                    <input type="checkbox" name="default" value="1"><span style="font-size: 13px;">Save as default?</span>
+                    
                 </form>
         </section>
     </div>
@@ -157,6 +155,12 @@ include 'profile_dynamic_navbar.php';
         let form = document.getElementById("addressForm");
         //if clicked we hide container and show form;
         container.style.display = "none";
+        // clear all the value before we show the form;
+        name.value = "";
+        number.value = "";
+        street.value = "";
+        building.value = "";
+        postcode.value = "";
         form.removeAttribute("hidden");
     }
 
@@ -348,12 +352,29 @@ include 'profile_dynamic_navbar.php';
                 "indexToDelete" : addressIndex
             },
             success: function(res){
-                console.log(res);
                 if(res=="success"){
                     $(".delete[data-card]").parent("div").parent("div").remove();
+                    showError("Address removed!");
                 }
             }
         });
+
+
+        function showError(msg){
+            let flashcard = $(".info-container.warn").children("span");
+            flashcard.text(msg);
+            setTimeout(function(){
+                flashcard.text("");
+            }, 3000);
+        }
+
+        function showSuccess(msg){
+            let flashcard = $(".info-container.success").children("span");
+            flashcard.text(msg);
+            setTimeout(function(){
+                flashcard.text("");
+            }, 3000);
+        }
     })
 </script>
 

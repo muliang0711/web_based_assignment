@@ -92,6 +92,7 @@ if(is_post()){
     $stm = $_db->prepare("UPDATE savedaddress SET address = ? , phoneNo = ? , name = ?, defaultAdd = ? WHERE userID = ? AND addressIndex = ?");
     $stm->execute([$address, $number, $name, $default ,$userID, $indexToEdit]);
 
+    temp('info', "Changes saved!");
     redirect("address.php");
 }
 
@@ -103,10 +104,6 @@ include 'profile_dynamic_navbar.php';
 
 <div class="main">
 
-<section class="info-boxes">
-        <div role="alert" class="info-box success"><?= temp('info') ?></div>
-        <div role="alert" class="info-box error"><?= temp('error') ?></div>
-</section>
 <h1 class="heading"><?= $current_title ?></h1>
 
 
@@ -154,7 +151,8 @@ include 'profile_dynamic_navbar.php';
                     <div class="form-group">
                         <label">Postcode</label><br>
                         <input id="postcode" name="postcode" type="text"style="width:80px;" maxlength="5" value="<?= isset($postcode)?$postcode:"" ?>">
-                        <span id="errmsg" style="color: red; font-size: 15px;" hidden>⚠️ Incorrect Postcode!</span>
+                        <span id="errmsg" style="color: red; font-size: 15px;" hidden>⚠️ Incorrect Postcode!</span><br>
+                        <input type="checkbox" name="default" value="1" <?= (isset($default) && $default == 1)? "checked":"" ?>><span style="font-size: 13px;">Save as default?</span>
                     </div>
                     <button class="btn-simple btn-green" id="cancel" style="background-color:rgb(255, 136, 25)">Discard changes</button>                    
                     <button 
@@ -162,7 +160,7 @@ include 'profile_dynamic_navbar.php';
                         id="submit2"
                         class="btn-simple btn-green"
                     >Save changes</button>
-                    <input type="checkbox" name="default" value="1" <?= (isset($default) && $default == 1)? "checked":"" ?>><span style="font-size: 13px;">Save as default?</span>
+                    
                 </form>
         </section>
     </div>
