@@ -120,7 +120,6 @@ $(()=>{
             var datas = {
                 vcr : code
             }
-
             $.ajax({
                 url : "/api/validateVoucher.php",
                 type : "POST",
