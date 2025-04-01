@@ -74,7 +74,7 @@
         $color = $deliveredColor;
     }
     //if order has been received
-    else {
+    else if ($order->status == "Pending"){
         $msg = "Estimated Delivery Date";
         $msg2 = "Processing Order";
         $msg3 = "Your order has been received";
@@ -82,6 +82,15 @@
         $Month = date("M", strtotime($order->estimatedDate));
         $Date = date("d", strtotime($order->estimatedDate));
         $color = $pendingColor;
+    }
+    else {
+        $msg = "Your Order Won't Be Delivered On";
+        $msg2 = "Order Canceled";
+        $msg3 = "Your order has been canceled";
+        $Day = date("l", strtotime($order->estimatedDate));
+        $Month = date("M", strtotime($order->estimatedDate));
+        $Date = date("d", strtotime($order->estimatedDate));
+        $color = "rgba(158, 158, 158, 0.86)";
     }
     
     include "../../_head.php";
@@ -138,7 +147,7 @@
 
     <div class="email-container">
         <span>Sign Up for Email Notifications</span>
-        <p>Get delivery updates sent directly to <span style="color: var(--seclessImportant);font-weight: 500;"><?= $order->email ?></span>. By signing up for SMS updates for this order, you accept our <a href="about:blank" target="_blank" style="color: rgb(10,132,255);">terms of use</a></p>
+        <p>Get delivery updates sent directly to <span style="color: var(--seclessImportant);font-weight: 500;"><?= $order->email ?></span>. By signing up for Email updates for this order, you accept our <a href="about:blank" target="_blank" style="color: rgb(10,132,255);">terms of use</a></p>
         <button class="email-button">
             <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="rgb(39, 39, 39)"><path d="M160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h640q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160H160Zm320-280L160-640v400h640v-400L480-440Zm0-80 320-200H160l320 200ZM160-640v-80 480-400Z"/></svg>
             <span>Get delivery updates</span>

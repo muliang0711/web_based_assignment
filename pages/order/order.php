@@ -35,7 +35,7 @@
 
     //setting the filter
     //by default, show all status type and from newest order date to oldest
-    $showOnlyStatus = $_GET["status"] ?? "'Pending', 'In Transit', 'Delivered'";
+    $showOnlyStatus = $_GET["status"] ?? "'Pending', 'In Transit', 'Delivered', 'Canceled'";
     $sort = $_GET["date"] ?? "desc"; 
     $price = $_GET["price"] ?? "desc"; 
 
@@ -126,7 +126,7 @@
     <?php foreach($orders as $o): ?>
 
         <?php
-            if($o->status === "Pending"){
+            if($o->status === "Pending" || $o->status === "Canceled"){
                 $index = 0;
             }
                 
