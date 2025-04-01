@@ -153,7 +153,7 @@ form {
             border-right: none;
             transform: translate(2px, 5px) rotate(-45deg);
 
-            transition: height 0s ease, width .2s ease, transform 0.2s ease;
+            transition: height 0.2s ease, width .2s ease, transform 0.2s ease;
             
         }
 
