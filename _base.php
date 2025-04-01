@@ -375,6 +375,20 @@ function is_blocked($userID): bool {
     return $memberStatus == 'Blocked';
 }
 
+/** Log out and redirect to a page for request unblock if currently logged in user has been blocked
+ *
+ */
+function logout_and_redirect_if_blocked() {
+    global $_user;
+    if (!$_user) {
+        return;
+    }
+    if (is_blocked($_user->userID)) {
+        logout("user");
+        redirect('/pages/user/blocked.php');
+    }
+}
+
 //password hashing
 function pwHash($pw){
     return password_hash($pw, PASSWORD_DEFAULT);
