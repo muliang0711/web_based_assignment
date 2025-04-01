@@ -250,7 +250,7 @@ link_stylesheet($stylesheetArray);
     // 8. save 
     pdf.save("report.pdf");
   }
-  
+
   function exportDataToCSV(data, reportType) {
     let rows = [];
     let headers = [];
@@ -305,5 +305,9 @@ link_stylesheet($stylesheetArray);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+  }
+
+  function sendToemail(){
+    
   }
 </script>
