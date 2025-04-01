@@ -45,7 +45,7 @@ class CheckStock {
     }
 
     // 1. send sms ; 
-
+    
     public function check_low_stock() {
         $sql = "SELECT * FROM productstock WHERE stock <= low_stock_threshold AND alert_sent = 0";
         $stmt = $this->pdo->prepare($sql);
@@ -64,7 +64,7 @@ class CheckStock {
             $stock = $product->stock;
             $threshold = $product->low_stock_threshold;
 
-            $ownerEmail = 'puihy-wm24@student.tarc.edu.my'; // or load from DB/config
+            $ownerEmail = 'puihy-wm24@student.tarc.edu.my'; 
 
             $emailSent = $this->sendLowStockEmail($ownerEmail, $productName, $stock, $threshold);
 

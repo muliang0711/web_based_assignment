@@ -111,12 +111,20 @@ class ProductController
 
         // Check if productID & seriesID combination already exists
         $products = $this->getAllProducts();
+
         foreach ($products as $product) {
+            if (
+                $productInformation['productId'] == $product->productID &&
+                $productInformation['sizeId'] == $product->sizeID
+            ) {
+                $errors[] = "Product ID already exists with the same sizeID.";
+                break;
+            }
             if (
                 $productInformation['productId'] == $product->productID &&
                 $productInformation['seriesId'] == $product->seriesID
             ) {
-                $errors[] = "Product ID already exists with the same series.";
+                $errors[] = "Product ID already exists with the same seriesID.";
                 break;
             }
         }
@@ -247,37 +255,6 @@ class ProductController
             $this->addErrorAndRedirect("Error searching products: " . $e->getMessage());
         }
     }
-
-    private function updateStatus()
-    {
-        header('Content-Type: application/json');
-
-        $data = json_decode(file_get_contents('php://input'), true);
-        if (
-            !isset($data['productID'], $data['sizeID'], $data['status']) ||
-            !in_array($data['status'], ['onsales', 'notonsales'])
-        ) {
-            http_response_code(400);
-            echo json_encode(['error' => 'Invalid data for updateStatus.']);
-            exit();
-        }
-
-        try {
-            $result = $this->productDb->updateProductStatus($data['productID'], $data['sizeID'], $data['status']);
-            if ($result['success']) {
-                echo json_encode(['success' => true, 'message' => 'Status updated']);
-            } else {
-                http_response_code(500);
-                echo json_encode(['error' => 'Failed to update status']);
-            }
-            exit();
-        } catch (Exception $e) {
-            http_response_code(500);
-            echo json_encode(['error' => 'Exception updating status: ' . $e->getMessage()]);
-            exit();
-        }
-    }
-
     // ----------------------- Validation & File Processing ----------------------------
 
     private function validation($productInformation)

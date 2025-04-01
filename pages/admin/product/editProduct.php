@@ -1,12 +1,12 @@
 <?php
 require_once "../../../db_connection.php";
 require_once "../../../controller/productController.php";
-include '../../admin_login_guard.php';
-$productID = $_GET['productID'] ?? '';
-$sizeID = $_GET['sizeID'] ?? '';
 
-$productController = new ProductController($_db);
-$product = $productController->getProductByIDAndSize($productID, $sizeID);
+$productID    = $_GET['productID'] ?? '';
+$sizeID       = $_GET['sizeID'] ?? '';
+
+$productController  = new ProductController($_db);
+$product            = $productController->getProductByIDAndSize($productID, $sizeID);
 
 if (!$product) {
   echo "Product not found.";
