@@ -27,8 +27,13 @@ $(() => {
 
     $("input[type='checkbox']").on('click', function(e){
         let all = $("#all");
+        
         if($(this).prop("checked") == false){
             all.prop("checked",false);
+        }
+
+        else if($("#delivered").prop("checked") && $("#pending").prop("checked") && $("#intransit").prop("checked") && $("#canceled").prop("checked")){
+            all.prop("checked",true);
         }
     })
 
