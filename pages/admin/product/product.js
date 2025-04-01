@@ -63,20 +63,25 @@ $(document).ready(function () {
 
     document.querySelectorAll('.status-toggle-btn').forEach(button => {
         button.addEventListener('click', async () => {
+            
+            // 1. fetch  element form html tag : 
             const productID = button.dataset.productid;
             const sizeID = button.dataset.sizeid;
-
             const currentStatus = button.dataset.status;
-
             const newStatus = currentStatus === 'onsales' ? 'notonsales' : 'onsales';
 
 
+            // 2. use try catch to improve the process structure ; 
             try {
+                // 3. sending the data to target file ;
                 const response = await fetch('/controller/apiStatusSwtich.php', {
+                    // 3.1 mention the request method ；
                     method: 'POST',
+                    // 3.2 mention how will the data convert into what type string or json or somelse in here is json 
                     headers: {
                         'Content-Type': 'application/json'
                     },
+                    // 3.3 modify the request body , what we want to send ; 
                     body: JSON.stringify({
                         productID: productID,
                         sizeID: sizeID,
@@ -84,12 +89,16 @@ $(document).ready(function () {
                     })
                 });
 
+                // 4. get http res body
                 const result = await response.json();
 
+                // repsonse.ok to ensure the request is send successfully 
+                // response.success to ensure the backend is correctly processing the data 
                 if (!response.ok || !result.success) {
                     throw new Error(result.error || 'Unknown error');
                 }
 
+                // update status 
                 button.dataset.status = newStatus;
 
                 if (newStatus === 'onsales') {
@@ -101,7 +110,7 @@ $(document).ready(function () {
                     button.classList.add('notonsales');
                     button.innerHTML = `<i class="fas fa-toggle-off"></i> Not On Sale`;
                 }
-
+                // error handle 
             } catch (error) {
                 console.error('Failed to update status:', error);
                 alert('Failed to update status. Please try again.');
