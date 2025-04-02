@@ -157,6 +157,7 @@ class CheckStock {
         }
         
     }
+    
 }
 // here is just for test ; 
 $check = new CheckStock($_db);

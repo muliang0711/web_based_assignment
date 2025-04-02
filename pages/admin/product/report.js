@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
 async function fetchTop5ProductSales(from, to) {
 
     // 2.1 target backend file (API URL)
-    const url = `/controller/apireport.php?from=${from}&end=${to}`;
+    const url = `/controller/api/report.php?from=${from}&end=${to}`;
 
     // 2.2 fetch request with await
     const res = await fetch(url);
