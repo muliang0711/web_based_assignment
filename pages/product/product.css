@@ -468,3 +468,23 @@ p{
   opacity: 1;
 }
 
+.priceRange{
+  width: 40%;
+  height: 30px;
+  font-size: 15px;
+  align-items: center;
+}
+
+.applyButton{
+  display: flex;
+  flex-wrap: wrap;
+  left: 30px;
+  margin-top: 10px;
+  margin-left: 95px;
+  font-size: 15px;
+  border: none;
+  background-color: #979797;
+  padding: 10px;
+  font-weight: bold;
+  cursor: pointer;
+}

@@ -53,7 +53,7 @@ include '../../_head.php';
         </a>
       <?php endforeach ?>
       <hr>
-      <h>Sorting</h>
+      <h>Price Sorting</h>
       <hr>
       <div class="sorting" ?>
       <a onclick="onclick()" href="../product/productlist.php?dir=asc&page=<?php echo $currentPage ?>">
@@ -63,6 +63,12 @@ include '../../_head.php';
         <p>High to Low</p>
       </a>
       </div>
+      <hr>
+      <h>Price Range</h>
+      <hr>
+      <input type="number" class="priceRange" name="digitsOne" id="digitsOne" placeholder="RM MIN"> - 
+      <input type="number" class="priceRange" name="digitsTwo" id="digitsTwo" placeholder="RM MAX">
+      <button type="submit" class="applyButton">Apply</button>
       <hr>
   </div>
 </div>
