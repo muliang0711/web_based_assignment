@@ -53,13 +53,13 @@ include '../../_head.php';
         </a>
       <?php endforeach ?>
       <hr>
-      <h>Price Sorting</h>
+      <h>Sorting</h>
       <hr>
       <div class="sorting" ?>
-      <a onclick="onclick()" href="../product/productlist.php?price=asc&page=<?php echo $currentPage ?>">
+      <a onclick="onclick()" href="../product/productlist.php?dir=asc&page=<?php echo $currentPage ?>">
         <p>Low to High</p>
       </a>
-      <a onclick="onclick()" href="../product/productlist.php?price=desc&page=<?php echo $currentPage ?>">
+      <a onclick="onclick()" href="../product/productlist.php?dir=desc&page=<?php echo $currentPage ?>">
         <p>High to Low</p>
       </a>
       </div>
@@ -69,12 +69,12 @@ include '../../_head.php';
 
 <!-- ascending for product list -->
 <?php 
-if(req('price')){
-$order = req('price');
+if(req('dir')){
+$order = req('dir');
 }else{
   $order = "asc";
 }/*
-$order = isset($_GET['price']) && $_GET['price'] == 'desc' ? 'DESC' : 'ASC'; */?>
+$order = isset($_GET['dir']) && $_GET['dir'] == 'desc' ? 'DESC' : 'ASC'; */?>
 <!-- ========================== -->
  
 <div class="main-container">
@@ -101,7 +101,7 @@ $order = isset($_GET['price']) && $_GET['price'] == 'desc' ? 'DESC' : 'ASC'; */?
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
   ]);
 /*
-  $statement = $_db->prepare("SELECT * FROM product JOIN product_images USING (productID) WHERE image_type = 'product' ORDER BY price $order");
+  $statement = $_db->prepare("SELECT * FROM product JOIN product_images USING (productID) WHERE image_type = 'product' ORDER BY dir $order");
   $statement->execute([]);
   $productObjectArray = $statement->fetchAll();   */
   ?>

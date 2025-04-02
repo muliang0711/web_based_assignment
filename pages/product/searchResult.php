@@ -24,12 +24,12 @@ $currentPage = req('page',1);
           </a>
         <?php endforeach ?>
         <hr>
-        <h>Price Sorting</h>
+        <h>Sorting</h>
         <hr>
-        <a onclick="onclick()" href="../product/searchResult.php?price=asc&search=<?php echo $search ?>&page=<?php echo $currentPage ?>">
+        <a onclick="onclick()" href="../product/searchResult.php?dir=asc&search=<?php echo $search ?>&page=<?php echo $currentPage ?>">
           <p>Low to High</p>
         </a>
-        <a onclick="onclick()" href="../product/searchResult.php?price=desc&search=<?php echo $search ?>&page=<?php echo $currentPage ?>">
+        <a onclick="onclick()" href="../product/searchResult.php?dir=desc&search=<?php echo $search ?>&page=<?php echo $currentPage ?>">
           <p>High to Low</p>
         </a>
         <hr>
@@ -51,8 +51,8 @@ $currentPage = req('page',1);
 
     <!-- Default setting of sorting function -->
     <?php global $order;
-    if(req('price')){
-      $order = req('price');
+    if(req('dir')){
+      $order = req('dir');
       }else{
         $order = "asc";
       } ?>
@@ -81,7 +81,7 @@ $currentPage = req('page',1);
        /* $_db = new PDO('mysql:dbname=web_based_assignment', 'root', '', [
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
         ]);
-        $statement = $_db->prepare("SELECT * FROM product JOIN product_images USING (productID) WHERE image_type = 'product' AND productName LIKE ? ORDER BY price $order");
+        $statement = $_db->prepare("SELECT * FROM product JOIN product_images USING (productID) WHERE image_type = 'product' AND productName LIKE ? ORDER BY dir $order");
         $statement->execute(["%$search%"]);
         $productObjectArray = $statement->fetchAll();
         */?>
@@ -137,7 +137,7 @@ $currentPage = req('page',1);
             <hr>
             <div class="list" id="productList">
               <?php
-              $statement = $_db->prepare("SELECT * FROM product JOIN product_images USING (productID) WHERE image_type = 'product' ORDER BY price $order");
+              $statement = $_db->prepare("SELECT * FROM product JOIN product_images USING (productID) WHERE image_type = 'product' ORDER BY dir $order");
               $statement->execute([]);
               $productObjectArray = $statement->fetchAll();
               foreach ($productObjectArray as $productObject): ?>
