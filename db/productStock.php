@@ -45,6 +45,9 @@ class CheckStock {
     }
 
     // 1. send sms ; 
+    private function sendLowStockSMS(){
+        return ; 
+    }
     
     public function check_low_stock() {
         $sql = "SELECT * FROM productstock WHERE stock <= low_stock_threshold AND alert_sent = 0";
@@ -87,19 +90,23 @@ class CheckStock {
                     p.productID,
                     p.productName,
                     p.price,
-                    p.introduction,
-                    p.playerInfo,
                     p.seriesID,
                     s.seriesName,
                     ps.sizeID,
-                    ps.stock ,
-                    GROUP_CONCAT(CASE WHEN pi.image_type = 'product' THEN pi.image_path END) AS product_images,
-                    GROUP_CONCAT(CASE WHEN pi.image_type = 'player' THEN pi.image_path END) AS player_images
-                FROM product p
-                JOIN productstock ps ON p.productID = ps.productID
-                JOIN series s ON p.seriesID = s.seriesID
-                LEFT JOIN product_images pi ON p.productID = pi.productID
-                WHERE ps.stock <= ps.low_stock_threshold  ";
+                    ps.stock,
+                    ps.low_stock_threshold,
+                    img.image_path AS productImage
+                FROM 
+                    productstock ps
+                JOIN 
+                    product p ON ps.productID = p.productID
+                LEFT JOIN 
+                    series s ON p.seriesID = s.seriesID
+                LEFT JOIN 
+                    product_images img ON p.productID = img.productID AND img.image_type = 'product'
+                WHERE 
+                    ps.stock < ps.low_stock_threshold ";
+
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute();
@@ -109,6 +116,47 @@ class CheckStock {
         return $low_stock_product ; 
     }
 
+    // pending 
+    public function change_low_stock_threshold($low_stock_threshold , $productID , $sizeID) {
+        $sql = "UPDATE productstock 
+                SET low_stock_threshold = ? 
+                WHERE productID = ? 
+                AND sizeID = ? " ;
+
+        $stmt = $this->pdo->prepare($sql);
+        $success = $stmt->execute($low_stock_threshold , $productID , $sizeID);
+
+        if ($success && $stmt->rowCount() > 0) {
+            return true; // Update successful
+        } else {
+            return false; // Either no such product-size match, or no change needed
+        }
+
+    }
+
+    // update product stock ; 
+    public function update_product_stock($quantity ,$productID , $sizeID ){
+        $sql = "UPDATE productstock
+                SET 
+                    stock = stock + ?,
+                    alert_sent = 
+                    CASE 
+                        WHEN (stock + ?) > low_stock_threshold THEN 0 
+                        ELSE alert_sent 
+                    END
+                WHERE 
+                    productID = ? AND
+                    sizeID = ? ";
+        $stmt = $this->pdo->prepare($sql);
+        $success = $stmt->execute([$quantity ,$quantity , $productID , $sizeID]);
+        
+        if ($success && $stmt->rowCount() > 0) {
+            return true; // Update successful
+        } else {
+            return false; // Either no such product-size match, or no change needed
+        }
+        
+    }
 }
 // here is just for test ; 
 $check = new CheckStock($_db);
