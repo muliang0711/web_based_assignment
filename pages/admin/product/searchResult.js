@@ -27,7 +27,7 @@ $(document).ready(function() {
         const newStatus = currentStatus === "onsales" ? "notonsales" : "onsales";
 
         $.ajax({
-            url: "/controller/apiStatusSwtich.php",
+            url: "/controller/api/statusSwtich.php",
             method: "POST",
             contentType: "application/json",
             data: JSON.stringify({
