@@ -31,7 +31,7 @@ if (!$record) {
     exit;
 }
 
-$updateSql = "UPDATE productstock SET stock = ? WHERE productID = ? AND sizeID = ?";
+$updateSql = "UPDATE productstock SET stock = stock + ? WHERE productID = ? AND sizeID = ?";
 $updateStmt = $_db->prepare($updateSql);
 $updateStmt->execute([$newQty, $productID, $sizeID]);
 
