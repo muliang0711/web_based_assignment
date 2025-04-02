@@ -10,9 +10,9 @@ class SimplePager {
 
     public function __construct($query, $params, $limit, $page) {
         global $_db;
-
+        
         // Set [limit] and [page]
-        $this->limit = ctype_digit($limit) ? max($limit, 1) : 10;
+        $this->limit = ctype_digit($limit) ? max($limit, 1) : 3;
         $this->page = ctype_digit($page) ? max($page, 1) : 1;
 
         // Set [item count]
@@ -37,23 +37,44 @@ class SimplePager {
     }
 
     public function html($href = '', $attr = '') {
+        global $order;
+        global $search;
+        if($search){
+            if (!$this->result) return;
+            // Generate pager (html)
+            $prev = max($this->page - 1, 1);
+            $next = min($this->page + 1, $this->page_count);
+    
+            echo "<ul class='pager' $attr>";
+            echo "<a href='?page=1&price=$order&search=$search&$href'>First</a>";
+            echo "<a href='?page=$prev&price=$order&search=$search&$href'>Previous</a>";
+    
+            for ($p = 1; $p <= $this->page_count; $p++) {
+                $c = $p == $this->page ? 'active' : '';
+                echo "<a href='?page=$p&price=$order&search=$search&$href' class='$c'>$p</a>";
+            }
+    
+            echo "<a href='?page=$next&price=$order&search=$search&$href'>Next</a>";
+            echo "<a href='?page=$this->page_count&price=$order&search=$search&$href'>Last</a>";
+            echo "</ul>";
+        }else{
         if (!$this->result) return;
-
         // Generate pager (html)
         $prev = max($this->page - 1, 1);
         $next = min($this->page + 1, $this->page_count);
 
         echo "<ul class='pager' $attr>";
-        echo "<a href='?page=1&$href'>First</a>";
-        echo "<a href='?page=$prev&$href'>Previous</a>";
+        echo "<a href='?page=1&price=$order&$href'>First</a>";
+        echo "<a href='?page=$prev&price=$order&$href'>Previous</a>";
 
         for ($p = 1; $p <= $this->page_count; $p++) {
             $c = $p == $this->page ? 'active' : '';
-            echo "<a href='?page=$p&$href' class='$c'>$p</a>";
+            echo "<a href='?page=$p&price=$order&$href' class='$c'>$p</a>";
         }
 
-        echo "<a href='?page=$next&$href'>Next</a>";
-        echo "<a href='?page=$this->page_count&$href'>Last</a>";
+        echo "<a href='?page=$next&price=$order&$href'>Next</a>";
+        echo "<a href='?page=$this->page_count&price=$order&$href'>Last</a>";
         echo "</ul>";
     }
+}
 }

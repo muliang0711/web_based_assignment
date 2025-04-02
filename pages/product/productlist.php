@@ -1,6 +1,6 @@
 <?php
 require '../../_base.php';
-
+$currentPage = req('page',1);
 $stylesheetArray = ['product.css','pager.css'];
 $title = 'Product List';
 
@@ -56,10 +56,10 @@ include '../../_head.php';
       <h>Price Sorting</h>
       <hr>
       <div class="sorting" ?>
-      <a onclick="onclick()" href="../product/productlist.php?price=asc">
+      <a onclick="onclick()" href="../product/productlist.php?price=asc&page=<?php echo $currentPage ?>">
         <p>Low to High</p>
       </a>
-      <a onclick="onclick()" href="../product/productlist.php?price=desc">
+      <a onclick="onclick()" href="../product/productlist.php?price=desc&page=<?php echo $currentPage ?>">
         <p>High to Low</p>
       </a>
       </div>
@@ -68,7 +68,13 @@ include '../../_head.php';
 </div>
 
 <!-- ascending for product list -->
-<?php $order = isset($_GET['price']) && $_GET['price'] == 'desc' ? 'DESC' : 'ASC'; ?>
+<?php 
+if(req('price')){
+$order = req('price');
+}else{
+  $order = "asc";
+}/*
+$order = isset($_GET['price']) && $_GET['price'] == 'desc' ? 'DESC' : 'ASC'; */?>
 <!-- ========================== -->
  
 <div class="main-container">
@@ -94,17 +100,17 @@ include '../../_head.php';
   $_db = new PDO('mysql:dbname=web_based_assignment', 'root', '', [
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
   ]);
-
+/*
   $statement = $_db->prepare("SELECT * FROM product JOIN product_images USING (productID) WHERE image_type = 'product' ORDER BY price $order");
   $statement->execute([]);
-  $productObjectArray = $statement->fetchAll();   
+  $productObjectArray = $statement->fetchAll();   */
   ?>
 
 <!-- ============== -->
 <!--   pagination   -->
    <?php
-   $page = req('page',1);
    require_once 'D:\user\Documents\web_based_assignment\pages\product\SimplePager.php';
+   $page = req('page',1);
    $p = new SimplePager("SELECT * FROM product JOIN product_images USING (productID) WHERE image_type = 'product' ORDER BY price $order",[],3,$page);
    $arr = $p->result;
    ?>
@@ -125,7 +131,7 @@ include '../../_head.php';
 <!-- =============== -->
   <div class="list" id="productList">
     <?php
-      foreach ($productObjectArray as $productObject): ?>
+      foreach ($arr as $productObject): ?>
         <!-- start -->
         <div class="container">
         <!-- top side  -->
