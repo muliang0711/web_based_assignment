@@ -66,7 +66,7 @@ include '../../_head.php';
       <hr>
       <h>Price Range</h>
       <hr>
-      <input type="number" class="priceRange" name="digitsOne" id="digitsOne" placeholder="RM MIN"> - 
+      <input type="number" class="priceRange" name="digitsOne" id="digitsOne" placeholder="RM MIN"> -
       <input type="number" class="priceRange" name="digitsTwo" id="digitsTwo" placeholder="RM MAX">
       <button type="submit" class="applyButton">Apply</button>
       <hr>
@@ -120,11 +120,6 @@ $order = isset($_GET['dir']) && $_GET['dir'] == 'desc' ? 'DESC' : 'ASC'; */?>
    $p = new SimplePager("SELECT * FROM product JOIN product_images USING (productID) WHERE image_type = 'product' ORDER BY price $order",[],3,$page);
    $arr = $p->result;
    ?>
-
-   <p>  
-      <?= $p->count ?> of <?= $p->item_count ?> record(s) |
-      Page <?= $p->page ?> of <?= $p->page_count ?>
-   </p>
    <br>
    <?= $p->html() ?>
 <!-- ============== -->
