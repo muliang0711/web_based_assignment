@@ -281,7 +281,7 @@ class productDb
                 JOIN series s ON p.seriesID = s.seriesID
                 LEFT JOIN product_images pi ON p.productID = pi.productID
                 WHERE p.productID = :productID
-                  AND ps.sizeID = :sizeID
+                AND ps.sizeID = :sizeID
                 GROUP BY p.productID, ps.sizeID
         ";
         $stmt = $this->pdo->prepare($sql);

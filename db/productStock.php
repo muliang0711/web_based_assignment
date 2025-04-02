@@ -160,8 +160,8 @@ class CheckStock {
     
     // show restock record ;
     public function record_restock($productID, $sizeID, $quantity, $admin  ) {
-        $sql = "INSERT INTO restock_history (productID, sizeID, restock_quantity, restocked_by, )
-                VALUES (?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO restock_history (productID, sizeID, restock_quantity, restocked_by)
+                VALUES (?, ?, ?, ?)";
         $stmt = $this->pdo->prepare($sql);
         return $stmt->execute([$productID, $sizeID, $quantity, $admin ]);
     }
