@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Apr 01, 2025 at 12:55 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- 主机： 127.0.0.1
+-- 生成日期： 2025-04-02 15:05:42
+-- 服务器版本： 10.4.32-MariaDB
+-- PHP 版本： 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,15 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `web_based_assignment`
+-- 数据库： `web_based_assignment`
 --
 
 -- --------------------------------------------------------
+CREATE DATABASE IF NOT EXISTS web_based_assignment;
+USE web_based_assignment;
 
 --
--- Table structure for table `admin`
+-- 表的结构 `admin`
 --
 
 CREATE TABLE `admin` (
@@ -36,7 +38,7 @@ CREATE TABLE `admin` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `admin`
+-- 转存表中的数据 `admin`
 --
 
 INSERT INTO `admin` (`id`, `position`, `passwordHash`, `adminLevel`, `status`) VALUES
@@ -49,7 +51,7 @@ INSERT INTO `admin` (`id`, `position`, `passwordHash`, `adminLevel`, `status`) V
 -- --------------------------------------------------------
 
 --
--- Table structure for table `blockeduser`
+-- 表的结构 `blockeduser`
 --
 
 CREATE TABLE `blockeduser` (
@@ -63,7 +65,7 @@ CREATE TABLE `blockeduser` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `cartitem`
+-- 表的结构 `cartitem`
 --
 
 CREATE TABLE `cartitem` (
@@ -74,7 +76,7 @@ CREATE TABLE `cartitem` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `cartitem`
+-- 转存表中的数据 `cartitem`
 --
 
 INSERT INTO `cartitem` (`userID`, `productID`, `sizeID`, `quantity`) VALUES
@@ -87,7 +89,7 @@ INSERT INTO `cartitem` (`userID`, `productID`, `sizeID`, `quantity`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `orders`
+-- 表的结构 `orders`
 --
 
 CREATE TABLE `orders` (
@@ -105,7 +107,7 @@ CREATE TABLE `orders` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `orders`
+-- 转存表中的数据 `orders`
 --
 
 INSERT INTO `orders` (`orderId`, `userId`, `orderDate`, `status`, `orderAddress`, `orderName`, `orderPhone`, `deliveryMethod`, `deliveredDate`, `tracking`, `discount`) VALUES
@@ -114,7 +116,7 @@ INSERT INTO `orders` (`orderId`, `userId`, `orderDate`, `status`, `orderAddress`
 -- --------------------------------------------------------
 
 --
--- Table structure for table `order_items`
+-- 表的结构 `order_items`
 --
 
 CREATE TABLE `order_items` (
@@ -126,7 +128,7 @@ CREATE TABLE `order_items` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `order_items`
+-- 转存表中的数据 `order_items`
 --
 
 INSERT INTO `order_items` (`orderId`, `productId`, `quantity`, `subtotal`, `gripSize`) VALUES
@@ -135,7 +137,7 @@ INSERT INTO `order_items` (`orderId`, `productId`, `quantity`, `subtotal`, `grip
 -- --------------------------------------------------------
 
 --
--- Table structure for table `product`
+-- 表的结构 `product`
 --
 
 CREATE TABLE `product` (
@@ -148,7 +150,7 @@ CREATE TABLE `product` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `product`
+-- 转存表中的数据 `product`
 --
 
 INSERT INTO `product` (`productID`, `productName`, `price`, `seriesID`, `introduction`, `playerInfo`) VALUES
@@ -162,7 +164,7 @@ INSERT INTO `product` (`productID`, `productName`, `price`, `seriesID`, `introdu
 -- --------------------------------------------------------
 
 --
--- Table structure for table `productstock`
+-- 表的结构 `productstock`
 --
 
 CREATE TABLE `productstock` (
@@ -176,7 +178,7 @@ CREATE TABLE `productstock` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `productstock`
+-- 转存表中的数据 `productstock`
 --
 
 INSERT INTO `productstock` (`productID`, `sizeID`, `stock`, `status`, `low_stock_threshold`, `alert_sent`, `qr_token`) VALUES
@@ -196,7 +198,7 @@ INSERT INTO `productstock` (`productID`, `sizeID`, `stock`, `status`, `low_stock
 -- --------------------------------------------------------
 
 --
--- Table structure for table `product_images`
+-- 表的结构 `product_images`
 --
 
 CREATE TABLE `product_images` (
@@ -208,7 +210,7 @@ CREATE TABLE `product_images` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `product_images`
+-- 转存表中的数据 `product_images`
 --
 
 INSERT INTO `product_images` (`id`, `productID`, `image_path`, `image_type`, `created_at`) VALUES
@@ -228,7 +230,22 @@ INSERT INTO `product_images` (`id`, `productID`, `image_path`, `image_type`, `cr
 -- --------------------------------------------------------
 
 --
--- Table structure for table `savedaddress`
+-- 表的结构 `restock_history`
+--
+
+CREATE TABLE `restock_history` (
+  `restockID` int(11) NOT NULL,
+  `productID` varchar(20) NOT NULL,
+  `sizeID` varchar(20) NOT NULL,
+  `restock_quantity` int(11) NOT NULL,
+  `restocked_by` varchar(250) DEFAULT NULL,
+  `restock_time` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `savedaddress`
 --
 
 CREATE TABLE `savedaddress` (
@@ -241,7 +258,7 @@ CREATE TABLE `savedaddress` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `savedaddress`
+-- 转存表中的数据 `savedaddress`
 --
 
 INSERT INTO `savedaddress` (`userID`, `address`, `phoneNo`, `name`, `defaultAdd`, `addressIndex`) VALUES
@@ -250,7 +267,7 @@ INSERT INTO `savedaddress` (`userID`, `address`, `phoneNo`, `name`, `defaultAdd`
 -- --------------------------------------------------------
 
 --
--- Table structure for table `series`
+-- 表的结构 `series`
 --
 
 CREATE TABLE `series` (
@@ -259,7 +276,7 @@ CREATE TABLE `series` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `series`
+-- 转存表中的数据 `series`
 --
 
 INSERT INTO `series` (`seriesID`, `seriesName`) VALUES
@@ -271,7 +288,7 @@ INSERT INTO `series` (`seriesID`, `seriesName`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user`
+-- 表的结构 `user`
 --
 
 CREATE TABLE `user` (
@@ -289,7 +306,7 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `user`
+-- 转存表中的数据 `user`
 --
 
 INSERT INTO `user` (`userID`, `username`, `passwordHash`, `address`, `birthdate`, `email`, `phoneNo`, `gender`, `profilePic`, `bio`, `memberStatus`) VALUES
@@ -299,7 +316,7 @@ INSERT INTO `user` (`userID`, `username`, `passwordHash`, `address`, `birthdate`
 -- --------------------------------------------------------
 
 --
--- Table structure for table `vouchers`
+-- 表的结构 `vouchers`
 --
 
 CREATE TABLE `vouchers` (
@@ -311,44 +328,44 @@ CREATE TABLE `vouchers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `vouchers`
+-- 转存表中的数据 `vouchers`
 --
 
 INSERT INTO `vouchers` (`voucherCode`, `amount`, `issuedBy`, `allowedUsage`, `totalUsage`) VALUES
 ('TEST123', 30, 'A003', 10, 0);
 
 --
--- Indexes for dumped tables
+-- 转储表的索引
 --
 
 --
--- Indexes for table `admin`
+-- 表的索引 `admin`
 --
 ALTER TABLE `admin`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `blockeduser`
+-- 表的索引 `blockeduser`
 --
 ALTER TABLE `blockeduser`
   ADD PRIMARY KEY (`blockedUserID`);
 
 --
--- Indexes for table `cartitem`
+-- 表的索引 `cartitem`
 --
 ALTER TABLE `cartitem`
   ADD PRIMARY KEY (`userID`,`productID`,`sizeID`),
   ADD KEY `productID` (`productID`,`sizeID`);
 
 --
--- Indexes for table `orders`
+-- 表的索引 `orders`
 --
 ALTER TABLE `orders`
   ADD PRIMARY KEY (`orderId`),
   ADD KEY `userId` (`userId`);
 
 --
--- Indexes for table `order_items`
+-- 表的索引 `order_items`
 --
 ALTER TABLE `order_items`
   ADD PRIMARY KEY (`orderId`,`productId`,`gripSize`),
@@ -356,41 +373,48 @@ ALTER TABLE `order_items`
   ADD KEY `order_items_ibfk_2` (`productId`,`gripSize`);
 
 --
--- Indexes for table `product`
+-- 表的索引 `product`
 --
 ALTER TABLE `product`
   ADD PRIMARY KEY (`productID`),
   ADD KEY `seriesID` (`seriesID`);
 
 --
--- Indexes for table `productstock`
+-- 表的索引 `productstock`
 --
 ALTER TABLE `productstock`
   ADD PRIMARY KEY (`productID`,`sizeID`),
   ADD UNIQUE KEY `qr_token` (`qr_token`);
 
 --
--- Indexes for table `product_images`
+-- 表的索引 `product_images`
 --
 ALTER TABLE `product_images`
   ADD PRIMARY KEY (`id`),
   ADD KEY `productID` (`productID`);
 
 --
--- Indexes for table `savedaddress`
+-- 表的索引 `restock_history`
+--
+ALTER TABLE `restock_history`
+  ADD PRIMARY KEY (`restockID`),
+  ADD KEY `productID` (`productID`,`sizeID`);
+
+--
+-- 表的索引 `savedaddress`
 --
 ALTER TABLE `savedaddress`
   ADD PRIMARY KEY (`addressIndex`),
   ADD KEY `userID` (`userID`);
 
 --
--- Indexes for table `series`
+-- 表的索引 `series`
 --
 ALTER TABLE `series`
   ADD PRIMARY KEY (`seriesID`);
 
 --
--- Indexes for table `user`
+-- 表的索引 `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`userID`),
@@ -400,89 +424,102 @@ ALTER TABLE `user`
   ADD KEY `username` (`username`);
 
 --
--- Indexes for table `vouchers`
+-- 表的索引 `vouchers`
 --
 ALTER TABLE `vouchers`
   ADD PRIMARY KEY (`voucherCode`),
   ADD KEY `issuedBy` (`issuedBy`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- 在导出的表使用AUTO_INCREMENT
 --
 
 --
--- AUTO_INCREMENT for table `orders`
+-- 使用表AUTO_INCREMENT `orders`
 --
 ALTER TABLE `orders`
   MODIFY `orderId` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12355;
 
 --
--- AUTO_INCREMENT for table `product_images`
+-- 使用表AUTO_INCREMENT `product_images`
 --
 ALTER TABLE `product_images`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
--- AUTO_INCREMENT for table `savedaddress`
+-- 使用表AUTO_INCREMENT `restock_history`
+--
+ALTER TABLE `restock_history`
+  MODIFY `restockID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `savedaddress`
 --
 ALTER TABLE `savedaddress`
   MODIFY `addressIndex` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT for table `user`
+-- 使用表AUTO_INCREMENT `user`
 --
 ALTER TABLE `user`
   MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- Constraints for dumped tables
+-- 限制导出的表
 --
 
 --
--- Constraints for table `cartitem`
+-- 限制表 `cartitem`
 --
 ALTER TABLE `cartitem`
   ADD CONSTRAINT `cartitem_ibfk_1` FOREIGN KEY (`productID`,`sizeID`) REFERENCES `productstock` (`productID`, `sizeID`);
 
 --
--- Constraints for table `orders`
+-- 限制表 `orders`
 --
 ALTER TABLE `orders`
   ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `user` (`userID`);
 
 --
--- Constraints for table `order_items`
+-- 限制表 `order_items`
 --
 ALTER TABLE `order_items`
   ADD CONSTRAINT `order_items_ibfk_1` FOREIGN KEY (`orderId`) REFERENCES `orders` (`orderId`),
   ADD CONSTRAINT `order_items_ibfk_2` FOREIGN KEY (`productId`,`gripSize`) REFERENCES `productstock` (`productID`, `sizeID`);
 
 --
--- Constraints for table `product`
+-- 限制表 `product`
 --
 ALTER TABLE `product`
   ADD CONSTRAINT `product_ibfk_1` FOREIGN KEY (`seriesID`) REFERENCES `series` (`seriesID`);
 
 --
--- Constraints for table `productstock`
+-- 限制表 `productstock`
 --
 ALTER TABLE `productstock`
   ADD CONSTRAINT `productStock_ibfk_1` FOREIGN KEY (`productID`) REFERENCES `product` (`productID`);
 
 --
--- Constraints for table `product_images`
+-- 限制表 `product_images`
 --
 ALTER TABLE `product_images`
   ADD CONSTRAINT `product_images_ibfk_1` FOREIGN KEY (`productID`) REFERENCES `product` (`productID`) ON DELETE CASCADE;
 
 --
--- Constraints for table `savedaddress`
+-- 限制表 `restock_history`
+--
+ALTER TABLE `restock_history`
+  ADD CONSTRAINT `restock_history_ibfk_1` FOREIGN KEY (`productID`) REFERENCES `product` (`productID`),
+  ADD CONSTRAINT `restock_history_ibfk_2` FOREIGN KEY (`productID`,`sizeID`) REFERENCES `productstock` (`productID`, `sizeID`);
+
+--
+-- 限制表 `savedaddress`
 --
 ALTER TABLE `savedaddress`
   ADD CONSTRAINT `savedaddress_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`);
 
 --
--- Constraints for table `vouchers`
+-- 限制表 `vouchers`
 --
 ALTER TABLE `vouchers`
   ADD CONSTRAINT `vouchers_ibfk_1` FOREIGN KEY (`issuedBy`) REFERENCES `admin` (`id`);
@@ -491,4 +528,3 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-
