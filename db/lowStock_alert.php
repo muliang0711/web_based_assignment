@@ -81,7 +81,34 @@ class CheckStock {
         }
     }
 
-    
+    public function get_low_stock_product(){
+
+        $sql = "SELECT 
+                    p.productID,
+                    p.productName,
+                    p.price,
+                    p.introduction,
+                    p.playerInfo,
+                    p.seriesID,
+                    s.seriesName,
+                    ps.sizeID,
+                    ps.stock ,
+                    GROUP_CONCAT(CASE WHEN pi.image_type = 'product' THEN pi.image_path END) AS product_images,
+                    GROUP_CONCAT(CASE WHEN pi.image_type = 'player' THEN pi.image_path END) AS player_images
+                FROM product p
+                JOIN productstock ps ON p.productID = ps.productID
+                JOIN series s ON p.seriesID = s.seriesID
+                LEFT JOIN product_images pi ON p.productID = pi.productID
+                WHERE ps.stock <= ps.low_stock_threshold  ";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+
+        $low_stock_product = $stmt->fetchAll();
+
+        return $low_stock_product ; 
+    }
+
 }
 // here is just for test ; 
 $check = new CheckStock($_db);
