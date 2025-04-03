@@ -32,7 +32,7 @@
       <a href="#"><i class="fas fa-cog"></i> Settings</a>
     </li>
     <li>
-      <a href="/pages/admin/product/lowstock.php"><i class="fas fa-chart-line"></i> Restock </a>
+      <a href="/pages/admin/product/stock.php"><i class="fas fa-chart-line"></i> Restock </a>
     </li>
   </ul>
 </div>

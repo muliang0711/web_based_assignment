@@ -7,18 +7,18 @@ header('Content-Type: application/json');
 include_once __DIR__ . "/../../db/productStock.php";
 include_once __DIR__ . "/../../db_connection.php";
 
-    // 2.1 make class 
-
-    $manager = new $checkStock($_db);
+// 2.1 make class 
+$manager = new CheckStock($_db);
 
 // 3. get data from frontend :
-$method = $_SERVER['REQUEST_METHOD'];
-$data = ($method === 'POST') ? $_POST : $_GET;
+$data = json_decode(file_get_contents('php://input'), true);
 
 $response = [
     "success" => false,
     "message" => "Invalid request",
 ];
+
+session_start();
 
 if (isset($data['action'])) {
     switch ($data['action']) {
@@ -60,6 +60,13 @@ if (isset($data['action'])) {
             }
             break;
 
+        case 'get_low_stock_product':
+            $result = $manager->get_low_stock_product();
+            $response['success'] = true;
+            $response['products'] = $result;
+            $response['message'] = count($result) . " low-stock products found.";
+            break;
+
         default:
             $response['message'] = "Unknown action";
     }
@@ -67,7 +74,3 @@ if (isset($data['action'])) {
 
 echo json_encode($response);
 exit;
-
-
-
-?> 

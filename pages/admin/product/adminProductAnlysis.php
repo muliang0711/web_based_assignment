@@ -109,7 +109,7 @@ link_stylesheet($stylesheetArray);
         renderChartPreview(reportType, data);
       } catch (error) {
         showChartMessage(`❌ ${error.message}`);
-      }
+      } 
     });
   });
 
