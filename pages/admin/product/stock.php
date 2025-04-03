@@ -108,7 +108,6 @@
             margin-top: 10px;
             font-weight: bold;
         }
-        
     </style>
 </head>
 <body>
@@ -120,8 +119,9 @@
 
         <div class="bottom">
             <button onclick="fetchLowStock()">Fetch Low Stock</button>
-            <button onclick="startQRScanner()">Restock</button>
+            <button onclick="startQRScanner()">Record Restock</button>
             <button onclick="changeThreshold()">Change Threshold</button>
+            <button onclick="updateStock()">Update Stock</button>
         </div>
 
         <!-- QR Reader + Info -->
@@ -215,7 +215,7 @@
                         productID: scannedData.productID,
                         sizeID: scannedData.sizeID,
                         token: scannedData.token,
-                        new_quantity: newQty , 
+                        new_quantity: newQty
                     }),
                     success: function (data) {
                         $("#restock-status").text(data.message).css("color", data.success ? "green" : "red");
