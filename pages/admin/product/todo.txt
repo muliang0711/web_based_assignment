@@ -13,6 +13,12 @@
 10 . js file can not load in admin_product 
 11. composer download ;
 
+12. show product card in details page 
+13. show product page in product card deatils button 
+14. show low stock product card with php 
+15. when restock add full verfiy function 
+16. add show restock record 
+
 <VirtualHost *:80>
     DocumentRoot "C:/code/Project/"
     ServerName myproject.local

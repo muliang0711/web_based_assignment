@@ -174,13 +174,6 @@
                 }
             };
 
-            window.changeThreshold = async function () {
-                // Optional implementation
-            };
-
-            window.updateStock = async function () {
-                // Optional implementation
-            };
 
             window.startQRScanner = function () {
                 $("#qr-reader").show();
@@ -237,6 +230,7 @@
                     }
                 });
             });
+            
         });
     </script>
 </body>
