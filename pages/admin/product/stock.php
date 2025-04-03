@@ -92,7 +92,10 @@
 
         #qr-reader {
             width: 300px;
-            margin: auto;
+            position: fixed;    
+            top: -50%;
+            left: 32%;
+
         }
 
         #restock-form button {
@@ -115,7 +118,10 @@
     <div class="body">
         <div class="top" id="messageBar"></div>
 
-        <div class="middle" id="productContainer"></div>
+        <div class="middle" id="productContainer">
+
+        <div style="height: 800px;"></div>
+        </div>
 
         <div class="bottom">
             <button onclick="fetchLowStock()">Fetch Low Stock</button>
