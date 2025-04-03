@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Stock Management with QR Restock</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+
+    
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -119,9 +119,8 @@
 
         <div class="bottom">
             <button onclick="fetchLowStock()">Fetch Low Stock</button>
-            <button onclick="startQRScanner()">Record Restock</button>
+            <button onclick="startQRScanner()">update stock</button>
             <button onclick="changeThreshold()">Change Threshold</button>
-            <button onclick="updateStock()">Update Stock</button>
         </div>
 
         <!-- QR Reader + Info -->
@@ -139,6 +138,10 @@
         </div>
     </div>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+
+    
     <script>
         let scannedData = null;
         const backendURL = "/../../../controller/api/stock.php";
