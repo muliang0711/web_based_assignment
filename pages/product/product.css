@@ -26,7 +26,7 @@ main {
   top:8%;
   height: 100%;
   background-color: rgb(50, 50, 50);
-  font-size: 25px;
+  font-size: 20px;
   padding-top: 20px;
 }
 
@@ -37,10 +37,16 @@ main {
 .sidebarFont p{
   cursor: pointer;
   color: white;
+  padding-left: 70px;
+}
+
+.sidebarFont h{
+  padding-left: 70px;
+  font-size: 25px;
 }
 
 .sidebarFont{
-  text-align: center;
+  text-align: left;
   color: white;
   font-family: Arial, sans-serif;
 }
@@ -49,6 +55,7 @@ main {
   display: inline-block;
   text-align: left;
   width: 100%; 
+  padding-left: 10px;
 }
 
 .main-container {
@@ -468,3 +475,24 @@ p{
   opacity: 1;
 }
 
+.priceRange{
+  width: 40%;
+  height: 30px;
+  font-size: 15px;
+  align-items: center;
+  margin-left: 10px;
+}
+
+.applyButton{
+  display: flex;
+  flex-wrap: wrap;
+  left: 30px;
+  margin-top: 10px;
+  margin-left: 95px;
+  font-size: 15px;
+  border: none;
+  background-color: #979797;
+  padding: 10px;
+  font-weight: bold;
+  cursor: pointer;
+}
