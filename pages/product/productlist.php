@@ -3,6 +3,16 @@ require '../../_base.php';
 $currentPage = req('page',1);
 $stylesheetArray = ['product.css','pager.css'];
 $title = 'Product List';
+global $order;
+// default price range 
+global $min_price;
+global $max_price;
+if(!req('min')){
+  $min_price = 0;
+}
+if(!req('max')){
+  $max_price = 10000;
+}
 
 // function link_stylesheet($stylesheetArray) {
 //   if (!$stylesheetArray) {
@@ -56,22 +66,45 @@ include '../../_head.php';
       <h>Price Sorting</h>
       <hr>
       <div class="sorting" ?>
-      <a onclick="onclick()" href="../product/productlist.php?dir=asc&page=<?php echo $currentPage ?>">
+      <a onclick="onclick()" href="../product/productlist.php?dir=asc&page=<?php echo $currentPage ?>&max=<?php echo $max_price ?>&min=<?php echo $min_price ?>">
         <p>Low to High</p>
       </a>
-      <a onclick="onclick()" href="../product/productlist.php?dir=desc&page=<?php echo $currentPage ?>">
+      <a onclick="onclick()" href="../product/productlist.php?dir=desc&page=<?php echo $currentPage ?>&max=<?php echo $max_price ?>&min=<?php echo $min_price ?>">
         <p>High to Low</p>
       </a>
       </div>
       <hr>
       <h>Price Range</h>
       <hr>
-      <input type="number" class="priceRange" name="digitsOne" id="digitsOne" placeholder="RM MIN"> -
-      <input type="number" class="priceRange" name="digitsTwo" id="digitsTwo" placeholder="RM MAX">
+      <form method="get" name="priceRange" action="../product/productlist.php?dir=<?php if(!$order){ echo "asc";}else{echo $order;} ?>&page=<?php echo $currentPage ?>&min=<?php echo $min_price?>&max=<?php echo $max_price?>"> 
+      <input type="number" class="priceRange" name="min" id="min" placeholder="RM MIN"> -
+      <input type="number" class="priceRange" name="max" id="max" placeholder="RM MAX">
       <button type="submit" class="applyButton">Apply</button>
+      </form> 
       <hr>
   </div>
 </div>
+
+<!-- get price range -->
+<?php 
+$min_price = isset($_GET['min']) ? $_GET['min'] : 0;
+$max_price = isset($_GET['max']) ? $_GET['max'] : 10000;
+// verify input
+if($min_price){
+  if($min_price < 0){
+    $min_price = 0;
+  }else{
+    $min_price = req('min');
+  }
+}
+
+if($max_price){
+  if($min_price > $max_price){
+    $max = 10000;
+    $min = 0;
+  }
+}
+?>
 
 <!-- ascending for product list -->
 <?php 
@@ -117,7 +150,7 @@ $order = isset($_GET['dir']) && $_GET['dir'] == 'desc' ? 'DESC' : 'ASC'; */?>
    <?php
    require_once 'D:\user\Documents\web_based_assignment\pages\product\SimplePager.php';
    $page = req('page',1);
-   $p = new SimplePager("SELECT * FROM product JOIN product_images USING (productID) WHERE image_type = 'product' ORDER BY price $order",[],3,$page);
+   $p = new SimplePager("SELECT * FROM product JOIN product_images USING (productID) WHERE image_type = 'product' AND price BETWEEN $min_price AND $max_price ORDER BY price $order",[],3,$page);
    $arr = $p->result;
    ?>
    <br>
