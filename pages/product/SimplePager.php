@@ -39,6 +39,8 @@ class SimplePager {
     public function html($href = '', $attr = '') {
         global $order;
         global $search;
+        global $min_price;
+        global $max_price;
         if($search){
             if (!$this->result) return;
             // Generate pager (html)
@@ -46,16 +48,16 @@ class SimplePager {
             $next = min($this->page + 1, $this->page_count);
     
             echo "<ul class='pager' $attr>";
-            echo "<a href='?page=1&price=$order&search=$search&$href'>First</a>";
-            echo "<a href='?page=$prev&price=$order&search=$search&$href'>Previous</a>";
+            echo "<a href='?page=1&dir=$order&search=$search&min=$min_price&$max_price&$href'>First</a>";
+            echo "<a href='?page=$prev&dir=$order&search=$search&min=$min_price&$max_price&$href'>Previous</a>";
     
             for ($p = 1; $p <= $this->page_count; $p++) {
                 $c = $p == $this->page ? 'active' : '';
-                echo "<a href='?page=$p&price=$order&search=$search&$href' class='$c'>$p</a>";
+                echo "<a href='?page=$p&dir=$order&search=$search&min=$min_price&$max_price&$href' class='$c'>$p</a>";
             }
     
-            echo "<a href='?page=$next&price=$order&search=$search&$href'>Next</a>";
-            echo "<a href='?page=$this->page_count&price=$order&search=$search&$href'>Last</a>";
+            echo "<a href='?page=$next&dir=$order&search=$search&min=$min_price&$max_price&$href'>Next</a>";
+            echo "<a href='?page=$this->page_count&dir=$order&search=$search&min=$min_price&$max_price&$href'>Last</a>";
             echo "</ul>";
         }else{
         if (!$this->result) return;
@@ -64,16 +66,16 @@ class SimplePager {
         $next = min($this->page + 1, $this->page_count);
 
         echo "<ul class='pager' $attr>";
-        echo "<a href='?page=1&price=$order&$href'>First</a>";
-        echo "<a href='?page=$prev&price=$order&$href'>Previous</a>";
+        echo "<a href='?page=1&dir=$order&min=$min_price&$max_price&$href'>First</a>";
+        echo "<a href='?page=$prev&dir=$order&min=$min_price&$max_price&$href'>Previous</a>";
 
         for ($p = 1; $p <= $this->page_count; $p++) {
             $c = $p == $this->page ? 'active' : '';
-            echo "<a href='?page=$p&price=$order&$href' class='$c'>$p</a>";
+            echo "<a href='?page=$p&dir=$order&min=$min_price&$max_price&$href' class='$c'>$p</a>";
         }
 
-        echo "<a href='?page=$next&price=$order&$href'>Next</a>";
-        echo "<a href='?page=$this->page_count&price=$order&$href'>Last</a>";
+        echo "<a href='?page=$next&dir=$order&min=$min_price&$max_price&$href'>Next</a>";
+        echo "<a href='?page=$this->page_count&dir=$order&min=$min_price&$max_price&$href'>Last</a>";
         echo "</ul>";
     }
 }

@@ -4,6 +4,8 @@ $title = 'Product List';
 require '../../_base.php';
 include '../../_head.php';
 global $search;
+global $min;
+global $max;
 $search = req('search');
 $seriesStatement = $_db->prepare("SELECT * FROM series");
 $seriesStatement->execute([]);
@@ -71,7 +73,7 @@ $currentPage = req('page',1);
 <?php
    require_once 'D:\user\Documents\web_based_assignment\pages\product\SimplePager.php';
    $page = req('page',1);
-   $p = new SimplePager("SELECT * FROM product JOIN product_images USING (productID) WHERE image_type = 'product' AND productName LIKE '%$search%' ORDER BY price $order",[],3,$page);
+   $p = new SimplePager("SELECT * FROM product JOIN product_images USING (productID) WHERE image_type = 'product' AND productName LIKE '%$search%' AND price BETWEEN $min AND $max ORDER BY price $order",[],3,$page);
    /*$statement->execute(["%$search%"]);
    $productObjectArray = $statement->fetchAll();*/
    $arr = $p->result;
@@ -140,10 +142,7 @@ $currentPage = req('page',1);
             <hr>
             <div class="list" id="productList">
               <?php
-              $statement = $_db->prepare("SELECT * FROM product JOIN product_images USING (productID) WHERE image_type = 'product' ORDER BY price $order");
-              $statement->execute([]);
-              $productObjectArray = $statement->fetchAll();
-              foreach ($productObjectArray as $productObject): ?>
+              foreach ($arr as $productObject): ?>
                 <!-- start -->
                 <div class="container">
                   <!-- top side  -->
