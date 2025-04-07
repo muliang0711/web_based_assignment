@@ -342,112 +342,135 @@
 
 
     <script>
-        let scannedData = null;
-        const backendURL = "/../../../controller/api/stockManager.php";
+    const backendURL = "/../../../controller/api/stockManager.php";
+    let scannedData = null;
 
-        $(document).ready(function() {
-            window.fetchLowStock = async function() {
-                try {
-                    const response = await fetch(backendURL, {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify({
-                            action: "get_low_stock_product"
-                        })
-                    });
-
-                    const text = await response.text(); // Read as plain text first
-                    console.log("Raw response from server:", text);
-
-                    // Try to parse JSON
-                    let data;
-
-                    try {
-                        data = JSON.parse(text);
-                    } catch (jsonError) {
-                        console.error("JSON parsing failed:", jsonError.message);
-                        throw new Error("Invalid JSON returned from backend. Check PHP output.");
-                    }
-
-                    if (!data.success) throw new Error(data.message);
-
-                    console.log("Parsed low stock data:", data);
-
-                } catch (err) {
-                    console.error(" Fetch error:", err.message);
-                    $("#messageBar").removeClass().addClass("top error").text("Error: " + err.message);
-                }
-            };
-
-
-
-            window.startQRScanner = function() {
-                $("#qr-reader").show();
-                const qrScanner = new Html5QrcodeScanner("qr-reader", {
-                    fps: 10,
-                    qrbox: 250
-                });
-
-                qrScanner.render(async function(decodedText) {
-                    console.log("QR scanned:", decodedText);
-                    qrScanner.clear();
-                    $("#qr-reader").hide();
-
-                    try {
-                        const data = await $.getJSON(decodedText);
-                        if (data.success) {
-                            scannedData = data;
-                            $("#product-info").html(`
-                                <h3>Product Found:</h3>
-                                <p><strong>Name:</strong> ${data.product_name}</p>
-                                <p><strong>Size:</strong> ${data.size_label}</p>
-                                <p><strong>Current Stock:</strong> ${data.quantity}</p>
-                            `).fadeIn();
-                            $("#restock-form").fadeIn();
-                        } else {
-                            $("#product-info").html(`<p style="color:red;">${data.message}</p>`).fadeIn();
-                        }
-                    } catch (err) {
-                        console.error("QR verify error:", err);
-                        $("#product-info").html(`<p style="color:red;">Verification failed.</p>`).fadeIn();
-                    }
-                });
-            };
-
-            $("#restock-btn").on("click", function() {
-                const newQty = $("#newQty").val();
-                if (!newQty || !scannedData) return;
-
-                $.ajax({
-                    url: "https://wbproject.local/pages/admin/product/update-stock.php",
-                    method: "POST",
-                    contentType: "application/json",
-                    data: JSON.stringify({
-                        productID: scannedData.productID,
-                        sizeID: scannedData.sizeID,
-                        token: scannedData.token,
-                        new_quantity: newQty
-                    }),
-                    success: function(data) {
-                        $("#restock-status").text(data.message).css("color", data.success ? "green" : "red");
-                        if (data.success) {
-                            $("#messageBar").removeClass().addClass("top success").text("Stock updated successfully!");
-                        }
-                    },
-                    error: function() {
-                        $("#restock-status").text("Update failed.").css("color", "red");
-                    }
-                });
+    // ✅ Auto-fetch low stock products
+    async function fetchLowStock() {
+        console.log("🔄 fetchLowStock() triggered at", new Date().toLocaleTimeString());
+        try {
+            const response = await fetch(backendURL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ action: "get_low_stock_product" })
             });
 
-            window.addEventListener("DOMContentLoaded", () => {
-                fetchLowStock(); // run immediately
-                setInterval(fetchLowStock, 5000); // then every 5 seconds
-            });
+            const text = await response.text();
+            console.log("📦 Raw response:", text);
+
+            let data = JSON.parse(text);
+            if (!data.success) throw new Error(data.message);
+
+            console.log("✅ Parsed low stock data:", data.products);
+            // TODO: Render products if needed
+
+        } catch (err) {
+            console.error("❌ Fetch error:", err.message);
+            const msgBar = document.querySelector("#messageBar");
+            if (msgBar) {
+                msgBar.className = "top error";
+                msgBar.textContent = "Error: " + err.message;
+            }
+        }
+    }
+
+    // ✅ QR Scanner
+    function startQRScanner() {
+        document.querySelector("#qr-reader").style.display = "block";
+
+        const qrScanner = new Html5QrcodeScanner("qr-reader", {
+            fps: 10,
+            qrbox: 250
         });
-    </script>
+
+        qrScanner.render(async (decodedText) => {
+            console.log("📷 QR scanned:", decodedText);
+            qrScanner.clear();
+            document.querySelector("#qr-reader").style.display = "none";
+
+            try {
+                const response = await fetch(decodedText);
+                const data = await response.json();
+
+                const productInfo = document.querySelector("#product-info");
+                const restockForm = document.querySelector("#restock-form");
+
+                if (data.success) {
+                    scannedData = data;
+                    productInfo.innerHTML = `
+                        <h3>Product Found:</h3>
+                        <p><strong>Name:</strong> ${data.product_name}</p>
+                        <p><strong>Size:</strong> ${data.size_label}</p>
+                        <p><strong>Current Stock:</strong> ${data.quantity}</p>
+                    `;
+                    productInfo.style.display = "block";
+                    restockForm.style.display = "block";
+                } else {
+                    productInfo.innerHTML = `<p style="color:red;">${data.message}</p>`;
+                    productInfo.style.display = "block";
+                }
+            } catch (err) {
+                console.error("❌ QR verify error:", err);
+                document.querySelector("#product-info").innerHTML =
+                    `<p style="color:red;">Verification failed.</p>`;
+            }
+        });
+    }
+
+    // ✅ Handle restock submission
+    async function handleRestockSubmit() {
+        const newQty = document.querySelector("#newQty").value;
+        if (!newQty || !scannedData) return;
+
+        try {
+            const response = await fetch("https://wbproject.local/pages/admin/product/update-stock.php", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    productID: scannedData.productID,
+                    sizeID: scannedData.sizeID,
+                    token: scannedData.token,
+                    new_quantity: newQty
+                })
+            });
+
+            const data = await response.json();
+
+            const statusBar = document.querySelector("#restock-status");
+            const msgBar = document.querySelector("#messageBar");
+
+            statusBar.textContent = data.message;
+            statusBar.style.color = data.success ? "green" : "red";
+
+            if (data.success && msgBar) {
+                msgBar.className = "top success";
+                msgBar.textContent = "Stock updated successfully!";
+            }
+        } catch (err) {
+            console.error("❌ Restock fetch failed:", err);
+            document.querySelector("#restock-status").textContent = "Update failed.";
+            document.querySelector("#restock-status").style.color = "red";
+        }
+    }
+
+    // ✅ DOM Loaded: start auto-fetch + event listeners
+    window.addEventListener("DOMContentLoaded", () => {
+
+        // console.log("✅ DOM is ready. Starting everything...");
+
+        // fetchLowStock(); // run immediately
+        // setInterval(fetchLowStock, 5000); // auto refresh every 5s
+
+        const restockBtn = document.querySelector("#restock-btn");
+        if (restockBtn) {
+            restockBtn.addEventListener("click", handleRestockSubmit);
+        }
+
+        // Optional: assign startQRScanner to a button if needed
+        window.startQRScanner = startQRScanner;
+    });
+</script>
+
 </body>
 
 </html>
