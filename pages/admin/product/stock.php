@@ -1,10 +1,11 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Stock Management with QR Restock</title>
 
-    
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -15,7 +16,6 @@
         }
 
         .body {
-            width: 900px;
             display: flex;
             flex-direction: column;
             gap: 20px;
@@ -47,8 +47,8 @@
             gap: 20px;
             justify-content: flex-start;
             min-height: 100px;
-            width: 1200px;
-            background-color: red;
+            width: 1400px;
+            background-color: #f8d7da;
         }
 
         .bottom {
@@ -94,7 +94,7 @@
 
         #qr-reader {
             width: 300px;
-            position: fixed;    
+            position: fixed;
             top: -50%;
             left: 32%;
 
@@ -113,8 +113,137 @@
             margin-top: 10px;
             font-weight: bold;
         }
-        .middle{
 
+        .container {
+            width: 100%;
+            max-width: 410px;
+            max-height: 900px;
+            background-color: transparent;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            /* allow top alignment if it grows */
+            padding: 15px;
+        }
+
+        .product-card {
+            width: 100%;
+            background-color: #ffffff;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+
+        .top-side,
+        .middle-side,
+        .bottom-side {
+            width: 100%;
+            background-color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px 0;
+        }
+
+
+        .true-card {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 95%;
+            height: 90%;
+            background-color: transparent;
+        }
+
+        .picture-card {
+            width: 100%;
+            height: 100%;
+            background-color: #fff;
+            border-radius: 10px;
+        }
+
+        .picture {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            border-radius: 10px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .picture img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            display: block;
+            cursor: pointer;
+        }
+
+        .information {
+            width: 100%;
+            height: 100%;
+            color: #333;
+            background-color: #ffffff;
+            text-align: center;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .information .dsc {
+            margin: 5px 0;
+            font-size: 16px;
+            background-color: transparent;
+            color: #444;
+        }
+
+        .function {
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            width: 100%;
+        }
+
+        .btn button {
+            padding: 10px 15px;
+            background-color: #ff6f61;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            flex: 1;
+        }
+
+        .btn button:hover {
+            background-color: #e0544b;
+        }
+
+        .product-card {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        /* Hide bottom-side by default */
+        .bottom-side {
+            transform: translateY(100%);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        /* Show it on hover */
+        .product-card:hover .bottom-side {
+            transform: translateY(0);
+            opacity: 1;
         }
     </style>
 </head>
@@ -125,71 +254,70 @@
         <div class="top" id="messageBar"></div>
 
         <div class="middle" id="productContainer">
-        
-        <?php 
-        // 1. get low_stock product from session and dispaly it :
-        session_start();
+
+            <?php
+            // 1. get low_stock product from session and dispaly it :
 
 
-        $lowStockProducts = $_SESSION['low_stock_product'] ?? [];
+            $lowStockProducts = $_SESSION['low_stock_product'] ?? [];
 
-        if (!is_array($lowStockProducts)) {
-            $lowStockProducts = []; // fallback
-        }
+            if (!is_array($lowStockProducts)) {
+                $lowStockProducts = []; // fallback
+            }
 
 
-        // 2. display it ; 
-        ?> 
-             <?php
-      foreach ($lowStockProducts as $productObject): ?>
-        <!-- start -->
-        <div class="container">
-        <!-- top side  -->
-        <div class="product-card">
-          <div class="top-side">
-            <div class="true-card">
-              <div class="picture-card">
-                <div class="picture">
-                  <img width="150px" height="250px" id="productImage" src="../../../File/<?php echo  $productObject->image_path; ?>" alt="Product Image" />
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- middle side  -->
-          <div class="middle-side">
-            <div class="true-card">
-              <div class="information">
-                <div class="product-name dsc">
-                  <h2><?php echo $productObject->productName ?></h2>
-                </div>
-                <div class="product-series-name dsc"><span>
-                    <p>RM <?php echo $productObject->price ?>.00</p>
-                  </span></div>
-                <div class="size-id dsc"><span>3UG5 / 4UG5</span></div>
-              </div>
-            </div>
-          </div>
-          <!-- bottom side  -->
-          <div class="bottom-side">
-            <div class="true-card">
-              <div class="function">
-           <!-- <div class="btn"><button class="btn">Add to Cart</button></div>
+            // 2. display it ; 
+            ?>
+            <?php
+            foreach ($lowStockProducts as $productObject): ?>
+                <!-- start -->
+                <div class="container">
+                    <!-- top side  -->
+                    <div class="product-card">
+                        <div class="top-side">
+                            <div class="true-card">
+                                <div class="picture-card">
+                                    <div class="picture">
+                                        <img width="150px" height="250px" id="productImage" src="../../../File/<?php echo  $productObject->image_path; ?>" alt="Product Image" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- middle side  -->
+                        <div class="middle-side">
+                            <div class="true-card">
+                                <div class="information">
+                                    <div class="product-name dsc">
+                                        <h2><?php echo $productObject->productName ?></h2>
+                                    </div>
+                                    <div class="product-series-name dsc"><span>
+                                            <p>RM <?php echo $productObject->price ?>.00</p>
+                                        </span></div>
+                                    <div class="size-id dsc"><span>3UG5 / 4UG5</span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- bottom side  -->
+                        <div class="bottom-side">
+                            <div class="true-card">
+                                <div class="function">
+                                    <!-- <div class="btn"><button class="btn">Add to Cart</button></div>
                 <div class="btn"><button class="btn">Buy</button></div> -->
-                <div class="btn"><button class="btn" onclick="window.location.href='../product/productDetail.php?racket=<?php echo $productObject->productID ?>'">View Details</button></div>
-                <!--<?php //if (!$userID) {
-                      //prompt_user_login("Please log in to add to cart.");
-                    //}
-                    ?> -->
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- the end  -->
-      </div>
+                                    <div class="btn"><button class="btn" onclick="window.location.href='../product/productDetail.php?racket=<?php echo $productObject->productID ?>'">View Details</button></div>
+                                    <!--<?php //if (!$userID) {
+                                        //prompt_user_login("Please log in to add to cart.");
+                                        //}
+                                        ?> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- the end  -->
+                </div>
 
-    <?php endforeach ?>
+            <?php endforeach ?>
 
-        
+
         </div>
 
         <div class="bottom">
@@ -202,63 +330,71 @@
         <div id="qr-reader" style="display:none;"></div>
         <div id="product-info" class="card" style="display: none;"></div>
 
-            <!-- Restock Form -->
-            <div id="restock-form" class="card" style="display: none;">
-                <p>
-                    <label for="newQty">New Quantity:</label>
-                    <input type="number" id="newQty" min="1" required />
-                    <button id="restock-btn">Confirm Restock</button>
-                </p>
-                <p id="restock-status"></p>
-            </div>
+        <!-- Restock Form -->
+        <div id="restock-form" class="card" style="display: none;">
+            <p>
+                <label for="newQty">New Quantity:</label>
+                <input type="number" id="newQty" min="1" required />
+                <button id="restock-btn">Confirm Restock</button>
+            </p>
+            <p id="restock-status"></p>
+        </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 
-    
+
     <script>
         let scannedData = null;
         const backendURL = "/../../../controller/api/stock.php";
 
-        $(document).ready(function () {
-            window.fetchLowStock = async function () {
-    try {
-        const response = await fetch(backendURL, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ action: "get_low_stock_product" })
-        });
+        $(document).ready(function() {
+            window.fetchLowStock = async function() {
+                try {
+                    const response = await fetch(backendURL, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            action: "get_low_stock_product"
+                        })
+                    });
 
-        const text = await response.text(); // Read as plain text first
-        console.log("🟡 Raw response from server:", text);
+                    const text = await response.text(); // Read as plain text first
+                    console.log("Raw response from server:", text);
 
-        // Try to parse JSON
-        let data;
-        try {
-            data = JSON.parse(text);
-        } catch (jsonError) {
-            console.error("🔴 JSON parsing failed:", jsonError.message);
-            throw new Error("Invalid JSON returned from backend. Check PHP output.");
-        }
+                    // Try to parse JSON
+                    let data;
 
-        if (!data.success) throw new Error(data.message);
+                    try {
+                        data = JSON.parse(text);
+                    } catch (jsonError) {
+                        console.error("JSON parsing failed:", jsonError.message);
+                        throw new Error("Invalid JSON returned from backend. Check PHP output.");
+                    }
 
-        console.log("🟢 Parsed low stock data:", data);
+                    if (!data.success) throw new Error(data.message);
 
-    } catch (err) {
-        console.error("🔴 Fetch error:", err.message);
-        $("#messageBar").removeClass().addClass("top error").text("Error: " + err.message);
-    }
-};
+                    console.log("Parsed low stock data:", data);
+
+                } catch (err) {
+                    console.error(" Fetch error:", err.message);
+                    $("#messageBar").removeClass().addClass("top error").text("Error: " + err.message);
+                }
+            };
 
 
 
-            window.startQRScanner = function () {
+            window.startQRScanner = function() {
                 $("#qr-reader").show();
-                const qrScanner = new Html5QrcodeScanner("qr-reader", { fps: 10, qrbox: 250 });
+                const qrScanner = new Html5QrcodeScanner("qr-reader", {
+                    fps: 10,
+                    qrbox: 250
+                });
 
-                qrScanner.render(async function (decodedText) {
+                qrScanner.render(async function(decodedText) {
                     console.log("QR scanned:", decodedText);
                     qrScanner.clear();
                     $("#qr-reader").hide();
@@ -284,7 +420,7 @@
                 });
             };
 
-            $("#restock-btn").on("click", function () {
+            $("#restock-btn").on("click", function() {
                 const newQty = $("#newQty").val();
                 if (!newQty || !scannedData) return;
 
@@ -298,19 +434,20 @@
                         token: scannedData.token,
                         new_quantity: newQty
                     }),
-                    success: function (data) {
+                    success: function(data) {
                         $("#restock-status").text(data.message).css("color", data.success ? "green" : "red");
                         if (data.success) {
                             $("#messageBar").removeClass().addClass("top success").text("Stock updated successfully!");
                         }
                     },
-                    error: function () {
+                    error: function() {
                         $("#restock-status").text("Update failed.").css("color", "red");
                     }
                 });
             });
-            
+
         });
     </script>
 </body>
+
 </html>
