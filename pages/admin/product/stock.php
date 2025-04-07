@@ -47,6 +47,8 @@
             gap: 20px;
             justify-content: flex-start;
             min-height: 100px;
+            width: 1200px;
+            background-color: red;
         }
 
         .bottom {
@@ -111,16 +113,83 @@
             margin-top: 10px;
             font-weight: bold;
         }
+        .middle{
+
+        }
     </style>
 </head>
+
 <body>
 
     <div class="body">
         <div class="top" id="messageBar"></div>
 
         <div class="middle" id="productContainer">
+        
+        <?php 
+        // 1. get low_stock product from session and dispaly it :
+        session_start();
 
-        <div style="height: 800px;"></div>
+
+        $lowStockProducts = $_SESSION['low_stock_product'] ?? [];
+
+        if (!is_array($lowStockProducts)) {
+            $lowStockProducts = []; // fallback
+        }
+
+
+        // 2. display it ; 
+        ?> 
+             <?php
+      foreach ($lowStockProducts as $productObject): ?>
+        <!-- start -->
+        <div class="container">
+        <!-- top side  -->
+        <div class="product-card">
+          <div class="top-side">
+            <div class="true-card">
+              <div class="picture-card">
+                <div class="picture">
+                  <img width="150px" height="250px" id="productImage" src="../../../File/<?php echo  $productObject->image_path; ?>" alt="Product Image" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- middle side  -->
+          <div class="middle-side">
+            <div class="true-card">
+              <div class="information">
+                <div class="product-name dsc">
+                  <h2><?php echo $productObject->productName ?></h2>
+                </div>
+                <div class="product-series-name dsc"><span>
+                    <p>RM <?php echo $productObject->price ?>.00</p>
+                  </span></div>
+                <div class="size-id dsc"><span>3UG5 / 4UG5</span></div>
+              </div>
+            </div>
+          </div>
+          <!-- bottom side  -->
+          <div class="bottom-side">
+            <div class="true-card">
+              <div class="function">
+           <!-- <div class="btn"><button class="btn">Add to Cart</button></div>
+                <div class="btn"><button class="btn">Buy</button></div> -->
+                <div class="btn"><button class="btn" onclick="window.location.href='../product/productDetail.php?racket=<?php echo $productObject->productID ?>'">View Details</button></div>
+                <!--<?php //if (!$userID) {
+                      //prompt_user_login("Please log in to add to cart.");
+                    //}
+                    ?> -->
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- the end  -->
+      </div>
+
+    <?php endforeach ?>
+
+        
         </div>
 
         <div class="bottom">
@@ -133,15 +202,15 @@
         <div id="qr-reader" style="display:none;"></div>
         <div id="product-info" class="card" style="display: none;"></div>
 
-        <!-- Restock Form -->
-        <div id="restock-form" class="card" style="display: none;">
-            <p>
-                <label for="newQty">New Quantity:</label>
-                <input type="number" id="newQty" min="1" required />
-                <button id="restock-btn">Confirm Restock</button>
-            </p>
-            <p id="restock-status"></p>
-        </div>
+            <!-- Restock Form -->
+            <div id="restock-form" class="card" style="display: none;">
+                <p>
+                    <label for="newQty">New Quantity:</label>
+                    <input type="number" id="newQty" min="1" required />
+                    <button id="restock-btn">Confirm Restock</button>
+                </p>
+                <p id="restock-status"></p>
+            </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -154,25 +223,35 @@
 
         $(document).ready(function () {
             window.fetchLowStock = async function () {
-                try {
-                    const response = await fetch(backendURL, {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ action: "get_low_stock_product" })
-                    });
+    try {
+        const response = await fetch(backendURL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ action: "get_low_stock_product" })
+        });
 
-                    if (!response.ok) throw new Error("Failed to fetch");
+        const text = await response.text(); // Read as plain text first
+        console.log("🟡 Raw response from server:", text);
 
-                    const data = await response.json();
-                    if (!data.success) throw new Error(data.message);
+        // Try to parse JSON
+        let data;
+        try {
+            data = JSON.parse(text);
+        } catch (jsonError) {
+            console.error("🔴 JSON parsing failed:", jsonError.message);
+            throw new Error("Invalid JSON returned from backend. Check PHP output.");
+        }
 
-                    console.log("Low stock data:", data);
-                    // Render cards if needed
+        if (!data.success) throw new Error(data.message);
 
-                } catch (err) {
-                    $("#messageBar").removeClass().addClass("top error").text("Error: " + err.message);
-                }
-            };
+        console.log("🟢 Parsed low stock data:", data);
+
+    } catch (err) {
+        console.error("🔴 Fetch error:", err.message);
+        $("#messageBar").removeClass().addClass("top error").text("Error: " + err.message);
+    }
+};
+
 
 
             window.startQRScanner = function () {

@@ -95,7 +95,7 @@ class CheckStock {
                     ps.sizeID,
                     ps.stock,
                     ps.low_stock_threshold,
-                    img.image_path AS productImage
+                    img.image_path 
                 FROM 
                     productstock ps
                 JOIN 
