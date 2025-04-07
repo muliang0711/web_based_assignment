@@ -257,15 +257,11 @@
 
             <?php
             // 1. get low_stock product from session and dispaly it :
-
-
             $lowStockProducts = $_SESSION['low_stock_product'] ?? [];
 
             if (!is_array($lowStockProducts)) {
                 $lowStockProducts = []; // fallback
             }
-
-
             // 2. display it ; 
             ?>
             <?php
@@ -347,7 +343,7 @@
 
     <script>
         let scannedData = null;
-        const backendURL = "/../../../controller/api/stock.php";
+        const backendURL = "/../../../controller/api/stockManager.php";
 
         $(document).ready(function() {
             window.fetchLowStock = async function() {
@@ -446,6 +442,10 @@
                 });
             });
 
+            window.addEventListener("DOMContentLoaded", () => {
+                fetchLowStock(); // run immediately
+                setInterval(fetchLowStock, 5000); // then every 5 seconds
+            });
         });
     </script>
 </body>
