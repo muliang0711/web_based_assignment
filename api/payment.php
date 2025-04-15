@@ -21,6 +21,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     $discount = $_POST["discount"];
     $uid = $_POST["user"];
     $date = $_POST["date"];
+    $email = $_POST["email"];
 
     $_SESSION["tempOrder"] = (object)[
         "userId" => $uid,
@@ -97,6 +98,41 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
     else if($payment == "Ewallet"){
         echo "/api/tng.php";
+    }
+
+    else if($payment == "Banking"){
+        $billplz = "https://www.billplz-sandbox.com/api/v3/bills";
+        $collectionId = "0inp33zt";
+        $apikey = "d56323c3-e5cd-46aa-83ab-88eae4cbcc1c";
+
+        $data = [
+            'collection_id'      => $collectionId,
+            'description'        => 'Badminton Store',
+            'email'              => $email,
+            'name'               => 'Customer Test',
+            'amount'             => ($total*100),
+            'callback_url'       => 'https://discord.com/api/webhooks/1361803121478602783/SAi3ovGPbyldJxzS_uMvLZitCeurljdSPPkftr1mE8KkYZ5UlOSn4LQKHfqj5JR-3c6B',
+            'redirect_url'       => 'http://localhost/pages/order/success.php'
+        ];
+
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, $billplz);
+        curl_setopt($ch, CURLOPT_USERPWD, $apikey . ":");
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        $response = curl_exec($ch);
+        $response = json_decode($response, true);
+
+        if (curl_errno($ch)) {
+            echo "failed";
+        } else {
+            echo $response["url"];
+        }
+
+        curl_close($ch);
     }
 };
 ?>

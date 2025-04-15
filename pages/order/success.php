@@ -8,6 +8,11 @@
         redirect("/");
     }
 
+    if(isset($_GET["billplz"]["paid"]) && $_GET["billplz"]["paid"]=="false"){
+        redirect("/pages/order/paymentfailed.php");
+        exit;
+    }
+
     //create order in db
     $orderID = $_db->query("SELECT MAX(orderId) from orders")->fetchColumn();
     $orderID++;
@@ -44,6 +49,7 @@
     <svg xmlns="http://www.w3.org/2000/svg" height="70px" viewBox="0 -960 960 960" width="70px" fill="rgb(255,255,255)"><path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"/></svg>
     </div>
     <h1>Thank you for your payment!</h1>
+
 
     <div class="orderdetails">
         <div>
