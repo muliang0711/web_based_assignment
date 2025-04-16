@@ -109,15 +109,15 @@ link_stylesheet($stylesheetArray);
         renderChartPreview(reportType, data);
       } catch (error) {
         showChartMessage(`❌ ${error.message}`);
-      }
+      } 
     });
   });
 
   async function fetchReportData(reportType, from, to) {
 
     // 1. target proccess file path : 
-    const url = `/controller/apiReport.php?reportType=${encodeURIComponent(reportType)}&from=${from}&end=${to}`;
-
+    const url = `/controller/api/report.php?reportType=${encodeURIComponent(reportType)}&from=${from}&end=${to}`;
+    console.log(url);
     // 2. modify the resopnse 
     const res = await fetch(url);
 
@@ -279,14 +279,14 @@ link_stylesheet($stylesheetArray);
     let rows = [];
     let headers = [];
 
-    if (reportType === "Sales" || reportType === "All") {
+    if (reportType === "Sales" ) {
       headers = ["Product ID", "Product Name", "Total Sold", "Total Revenue"];
       data.sales.forEach(item => {
         rows.push([item.productID, item.productName, item.total_sold, item.total_revenue]);
       });
     }
 
-    if (reportType === "Inventory" || reportType === "All") {
+    if (reportType === "Inventory" ) {
       headers = ["Product ID", "Product Name", "Inventory"];
       data.inventory.forEach(item => {
         rows.push([item.productID, item.productName, item.inventory]);

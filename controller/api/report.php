@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../db_connection.php';
+require_once __DIR__ . '/../../db_connection.php';
 
 // 1. fetch data form url : 
 $reportType = $_GET['reportType'] ?? null;

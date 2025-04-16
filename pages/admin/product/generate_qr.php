@@ -44,6 +44,6 @@ function generateQRCode($pdo, $productID, $sizeID) {
 
     echo "QR Code generated and saved: $filePath\n";
 }
-$p = "R0005";
+$p = "R0001";
 $s = "3UG5";
 generateQRCode($_db, $p , $s); // Example: productID=5, sizeID=2

@@ -105,6 +105,34 @@ function save_photo($f, $folder, $width = 200, $height = 200) {
     return $photo;
 }
 
+// Is email?
+function is_email($value) {
+    return filter_var($value, FILTER_VALIDATE_EMAIL) !== false;
+}
+
+// Is username valid?
+function is_valid_username($username, &$errorStr) {
+    $usernameRegex = '/^[a-zA-Z0-9](?!.*\.\.)[\w._]{1,28}[a-zA-Z0-9]$/';
+    
+    if (!preg_match($usernameRegex, $username)) {
+        $errorStr = 'Invalid format!';
+        if (strlen($username) < 3 || strlen($username) > 30) {
+            $errorStr .= "<br> - Username must be between 3 and 30 characters.";
+        }
+        if (preg_match('/^[^a-zA-Z0-9]|[^a-zA-Z0-9]$/', $username)) {
+            $errorStr .= "<br> - Username must begin and end with letters or digits.";
+        }
+        if (preg_match('/[^\w_.]/', $username)) {
+            $errorStr .= "<br> - Username must only contain letters, digits, dots (.) or underscores (_).";
+        }
+        if (preg_match('/\.\./', $username)) {
+            $errorStr .= "<br> - Consecutive dots (e.g. ..) are not allowed.";
+        } 
+        return false;
+    }
+    
+    return true;
+}
 
 // ============================================================================
 // HTML Helpers

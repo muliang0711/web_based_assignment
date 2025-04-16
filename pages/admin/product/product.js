@@ -74,7 +74,7 @@ $(document).ready(function () {
             // 2. use try catch to improve the process structure ; 
             try {
                 // 3. sending the data to target file ;
-                const response = await fetch('/controller/apiStatusSwtich.php', {
+                const response = await fetch('/controller/api/statusSwtich.php', {
                     // 3.1 mention the request method ；
                     method: 'POST',
                     // 3.2 mention how will the data convert into what type string or json or somelse in here is json 

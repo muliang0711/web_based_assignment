@@ -267,5 +267,7 @@ unset($_SESSION['Delete_ErrorMsg']);
 include "../../../admin_foot.php"
 ?>
 
-<script src="/pages/admin/product/product.js"></script>
 <script src="/js/admin_product.js"></script>
+<script>
+
+</script>

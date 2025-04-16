@@ -1,40 +1,50 @@
 <?php
-$stylesheetArray = ['product.css'];
+$stylesheetArray = ['product.css','pager.css'];
 $title = 'Product List';
 require '../../_base.php';
 include '../../_head.php';
-$search = $_REQUEST['search'];
+global $search;
+global $min;
+global $max;
+$search = req('search');
 $seriesStatement = $_db->prepare("SELECT * FROM series");
 $seriesStatement->execute([]);
 $seriesArray = $seriesStatement->fetchAll();
+$currentPage = req('page',1);
 ?>
 
 <body>
 
-  <!-- Side bar -->
-  <div class="sidebar">
-    <div class="sidebarFont">
-      <ul>
-        <h>Series</h>
-        <hr>
-        <?php foreach ($seriesArray as $s): ?>
-          <a onclick="onclick()" href="../product/searchResult.php?search=<?php echo $s->seriesName ?>">
-            <p><?php echo "$s->seriesName" ?></p>
-          </a>
-        <?php endforeach ?>
-        <hr>
-        <h>Price Sorting</h>
-        <hr>
-        <a onclick="onclick()" href="../product/searchResult.php?price=asc&search=<?php echo $search ?>">
-          <p>Low to High</p>
+<!-- Side bar -->
+<div class="sidebar">
+  <div class="sidebarFont">
+      <h>Series</h>
+      <hr>
+      <?php foreach ($seriesArray as $s): ?>
+        <a onclick="onclick()" href="../product/searchResult.php?search=<?php echo $s->seriesName ?>">
+          <p><?php echo "$s->seriesName" ?></p>
         </a>
-        <a onclick="onclick()" href="../product/searchResult.php?price=desc&search=<?php echo $search ?>">
-          <p>High to Low</p>
-        </a>
-        <hr>
-      </ul>
-    </div>
+      <?php endforeach ?>
+      <hr>
+      <h>Price Sorting</h>
+      <hr>
+      <div class="sorting" ?>
+      <a onclick="onclick()" href="../product/productlist.php?dir=asc&page=<?php echo $currentPage ?>">
+        <p>Low to High</p>
+      </a>
+      <a onclick="onclick()" href="../product/productlist.php?dir=desc&page=<?php echo $currentPage ?>">
+        <p>High to Low</p>
+      </a>
+      </div>
+      <hr>
+      <h>Price Range</h>
+      <hr>
+      <input type="number" class="priceRange" name="digitsOne" id="digitsOne" placeholder="RM MIN"> - 
+      <input type="number" class="priceRange" name="digitsTwo" id="digitsTwo" placeholder="RM MAX">
+      <button type="submit" class="applyButton">Apply</button>
+      <hr>
   </div>
+</div>
 
 
   <!-- Search bar -->
@@ -50,23 +60,40 @@ $seriesArray = $seriesStatement->fetchAll();
 
 
     <!-- Default setting of sorting function -->
-    <?php $order = isset($_GET['price']) && $_GET['price'] == 'desc' ? 'DESC' : 'ASC'; ?>
+    <?php global $order;
+    if(req('dir')){
+      $order = req('dir');
+      }else{
+        $order = "asc";
+      } ?>
 
 
-
+<!-- ============== -->
+<!--   pagination   -->
+<?php
+   require_once 'D:\user\Documents\web_based_assignment\pages\product\SimplePager.php';
+   $page = req('page',1);
+   $p = new SimplePager("SELECT * FROM product JOIN product_images USING (productID) WHERE image_type = 'product' AND productName LIKE '%$search%' AND price BETWEEN $min AND $max ORDER BY price $order",[],3,$page);
+   /*$statement->execute(["%$search%"]);
+   $productObjectArray = $statement->fetchAll();*/
+   $arr = $p->result;
+   ?>
+   <br>
+   <?= $p->html() ?>
+<!-- ============== -->
 
 <?php
-        $_db = new PDO('mysql:dbname=web_based_assignment', 'root', '', [
+       /* $_db = new PDO('mysql:dbname=web_based_assignment', 'root', '', [
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
         ]);
-        $statement = $_db->prepare("SELECT * FROM product JOIN product_images USING (productID) WHERE image_type = 'product' AND productName LIKE ? ORDER BY price $order");
+        $statement = $_db->prepare("SELECT * FROM product JOIN product_images USING (productID) WHERE image_type = 'product' AND productName LIKE ? ORDER BY dir $order");
         $statement->execute(["%$search%"]);
         $productObjectArray = $statement->fetchAll();
-        ?>
-        <?php if ($productObjectArray): ?>
+        */?>
+        <?php if ($arr): ?>
           <div class="list" id="productList">
             <?php
-            foreach ($productObjectArray as $productObject): ?>
+            foreach ($arr as $productObject): ?>
               <!-- start -->
               <div class="container">
                 <!-- top side  -->
@@ -115,10 +142,7 @@ $seriesArray = $seriesStatement->fetchAll();
             <hr>
             <div class="list" id="productList">
               <?php
-              $statement = $_db->prepare("SELECT * FROM product JOIN product_images USING (productID) WHERE image_type = 'product' ORDER BY price $order");
-              $statement->execute([]);
-              $productObjectArray = $statement->fetchAll();
-              foreach ($productObjectArray as $productObject): ?>
+              foreach ($arr as $productObject): ?>
                 <!-- start -->
                 <div class="container">
                   <!-- top side  -->
