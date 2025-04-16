@@ -27,7 +27,10 @@ if (is_post()) {
     $action = post('action');
 
     if ($action == 'removeProfPic') {
-        // TODO: remove photo from server
+        // Delete photo from server
+        unlink($_profilePicDir . $profilePic); // $profilePic is obtained from extract((array)$_user)
+
+        // Update DB
         $stm = $_db->prepare('
             UPDATE user
             SET profilePic = null
@@ -37,6 +40,7 @@ if (is_post()) {
             'userID' => $_user->userID,
         ]);
 
+        // Set flash message then redirect
         temp('info', 'Profile picture removed');
         redirect();
     }
@@ -60,8 +64,10 @@ if (is_post()) {
         // move_uploaded_file($f->tmp_name, "uploads/$f->name");
         // $profilePicPath = save_photo($f, "/File/user-profile-pics");
 
-        // Delete old photo
-        unlink($_profilePicDir . $profilePic); // $profilePic is obtained from extract( (array)$_user )
+        // Delete old photo (only if the user had a profile photo prior to this upload)
+        if ($profilePic) {
+            unlink($_profilePicDir . $profilePic); // $profilePic is obtained from extract((array)$_user)
+        }
 
         // Save new photo
         $f = get_file('profilePic');
