@@ -30,7 +30,6 @@ if (is_post()) {
         // Delete photo from server
         unlink($_profilePicDir . $profilePic); // $profilePic is obtained from extract((array)$_user)
 
-        // Update DB
         $stm = $_db->prepare('
             UPDATE user
             SET profilePic = null
@@ -40,30 +39,13 @@ if (is_post()) {
             'userID' => $_user->userID,
         ]);
 
-        // Set flash message then redirect
         temp('info', 'Profile picture removed');
         redirect();
     }
 
-    // Handle profile photo uploads
-    // $f = get_file('profilePic');
-    // var_dump($f);
-
-    // // Validate: photo (file)
-    // if ($f == null) {
-    //     $_err['photo'] = 'Required';
-    // }
-    // else if (!str_starts_with($f->type, 'image/')) { // TODO
-    //     $_err['photo'] = 'Must be image';
-    // }
-    // else if ($f->size > 1 * 1024 * 1024) { // TODO
-    //     $_err['photo'] = 'Maximum 1MB';
-    // }
+    // Reminder: validation of uploaded photo is done in profilePic.js!
 
     if ($action == "changeProfPic") {
-        // move_uploaded_file($f->tmp_name, "uploads/$f->name");
-        // $profilePicPath = save_photo($f, "/File/user-profile-pics");
-
         // Delete old photo (only if the user had a profile photo prior to this upload)
         if ($profilePic) {
             unlink($_profilePicDir . $profilePic); // $profilePic is obtained from extract((array)$_user)
@@ -103,28 +85,49 @@ if (is_post()) {
             // }
             
     // TODO: need to use JS to check which fields have changed, then insert data-confirm into the Update profile button dynamically.
-    // $username = post('username');
-    // $email = post('email');
-    // $bio = post('bio');
-    // $gender = post('gender');
-    // $userID = $_user->userID;
+    
+    // TODO: Beautify the display of field error messages.
+    // TODO: Red-highlight fields with error and autofocus. Refer to the JS used in user-login.php
+    if ($action == "editProfile") {
+        $username = post('username');
+        $email = post('email');
+        $bio = post('bio');
+        $gender = post('gender');
+        $userID = $_user->userID;
 
-    // // Update db
-    // $stm = $_db->prepare('
-    //     UPDATE user 
-    //     SET username = :username, email = :email, bio = :bio, gender = :gender 
-    //     WHERE userID = :userID
-    // ');
-    // $stm->execute([
-    //     'username' => $username,
-    //     'email' => $email,
-    //     'bio' => $bio,
-    //     'gender' => $gender,
-    //     'userID' => $userID,
-    // ]);
+        // Validate username
+        $temp = ''; // temporary variable for storing the error message (cannot directly pass $_errors['username'] as reference because it doesn't exist yet)
+        if (!is_valid_username($username, $temp)) {
+            $_errors['username'] = $temp;
+        }
 
-    // temp('info', 'Profile updated');
-    // redirect();
+        // Validate email
+        if (!is_email($email)) {
+            $_errors['email'] = "Sorry, invalid email format";
+        } 
+
+        if (!$_errors) {
+            // Update db
+            $stm = $_db->prepare('
+                UPDATE user 
+                SET username = :username, email = :email, bio = :bio, gender = :gender 
+                WHERE userID = :userID
+            ');
+            $stm->execute([
+                'username' => $username,
+                'email' => $email,
+                'bio' => $bio,
+                'gender' => $gender,
+                'userID' => $userID,
+            ]);
+        
+            // Set flash message then redirect
+            temp('info', 'Profile updated');
+            redirect();
+        }
+    
+
+    }
 
 }
 
@@ -147,11 +150,13 @@ include 'profile_dynamic_navbar.php';
                 <div class="form-group">
                     <label class="label">Username</label>
                     <?= input_text('username') ?>
+                    <?= error('username'); ?>
                 </div>
 
                 <div class="form-group">
                     <label class="label">Email</label>
                     <?= input_text('email') ?>
+                    <?= error('email'); ?>
                 </div>
 
                 <div class="form-group">
@@ -164,6 +169,7 @@ include 'profile_dynamic_navbar.php';
                     <?= input_radios('gender', $_genders) ?>
                 </div>
 
+                <input type="hidden" name="action" value="editProfile"/>
                 <button 
                     type="submit" 
                     class="btn-simple btn-green"
