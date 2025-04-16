@@ -12,21 +12,38 @@ if (is_post()) {
     $password = post('password');
     $cfm_password = post('cfm_password');
 
+    // Validate username
+    $tempErrorMsg = '';
     if (!$username) {
         $_errors['username'] = 'Required';
     }
-    if (exists_in_db($username, 'user', 'username')) {
+    else if (!is_valid_username($username, $tempErrorMsg)) {
+        $_errors['username'] = $tempErrorMsg;
+    }
+    else if (exists_in_db($username, 'user', 'username')) {
         $_errors['username'] = 'Sorry! Username is taken.';
     }
 
+    // Validate email
     if (!$email) {
         $_errors['email'] = 'Required';
+    } 
+    else if (!is_email($email)) {
+        $_errors['email'] = "Sorry, invalid email format";
+    } 
+    else if (exists_in_db($email, 'user', 'email')) {
+        $_errors['email'] = "Looks like you've already signed up with this email. <a href='user-login.php' style='color:#306c80'>Click here to log in!</a>";
     }
 
+    // Validate password
     if (!$password) {
         $_errors['password'] = 'Required';
     }
+    else if (!is_strong_password($password)) {
+        $_errors['password'] = 'Password not strong enough';
+    }
 
+    // Validate confirm password
     if (!$cfm_password) {
         $_errors['cfm_password'] = 'Please confirm your password';
     }
@@ -84,7 +101,7 @@ include '../../_head.php';
         </div>
 
         <div class="form-item">
-            <label for="email">Email Address</label>
+            <label for="email">Email</label>
             <br>
             <?php input_text('email') ?>
             <?php error("email"); ?>
@@ -98,6 +115,11 @@ include '../../_head.php';
                 <img class="visibility-toggle-icon" src="../../assets/img/visibility-off.svg" alt="Visibility toggle icon"/>
             </div>
             <?php error("password"); ?>
+            <div class="password-strength-tester">
+                <p class="checks" id="charCount">At least 8 characters</p>
+                <p class="checks" id="bothCase">Contains uppercase and lowercase letters</p>
+                <p class="checks" id="specialSymbols">Contains special symbol(s)</p>
+            </div>
         </div>
 
         <div class="form-item">

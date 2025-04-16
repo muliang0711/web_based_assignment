@@ -134,6 +134,16 @@ function is_valid_username($username, &$errorStr) {
     return true;
 }
 
+// Is password strong enough?
+function is_strong_password($password) {
+    $hasLength = strlen($password) >= 8;
+    $hasUpper = preg_match('/[A-Z]/', $password);
+    $hasLower = preg_match('/[a-z]/', $password);
+    $hasSpecial = preg_match('/[\W_]/', $password); // non-word characters (includes _)
+
+    return $hasLength && $hasUpper && $hasLower && $hasSpecial;
+}
+
 // get domain e.g. "http://localhost:8001/"
 function get_domain() {
     $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off'

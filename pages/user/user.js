@@ -32,6 +32,50 @@ $(() => {
     $('.form-item:has(.error) :input:not(button):first').focus();
     
 
+    // Password strength tester div
+    $('input#password').on('input', e => {
+        $inputPassword = $(e.target);
+        $passwordTesterBox = $inputPassword.closest('.form-item').find('.password-strength-tester');
+
+        const password = e.target.value;
+        let passes = 0;
+        const totalChecks = $passwordTesterBox.children('.checks').length;
+
+        if (password.length >= 8) {
+            $passwordTesterBox.children('#charCount').addClass('good');
+            passes++;
+        }
+        if (/[A-Z]/.test(password) && /[a-z]/.test(password)) {
+            $passwordTesterBox.children('#bothCase').addClass('good');
+            passes++;
+        }
+        if (/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+            $passwordTesterBox.children('#specialSymbols').addClass('good');
+            passes++;
+        }
+
+        if (passes < totalChecks) {
+            $inputPassword.addClass('not-strong-enough');
+        } else {
+            $inputPassword.removeClass('not-strong-enough');
+        }
+    });
+
+    // Make topbar have semi-transparent bg color when div.container scrolls up to the bottom of the topbar
+    window.addEventListener('scroll', () => {
+        const trigger = $('div.container')[0];
+        const $topbar = $('header');
+        const topbarHeight = $topbar.outerHeight();
+        const rect = trigger.getBoundingClientRect();
+        console.log(rect.top, topbarHeight);
+      
+        if (rect.top <= topbarHeight) {
+          $topbar.addClass('scrolled');
+        } else {
+          $topbar.removeClass('scrolled');
+        }
+      });
+      
     // close popup
     // $('.close-btn').on('click', e => {
     //     $('.popup').addClass('closed');

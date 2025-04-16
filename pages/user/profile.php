@@ -96,9 +96,9 @@ if (is_post()) {
         $userID = $_user->userID;
 
         // Validate username
-        $temp = ''; // temporary variable for storing the error message (cannot directly pass $_errors['username'] as reference because it doesn't exist yet)
-        if (!is_valid_username($username, $temp)) {
-            $_errors['username'] = $temp;
+        $tempErrorMsg = ''; // temporary variable for storing the error message (cannot directly pass $_errors['username'] as reference because it doesn't exist yet)
+        if (!is_valid_username($username, $tempErrorMsg)) {
+            $_errors['username'] = $tempErrorMsg;
         }
 
         // Validate email
