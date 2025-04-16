@@ -3,7 +3,7 @@ require_once __DIR__ . "/../../../db_connection.php";
 require_once "../../../controller/productController.php";
 require_once "../../../_base.php";
 include __DIR__ . "/../main.php";
-include __DIR__ . "/../../../_login_guard.php";
+include '../../admin_login_guard.php';
 // Include CSS
 $stylesheetArray = ['../../../css/admin_product.css'];
 link_stylesheet($stylesheetArray);

@@ -20,7 +20,12 @@ $sort = req('sort');
 key_exists($sort,$fields)||$sort='userID';
 $dir = req('dir');
 in_array($dir,['asc','desc'])||$dir='asc';
-$arr = $_db->query("SELECT * FROM user order by $sort $dir")->fetchAll();
+$page = req('page', 1);
+require_once '../../Pager.php';
+$p = new Pager("SELECT * FROM user ORDER BY $sort $dir", [], 10, $page);
+$arr = $p->result;
+
+// $arr = $_db->query("SELECT * FROM user order by $sort $dir")->fetchAll();
 ?>
 <div class="searchBar">
     <a href="" class="add">Add Admin</a>
@@ -66,9 +71,12 @@ padding: 1rem;">
                     </tr>
                 <?php endforeach ?>
             </table>
-        </div>
+            <div class="pagination" style="text-align: center; margin-top: 1rem;">
+<?= $p->html("sort=$sort&dir=$dir") ?>
     </div>
+        </div>
 
+                                </div>
 </div>
 
 
