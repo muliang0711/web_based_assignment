@@ -134,6 +134,17 @@ function is_valid_username($username, &$errorStr) {
     return true;
 }
 
+// get domain e.g. "http://localhost:8001/"
+function get_domain() {
+    $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off'
+                || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+    
+    $host = $_SERVER['HTTP_HOST']; // includes domain and port (if not 80/443)
+    // $uri = $_SERVER['REQUEST_URI']; // everything after domain
+
+    return $protocol . $host . '/';
+}
+
 // ============================================================================
 // HTML Helpers
 // ============================================================================
