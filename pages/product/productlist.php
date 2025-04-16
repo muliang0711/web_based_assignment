@@ -240,9 +240,14 @@ $order = isset($_GET['dir']) && $_GET['dir'] == 'desc' ? 'DESC' : 'ASC'; */?>
   );
    $arr = $p->result;
   //  var_dump($arr);
+   echo "<br>"; 
+   if (isset($search)) {
+     $p->html("dir=$order&search=$search&min=$min_price&max=$max_price");
+   } 
+   else {
+     $p->html("dir=$order&min=$min_price&max=$max_price");
+   }
    ?>
-   <br>
-   <?= $p->html() ?>
 <!-- ============== -->
 
 
