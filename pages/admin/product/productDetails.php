@@ -2,7 +2,7 @@
 require_once "../../../db_connection.php";
 require_once "../../../controller/productController.php";
 require_once "../../../_base.php";
-include '../../admin_login_guard.php';
+include '../../../admin_login_guard.php';
 $stylesheetArray = ['../../../css/editAnddetails.css'];
 link_stylesheet($stylesheetArray);
 
