@@ -1,4 +1,7 @@
-<?php session_start(); ?>
+<?php 
+    require_once __DIR__ . "/../../../_base.php";
+    include_once __DIR__ . "/../../../admin_login_guard.php";
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -317,13 +320,16 @@
         </div>
 
         <div class="bottom">
-            <button onclick="fetchLowStock()">Fetch Low Stock</button>
-            <button onclick="startQRScanner()">update stock</button>
-            <button onclick="changeThreshold()">Change Threshold</button>
+            <button onclick="location.href = 'admin_product.php' " >Back to Menu       </button>
+            <button onclick="startQRScanner()"                  >update stock       </button>
+            <button onclick="changeThreshold()"                 >Change Threshold   </button>
         </div>
 
         <!-- QR Reader + Info -->
-        <div id="qr-reader" style="display:none;"></div>
+
+        <div id="qr-reader" style="display:none;">
+        <button id="close-scanner" style="float:right; margin-bottom:5px;">✖ Close</button>
+        </div>
         <div id="product-info" class="card" style="display: none;"></div>
 
         <!-- Restock Form -->
@@ -345,36 +351,6 @@
     const backendURL = "/../../../controller/api/stockManager.php";
     let scannedData = null;
 
-    // Auto-fetch low stock products
-    async function fetchLowStock() {
-        console.log("🔄 fetchLowStock() triggered at", new Date().toLocaleTimeString());
-        try {
-            const response = await fetch(backendURL, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ action: "get_low_stock_product" })
-            });
-
-            const text = await response.text();
-            console.log("📦 Raw response:", text);
-
-            let data = JSON.parse(text);
-            if (!data.success) throw new Error(data.message);
-
-            console.log("✅ Parsed low stock data:", data.products);
-            // TODO: Render products if needed
-
-        } catch (err) {
-            console.error("❌ Fetch error:", err.message);
-            const msgBar = document.querySelector("#messageBar");
-            if (msgBar) {
-                msgBar.className = "top error";
-                msgBar.textContent = "Error: " + err.message;
-            }
-        }
-    }
-
-    // ✅ QR Scanner
     function startQRScanner() {
         document.querySelector("#qr-reader").style.display = "block";
 
@@ -384,7 +360,7 @@
         });
 
         qrScanner.render(async (decodedText) => {
-            console.log("📷 QR scanned:", decodedText);
+            console.log(" QR scanned:", decodedText);
             qrScanner.clear();
             document.querySelector("#qr-reader").style.display = "none";
 
@@ -410,10 +386,30 @@
                     productInfo.style.display = "block";
                 }
             } catch (err) {
-                console.error("❌ QR verify error:", err);
+                console.error(" QR verify error:", err);
                 document.querySelector("#product-info").innerHTML =
                     `<p style="color:red;">Verification failed.</p>`;
             }
+        
+
+        });
+        document.addEventListener("DOMContentLoaded", () => {
+            const closeBtn = document.getElementById("close-scanner");
+            if (closeBtn) {
+                closeBtn.addEventListener("click", async () => {
+                    if (qrScannerInstance) {
+                        await qrScannerInstance.clear();
+                    }
+                    document.querySelector("#qr-reader").style.display = "none";
+                });
+            }
+
+            const restockBtn = document.querySelector("#restock-btn");
+            if (restockBtn) {
+                restockBtn.addEventListener("click", handleRestockSubmit);
+            }
+
+            window.startQRScanner = startQRScanner;
         });
     }
 
@@ -447,13 +443,12 @@
                 msgBar.textContent = "Stock updated successfully!";
             }
         } catch (err) {
-            console.error("❌ Restock fetch failed:", err);
+            console.error("Restock fetch failed:", err);
             document.querySelector("#restock-status").textContent = "Update failed.";
             document.querySelector("#restock-status").style.color = "red";
         }
     }
 
-    // DOM Loaded: start auto-fetch + event listeners
     window.addEventListener("DOMContentLoaded", () => {
 
         // console.log("DOM is ready. Starting everything...");

@@ -1,8 +1,8 @@
 <?php
 // File: /controller/api/updateStatusController.php
 
-require_once __DIR__ . "/../db_connection.php";
-require_once __DIR__ . "/../db/productDb.php";
+require_once __DIR__ . "/../../db_connection.php";
+require_once __DIR__ . "/../../db/productDb.php";
 
 header('Content-Type: application/json');
 
