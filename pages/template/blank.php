@@ -12,6 +12,9 @@ $scriptArray = ['example.js'];      // Put JS files that are specific to this pa
 temp('warn', 'You are not logged in. <a href="/pages/user/user-login.php">Log in</a>');
 
 include '../../_head.php';
+
+
+echo get_domain();
 ?>
 
 

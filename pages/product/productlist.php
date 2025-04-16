@@ -7,12 +7,57 @@ global $order;
 // default price range 
 global $min_price;
 global $max_price;
-if(!req('min')){
+
+$min_price = req('min');
+$max_price = req('max');
+
+// Switch values if min > max
+if ($min_price > $max_price) {
+  $temp = $max_price;
+  $max_price = $min_price;
+  $min_price = $temp;
+}
+
+// Set to default if no value
+if (!$min_price || $min_price < 0) {
   $min_price = 0;
 }
-if(!req('max')){
+if (!$max_price) {
   $max_price = 10000;
 }
+
+
+// // // verify input
+// if($min_price){
+//   if($min_price < 0){
+//     $min_price = 0;
+//   }
+
+//   if($max_price){
+//     if($min_price > $max_price){
+//       $max_price = 10000;
+//       $min_price = 0;
+//     }
+//   }
+// }
+
+
+// redirect('');
+
+
+// if(!req('min')){
+//   $min_price = 0;
+// } else {
+//   $min_price = req('min');
+// }
+// if(!req('max')){
+//   $max_price = 10000;
+// } else {
+//   $max_price = req('max');
+// }
+
+
+
 
 // function link_stylesheet($stylesheetArray) {
 //   if (!$stylesheetArray) {
@@ -76,34 +121,65 @@ include '../../_head.php';
       <hr>
       <h>Price Range</h>
       <hr>
-      <form method="get" name="priceRange" action="../product/productlist.php?dir=<?php if(!$order){ echo "asc";}else{echo $order;} ?>&page=<?php echo $currentPage ?>&min=<?php echo $min_price?>&max=<?php echo $max_price?>"> 
-      <input type="number" class="priceRange" name="min" id="min" placeholder="RM MIN"> -
-      <input type="number" class="priceRange" name="max" id="max" placeholder="RM MAX">
+      <form method="get" class="priceRangeForm" name="priceRange" action="../product/productlist.php?dir=<?php if(!$order){ echo "asc";}else{echo $order;} ?>&page=<?php echo $currentPage ?>&min=<?php echo $min_price?>&max=<?php echo $max_price?>"> 
+      <input type="number" class="priceRange" name="min" id="min" min="0" placeholder="RM MIN"> -
+      <input type="number" class="priceRange" name="max" id="max" min="0" placeholder="RM MAX">
       <button type="submit" class="applyButton">Apply</button>
       </form> 
+      <script>
+        // Frontend validation of priceRange field.
+        $('.priceRange').on('change', e => {
+          // If a number < 0 is input, change it to 0.
+          if (e.target.value < 0) {
+            e.target.value = 0;
+            return;
+          }
+        });
+
+        $('form.priceRangeForm').on('submit', e => {
+          // Prevent default behavior, which is submitting the form
+          e.preventDefault();
+          const $form = e.target;
+          
+          const min = $('.priceRange[name=min]')[0];
+          const max = $('.priceRange[name=max]')[0];          
+
+          // Only switch when both min and max fields have values.
+          if (min.value && max.value) {
+            const initialMinValue = parseInt(min.value);
+            const initialMaxValue = parseInt(max.value);
+
+            if (initialMinValue <= initialMaxValue) {
+              // If min and max are valid, submit form
+              $form.submit();
+            }
+
+            // min is greater than max! Invalid! Do not submit the form. Alert the user and switch the values for them
+            console.log('min is greater than max');
+            alert('Error: min value is greater than max value! We\'ve switched the values for you. Please click "Apply" again');
+            const temp = initialMinValue;
+            min.value = initialMaxValue;
+            max.value = temp;
+          } 
+          else {
+            // If one or both fields are empty, set empty field(s) to their default values
+            if (!min.value) {
+              min.value = 0;
+            }
+            if (!max.value) {
+              max.value = 10000;
+            }
+            $form.submit();
+          }
+        });
+      </script>
       <hr>
   </div>
 </div>
 
 <!-- get price range -->
 <?php 
-$min_price = isset($_GET['min']) ? $_GET['min'] : 0;
-$max_price = isset($_GET['max']) ? $_GET['max'] : 10000;
-// verify input
-if($min_price){
-  if($min_price < 0){
-    $min_price = 0;
-  }else{
-    $min_price = req('min');
-  }
-}
 
-if($max_price){
-  if($min_price > $max_price){
-    $max = 10000;
-    $min = 0;
-  }
-}
 ?>
 
 <!-- ascending for product list -->
@@ -148,7 +224,7 @@ $order = isset($_GET['dir']) && $_GET['dir'] == 'desc' ? 'DESC' : 'ASC'; */?>
 <!-- ============== -->
 <!--   pagination   -->
    <?php
-   require_once 'D:\user\Documents\web_based_assignment\pages\product\SimplePager.php';
+   require_once __DIR__ . '\SimplePager.php';
    $page = req('page',1);
    $p = new SimplePager("SELECT * FROM product JOIN product_images USING (productID) WHERE image_type = 'product' AND price BETWEEN $min_price AND $max_price ORDER BY price $order",[],3,$page);
    $arr = $p->result;

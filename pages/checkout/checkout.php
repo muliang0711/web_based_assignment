@@ -75,6 +75,11 @@
                 <span>E-Wallet</span><br>
                 <img width="60" height="60" src="/assets/img/tng.png">
             </div>
+
+            <div data-method="Banking">
+                <span>Online Banking</span><br>
+                <svg xmlns="http://www.w3.org/2000/svg" height="58px" viewBox="0 -960 960 960" width="58px" fill="rgb(170, 170, 170)"><path d="M200-280v-280h80v280h-80Zm240 0v-280h80v280h-80ZM80-120v-80h800v80H80Zm600-160v-280h80v280h-80ZM80-640v-80l400-200 400 200v80H80Zm178-80h444-444Zm0 0h444L480-830 258-720Z"/></svg>
+            </div>
             
             <div class="border"></div>
         </div>
@@ -175,6 +180,7 @@
                     total : total,
                     discount : discount,
                     payment : payMethod,
+                    email : "<?= $_user->email ?>",
                     items : <?= json_encode($items) ?>,
                     address : addressJson,
                     user : <?= $userID ?>,
@@ -186,7 +192,10 @@
                     data: datas,
                     type: "POST",
                     success: function(res2){
-                        location=res2;
+                        if(res2!="failed"){
+                            location=res2;
+                        }
+                        
                     }
                 });
                 
