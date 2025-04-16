@@ -5,7 +5,11 @@ $title = 'Login';
 $stylesheetArray = ['user.css']; // Put CSS files that are specific to this page here. If you want to change the styling of the header and the footer, go to /css/app.cs
 $scriptArray = ['user.js'];      // Put JS files that are specific to this page here. If you want to change the JavaScript for the header and the footer, go to /js/app.js
 
-$emailRegex = '/^[\w._]+@[a-zA-Z\d.-]+\.[a-zA-Z]{2,}$/';
+if (is_logged_in('user')) {
+    redirect('/');
+}
+
+// $emailRegex = '/^[\w._]+@[a-zA-Z\d.-]+\.[a-zA-Z]{2,}$/';
 // Some regex notes:
 // 1. `.` is usually a wildcard, meaning "any character except newline",
 //    but inside a character class ([...]), `.` loses that special meaning
