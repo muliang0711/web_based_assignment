@@ -345,7 +345,7 @@
     const backendURL = "/../../../controller/api/stockManager.php";
     let scannedData = null;
 
-    // ✅ Auto-fetch low stock products
+    // Auto-fetch low stock products
     async function fetchLowStock() {
         console.log("🔄 fetchLowStock() triggered at", new Date().toLocaleTimeString());
         try {
@@ -417,7 +417,7 @@
         });
     }
 
-    // ✅ Handle restock submission
+    //  Handle restock submission
     async function handleRestockSubmit() {
         const newQty = document.querySelector("#newQty").value;
         if (!newQty || !scannedData) return;
@@ -453,10 +453,10 @@
         }
     }
 
-    // ✅ DOM Loaded: start auto-fetch + event listeners
+    // DOM Loaded: start auto-fetch + event listeners
     window.addEventListener("DOMContentLoaded", () => {
 
-        // console.log("✅ DOM is ready. Starting everything...");
+        // console.log("DOM is ready. Starting everything...");
 
         // fetchLowStock(); // run immediately
         // setInterval(fetchLowStock, 5000); // auto refresh every 5s
