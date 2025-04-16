@@ -69,7 +69,11 @@ class SimplePager {
         echo "<a href='?page=1&dir=$order&min=$min_price&max=$max_price&$href'>First</a>";
         echo "<a href='?page=$prev&dir=$order&min=$min_price&max=$max_price&$href'>Previous</a>";
 
-        for ($p = 1; $p <= $this->page_count; $p++) {
+        $num_links = 5;
+        $num_links = $this->page_count < $num_links ? $this->page_count : $num_links; // Check if there are few pages in total than $num_links. If yes, change $num_links to page count.
+        $first_link = max(1, min($this->page_count - $num_links + 1, $this->page - 2)); // x = $this->page - 2, 1 <= x <= $this->page_count - $num_links + 1
+        $last_link  = max($num_links, min($this->page_count, $this->page + 2));         // y = $this->page + 2, $num_links <= y <= $this->page_count
+        for ($p = $first_link; $p <= $last_link; $p++) {
             $c = $p == $this->page ? 'active' : '';
             echo "<a href='?page=$p&dir=$order&min=$min_price&max=$max_price&$href' class='$c'>$p</a>";
         }
