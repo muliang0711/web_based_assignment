@@ -8,8 +8,10 @@ $scriptArray = ['profilePic.js'];      // Put JS files that are specific to this
 
 auth("user");
 
+// Cast the $_user object to an array, then assign each element of the array to a global variable,
+// (e.g. $bio, $username, $profilePic, ...)
+// so that the <input> generating functions can get the values of each field.
 extract((array)$_user);
-// echo $bio;
 
 $_genders = [
     'F' => 'Female',
@@ -17,12 +19,13 @@ $_genders = [
     'R' => 'Rather not say',
 ];
 
-$_profilePicDir = '/File/user-profile-pics/';
+$_profilePicDir = '../../File/user-profile-pics/';
 
 // TODO
 // - handle request to update profile
 if (is_post()) {
     $action = post('action');
+
     if ($action == 'removeProfPic') {
         // TODO: remove photo from server
         $stm = $_db->prepare('
@@ -57,16 +60,14 @@ if (is_post()) {
         // move_uploaded_file($f->tmp_name, "uploads/$f->name");
         // $profilePicPath = save_photo($f, "/File/user-profile-pics");
 
+        // Delete old photo
+        unlink($_profilePicDir . $profilePic); // $profilePic is obtained from extract( (array)$_user )
+
+        // Save new photo
         $f = get_file('profilePic');
-        
-        $photo = uniqid() . '.jpg';
+        $photo = save_photo($f, $_profilePicDir);
 
-        require_once '../../lib/SimpleImage.php';
-        $img = new SimpleImage();
-        $img->fromFile($f->tmp_name)
-            ->thumbnail(200, 200)
-            ->toFile("../../File/user-profile-pics/$photo", 'image/jpeg');
-
+        // Update DB
         $stm = $_db->prepare('
             UPDATE user
             SET profilePic = :profilePicPath
@@ -77,6 +78,7 @@ if (is_post()) {
             'userID' => $_user->userID,
         ]);
 
+        // Set flash message and redirect
         temp('info', 'Profile picture updated');
         redirect();
     }
