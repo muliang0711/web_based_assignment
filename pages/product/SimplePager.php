@@ -24,6 +24,11 @@ class SimplePager {
         // Set [page count]
         $this->page_count = ceil($this->item_count / $this->limit);
 
+        // If somehow $this->page exceeds the number of pages there is, just treat it as though user requested fir the last page
+        if ($this->page > $this->page_count) {
+            $this->page = $this->page_count;
+        }
+
         // Calculate offset
         $offset = ($this->page - 1) * $this->limit;
 
@@ -61,6 +66,7 @@ class SimplePager {
             echo "</ul>";
         }else{
         if (!$this->result) return;
+
         // Generate pager (html)
         $prev = max($this->page - 1, 1);
         $next = min($this->page + 1, $this->page_count);
@@ -70,9 +76,16 @@ class SimplePager {
         echo "<a href='?page=$prev&dir=$order&min=$min_price&max=$max_price&$href'>Previous</a>";
 
         $num_links = 5;
-        $num_links = $this->page_count < $num_links ? $this->page_count : $num_links; // Check if there are few pages in total than $num_links. If yes, change $num_links to page count.
+        // $num_links = $this->page_count < $num_links ? $this->page_count : $num_links; // Check if there are few pages in total than $num_links. If yes, change $num_links to page count.
         $first_link = max(1, min($this->page_count - $num_links + 1, $this->page - 2)); // x = $this->page - 2, 1 <= x <= $this->page_count - $num_links + 1
-        $last_link  = max($num_links, min($this->page_count, $this->page + 2));         // y = $this->page + 2, $num_links <= y <= $this->page_count
+        
+        if ($this->page_count < $num_links) {
+            $last_link = $this->page_count;
+        }
+        else {
+            $last_link  = max($num_links, min($this->page_count, $this->page + 2));         // y = $this->page + 2, $num_links <= y <= $this->page_count
+        }
+
         for ($p = $first_link; $p <= $last_link; $p++) {
             $c = $p == $this->page ? 'active' : '';
             echo "<a href='?page=$p&dir=$order&min=$min_price&max=$max_price&$href' class='$c'>$p</a>";
