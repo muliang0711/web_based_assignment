@@ -9,12 +9,14 @@ $scriptArray = ['example.js'];      // Put JS files that are specific to this pa
 
 // temp('info', 'Something went right.');
 // temp('error', 'Something went wrong.');
-temp('warn', 'You are not logged in. <a href="/pages/user/user-login.php">Log in</a>');
+// temp('warn', 'You are not logged in. <a href="/pages/user/user-login.php">Log in</a>');
 
 include '../../_head.php';
 
-
-echo get_domain();
+require '../product/SimplePager.php';
+$page = 1;
+$p = new SimplePager('SELECT * FROM user', [], 1, $page);
+var_dump($p->result);
 ?>
 
 

@@ -226,8 +226,20 @@ $order = isset($_GET['dir']) && $_GET['dir'] == 'desc' ? 'DESC' : 'ASC'; */?>
    <?php
    require_once __DIR__ . '\SimplePager.php';
    $page = req('page',1);
-   $p = new SimplePager("SELECT * FROM product JOIN product_images USING (productID) WHERE image_type = 'product' AND price BETWEEN $min_price AND $max_price ORDER BY price $order",[],3,$page);
+   // Reminder: the `limit` parameter of the SimplePager constructor must be a string, e.g. "10". Can't pass an int due to the use of ctype_digit(). This behavior seems to be deliberate (look up the constructor definition), which makes it weirder. 
+   $p = new SimplePager(
+    "SELECT * FROM product 
+    JOIN product_images 
+    USING (productID) 
+    WHERE image_type = 'product' 
+    AND price BETWEEN $min_price AND $max_price 
+    ORDER BY price $order",
+    [],
+    "3", // Reminder: the `limit` parameter of the SimplePager constructor must be a string, e.g. "10". Can't pass an int due to the use of ctype_digit(). This behavior seems to be deliberate (look up the constructor definition), which makes it weirder. 
+    $page
+  );
    $arr = $p->result;
+  //  var_dump($arr);
    ?>
    <br>
    <?= $p->html() ?>
