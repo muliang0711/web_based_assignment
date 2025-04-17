@@ -74,7 +74,6 @@ $currentPage = req('page',1);
       } ?>
 
 
-<!-- ============== -->
 <!--   pagination   -->
 <?php
    require_once __DIR__ . '\SimplePager.php';
@@ -87,10 +86,6 @@ $currentPage = req('page',1);
    echo "<br>";
 
    $p->html("dir=$order&search=$search&min=$min_price&max=$max_price");
-
-   
-
-
 ?>
 
 
@@ -103,6 +98,7 @@ $currentPage = req('page',1);
         $statement->execute(["%$search%"]);
         $productObjectArray = $statement->fetchAll();
         */?>
+        
         <?php if ($arr): ?>
           <div class="list" id="productList">
             <?php

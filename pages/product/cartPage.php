@@ -4,6 +4,7 @@ $title = 'Product List';
 require '../../_base.php';
 include '../../_login_guard.php';
 
+// remove item from cart
 function removeFromCart($productID, $sizeID, $userID): void {
     global $_db;
     $deleteStmt = $_db->prepare('DELETE FROM cartitem WHERE productID = :productID AND sizeID = :sizeID AND userID = :userID');
@@ -20,16 +21,18 @@ function removeFromCart($productID, $sizeID, $userID): void {
     }
 }
 
-if (is_post()) {
-    // Handle minus/add/delete operations on the cart
-    $actionGroup = post('actionGroup');
-    $action = post('action');
+// Handle minus/add/delete operations on the cart
+    if (is_post()) {
+        $actionGroup = post('actionGroup');
+        $action = post('action');
 
     if (isset($actionGroup) && $actionGroup == 'cart') {
 
         $productID = post('productID');
         $sizeID = post('sizeID');
         $userID = $_user->userID;
+
+        // Decrement the quantity
         if ($action === 'minus') {
             $selectStmt = $_db->prepare('SELECT quantity FROM cartitem WHERE productID = :productID AND sizeID = :sizeID AND userID = :userID');
             $selectStmt->execute([
@@ -39,6 +42,7 @@ if (is_post()) {
             ]);
             $oldQuantity = $selectStmt->fetchColumn();
         
+            // if the quantity is minus to 0
             if ($oldQuantity === 1) {
                 removeFromCart($productID, $sizeID, $userID);
             } else {
@@ -50,7 +54,7 @@ if (is_post()) {
                 ]);
             }
             
-            // $updateStmt = $_db->prepare('UPDATE cartitem SET ')
+        // $updateStmt = $_db->prepare('UPDATE cartitem SET ')
         } else if ($action === 'add') {
          //   if ($stock > $cartQuantity) {
             $updateStmt = $_db->prepare('UPDATE cartitem SET quantity = quantity + 1 WHERE productID = :productID AND sizeID = :sizeID AND userID = :userID');
@@ -59,12 +63,14 @@ if (is_post()) {
                 'sizeID' => $sizeID,
                 'userID' => $userID,
             ]);
+
         /*      temp("info", "Added to cart Successfully!");
           redirect("../product/productDetail.php?racket=$productObj->productID");
         } else {
           temp("error", "Stock unvailable! / Over limit!");
           redirect("../product/productDetail.php?racket=$productObject->productID");
         }*/
+
         } else if ($action === 'delete') {
             removeFromCart($productID, $sizeID, $userID);
         }
@@ -72,11 +78,7 @@ if (is_post()) {
         // Reload cart page after updating cart
         redirect();
     }
-    
-
-    
-
-}
+    }
 
 
 include '../../_head.php';
@@ -101,8 +103,7 @@ include '../../_head.php';
 ?>
 
 <?php
-
-
+                        // Cart output
                         $userID = $_user->userID;
                         $statement = $_db->prepare('SELECT * FROM cartitem JOIN product USING (productID) WHERE userID = ?');
                         $statement->execute([$userID]);

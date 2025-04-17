@@ -3,21 +3,27 @@ $stylesheetArray = ['product.css'];
 $title = 'Product List';
 require '../../_base.php';
 
+// get the racket id from url
 if (isset($_GET['racket'])) {
   $productID = $_GET['racket'];
 }
+
+// database
 $_db = new PDO('mysql:dbname=web_based_assignment', 'root', '', [
   PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
 ]);
 
+// SQL query
 $statement = $_db->prepare("SELECT * FROM product WHERE productID = ?");
 $statement->execute([$productID]); 
 $productObject = $statement->fetch();
 
+// get product image
 $stm = $_db->prepare("SELECT * FROM product_images WHERE productID = ? AND image_type = 'product'");
 $stm->execute([$productID]); 
 $productImg = $stm->fetch();
 
+// get player image
 $stmm = $_db->prepare("SELECT * FROM product_images WHERE productID = ? AND image_type = 'player'");
 $stmm->execute([$productID]); 
 $playerImg = $stmm->fetch();
@@ -27,8 +33,6 @@ if (!$productObject) {
   // redirect('/');
 }
 
-
-// If $productID is “R0001”, now your $productObject will be {productID: “R0001”, productName: “Yonex Arcsaber 11 Pro”, price: 849.00, seriesID: “ARC”}
 $racketID = $productObject->productID;
 $racketName = $productObject->productName; // Get the productName attribute of the product object
 $price = $productObject->price; // Get the price attribute of the product object
@@ -37,6 +41,7 @@ $intro = $productObject->introduction;
 $playerInfo = $productObject->playerInfo;
 $playerImg = $playerImg->image_path;
 
+// get grip size from url
 $gripSize = get("gripSize");
 if (is_logged_in("user")) {
   global $_db;
@@ -93,6 +98,7 @@ include '../../_head.php';
 <div class="error"><?= temp("error"); ?></div>
 <div class="error"><?= temp("login"); ?></div> -->
 
+<!-- racket information -->
 <div class="detail">
   <div class="product"><img src="../../../File/<?php echo $imgUrl; ?>" alt="Image"></div>
   <div class="racketName"><?php echo $racketName ?></div>
@@ -129,7 +135,7 @@ include '../../_head.php';
 </div>
 
 
-
+<!-- player information -->
 <div class="playerPhoto">
   <div class="HeadingIntro">
     <?php echo "The player who is using this racket" ?></div><br>
@@ -137,7 +143,7 @@ include '../../_head.php';
   <img src="../../../File/<?php echo $playerImg; ?>" alt="PlayerImage">
 </div>
 
-
+<!-- add to cart button -->
 <form method="get">
   <div class="AddCart">
 
@@ -159,37 +165,6 @@ $size = $_db->prepare("SELECT * FROM productStock WHERE productID = ?");
 $size->execute([$productID]);
 $productObject = $size->fetchAll();
 ?>
-<!--
-<?php if ($userID): ?>
-<div class="sizeSelect" id="selectSize">
-  <div class="popup" id="popup">
-    <h2>Select grip size</h2>
-    <?php foreach ($productObject as $Obj): ?>
-      <a onclick="onclick()" href="../product/productDetail.php?racket=<?php echo $Obj->productID ?>&gripSize=<?php echo $Obj->sizeID ?>">
-        <button><?php echo $Obj->sizeID ?></button>
-      </a>
-    <?php endforeach ?>
-    <button onclick="closeSelect()">Close</button>
-    <?php else: ?>
-      <div class="attention">
-      <p>Please login before add to cart!</p>
-    </div>
-      <?php endif ?>
 
-  </div>
-</div>
-
-<script>
-  function openSelect() {
-    document.getElementById("popup").style.display = "block";
-    document.getElementById("selectSize").style.display = "block";
-  }
-
-  function closeSelect() {
-    document.getElementById("popup").style.display = "none";
-    document.getElementById("selectSize").style.display = "none";
-  }
-</script>
-    -->
 <?php
 include '../../_foot.php';

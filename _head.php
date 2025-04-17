@@ -69,7 +69,7 @@ if (is_post()) {
             <a href="/pages/template/template.php">(dev only) Template page</a>
             <a href="/">Home</a>
             <a href="/pages/product/productlist.php">Shop</a>
-            <a href="/pages/About/about.html">About us</a>
+            <a href="/pages/About/about.php">About us</a>
 
             <?php if (is_logged_in("user")): ?>
 
