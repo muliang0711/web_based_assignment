@@ -32,7 +32,7 @@ if (is_post()) {
             DELETE FROM token WHERE userID = :userID;
 
             INSERT INTO token (id, type, expire, userID)
-            VALUES (:tokenID, "reset-password", ADDTIME(NOW(), "00:05"), :userID);
+            VALUES (:tokenID, "change-password", ADDTIME(NOW(), "00:05"), :userID);
         ');
         $stm->execute([
             'userID' => $u->userID,
@@ -50,55 +50,7 @@ if (is_post()) {
         $m->addEmbeddedImage("../../assets/img/logo.jpg", 'logo');
         $m->isHTML(true);
         $m->Subject = 'Reset Password';
-        $m->Body = "
-            <body style='background-color: #fff; font-family: sans-serif; font-size: 14px; line-height: 1.4; margin: 0; padding: 0; width: 100%; box-sizing: border-box;'>
-  <div class='container' style='display: block; margin: 0 auto !important; max-width: 580px; padding: 50px; width: 100%; box-sizing: border-box;'>
-    
-    <header style='margin-bottom: 30px; box-sizing: border-box;'>
-      <a href='$home_url' style='box-sizing: border-box;'>
-        <img class='logo' alt='The Shuttle Store' src='cid:logo' style='border: none; width: 100%; max-width: 100px; box-sizing: border-box;'>
-      </a>
-    </header>
-
-    <main style='box-sizing: border-box;'>
-      <p style='color: initial; font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px; box-sizing: border-box;'>
-        Hello, $u->username
-      </p>
-
-      <p style='color: initial; font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px; box-sizing: border-box;'>
-        You requested to reset the password for your account with the e-mail address 
-        <a href='mailto:$u->email' style='color: rgb(47, 96, 255); text-decoration: underline; box-sizing: border-box;'>$u->email</a>.
-      </p>
-
-      <p style='color: initial; font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px; box-sizing: border-box;'>
-        Please click the link below to reset your password.
-      </p>
-
-      <p style='color: initial; font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px; box-sizing: border-box;'>
-        Note that this link will <b>expire in 5 minutes.</b>
-      </p>
-
-      <p style='color: initial; font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px; box-sizing: border-box;'>
-        <a class='btn-rounded' href='$reset_pw_url' style='display: inline-block; border: 0; border-radius: 20px; background-color: rgb(47, 96, 255) !important; opacity: 1; color: white; text-decoration: none; cursor: pointer; padding: 10px 20px; transition: all 0.3s; box-sizing: border-box;'>
-          Reset password
-        </a>
-      </p>
-
-      <p style='color: initial; font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px; box-sizing: border-box;'>
-        Best regards,<br>The Shuttle Store
-      </p>
-    </main>
-
-    <footer style='margin-top: 30px; box-sizing: border-box;'>
-      <small style='opacity: 0.5; box-sizing: border-box;'>
-        If you did not request a password request, please feel free to ignore this message.
-      </small>
-    </footer>
-
-  </div>
-</body>
-
-        ";
+        $m->Body = get_reset_pw_email_body($u->username, $u->email, $home_url, $reset_pw_url);
         $m->send();
 
         temp('info', 'Email sent. Please check your inbox (and spam).');

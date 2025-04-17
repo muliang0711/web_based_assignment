@@ -25,6 +25,7 @@
     --color-warning-border: rgb(97, 48, 0); 
 
     --green: rgb(27, 140, 27);
+    --red: rgb(211, 1, 1);
 }
 
 
@@ -466,6 +467,10 @@ footer{
 
 .btn-green {
     background-color: var(--green);
+    color: white;
+}
+.btn-red {
+    background-color: var(--red);
     color: white;
 }
 

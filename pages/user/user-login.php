@@ -19,7 +19,7 @@ if (is_logged_in('user')) {
 //    because those might break URL paths.
 
 if (is_post()) {
-    var_dump($_errors);
+    // var_dump($_errors);
 
     $username = post('username');
     $password = post('password');
@@ -48,7 +48,7 @@ if (is_post()) {
 
     // If inputs are valid, authenticate user
     if (!$_errors) {
-        $stm = $_db->prepare('SELECT * FROM user WHERE username = :username');
+        $stm = $_db->prepare('SELECT * FROM user WHERE username = :username AND isDeleted = 0');
         $stm->execute([
             ':username' => $username,
         ]);

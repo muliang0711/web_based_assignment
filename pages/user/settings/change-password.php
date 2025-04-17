@@ -4,8 +4,7 @@ include '../../../_base.php';
 // ----------------------------------------------------------------------------
 
 // (1) Delete expired tokens
-// TODO: Uncomment this section!
-// $_db->query('DELETE FROM token WHERE expire < NOW()');
+$_db->query('DELETE FROM token WHERE expire < NOW()');
 
 $id = req('id');
 
@@ -108,7 +107,10 @@ include '../../../_head.php';
         <div class="form-item">
             <label for="password">Current password</label>
             <br>
-            <?php input_password('password') ?>
+            <div class="password-input-box">
+                <?php input_password('password') ?>
+                <img class="visibility-toggle-icon" src="../../../assets/img/visibility-off.svg" alt="Visibility toggle icon"/>
+            </div>
             <?php error("password"); ?>
         </div>
 
