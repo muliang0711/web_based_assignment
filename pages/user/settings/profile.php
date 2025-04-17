@@ -1,5 +1,5 @@
 <?php
-require '../../_base.php';
+require '../../../_base.php';
 
 /********* You can change these to suit the specific needs of your page *********/
 $title = 'Profile';
@@ -19,7 +19,7 @@ $_genders = [
     'R' => 'Rather not say',
 ];
 
-$_profilePicDir = '../../File/user-profile-pics/';
+$_profilePicDir = '../../../File/user-profile-pics/';
 
 // TODO
 // - handle request to update profile
@@ -131,7 +131,7 @@ if (is_post()) {
 
 }
 
-include '../../_head.php';
+include '../../../_head.php';
 
 include 'profile_dynamic_navbar.php';
 ?>
@@ -230,4 +230,4 @@ include 'profile_dynamic_navbar.php';
 
 
 <?php
-include '../../_foot.php';
+include '../../../_foot.php';

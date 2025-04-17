@@ -17,7 +17,7 @@ $(()=>{
     }
     
     $("#addaddr").on('click', function(e){
-        location="/pages/user/address.php";
+        location="/pages/user/settings/address.php";
     });
 
     $(".paymentcontainer").on('click', function(e){

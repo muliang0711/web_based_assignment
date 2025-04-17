@@ -124,7 +124,7 @@ include '../../_head.php';
             <label for="remember-me">Remember me</label>
         </div>
 
-        <a href="#" class="forgot-pw">Forgot password?</a>
+        <a href="reset-pw.php" class="forgot-pw">Forgot password?</a>
         <button class="submit-btn" type="submit">Login</button>            
     </form>
 </div>

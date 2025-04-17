@@ -1,12 +1,12 @@
 <?php 
-require '../../_base.php';
+require '../../../_base.php';
 
 /********* You can change these to suit the specific needs of your page *********/
 $title = 'Profile';
 $stylesheetArray = ['profile.css','address.css']; // Put CSS files that are specific to this page here. If you want to change the styling of the header and the footer, go to /css/app.cs
 $scriptArray = [];      // Put JS files that are specific to this page here. If you want to change the JavaScript for the header and the footer, go to /js/app.js
 
-include '../../_login_guard.php';
+include '../../../_login_guard.php';
 extract((array)$_user);
 $userID = $_user->userID;
 $states = [
@@ -97,7 +97,7 @@ if(is_post()){
 }
 
 
-include '../../_head.php';
+include '../../../_head.php';
 
 include 'profile_dynamic_navbar.php';
 ?>
@@ -337,4 +337,4 @@ include 'profile_dynamic_navbar.php';
 
 
 <?php
-include '../../_foot.php';
+include '../../../_foot.php';
