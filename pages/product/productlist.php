@@ -4,6 +4,7 @@ $currentPage = req('page',1);
 $stylesheetArray = ['product.css','pager.css'];
 $title = 'Product List';
 global $order;
+
 // default price range 
 global $min_price;
 global $max_price;
@@ -25,52 +26,6 @@ if (!$min_price || $min_price < 0) {
 if (!$max_price) {
   $max_price = 10000;
 }
-
-
-// // // verify input
-// if($min_price){
-//   if($min_price < 0){
-//     $min_price = 0;
-//   }
-
-//   if($max_price){
-//     if($min_price > $max_price){
-//       $max_price = 10000;
-//       $min_price = 0;
-//     }
-//   }
-// }
-
-
-// redirect('');
-
-
-// if(!req('min')){
-//   $min_price = 0;
-// } else {
-//   $min_price = req('min');
-// }
-// if(!req('max')){
-//   $max_price = 10000;
-// } else {
-//   $max_price = req('max');
-// }
-
-
-
-
-// function link_stylesheet($stylesheetArray) {
-//   if (!$stylesheetArray) {
-//       return;
-//   }
-// }
-//   $time = time();
-
-//   if (is_array($stylesheetArray)) {
-//       foreach ($stylesheetArray as $stylesheet) {
-//           echo "<link rel='stylesheet' href='$stylesheet?v=$time' />";
-//       }
-//   } 
 
 // Get product data from database
 $_db = new PDO('mysql:dbname=web_based_assignment', 'root', '', [
@@ -96,7 +51,7 @@ if (is_logged_in("user")) {
 include '../../_head.php';
 ?>
 
-
+<!------------------------------------------------------------------------------------------------------------------------------------------------>
 <!-- Side bar -->
 <div class="sidebar">
   <div class="sidebarFont">
@@ -131,11 +86,6 @@ include '../../_head.php';
   </div>
 </div>
 
-<!-- get price range -->
-<?php 
-
-?>
-
 <!-- ascending for product list -->
 <?php 
 if(req('dir')){
@@ -144,7 +94,7 @@ $order = req('dir');
   $order = "asc";
 }/*
 $order = isset($_GET['dir']) && $_GET['dir'] == 'desc' ? 'DESC' : 'ASC'; */?>
-<!-- ========================== -->
+
  
 <div class="main-container">
   <form method="get" action="../product/searchResult.php?search=?">
@@ -169,18 +119,14 @@ $order = isset($_GET['dir']) && $_GET['dir'] == 'desc' ? 'DESC' : 'ASC'; */?>
   $_db = new PDO('mysql:dbname=web_based_assignment', 'root', '', [
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
   ]);
-/*
-  $statement = $_db->prepare("SELECT * FROM product JOIN product_images USING (productID) WHERE image_type = 'product' ORDER BY dir $order");
-  $statement->execute([]);
-  $productObjectArray = $statement->fetchAll();   */
   ?>
 
-<!-- ============== -->
 <!--   pagination   -->
    <?php
    require_once __DIR__ . '\SimplePager.php';
    $page = req('page',1);
    // Reminder: the `limit` parameter of the SimplePager constructor must be a string, e.g. "10". Can't pass an int due to the use of ctype_digit(). This behavior seems to be deliberate (look up the constructor definition), which makes it weirder. 
+   // I see.
    $p = new SimplePager(
     "SELECT * FROM product 
     JOIN product_images 
@@ -202,14 +148,8 @@ $order = isset($_GET['dir']) && $_GET['dir'] == 'desc' ? 'DESC' : 'ASC'; */?>
      $p->html("dir=$order&min=$min_price&max=$max_price");
    }
    ?>
-<!-- ============== -->
 
-
-
-
-<!-- =============== -->
 <!-- product listing -->
-<!-- =============== -->
   <div class="list" id="productList">
     <?php
       foreach ($arr as $productObject): ?>
@@ -265,32 +205,3 @@ $order = isset($_GET['dir']) && $_GET['dir'] == 'desc' ? 'DESC' : 'ASC'; */?>
 <?php
 include '../../_foot.php';
 
-// <!-- label filter value -->
-//     <form>
-//       <label for="series">Choose a series:</label>
-//        <select id="series" name="series" onchange="filterProducts()">
-//           <option value="All">All products</option>
-//           <option value="Ast">Astrox</option>
-//           <option value="Nnf">Nanoflare</option>
-//           <option value="Arc">Arcsaber</option>
-//         </select>
-//     </form>
-
-// <script>
-//     function filterProducts() {
-//         var selectedSeries = document.getElementById("series").value;
-//         var products = document.querySelectorAll(".item");
-
-//         products.forEach(function(product) {
-//             if (selectedSeries === "All") {
-//                 product.style.display = "block"; // Show all products
-//             } else {
-//                 if (product.getAttribute("data-series") === selectedSeries) {
-//                     product.style.display = "block"; // Show matching products
-//                 } else {
-//                     product.style.display = "none"; // Hide non-matching products
-//                 }
-//             }
-//         });
-//     }
-// </script> 
