@@ -24,7 +24,11 @@ if (is_post()) {
     if (!$_errors) {
         // Delete user from DB
         $stm = $_db->prepare('
-            DELETE FROM user
+            -- DELETE FROM user
+            -- WHERE userID = :userID
+
+            UPDATE user
+            SET isDeleted = 1
             WHERE userID = :userID
         ');
         $stm->execute(['userID' => $_user->userID]);
