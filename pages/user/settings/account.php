@@ -17,47 +17,29 @@ $_genders = [
     'R' => 'Rather not say',
 ];
 
-// TODO
-// - handle request to update profile
 if (is_post()) {
-    // $fields = ['username', 'email', 'bio', 'gender'];
+    $action = post('action');
+    if ($action == 'changePassword') {
+        // Generate token ID
+        $id = sha1(uniqid() . rand()); // question: why need both uniqid() and rand() ah? is it to increase randomness?
 
-    
-    // Check which fields have been changed
-    // foreach ($fields as $field) {
-        //     $posted_value = post($field);
-        //     $current_value = $$field;
-        
-        //     if ($current_value != $posted_value) {
-            //         $changed[$field] = ['old' => $current_value, 'new' => $posted_value];
-            //         $$field = $posted_value;
-            //     }
-            // }
-            
-    // TODO: need to use JS to check which fields have changed, then insert data-confirm into the Update profile button dynamically.
-    $username = post('username');
-    $email = post('email');
-    $bio = post('bio');
-    $gender = post('gender');
-    $userID = $_user->userID;
+        // Delete old and insert new token
+        $stm = $_db->prepare('
+            DELETE FROM token WHERE userID = :userID;
 
-    // Update db
-    $stm = $_db->prepare('
-        UPDATE user 
-        SET username = :username, email = :email, bio = :bio, gender = :gender 
-        WHERE userID = :userID
-    ');
-    $stm->execute([
-        'username' => $username,
-        'email' => $email,
-        'bio' => $bio,
-        'gender' => $gender,
-        'userID' => $userID,
-    ]);
+            INSERT INTO token (id, type, expire, userID)
+            VALUES (:tokenID, "change-password", ADDTIME(NOW(), "00:05"), :userID);
+        ');
+        $stm->execute([
+            'userID' => $_user->userID,
+            'tokenID' => $id,
+        ]);
 
-    temp('info', 'Profile updated');
-    redirect();
-
+        redirect("change-password.php?id=$id");
+    }   
+    else if ($action == 'deleteAccount') {
+        redirect('verify_identity.php');
+    }
 }
 
 include '../../../_head.php';
@@ -73,6 +55,27 @@ include 'profile_dynamic_navbar.php';
 
     <h1 class="heading"><?= $current_title ?></h1>
     <div class="section-container">
+        <section>
+            <h2>Change password</h2>
+            <form method="post">
+                <input type="hidden" name="action" value="changePassword"/>
+                <button 
+                    type="submit" 
+                    class="btn-simple btn-green"
+                >Change password</button>
+            </form>
+        </section>
+
+        <section>
+            <h2>Account maintenance</h2>
+            <form method="post">
+                <input type="hidden" name="action" value="deleteAccount"/>
+                <button 
+                    type="submit" 
+                    class="btn-simple btn-red"
+                >Delete account</button>
+            </form>
+        </section>
         <!-- <section class="left-col">
             <form method="post">
                 <div class="form-group">

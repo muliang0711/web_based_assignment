@@ -281,118 +281,56 @@ function get_mail() {
     return $m;
 }
 
-function send_reset_pw_email($email) {
-    require_once 'lib/PHPMailer.php';
-    require_once 'lib/SMTP.php';
+function get_reset_pw_email_body($username, $email, $home_url, $reset_pw_url) {
+    return "
+            <body style='background-color: #fff; font-family: sans-serif; font-size: 14px; line-height: 1.4; margin: 0; padding: 0; width: 100%; box-sizing: border-box;'>
+  <div class='container' style='display: block; margin: 0 auto !important; max-width: 580px; padding: 50px; width: 100%; box-sizing: border-box;'>
+    
+    <header style='margin-bottom: 30px; box-sizing: border-box;'>
+      <a href='$home_url' style='box-sizing: border-box;'>
+        <img class='logo' alt='The Shuttle Store' src='cid:logo' style='border: none; width: 100%; max-width: 100px; box-sizing: border-box;'>
+      </a>
+    </header>
 
-    $m = get_mail();
-    $m->addAddress($email);
-    $m->Subject = "Reset Password";
-    $m->Body = "
-        <style>
-            * {
-            box-sizing: border-box;
-            }
+    <main style='box-sizing: border-box;'>
+      <p style='color: initial; font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px; box-sizing: border-box;'>
+        Hello, $username
+      </p>
 
-            img {
-            border: none;
-            max-width: 100%; 
-            }
+      <p style='color: initial; font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px; box-sizing: border-box;'>
+        You requested to reset the password for your account with the e-mail address 
+        <a href='mailto:$email' style='color: rgb(47, 96, 255); text-decoration: underline; box-sizing: border-box;'>$email</a>.
+      </p>
 
-            header {
-            margin-bottom: 30px;
-            }
+      <p style='color: initial; font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px; box-sizing: border-box;'>
+        Please click the link below to reset your password.
+      </p>
 
-            body {
-            background-color: #fff;
-            font-family: sans-serif;
-            font-size: 14px;
-            line-height: 1.4;
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            }
-            
-            footer {
-            margin-top: 30px;
-            }
+      <p style='color: initial; font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px; box-sizing: border-box;'>
+        Note that this link will <b>expire in 5 minutes.</b>
+      </p>
 
-            /* Set a max-width, and make it display as block so it will automatically stretch to that width, but will also shrink down on a phone or something */
-            .container {
-            display: block;
-            margin: 0 auto !important;
-            /* makes it centered */
-            max-width: 580px;
-            padding: 50px;
-            width: 100%; 
-            }
+      <p style='color: initial; font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px; box-sizing: border-box;'>
+        <a class='btn-rounded' href='$reset_pw_url' style='display: inline-block; border: 0; border-radius: 20px; background-color: rgb(47, 96, 255) !important; opacity: 1; color: white; text-decoration: none; cursor: pointer; padding: 10px 20px; transition: all 0.3s; box-sizing: border-box;'>
+          Reset password
+        </a>
+      </p>
 
-            h1 {
-            margin-bottom: 15px;
-            }
+      <p style='color: initial; font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px; box-sizing: border-box;'>
+        Best regards,<br>The Shuttle Store
+      </p>
+    </main>
 
-            p {
-            color: initial;
-            font-family: sans-serif;
-            font-size: 14px;
-            font-weight: normal;
-            margin: 0;
-            margin-bottom: 15px; 
-            }
+    <footer style='margin-top: 30px; box-sizing: border-box;'>
+      <small style='opacity: 0.5; box-sizing: border-box;'>
+        If you did not request a password request, please feel free to ignore this message.
+      </small>
+    </footer>
 
-            small {
-            opacity: 0.5;
-            }
+  </div>
+</body>
 
-            a {
-            color: rgb(47, 96, 255);
-            text-decoration: underline; 
-            }
-
-            button {
-            border: 0;
-            border-radius: 20px;
-            background-color: rgb(47, 96, 255);
-            opacity: 1;
-            color: white;
-            text-decoration: none;
-            cursor: pointer;
-            padding: 10px 20px;
-            transition: all 0.3s;
-            }
-
-            button:hover {
-            background-color: #ddd;
-            color: rgb(47, 96, 255);
-            }		
-        </style>
-        
-        <body>
-            <div class='container'>
-                <header>
-                    <a href='<!-- generate dynamic url of homepage here -->'>
-                    <img class='logo' alt='The Shuttle Store' src='<!--logo image path-->'>
-                    </a>
-                </header>
-
-                <main>
-                    <p>Hello, [username]</p>
-                    <p>
-                    You requested to reset the password for your account with the e-mail address 
-                    <a href='mailto:<!--email-->'>[email]</a>. 
-                    </p>
-                    <p>Please click the link below to reset your password.</p>
-                    <p><a href='https://www.google.com'><button>Reset password</button></a></p>
-                    
-                    <p>Best regards,<br>The Shuttle Team</p>
-                </main>
-
-                <footer>
-                    <small>If you did not request a password request, please feel free to ignore this message.</small>
-                </footer>
-            </div>
-        </body>
-    ";
+        ";
 }
 
 // ============================================================================
