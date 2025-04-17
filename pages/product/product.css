@@ -496,3 +496,16 @@ p{
   font-weight: bold;
   cursor: pointer;
 }
+
+.priceRangeOutput{
+  position: absolute;
+  right: 51%;
+  top: 100px;
+  background-color: #e2e2e2;
+  letter-spacing: 2px;
+  width: 300px;
+  font-size: 15px;
+  height: 30px;
+  padding-top: 5px;
+  text-align: center;
+}
