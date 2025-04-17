@@ -42,6 +42,9 @@ if (is_post()) {
     if (!$password) {
         $_errors['password'] = 'Required';
     }
+    else if (strlen($password) < 5 || strlen($password) > 100) {
+        $_errors['password'] = 'Between 5-100 characters';
+    }
     else if (!is_strong_password($password)) {
         $_errors['password'] = 'Password not strong enough';
     }
@@ -51,7 +54,7 @@ if (is_post()) {
         $_errors['cfm_password'] = 'Please confirm your password';
     }
     else if ($cfm_password != $password) {
-        $_errors['cfm_password'] = 'Confirmed password must match with password';
+        $_errors['cfm_password'] = 'Does not match with password';
     }
 
     // THIS IS A JOKE. I REPEAT, THIS IS A JOKE.
@@ -114,7 +117,7 @@ include '../../_head.php';
             <label for="password">Password</label>
             <br>
             <div class="password-input-box">
-                <?php input_password('password') ?>
+                <?php input_password('password', 'class="strength-testable"') ?>
                 <img class="visibility-toggle-icon" src="../../assets/img/visibility-off.svg" alt="Visibility toggle icon"/>
             </div>
             <?php error("password"); ?>
