@@ -38,7 +38,7 @@ function generateQRCode($pdo, $productID, $sizeID) {
     }
 
     // 4. Build verification URL
-    $verifyUrl = get_domain() . "pages/admin/product/verify-stock.php?productID=$productID&sizeID=$sizeID&token=$token";
+    $verifyUrl = base("pages/admin/product/verify-stock.php?productID=$productID&sizeID=$sizeID&token=$token");
     // $verifyUrl = "https://wbproject.local/pages/admin/product/verify-stock.php?productID=$productID&sizeID=$sizeID&token=$token";
 
     // 5. Generate QR code

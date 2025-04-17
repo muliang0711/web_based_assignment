@@ -144,15 +144,17 @@ function is_strong_password($password) {
     return $hasLength && $hasUpper && $hasLower && $hasSpecial;
 }
 
-// get domain e.g. "http://localhost:8001/"
-function get_domain() {
-    $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off'
-                || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
-    
-    $host = $_SERVER['HTTP_HOST']; // includes domain and port (if not 80/443)
-    // $uri = $_SERVER['REQUEST_URI']; // everything after domain
+// Return local root path
+function root($path = '') {
+    return "$_SERVER[DOCUMENT_ROOT]/$path";
+}
 
-    return $protocol . $host . '/';
+// Return base url (host + port) e.g. "http://localhost:8001/" + $path
+function base($path = '') {
+    $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off'
+                || $_SERVER['SERVER_PORT'] == 443) ? "https" : "http";
+
+    return "$protocol://$_SERVER[HTTP_HOST]/$path";
 }
 
 // ============================================================================
@@ -244,6 +246,153 @@ function temp($key, $value = null) {
         unset($_SESSION["temp_$key"]);
         return $value;
     }
+}
+
+// ============================================================================
+// Email Functions
+// ============================================================================
+
+// Demo Accounts:
+// --------------
+// AACS3173@gmail.com                   npsg gzfd pnio aylm
+// BAIT2173.email@gmail.com             ytwo bbon lrvw wclr
+// liaw.casual@gmail.com                wtpa kjxr dfcb xkhg
+// liawcv1@gmail.com                    obyj shnv prpa kzvj
+
+// Account used for sending password reset emails:
+// -----------------------------------------------
+// limlh-wm24@student.tarc.edu.my       rtau dhsb orbk ybmm 
+
+// Initialize and return mail object
+function get_mail() {
+    require_once 'lib/PHPMailer.php';
+    require_once 'lib/SMTP.php';
+
+    $m = new PHPMailer(true);
+    $m->isSMTP();
+    $m->SMTPAuth = true;
+    $m->Host = 'smtp.gmail.com';
+    $m->Port = 587;
+    $m->Username = 'limlh-wm24@student.tarc.edu.my';
+    $m->Password = 'rtau dhsb orbk ybmm';
+    $m->CharSet = 'utf-8';
+    $m->setFrom($m->Username, 'The Shuttle Store');
+
+    return $m;
+}
+
+function send_reset_pw_email($email) {
+    require_once 'lib/PHPMailer.php';
+    require_once 'lib/SMTP.php';
+
+    $m = get_mail();
+    $m->addAddress($email);
+    $m->Subject = "Reset Password";
+    $m->Body = "
+        <style>
+            * {
+            box-sizing: border-box;
+            }
+
+            img {
+            border: none;
+            max-width: 100%; 
+            }
+
+            header {
+            margin-bottom: 30px;
+            }
+
+            body {
+            background-color: #fff;
+            font-family: sans-serif;
+            font-size: 14px;
+            line-height: 1.4;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            }
+            
+            footer {
+            margin-top: 30px;
+            }
+
+            /* Set a max-width, and make it display as block so it will automatically stretch to that width, but will also shrink down on a phone or something */
+            .container {
+            display: block;
+            margin: 0 auto !important;
+            /* makes it centered */
+            max-width: 580px;
+            padding: 50px;
+            width: 100%; 
+            }
+
+            h1 {
+            margin-bottom: 15px;
+            }
+
+            p {
+            color: initial;
+            font-family: sans-serif;
+            font-size: 14px;
+            font-weight: normal;
+            margin: 0;
+            margin-bottom: 15px; 
+            }
+
+            small {
+            opacity: 0.5;
+            }
+
+            a {
+            color: rgb(47, 96, 255);
+            text-decoration: underline; 
+            }
+
+            button {
+            border: 0;
+            border-radius: 20px;
+            background-color: rgb(47, 96, 255);
+            opacity: 1;
+            color: white;
+            text-decoration: none;
+            cursor: pointer;
+            padding: 10px 20px;
+            transition: all 0.3s;
+            }
+
+            button:hover {
+            background-color: #ddd;
+            color: rgb(47, 96, 255);
+            }		
+        </style>
+        
+        <body>
+            <div class='container'>
+                <header>
+                    <a href='<!-- generate dynamic url of homepage here -->'>
+                    <img class='logo' alt='The Shuttle Store' src='<!--logo image path-->'>
+                    </a>
+                </header>
+
+                <main>
+                    <p>Hello, [username]</p>
+                    <p>
+                    You requested to reset the password for your account with the e-mail address 
+                    <a href='mailto:<!--email-->'>[email]</a>. 
+                    </p>
+                    <p>Please click the link below to reset your password.</p>
+                    <p><a href='https://www.google.com'><button>Reset password</button></a></p>
+                    
+                    <p>Best regards,<br>The Shuttle Team</p>
+                </main>
+
+                <footer>
+                    <small>If you did not request a password request, please feel free to ignore this message.</small>
+                </footer>
+            </div>
+        </body>
+    ";
 }
 
 // ============================================================================

@@ -14,9 +14,11 @@ $scriptArray = ['example.js'];      // Put JS files that are specific to this pa
 include '../../_head.php';
 
 require '../product/SimplePager.php';
-$page = 1;
-$p = new SimplePager('SELECT * FROM user', [], 1, $page);
-var_dump($p->result);
+// $page = 1;
+// $p = new SimplePager('SELECT * FROM user', [], 1, $page);
+// var_dump($p->result);
+echo base("pages/youre/dumb");
+echo $_SERVER['HTTP_HOST'];
 ?>
 
 
