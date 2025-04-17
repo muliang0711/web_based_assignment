@@ -194,13 +194,14 @@ input[type="text"], input[type="password"] {
 
 .password-strength-tester {
     margin-top: 10px;
-    max-height:0;
+    /* border:1px solid black; */
+    height:0;
     overflow:hidden;
     transition: all 0.5s ease-in-out;
 }
-.form-item:has(input#password:focus) .password-strength-tester {
+/* .form-item:has(input#password:focus) .password-strength-tester {
     max-height:500px;
-}
+} */
 .password-strength-tester p {
     margin: 0;
     color: #666;

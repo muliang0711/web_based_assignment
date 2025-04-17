@@ -32,7 +32,18 @@ $(() => {
     $('.form-item:has(.error) :input:not(button):first').focus();
     
 
+    $passwordTesterBox = $('.password-strength-tester');
+
+    $passwordTesterBox.css({ visibility: 'hidden', position: 'absolute', height: 'initial', display: 'block' });
+    initialHeight = $passwordTesterBox.outerHeight();
+    $passwordTesterBox.css({ visibility: '', position: '', height: '', display: '' }); // restore original styles
+    console.log(initialHeight);
+
     // Password strength tester div
+    $('input#password').one('input', e => {
+        $passwordTesterBox.animate({ height: initialHeight+'px' }, 100);
+    });
+
     $('input#password').on('input', e => {
         $inputPassword = $(e.target);
         $passwordTesterBox = $inputPassword.closest('.form-item').find('.password-strength-tester');
