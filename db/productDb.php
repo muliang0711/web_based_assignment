@@ -20,7 +20,8 @@ class productDb
     }
 
     // -------------------------------------------------------------------------
-    public function getAllProducts() {
+    public function getAllProducts() 
+    {
         $sql = "SELECT 
                     p.productID, 
                     p.productName, 
@@ -40,13 +41,15 @@ class productDb
         return $stmt->fetchAll();
     }
 
-    public function getSeriesID() {
+    public function getSeriesID() 
+    {
         $sql = "SELECT seriesID FROM series";
         $stmt = $this->pdo->query($sql);
         return $stmt->fetchAll();
     }
 
-    public function getProductID() {
+    public function getProductID() 
+    {
         $sql = "SELECT productID FROM product";
         $stmt = $this->pdo->query($sql);
         return $stmt->fetchAll();
