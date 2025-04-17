@@ -90,7 +90,7 @@ if (is_post()) {
                             <div class="username"><?= $_user->username ?></div>
                         </div>
                         <div class="dropdown-main">
-                            <a class="dropdown-item" href="/pages/user/profile.php">
+                            <a class="dropdown-item" href="/pages/user/settings/profile.php">
                                 <span><img src="/assets/img/icon-profile.svg" /></span>
                                 <div>Profile</div>
                             </a>

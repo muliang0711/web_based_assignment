@@ -193,7 +193,7 @@ input[type="text"], input[type="password"] {
 }
 
 .password-strength-tester {
-    margin-top: 10px;
+    /*padding-top: 0; /* will be set to 10px when user starts typing in the password field */
     /* border:1px solid black; */
     height:0;
     overflow:hidden;
@@ -265,12 +265,17 @@ input#password.not-strong-enough {
     /* opacity: 0.9; */
     color: white;
 }
-.submit-btn:hover {
+.submit-btn.disabled {
+    background-color: #ddd;
+    color: #333;
+}
+.submit-btn:not(.disabled):hover {
     opacity: 0.8;
 }
-.submit-btn:active {
+.submit-btn:not(.disabled):active {
     opacity: 1;
 }
+
 
 /* Input validation */
 input:required:invalid {

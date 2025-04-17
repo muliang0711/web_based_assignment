@@ -4,7 +4,7 @@ $(() => {
     console.log("hello");
 
     // Toggle password visibility
-    $('.visibility-toggle-icon').on('click', function() {
+    $('.visibility-toggle-icon').on('click', function(e) {
         console.log("eye clicked");
         var imgSrc = $(this).attr('src');
         if (imgSrc === '../../assets/img/visibility-off.svg') {
@@ -13,7 +13,9 @@ $(() => {
             $(this).prop('src', '../../assets/img/visibility-off.svg');
         }
 
-        var input = document.getElementById("password");
+        console.log("e.target: " + e.target);
+        var input = e.target.closest('.password-input-box').querySelectorAll('input')[0];
+        console.log("input: " + input);
         input.type = (input.type === "password") ? "text" : "password";
     })
 
@@ -35,16 +37,19 @@ $(() => {
     $passwordTesterBox = $('.password-strength-tester');
 
     $passwordTesterBox.css({ visibility: 'hidden', position: 'absolute', height: 'initial', display: 'block' });
+    // console.log($passwordTesterBox.css('padding'));
     initialHeight = $passwordTesterBox.outerHeight();
     $passwordTesterBox.css({ visibility: '', position: '', height: '', display: '' }); // restore original styles
     console.log(initialHeight);
 
     // Password strength tester div
-    $('input#password').one('input', e => {
+    $('input.strength-testable').one('input', e => {
+        console.log("showing myself~");
+        // $passwordTesterBox.css('padding-top', '10px');
         $passwordTesterBox.animate({ height: initialHeight+'px' }, 100);
     });
 
-    $('input#password').on('input', e => {
+    $('input.strength-testable').on('input', e => {
         $inputPassword = $(e.target);
         $passwordTesterBox = $inputPassword.closest('.form-item').find('.password-strength-tester');
 
