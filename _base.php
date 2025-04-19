@@ -294,7 +294,7 @@ function get_reset_pw_email_body($username, $email, $home_url, $reset_pw_url) {
 
     <main style='box-sizing: border-box;'>
       <p style='color: initial; font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px; box-sizing: border-box;'>
-        Hello, $username
+        Hello, <b>$username</b>!
       </p>
 
       <p style='color: initial; font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px; box-sizing: border-box;'>
@@ -323,7 +323,7 @@ function get_reset_pw_email_body($username, $email, $home_url, $reset_pw_url) {
 
     <footer style='margin-top: 30px; box-sizing: border-box;'>
       <small style='opacity: 0.5; box-sizing: border-box;'>
-        If you did not request a password request, please feel free to ignore this message.
+        If you did not request a password reset, please feel free to ignore this message.
       </small>
     </footer>
 
