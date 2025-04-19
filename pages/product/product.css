@@ -233,7 +233,7 @@ p{
 .playerPhoto img {
   position: absolute;
   display: flex;
-  top: -20px;
+  top: -70px;
   left: 100%;
   width: auto;
   height: 280px;
@@ -495,4 +495,17 @@ p{
   padding: 10px;
   font-weight: bold;
   cursor: pointer;
+}
+
+.priceRangeOutput{
+  position: absolute;
+  right: 44%;
+  top: 100px;
+  background-color: #e2e2e2;
+  letter-spacing: 2px;
+  width: 300px;
+  font-size: 15px;
+  height: 30px;
+  padding-top: 5px;
+  text-align: center;
 }

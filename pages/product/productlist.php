@@ -12,6 +12,13 @@ global $max_price;
 $min_price = req('min');
 $max_price = req('max');
 
+// default ascending
+if(req('dir')){
+  $order = req('dir');
+  }else{
+    $order = "asc";
+  }
+
 // Switch values if min > max
 if ($min_price > $max_price) {
   $temp = $max_price;
@@ -58,7 +65,7 @@ include '../../_head.php';
       <h>Series</h>
       <hr>
       <?php foreach ($seriesArray as $s): ?>
-        <a onclick="onclick()" href="../product/searchResult.php?search=<?php echo $s->seriesName ?>">
+        <a onclick="onclick()" href="../product/searchResult.php?search=<?php echo $s->seriesName ?>&dir=<?php echo $order ?>&page=<?php echo $currentPage ?>&min=<?php echo $min_price?>&max=<?php echo $max_price?>">
           <p><?php echo "$s->seriesName" ?></p>
         </a>
       <?php endforeach ?>
@@ -76,9 +83,11 @@ include '../../_head.php';
       <hr>
       <h>Price Range</h>
       <hr>
-      <form method="get" class="priceRangeForm" name="priceRange" action="../product/productlist.php?dir=<?php if(!$order){ echo "asc";}else{echo $order;} ?>&page=<?php echo $currentPage ?>&min=<?php echo $min_price?>&max=<?php echo $max_price?>"> 
+      <form method="get" class="priceRangeForm" name="priceRange"> 
       <input type="number" class="priceRange" name="min" id="min" min="0" placeholder="RM MIN"> -
       <input type="number" class="priceRange" name="max" id="max" min="0" placeholder="RM MAX">
+      <input type="hidden" id="dir" name="dir" value=<?php echo $order ?>>
+      <input type="hidden" id="page" name="page" value=<?php echo $currentPage ?>>
       <button type="submit" class="applyButton">Apply</button>
       </form> 
       <script src="validatePriceRange.js"></script>
@@ -86,13 +95,9 @@ include '../../_head.php';
   </div>
 </div>
 
-<!-- ascending for product list -->
+
 <?php 
-if(req('dir')){
-$order = req('dir');
-}else{
-  $order = "asc";
-}/*
+/*
 $order = isset($_GET['dir']) && $_GET['dir'] == 'desc' ? 'DESC' : 'ASC'; */?>
 
  
@@ -106,7 +111,13 @@ $order = isset($_GET['dir']) && $_GET['dir'] == 'desc' ? 'DESC' : 'ASC'; */?>
     </div>
   </form>
 
+  <!-- show price range -->
+  <div class="priceRangeOutput">
+  <?php
+   echo "Price Range: RM"; echo $min_price; echo " - RM" ;echo $max_price;
+  ?>
 
+  </div>
   <!-- ad image -->
   <div class="image-box">
     <img src="aerosharp ad2.jpg" alt="Ad image">
@@ -135,7 +146,7 @@ $order = isset($_GET['dir']) && $_GET['dir'] == 'desc' ? 'DESC' : 'ASC'; */?>
     AND price BETWEEN $min_price AND $max_price 
     ORDER BY price $order",
     [],
-    "3", // Reminder: the `limit` parameter of the SimplePager constructor must be a string, e.g. "10". Can't pass an int due to the use of ctype_digit(). This behavior seems to be deliberate (look up the constructor definition), which makes it weirder. 
+    "6", // Reminder: the `limit` parameter of the SimplePager constructor must be a string, e.g. "10". Can't pass an int due to the use of ctype_digit(). This behavior seems to be deliberate (look up the constructor definition), which makes it weirder. 
     $page
   );
    $arr = $p->result;

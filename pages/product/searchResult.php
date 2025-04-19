@@ -4,15 +4,32 @@ $title = 'Product List';
 require '../../_base.php';
 include '../../_head.php';
 global $search;
+global $order;
 global $min_price;
 global $max_price;
-if (!isset($min_price)) {
+
+$min_price = req('min');
+$max_price = req('max');
+
+
+// Switch values if min > max
+if ($min_price > $max_price) {
+  $temp = $max_price;
+  $max_price = $min_price;
+  $min_price = $temp;
+}
+
+// Set to default if no value
+if (!$min_price || $min_price < 0) {
   $min_price = 0;
 }
-if (!isset($max)) {
+if (!$max_price) {
   $max_price = 10000;
 }
+
 $search = req('search');
+
+
 $seriesStatement = $_db->prepare("SELECT * FROM series");
 $seriesStatement->execute([]);
 $seriesArray = $seriesStatement->fetchAll();
@@ -27,7 +44,7 @@ $currentPage = req('page',1);
       <h>Series</h>
       <hr>
       <?php foreach ($seriesArray as $s): ?>
-        <a onclick="onclick()" href="../product/searchResult.php?search=<?php echo $s->seriesName ?>">
+        <a onclick="onclick()" href="../product/searchResult.php?search=<?php echo $s->seriesName ?>&dir=<?php echo $order ?>&page=<?php echo $currentPage ?>&min=<?php echo $min_price?>&max=<?php echo $max_price?>">
           <p><?php echo "$s->seriesName" ?></p>
         </a>
       <?php endforeach ?>
@@ -35,19 +52,24 @@ $currentPage = req('page',1);
       <h>Price Sorting</h>
       <hr>
       <div class="sorting" ?>
-      <a onclick="onclick()" href="../product/productlist.php?dir=asc&page=<?php echo $currentPage ?>">
+      <a onclick="onclick()" href="../product/searchResult.php?dir=asc&page=<?php echo $currentPage ?>&search=<?php echo $search ?>&min=<?php echo $min_price?>&max=<?php echo $max_price?>">
         <p>Low to High</p>
       </a>
-      <a onclick="onclick()" href="../product/productlist.php?dir=desc&page=<?php echo $currentPage ?>">
+      <a onclick="onclick()" href="../product/searchResult.php?dir=desc&page=<?php echo $currentPage ?>&search=<?php echo $search ?>&min=<?php echo $min_price?>&max=<?php echo $max_price?>">
         <p>High to Low</p>
       </a>
       </div>
       <hr>
       <h>Price Range</h>
       <hr>
-      <input type="number" class="priceRange" name="digitsOne" id="digitsOne" placeholder="RM MIN"> - 
-      <input type="number" class="priceRange" name="digitsTwo" id="digitsTwo" placeholder="RM MAX">
+      <form method="get" class="priceRangeForm" name="priceRange"> 
+      <input type="number" class="priceRange" name="min" id="min" min="0" placeholder="RM MIN"> -
+      <input type="number" class="priceRange" name="max" id="max" min="0" placeholder="RM MAX">
+      <input type="hidden" id="dir" name="dir" value=<?php echo $order ?>>
+      <input type="hidden" id="page" name="page" value=<?php echo $currentPage ?>>
+      <input type="hidden" id="search" name="search" value=<?php echo $search ?>>
       <button type="submit" class="applyButton">Apply</button>
+      </form> 
       <hr>
   </div>
 </div>
@@ -62,8 +84,14 @@ $currentPage = req('page',1);
           <button><img src="illustration-magnifying-glass-icon.png"></button>
         </div>
       </div>
-    </form>
+    </form>   
 
+    <!-- show price range -->
+    <div class="priceRangeOutput">
+      <?php
+       echo "Price Range: RM"; echo $min_price; echo " - RM" ;echo $max_price;
+      ?>
+    </div>
 
     <!-- Default setting of sorting function -->
     <?php global $order;
@@ -183,8 +211,8 @@ $currentPage = req('page',1);
                     <div class="bottom-side">
                       <div class="true-card">
                         <div class="function">
-                          <div class="btn"><button class="btn">Add to Cart</button></div>
-                          <div class="btn"><button class="btn">Buy</button></div>
+                          <!--<div class="btn"><button class="btn">Add to Cart</button></div>
+                          <div class="btn"><button class="btn">Buy</button></div>-->
                           <div class="btn"><button class="btn" onclick="window.location.href='../product/productDetail.php?racket=<?php echo $productObject->productID ?>'">View Details</button></div>
                         </div>
                       </div>

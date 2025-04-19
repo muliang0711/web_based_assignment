@@ -4,6 +4,8 @@ $title = 'Product List';
 require '../../_base.php';
 include '../../_login_guard.php';
 
+
+
 // remove item from cart
 function removeFromCart($productID, $sizeID, $userID): void {
     global $_db;
@@ -56,13 +58,28 @@ function removeFromCart($productID, $sizeID, $userID): void {
             
         // $updateStmt = $_db->prepare('UPDATE cartitem SET ')
         } else if ($action === 'add') {
-         //   if ($stock > $cartQuantity) {
+            
+            $quantityStm = $_db->prepare('SELECT quantity FROM cartitem WHERE productID = :productID AND sizeID = :sizeID AND userID = :userID');
+            $quantityStm->execute(['productID' => $productID, 'sizeID' => $sizeID, 'userID' => $userID]);
+            $qstm = $quantityStm->fetch();
+            $cartQuantity = $qstm->quantity;
+
+            $stockStm = $_db->prepare('SELECT stock FROM productstock WHERE productID = :productID AND sizeID = :sizeID');
+            $stockStm->execute(['productID' => $productID, 'sizeID' => $sizeID]);
+            $sstm = $stockStm->fetch();
+            $stock = $sstm->stock;
+
+            if ($cartQuantity < $stock) {
             $updateStmt = $_db->prepare('UPDATE cartitem SET quantity = quantity + 1 WHERE productID = :productID AND sizeID = :sizeID AND userID = :userID');
             $updateStmt->execute([
                 'productID' => $productID,
                 'sizeID' => $sizeID,
                 'userID' => $userID,
+                
             ]);
+        }else{
+            temp("error", "Stock unvailable! / Over limit!");
+        }
 
         /*      temp("info", "Added to cart Successfully!");
           redirect("../product/productDetail.php?racket=$productObj->productID");
@@ -192,10 +209,30 @@ include '../../_head.php';
                                 // }
                             ?>
 
+                            <?php 
+                            $overproduct = null;
+                            foreach($cartItemArray as $cart){
+                                $product = $cart -> productID;
+                                $size = $cart -> sizeID;
+                                $quantity =  $cart -> quantity;
+                                $stockStatement = $_db->prepare('SELECT stock FROM productstock WHERE productID = ? AND sizeID = ?');
+                                $stockStatement->execute([$product, $size]);
+                                $current = $stockStatement->fetch();
+                                $currentStock = $current->stock;
+                                if( $cart -> quantity > $currentStock){
+                                    $overproduct = $cartObject->productName;
+                                }
+                            }
+                            ?>
+                            <?php if(!$overproduct): ?>
                             <a onclick="onclick()" class="paymentBtn">
                             <button onclick="location='/pages/checkout/checkout.php?' ">Proceed to Payment </button>
                             </a>
-                            
+                            <?php else: ?>
+                             <div class="errorButton">
+                             <p><?php echo $overproduct ?> is out of current stock limit. Please decrease the quantity from the cart to procced to payment. Thank you.</p>
+                             </div>       
+                            <?php endif ?>
                             <div class = "sum" ><p>Total Item(s): <?php echo $totalItem?></p>
                             <p>Total Amount: RM <?php echo $totalAmount ?> .00</p></div>
                         <?php else: ?>

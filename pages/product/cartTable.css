@@ -3,10 +3,10 @@
     background-color: rgb(246, 246, 246);
     font-size: 30px;
     letter-spacing: 2px;
-    width: 100%;
-    padding-left: 50px;
-    padding-right: 50px;
-
+    width: 20%;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding: 20px;
 }
 
 .tableHead td{
@@ -14,6 +14,7 @@
     text-align: center;
     border-bottom: 2px solid rgb(246, 246, 246);
     padding: 30px;
+    left: 10%;
 }
 
 .paymentBtn button{
@@ -59,4 +60,20 @@
     background-color: rgb(246, 246, 246);
     padding-left: 20px;
     padding-right: 20px;
+}
+
+.errorButton{
+    position: absolute;
+    background-color: red;
+    border: none;
+    width: 350px;
+    bottom: 10%;
+    right: 5%;
+    text-align: center;
+    
+}
+
+.errorButton p{
+    color: white;
+    font-weight: bold;
 }
