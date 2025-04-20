@@ -58,6 +58,7 @@ if (is_logged_in("user")) {
 include '../../_head.php';
 ?>
 
+<body>
 <!------------------------------------------------------------------------------------------------------------------------------------------------>
 <!-- Side bar -->
 <div class="sidebar">
@@ -212,7 +213,7 @@ $order = isset($_GET['dir']) && $_GET['dir'] == 'desc' ? 'DESC' : 'ASC'; */?>
     <?php endforeach ?>
   </div>
 </div>
-
+</body>
 <?php
 include '../../_foot.php';
 

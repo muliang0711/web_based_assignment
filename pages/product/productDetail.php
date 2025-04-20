@@ -93,7 +93,7 @@ include '../../_head.php';
 ?>
 
 
-
+<body>
 <!-- <div class="info"><?= temp("info"); ?></div>
 <div class="error"><?= temp("error"); ?></div>
 <div class="error"><?= temp("login"); ?></div> -->
@@ -165,6 +165,6 @@ $size = $_db->prepare("SELECT * FROM productStock WHERE productID = ?");
 $size->execute([$productID]);
 $productObject = $size->fetchAll();
 ?>
-
+</body>
 <?php
 include '../../_foot.php';
