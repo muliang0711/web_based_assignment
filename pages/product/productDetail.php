@@ -132,25 +132,32 @@ include '../../_head.php';
       </div>
 
       <!-- add to cart button -->
-      <form method="get">
+      <form method="get" class="addToCartForm">
         <div class="AddCart">
 
+          <div class="radios">
+            <div class="radioOne">
+              <input type="radio" id="gripSize" name="gripSize" value='3UG5'> 
+              <label for="gripSize">
+                <strong>
+                  <span>3UG5</span>
+                </strong>
+              </label>
+            </div>
+            <div class="radioTwo">
+              <input type="radio" id="gripSize" name="gripSize" value='4UG5'> <label for="gripSize"><strong>
+                  <span>4UG5</span>
+                </strong></label>
+            </div>
+          </div>
+
           <button type="submit" id="racket" name="racket" value="<?php echo $productObject->productID ?>">Add To Cart</button>
-          <div class="radioOne">
-            <input type="radio" id="gripSize" name="gripSize" value='3UG5'> <label for="gripSize"><strong>
-                <p>3UG5</p>
-              </strong></label>
-          </div>
-          <div class="radioTwo">
-            <input type="radio" id="gripSize" name="gripSize" value='4UG5'> <label for="gripSize"><strong>
-                <p>4UG5</p>
-              </strong></label>
-          </div>
         </div>
       </form>
 
+      <hr>
+
       <div class="introduction">
-        <hr>
         <p>Racket Introduction ↓</p>
         <?php echo $intro ?>
       </div>
@@ -158,10 +165,12 @@ include '../../_head.php';
 
       <!-- player information -->
       <div class="playerPhoto">
-        <div class="HeadingIntro">
-          <?php echo "The player who is using this racket" ?></div><br>
-        <?php echo $playerInfo; ?>
         <img src="../../../File/<?php echo $playerImg; ?>" alt="PlayerImage">
+        <div class="HeadingIntro">
+          <?php echo "The player who is using this racket" ?>
+        </div>
+        <br>
+        <?php echo $playerInfo; ?>
       </div>
     </div>
 

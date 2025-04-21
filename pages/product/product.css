@@ -71,6 +71,10 @@ main {
   flex-direction: row;
 }
 
+.detail {
+  width:70%;
+}
+
 a{
   text-decoration:none;
   color: inherit;
@@ -148,30 +152,35 @@ p{
   flex-grow: 1;
 }
 
+.product {
+  max-width: 800px;
+}
+
 .product img{
-  width: 40%;
-  height: 20%;
+  width: 100%;
+  height: auto;
   background-color: rgb(252, 252, 252);
   display:inline-block;
   gap: 50px;
   margin-top: 50px;
-  margin-left: -100px;
+  /* margin-left: -100px; */
   justify-content: flex-start;
 }
+
+
 
 .racketName{
   font-size: 50px;
   font-weight: bold;
-  position: absolute;
   text-align: left;
   color: #222222;
-  right: 7%;
-  top: 150px;
+  /* right: 7%;
+  top: 150px; */
   letter-spacing: 1px;
   padding-left: 30px;
   font-family: "Lucida Console", "Courier New", monospace;
   height: 60px;
-  width: 900px;
+  /* width: 900px; */
   border-radius: 10px;
 }
 
@@ -179,12 +188,8 @@ p{
   display: flex;
   font-size: 30px;
   font-weight: bolder;
-  width: 60%;
-  position:absolute;
   text-align: left;
   color: #992a2a;
-  right: 5%;
-  top: 25%;
   font-family: Arial, sans-serif;
   padding: 40px;
   background-color: rgb(238, 238, 238);
@@ -192,9 +197,6 @@ p{
 }
 
 .information table{
-  position: absolute;
-  top: 40%;
-  right: 49%;
   text-align: left;
   color: black;
   font-size: 20px;
@@ -214,14 +216,14 @@ p{
   border: 1px;
   font-size: 20px;
   font-weight: 2px;
-  position:absolute;
+  /* position:absolute; */
   text-align: left;
   color: #222222;
-  right: 5%;
-  top: 90%;
+  /* right: 5%;
+  top: 90%; */
   font-family: Arial, sans-serif;
   gap:50px;
-  width: 900px;
+  /* width: 900px; */
   padding: 20px;
 }
 
@@ -232,8 +234,12 @@ p{
   font-size: 20px;
   color: black;
   width: 800px;
-  left:20%;
+  /* left:20%; */
   background-color: rgb(252, 252, 252);
+}
+
+.playerPhoto::after {
+  clear: both;
 }
 
 .HeadingIntro{
@@ -243,10 +249,11 @@ p{
 }
 
 .playerPhoto img {
-  position: absolute;
-  display: flex;
-  top: -70px;
-  left: 100%;
+  /* position: absolute; */
+  /* display: flex; */
+  /* top: -70px;
+  left: 100%; */
+  float: left;
   width: auto;
   height: 280px;
   padding: 20px;
@@ -286,11 +293,9 @@ p{
 }
 
 
-
-
 .AddCart button{
   font-size: 30px;
-  position: absolute;
+  /* position: absolute; */
   right:25%;
   top:75%;
   background-color: gray;
@@ -319,14 +324,16 @@ p{
   box-shadow: 0 0 10px rgb(70, 3, 3);
 }
 
+
+
 .radioOne, .radioTwo{
-  display: flex;
-  position: absolute;
+  display: inline-block;
+  /* position: absolute; */
   top: 70%;
   font-size: 20px;
   text-align: center; 
-  width: 16px;
-  height: 20px;
+  /* width: 16px;
+  height: 20px; */
   padding: 0px 20px;
   align-items: center;
   accent-color: rgb(7, 249, 209);
@@ -338,17 +345,17 @@ p{
 }
 
 .radioOne{
-  right:39%;
+  /* right:39%; */
   border: none;
 }
 
 .radioOne:focus{
-  right:39%;
+  /* right:39%; */
   border: none;
 }
 
 .radioTwo{
-  right:29%;
+  /* right:29%; */
   border: none;
 }
 
@@ -428,14 +435,13 @@ p{
 
     .information {
       width: 100%;
-      height: 100%;
       color: #333;
       background-color: #ffffff;
       text-align: center;
       padding: 10px;
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      /* justify-content: center; */
     }
 
     .information .dsc {
@@ -526,3 +532,7 @@ p{
   position: absolute;
 }
 
+/* Add to cart form in productDetail */
+.addToCartForm {
+  height: 100px;
+}
