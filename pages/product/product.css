@@ -4,7 +4,6 @@
 
 body{
   background-color: #ffffff;
-  display: flex;
 }
 
 h1{
@@ -61,6 +60,15 @@ main {
 
 .main-container {
   margin-left: var(--sidebar-width);
+  display: flex;
+  position: relative;
+  flex-direction: column;
+}
+
+.detailPage-main-container{
+  display: flex;
+  position: relative;
+  flex-direction: row;
 }
 
 a{
@@ -100,6 +108,7 @@ p{
 .list{
     display: flex; 
     flex-wrap: wrap;
+    
 }
 
 .item img {
@@ -127,6 +136,7 @@ p{
   justify-content: center;
   align-items: center;
   overflow: hidden; 
+  top: 2%;
 }
 
 .image-box img {
@@ -501,8 +511,8 @@ p{
 
 .priceRangeOutput{
   position: absolute;
-  right: 44%;
-  top: 100px;
+  right: 50%;
+  top: 20px;
   background-color: #e2e2e2;
   letter-spacing: 2px;
   width: 300px;
@@ -511,3 +521,8 @@ p{
   padding-top: 5px;
   text-align: center;
 }
+
+.container-hr{
+  position: absolute;
+}
+

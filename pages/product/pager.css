@@ -6,7 +6,8 @@ ul {
     display: flex;
     font-family: Arial, sans-serif;
     font-weight: bold;
-    left: 32%;
+    right: 10%;
+    top:1%;
 }
 
 ul a {
@@ -23,6 +24,7 @@ ul a:hover {
 
 /* Pager */
 ul.pager {
+    position: absolute;
     padding: 0;
     background: transparent;
 }

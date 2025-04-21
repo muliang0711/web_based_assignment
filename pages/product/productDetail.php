@@ -15,17 +15,17 @@ $_db = new PDO('mysql:dbname=web_based_assignment', 'root', '', [
 
 // SQL query
 $statement = $_db->prepare("SELECT * FROM product WHERE productID = ?");
-$statement->execute([$productID]); 
+$statement->execute([$productID]);
 $productObject = $statement->fetch();
 
 // get product image
 $stm = $_db->prepare("SELECT * FROM product_images WHERE productID = ? AND image_type = 'product'");
-$stm->execute([$productID]); 
+$stm->execute([$productID]);
 $productImg = $stm->fetch();
 
 // get player image
 $stmm = $_db->prepare("SELECT * FROM product_images WHERE productID = ? AND image_type = 'player'");
-$stmm->execute([$productID]); 
+$stmm->execute([$productID]);
 $playerImg = $stmm->fetch();
 
 if (!$productObject) {
@@ -63,7 +63,7 @@ if ($gripSize) {
     $cartStatement->execute([$userID, $productID, $gripSize]);
     $cartObject = $cartStatement->fetch();
     $cartQuantity = $cartObject->quantity;
-    
+
     if (!$cartQuantity) {
       $cartQuantity = 0;
     }
@@ -94,77 +94,85 @@ include '../../_head.php';
 
 
 <body>
-<!-- <div class="info"><?= temp("info"); ?></div>
+  <div class="detailPage-main-container">
+    <!-- <div class="info"><?= temp("info"); ?></div>
 <div class="error"><?= temp("error"); ?></div>
 <div class="error"><?= temp("login"); ?></div> -->
 
-<!-- racket information -->
-<div class="detail">
-  <div class="product"><img src="../../../File/<?php echo $imgUrl; ?>" alt="Image"></div>
-  <div class="racketName"><?php echo $racketName ?></div>
-  <div class="price"><?php echo "RM " ?>
-  <?php echo $price ?><?php echo ".00" ?></div>
-  <div class="information">
-  <table>
-  <tr>
-  <th>Grip</th>
-  <td>3UG5/4UG5</td>
-  </tr>
-  <br>
-  <tr>
-  <th>Joint</th>
-  <td>T-joint</td>
-  </tr>
-  <br> 
-  <tr>
-  <th>Texture</th>
-  <td>Full-carbon</td> 
-  </tr>
-  <br> 
-  <tr>
-  <th>Item ID</th> 
-  <td><?php echo $productID ?></td>
-  </tr>
-    </table>
-  </div>
-</div>
-<div class="introduction">
-<hr>
-<p>Racket Introduction ↓</p>
-  <?php echo $intro ?>
-</div>
+    <!-- racket information -->
+
+    <div class="product"><img src="../../../File/<?php echo $imgUrl; ?>" alt="Image"></div>
+
+    <div class="detail">
+      <div class="racketName"><?php echo $racketName ?></div>
+      <div class="price"><?php echo "RM " ?>
+        <?php echo $price ?><?php echo ".00" ?></div>
+      <div class="information">
+        <table>
+          <tr>
+            <th>Grip</th>
+            <td>3UG5/4UG5</td>
+          </tr>
+          <br>
+          <tr>
+            <th>Joint</th>
+            <td>T-joint</td>
+          </tr>
+          <br>
+          <tr>
+            <th>Texture</th>
+            <td>Full-carbon</td>
+          </tr>
+          <br>
+          <tr>
+            <th>Item ID</th>
+            <td><?php echo $productID ?></td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- add to cart button -->
+      <form method="get">
+        <div class="AddCart">
+
+          <button type="submit" id="racket" name="racket" value="<?php echo $productObject->productID ?>">Add To Cart</button>
+          <div class="radioOne">
+            <input type="radio" id="gripSize" name="gripSize" value='3UG5'> <label for="gripSize"><strong>
+                <p>3UG5</p>
+              </strong></label>
+          </div>
+          <div class="radioTwo">
+            <input type="radio" id="gripSize" name="gripSize" value='4UG5'> <label for="gripSize"><strong>
+                <p>4UG5</p>
+              </strong></label>
+          </div>
+        </div>
+      </form>
+
+      <div class="introduction">
+        <hr>
+        <p>Racket Introduction ↓</p>
+        <?php echo $intro ?>
+      </div>
 
 
-<!-- player information -->
-<div class="playerPhoto">
-  <div class="HeadingIntro">
-    <?php echo "The player who is using this racket" ?></div><br>
-  <?php echo $playerInfo; ?>
-  <img src="../../../File/<?php echo $playerImg; ?>" alt="PlayerImage">
-</div>
-
-<!-- add to cart button -->
-<form method="get">
-  <div class="AddCart">
-
-    <button type="submit" id="racket" name="racket" value="<?php echo $productObject->productID ?>">Add To Cart</button>
-    <div class="radioOne">
-      <input type="radio" id="gripSize" name="gripSize" value='3UG5'> <label for="gripSize"><strong>
-          <p>3UG5</p>
-        </strong></label>
+      <!-- player information -->
+      <div class="playerPhoto">
+        <div class="HeadingIntro">
+          <?php echo "The player who is using this racket" ?></div><br>
+        <?php echo $playerInfo; ?>
+        <img src="../../../File/<?php echo $playerImg; ?>" alt="PlayerImage">
+      </div>
     </div>
-    <div class="radioTwo">
-      <input type="radio" id="gripSize" name="gripSize" value='4UG5'> <label for="gripSize"><strong>
-          <p>4UG5</p>
-        </strong></label>
-    </div>
+
+
+
+    <?php
+    $size = $_db->prepare("SELECT * FROM productStock WHERE productID = ?");
+    $size->execute([$productID]);
+    $productObject = $size->fetchAll();
+    ?>
   </div>
-</form>
-<?php
-$size = $_db->prepare("SELECT * FROM productStock WHERE productID = ?");
-$size->execute([$productID]);
-$productObject = $size->fetchAll();
-?>
 </body>
 <?php
 include '../../_foot.php';

@@ -59,6 +59,7 @@ include '../../_head.php';
 ?>
 
 <body>
+
 <!------------------------------------------------------------------------------------------------------------------------------------------------>
 <!-- Side bar -->
 <div class="sidebar">
@@ -96,13 +97,10 @@ include '../../_head.php';
   </div>
 </div>
 
-
+<div class="main-container">
 <?php 
 /*
 $order = isset($_GET['dir']) && $_GET['dir'] == 'desc' ? 'DESC' : 'ASC'; */?>
-
- 
-<div class="main-container">
   <form method="get" action="../product/searchResult.php?search=?">
     <div class="searchContainer">
       <input type="text" id="search" name="search" maxlength="30" class="input" placeholder="S E A R C H">
@@ -123,6 +121,7 @@ $order = isset($_GET['dir']) && $_GET['dir'] == 'desc' ? 'DESC' : 'ASC'; */?>
   <div class="image-box">
     <img src="aerosharp ad2.jpg" alt="Ad image">
   </div>
+
 
   <hr>
 
@@ -213,6 +212,7 @@ $order = isset($_GET['dir']) && $_GET['dir'] == 'desc' ? 'DESC' : 'ASC'; */?>
     <?php endforeach ?>
   </div>
 </div>
+
 </body>
 <?php
 include '../../_foot.php';
