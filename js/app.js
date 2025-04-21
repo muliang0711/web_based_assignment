@@ -21,6 +21,11 @@ function openPopup(activationTriggerElement) {
 
 $(() => {
 
+    // Hamburger icon for header nav menu (only on mobile)
+    $('.hamburger').on('click', () => {
+        $('header > nav').toggleClass('show');
+    });
+
     // Autofocus
     $('form :input:not(button):first').focus();
     $('.err:first').prev().focus();

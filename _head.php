@@ -65,8 +65,9 @@ if (is_post()) {
 <body>
     <header>
         <a href="/" class="logo"><img src="/assets/img/logo.jpg" class="top-nav-store-logo" alt="(Store logo)" /></a>
+        <button class="hamburger" aria-label="Toggle Menu">☰</button>
         <nav>
-            <a href="/pages/template/template.php">(dev only) Template page</a>
+            <!-- <a href="/pages/template/template.php">(dev only) Template page</a> -->
             <a href="/">Home</a>
             <a href="/pages/product/productlist.php">Shop</a>
             <a href="/pages/About/about.php">About us</a>
@@ -75,9 +76,9 @@ if (is_post()) {
 
                 <div class="cart-btn">
                     <a onclick="onclick()" href="/pages/product/cartPage.php" ?>
-                    <img src="/assets/img/icon-cart.png" alt="Cart" title="Cart" />
-                    <div class="itemCount"><?php echo $totalItem ?></div>
-            </a>
+                        <img src="/assets/img/icon-cart.png" alt="Cart" title="Cart" />
+                        <div class="itemCount"><?php echo $totalItem ?></div>
+                    </a>
                 </div> 
 
                 <div class="account dropdown">

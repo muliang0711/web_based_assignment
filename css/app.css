@@ -107,6 +107,18 @@ header nav > a:hover::after {
     width: 100%;
 }
 
+/* Only shows up on mobile */
+.hamburger {
+    display: none;
+    font-size: 2rem;
+    background: none;
+    border: none;
+    color: white;
+    padding:0;
+    margin-right: 1rem;
+    cursor: pointer;
+  }
+
 /*********************************************
     Styling for cart button and cart popup 
 **********************************************/
@@ -647,3 +659,41 @@ span.error br {
     top: 15%;
     right:185px;
 }
+
+
+/* Responsiveness for mobile devices */
+@media (max-width: 768px) {
+    header, main, footer {
+        padding-left: 2rem;
+        padding-right: 1rem;
+    }
+
+    .hamburger {
+        display: block;
+    }
+
+    header nav {
+        display: none;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0;
+        background: inherit;
+        position: absolute;
+        top: 100%;
+        right: 0;
+        width: 200px;
+        padding: 0 1rem;
+        max-height: calc(100vh - var(--header-height));
+        overflow: auto; /* add scrollbars but only if needed */
+    }
+
+    header nav > a {
+        padding: 10px 0;
+        border-bottom: 1px solid #888; 
+        width: 100%;
+    }
+
+    header nav.show {
+        display: flex;
+    }
+}   
