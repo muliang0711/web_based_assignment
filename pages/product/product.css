@@ -4,6 +4,7 @@
 
 body{
   background-color: #ffffff;
+  display: flex;
 }
 
 h1{
@@ -145,6 +146,7 @@ p{
   gap: 50px;
   margin-top: 50px;
   margin-left: -100px;
+  justify-content: flex-start;
 }
 
 .racketName{

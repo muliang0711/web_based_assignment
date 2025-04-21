@@ -118,7 +118,7 @@ include '../../_head.php';
 
 
 ?>
-
+<body>
 <?php
                         // Cart output
                         $userID = $_user->userID;
@@ -240,5 +240,6 @@ include '../../_head.php';
                             <p>Your cart is empty.</p>
 
                         <?php endif ?>
+</body>
 <?php
 include '../../_foot.php';
