@@ -233,7 +233,7 @@ p{
   text-align: left;
   font-size: 20px;
   color: black;
-  width: 800px;
+  width: 100%;
   /* left:20%; */
   background-color: rgb(252, 252, 252);
 }
@@ -292,6 +292,14 @@ p{
   background-color: white;
 }
 
+
+/* Add to cart form in productDetail */
+.AddCart {
+  margin: 2rem auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
 
 .AddCart button{
   font-size: 30px;
@@ -532,10 +540,7 @@ p{
   position: absolute;
 }
 
-/* Add to cart form in productDetail */
-.addToCartForm {
-  height: 100px;
-}
+
 
 
 /* Responsiveness for mobile devices */
@@ -554,11 +559,21 @@ p{
   }
 
   .product {
-    width: 80%;
+    width: 70%;
     align-self: center;
   }
 
   .playerPhoto img {
     float: none;
+  }
+
+  .radios {
+    display:flex;
+    justify-content: center;
+  }
+
+  .AddCart button {
+    display: block;
+    margin: 0 auto;
   }
 }
