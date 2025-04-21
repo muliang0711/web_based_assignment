@@ -179,7 +179,7 @@ p{
   letter-spacing: 1px;
   padding-left: 30px;
   font-family: "Lucida Console", "Courier New", monospace;
-  height: 60px;
+  /* height: 60px; */
   /* width: 900px; */
   border-radius: 10px;
 }
@@ -535,4 +535,30 @@ p{
 /* Add to cart form in productDetail */
 .addToCartForm {
   height: 100px;
+}
+
+
+/* Responsiveness for mobile devices */
+@media (max-width: 768px) {
+  .detailPage-main-container {
+    flex-direction: column;
+    width:100%;
+  }
+
+  .detailPage-main-container > * {
+    width:100%;
+  }
+
+  .detail > * {
+    width: 100%;
+  }
+
+  .product {
+    width: 80%;
+    align-self: center;
+  }
+
+  .playerPhoto img {
+    float: none;
+  }
 }
