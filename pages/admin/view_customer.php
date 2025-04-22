@@ -26,13 +26,18 @@ $p = new Pager("SELECT * FROM user WHERE username like ? ORDER BY $sort $dir", [
 $arr = $p->result;
 
 // $arr = $_db->query("SELECT * FROM user order by $sort $dir")->fetchAll();
+$stmA = $_db->prepare("SELECT COUNT(*) AS TotalRequest FROM blockeduser WHERE role ='user'");
+$stmA->execute();
+$resultA = $stmA->fetch();
+
 ?>
 
 
 <div class="main-content" style="  margin-left: var(--sidebar-width);
 margin-top: 50px;
 padding: 1rem;">
-<div class="searchBar">
+<div class="searchBar" style="display:flex;">
+    <div>
 <form class="search-box" method="get">
 
     <?= html_search('username', 'Search customer name...', 'padding: 6px; border-radius: 4px; border: 1px solid #ccc; width: 200px;') ?>
@@ -40,8 +45,11 @@ padding: 1rem;">
       
       <button type="submit">Search</button>
     </form>
+    </div>
+    <div style="position: absolute; right: 0;">
+    <a href="/pages/admin/adminAdd.php" class="btn-add"><i class="fa-solid fa-envelope-open-text"></i> Request <?= htmlspecialchars($resultA->TotalRequest) ?></a>
 
-
+    </div>
 
 </div>
 

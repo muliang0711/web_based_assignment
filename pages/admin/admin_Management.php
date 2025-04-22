@@ -41,6 +41,11 @@ $departments = [
     'TS' => 'Technical Support Department',
     'FI' => 'Finance Department'
 ];
+
+$stmA = $_db->prepare("SELECT COUNT(*) AS TotalRequest FROM blockeduser WHERE role ='staff'");
+$stmA->execute();
+$resultA = $stmA->fetch();
+
 ?>
 
 <div class="main-content">
@@ -60,7 +65,8 @@ $departments = [
     
 </div>
     <div style="position: absolute; right: 0;">
-    <a href="/pages/admin/adminAdd.php" class="btn-add"><i class="fa-solid fa-plus"></i>Add Admin</a>
+    <a href="/pages/admin/adminAdd.php" class="btn-add"><i class="fa-solid fa-envelope-open-text"></i> Request <?= htmlspecialchars($resultA->TotalRequest) ?></a>
+    <a href="/pages/admin/adminAdd.php" class="btn-add"><i class="fa-solid fa-plus"></i> Add Admin</a>
     </div>
 </div>
     <div class="container-table">
