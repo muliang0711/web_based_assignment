@@ -39,7 +39,7 @@ $stylesheetArray = ['../user/user.css','/css/admin_login.css'];   // 注意：�
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?= link_stylesheet($stylesheetArray ?? ''); ?>
-        <!-- <?= link_stylesheet($stylesheetArray ?? ''); ?> -->
+      
     <title>Admin Login</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
