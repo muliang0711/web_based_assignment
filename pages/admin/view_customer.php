@@ -15,25 +15,37 @@ $fields = [
     'phoneNo' => 'Contact Number',
     'memberStatus' => 'Member Status'
 ];
-
+$username = $_GET['username'] ?? '';
 $sort = req('sort');
 key_exists($sort,$fields)||$sort='userID';
 $dir = req('dir');
 in_array($dir,['asc','desc'])||$dir='asc';
 $page = req('page', 1);
 require_once '../../Pager.php';
-$p = new Pager("SELECT * FROM user ORDER BY $sort $dir", [], 10, $page);
+$p = new Pager("SELECT * FROM user WHERE username like ? ORDER BY $sort $dir", ["%$username%"], 10, $page);
 $arr = $p->result;
 
 // $arr = $_db->query("SELECT * FROM user order by $sort $dir")->fetchAll();
 ?>
-<div class="searchBar">
-    <a href="" class="add">Add Admin</a>
-</div>
+
 
 <div class="main-content" style="  margin-left: var(--sidebar-width);
 margin-top: 50px;
 padding: 1rem;">
+<div class="searchBar">
+<form class="search-box" method="get">
+
+    <?= html_search('username', 'Search customer name...', 'padding: 6px; border-radius: 4px; border: 1px solid #ccc; width: 200px;') ?>
+
+      
+      <button type="submit">Search</button>
+    </form>
+
+
+
+</div>
+
+
     <div class="container-table">
 
 

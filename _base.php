@@ -608,14 +608,21 @@ function prompt_user_login($customPrompt = null) {
 
 
 // Generate <input type='search'>
-function html_search($key, $attr = '') {
-    $value = encode($GLOBALS[$key] ?? '');
-    echo "<input type='search' id='$key' name='$key' value='$value' $attr>";
+function html_search($key, $placeholder = 'Search...', $style = '') {
+    $value = htmlentities($_GET[$key] ?? '', ENT_QUOTES, 'UTF-8');
+    return "<input 
+                type='text' 
+                name='$key' 
+                value='$value' 
+                placeholder='$placeholder' 
+                style='$style'>";
 }
+
 
 // Generate <select>
 function html_select($key, $items, $default = '- Select One -', $attr = '') {
-    $value = encode($GLOBALS[$key] ?? '');
+    $value = encode(is_array($GLOBALS[$key] ?? '') ? ($GLOBALS[$key][0] ?? '') : ($GLOBALS[$key] ?? ''));
+
     echo "<select id='$key' name='$key' $attr>";
     if ($default !== null) {
         echo "<option value=''>$default</option>";

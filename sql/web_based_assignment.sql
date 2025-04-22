@@ -31,7 +31,8 @@ USE `web_based_assignment`;
 
 CREATE TABLE `admin` (
   `id` varchar(10) NOT NULL,
-  `position` varchar(20) NOT NULL,
+  `name` varchar(30) NOT NULL,
+  `department` varchar(2) NOT NULL,
   `passwordHash` varchar(255) NOT NULL,
   `adminLevel` enum('main','staff') NOT NULL,
   `status` enum('Active','Blocked') NOT NULL
@@ -41,12 +42,14 @@ CREATE TABLE `admin` (
 -- Dumping data for table `admin`
 --
 
-INSERT INTO `admin` (`id`, `position`, `passwordHash`, `adminLevel`, `status`) VALUES
-('A001', 'HR Manager', '$2y$10$5Y2WIZtHCoElCeI6IXp94.4TiLKeTcbOK5AgTswY9oAwbFw9FViFi', 'main', 'Active'),
-('A002', 'IT Support', '$2y$10$2ioQwFoTCz3dH1AjoKG7NuOAHqKjzmecG7b.8BPW5aGiuImR9oji2', 'staff', 'Active'),
-('A003', 'Finance Head', '$2y$10$AeTa6/0xSoeDf2gz0.bXE.i1/kG56Alerke8pFPhe9NSVBVOKA3wi', 'main', 'Active'),
-('A004', 'Marketing Lead', '$2y$10$rYBjsAfzbPMGCn4MANIZ.ef78dfu/MnSbq8RwOKHnY272KCo9h8gK', 'staff', 'Blocked'),
-('A005', 'Operations', '$2y$10$.2ZxTbzEPRnm0H9EYwJQnOG2YBQL8plEmxN3K7WzIAJHO1FUUYVFW', 'staff', 'Blocked');
+INSERT INTO `admin` (`id`,`name`, `department`, `passwordHash`, `adminLevel`, `status`) VALUES
+('A001', 'Alice Wong', 'SA', '$2y$10$5Y2WIZtHCoElCeI6IXp94.4TiLKeTcbOK5AgTswY9oAwbFw9FViFi', 'main', 'Active'),
+('A002', 'Bob Tan', 'IT', '$2y$10$2ioQwFoTCz3dH1AjoKG7NuOAHqKjzmecG7b.8BPW5aGiuImR9oji2', 'staff', 'Active'),
+('A003', 'Charlie Lim', 'CS', '$2y$10$AeTa6/0xSoeDf2gz0.bXE.i1/kG56Alerke8pFPhe9NSVBVOKA3wi', 'main', 'Active'),
+('A004', 'Daphne Teo', 'PD', '$2y$10$rYBjsAfzbPMGCn4MANIZ.ef78dfu/MnSbq8RwOKHnY272KCo9h8gK', 'staff', 'Blocked'),
+('A005', 'Hannah Yeo', 'TS', '$2y$10$.2ZxTbzEPRnm0H9EYwJQnOG2YBQL8plEmxN3K7WzIAJHO1FUUYVFW', 'staff', 'Blocked');
+
+
 
 -- --------------------------------------------------------
 
