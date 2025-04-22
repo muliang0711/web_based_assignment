@@ -21,9 +21,14 @@ try {
     $stmA->execute();
     $resultA = $stmA->fetch();
 
-    // $stmB = $_db->prepare("SELECT ProductID,ProductName FROM Product");
-    // $stmB->execute();
-    // $resultB = $stmB->fetchAll();
+    $stmB = $_db->prepare("SELECT COUNT(*) AS TotalCustomer FROM user");
+    $stmB->execute();
+    $resultB = $stmB->fetch();
+
+
+    $stmD = $_db->prepare("SELECT COUNT(*) AS TotalOrder FROM orders");
+    $stmD->execute();
+    $resultD = $stmD->fetch();
 
     //percentage of the product
     $stmC = $_db->prepare("SELECT 
@@ -66,18 +71,18 @@ try {
     </table>
     <table class="block">
         <tr>
-            <th>Total Product</th>
+            <th>Total Customer</th>
         </tr>
         <tr>
-            <td><?= htmlspecialchars($resultA->TotalProducts) ?></td>
+            <td><?= htmlspecialchars($resultB->TotalCustomer) ?></td>
         </tr>
     </table>
     <table class="block">
         <tr>
-            <th>Total Product</th>
+            <th>Total Order</th>
         </tr>
         <tr>
-            <td><?= htmlspecialchars($resultA->TotalProducts) ?></td>
+            <td><?= htmlspecialchars($resultD->TotalOrder) ?></td>
         </tr>
     </table>
 

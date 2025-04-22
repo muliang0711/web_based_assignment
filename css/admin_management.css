@@ -85,3 +85,9 @@ text-align: center;
     color:white;
 
 }
+.search-box input[type="text"] {
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    flex: 0.5;
+  }

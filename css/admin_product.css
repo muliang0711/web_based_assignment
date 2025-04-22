@@ -240,34 +240,7 @@ table th {
   gap: 1rem;
 }
 
-/* Search Box */
-.search-box {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  flex: 1;
-}
 
-.search-box input[type="text"] {
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  flex: 1;
-}
-
-.search-box button {
-  padding: 0.5rem 1rem;
-  border: none;
-  background-color: #1976d2;
-  color: white;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.search-box button:hover {
-  background-color: #125a9c;
-}
 
 /* Filter Form */
 .filter-form {

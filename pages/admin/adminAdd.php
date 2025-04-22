@@ -49,14 +49,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['generate'])) {
 $id = $_SESSION['id'] ?? 'click to generate';
 $password = $_SESSION['password'] ?? 'click to generate';
 
+$department = [
+    'SA' => 'Sales Department',
+    'IT' => 'IT Support',
+    'IN' => 'Inventory Department',
+    'CS' => 'Customer Service Department',
+    'PD' => 'Procurement Department',
+    'TS' => 'Technical Support Department',
+    'FI' => 'Finance Department'
+];
+
 
 // Handle POST request
 if (is_post()) {
     // $id=req('id'); // no need this, because this won't be submitted by the form. `$id = $_SESSION['id']` already store the id value.
-    $position = req('position');
+    $name = req('name');
     // $password=req('password'); // no need this, because this won't be submitted by the form. `$password = $_SESSION['password']` already store the password value.
     $level = req('level');
-
+    $department = req('department');
     // Validate id
     if ($id == '' || $id == 'click to generate') {
         $_errors['id'] = 'Required';
@@ -74,11 +84,16 @@ if (is_post()) {
     //     }
     // }  
 
-    // Validate position
-    if ($position == '') {
-        $_errors['position'] = 'Required';
-    } else if (strlen($position) > 20) {
-        $_errors['position'] = 'Maximum length 20';
+    // Validate name
+    if ($name == '') {
+        $_errors['name'] = 'Required';
+    } else if (strlen($name) > 20) {
+        $_errors['name'] = 'Maximum length 20';
+    }
+    if ($department == '') {
+        $_errors['department'] = 'Required';
+    } else if (strlen($department) > 2) {
+        $_errors['department'] = 'Error';
     }
 
     // Validate password
@@ -101,9 +116,9 @@ if (is_post()) {
         
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
         $stm = $_db->prepare('INSERT INTO admin
-                            (id, position, passwordHash, adminLevel)
-                            VALUES(?, ?, ?, ?)');
-        $stm->execute([$id, $position, $hashed_password, $level]);
+                            (id, name, department, passwordHash, adminLevel)
+                            VALUES(?, ?, ?, ?, ?)');
+        $stm->execute([$id, $name, $department, $hashed_password, $level]);
 
         // Destory id and password SESSION variables
         unset($_SESSION['id']);
@@ -122,9 +137,14 @@ if (is_post()) {
   padding: 1rem;">
 
     <form method="post" class="insert_form add_container">
-        <label for="position">Position</label>
-        <?= input_text('position', 'maxlength="20"') ?>
-        <?= error('position') ?>
+        <label for="name">Name</label>
+        <?= input_text('name', 'maxlength="20"') ?>
+        <?= error('name') ?>
+
+        <br><br>
+        <label for="department">Department</label>
+    <?= html_select('department', $department) ?>
+    <?= error('department') ?>
 
         <br><br>
         <label>Level</label>

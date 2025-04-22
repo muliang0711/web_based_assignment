@@ -12,6 +12,13 @@ if (is_post()) {
         'userID' => $userID,
         
     ]);
+
+    
+$stmB = $_db->prepare('INSERT INTO blockeduser
+(blockedUserID, role, status, appealReason)
+VALUES(?, ?, ?, ?)');
+$stmB->execute([$userID, "user", "-", ""]);
+
     temp('info','the user has been BLOCKED');
 }
 redirect('view_customer.php');

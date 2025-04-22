@@ -13,25 +13,56 @@ auth("admin", "main");
 <?php
 $fields = [
     'id' => 'Admin ID',
-    'position' => 'Position'
-];
+    'name' => 'Name',
+    'department' => 'Department'
 
+];
+$name = $_GET['name'] ?? '';
 $sort = req('sort');
 key_exists($sort, $fields) || $sort = 'id';
 $dir = req('dir');
 in_array($dir, ['asc', 'desc']) || $dir = 'asc';
 $page = req('page', 1);
 require_once '../../Pager.php';
-$p = new Pager("SELECT * FROM admin where adminLevel ='staff' ORDER BY $sort $dir", [], 10, $page);
-$arr = $p->result;
+ $p = new Pager("SELECT * FROM admin WHERE adminLevel ='staff' AND name like ? ORDER BY $sort $dir", ["%$name%"], 10, $page);
+
+ $arr = $p->result;
+// $stm = $_db->prepare("SELECT * FROM admin WHERE adminLevel = 'staff' and name like ? and (department=? or ?) and (id=? or ?) ORDER BY $sort $dir");
+// $stm->execute(["%$name%",$department,$department==null,$id,$id==null]);
+// $arr = $stm->fetchAll();
 
 // $arr = $_db->query('SELECT * FROM admin where adminLevel ="staff"')->fetchAll();
+$departments = [
+    'SA' => 'Sales Department',
+    'IT' => 'IT Support',
+    'IN' => 'Inventory Department',
+    'CS' => 'Customer Service Department',
+    'PD' => 'Procurement Department',
+    'TS' => 'Technical Support Department',
+    'FI' => 'Finance Department'
+];
 ?>
 
 <div class="main-content">
-    <div class="searchBar">
-        <a href="/pages/admin/adminAdd.php" class="btn-add"><i class="fa-solid fa-plus"></i>Add Admin</a>
+    <div class="searchBar" style="display:flex;">
+        <!-- <div> -->
+            <div>
+    <form class="search-box" method="get">
+
+    <?= html_search('name', 'Search admin name...', 'padding: 6px; border-radius: 4px; border: 1px solid #ccc; width: 300px;') ?>
+
+
+      <!-- <input type="text" name="searchText" placeholder="Search..." required> -->
+
+      
+      <button type="submit">Search</button>
+    </form>
+    
+</div>
+    <div style="position: absolute; right: 0;">
+    <a href="/pages/admin/adminAdd.php" class="btn-add"><i class="fa-solid fa-plus"></i>Add Admin</a>
     </div>
+</div>
     <div class="container-table">
 
 
@@ -51,7 +82,8 @@ $arr = $p->result;
                 <?php foreach ($arr as $a): ?>
                     <tr class="row">
                         <td class="td"><?= $a->id ?></td>
-                        <td class="td"><?= $a->position ?></td>
+                        <td class="td"><?= $a->name ?></td>
+                        <td class="td"><?= $departments[$a->department] ?></td>
                         <td class="td"><button class="action-btn-delete" data-post="/pages/admin/adminDelete.php?id=<?= $a->id ?>" data-confirm="Are you sure you want to delete"><i class="fas fa-trash"></i></button>
                             <?php if ($a->status == 'Active'): ?>
                                 <button class="action-btn-delete" data-post="/pages/admin/blockAdmin.php?id=<?= $a->id  ?>" data-confirm="Are you sure you want to block this user?"><i class="fas fa-ban"></i></button>

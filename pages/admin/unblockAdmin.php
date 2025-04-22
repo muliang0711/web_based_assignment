@@ -7,11 +7,18 @@ if (is_post()) {
     $stm = $_db->prepare('UPDATE admin 
     SET status="Active" 
     WHERE id = :id
+
+    
 ');
 $stm->execute([
     'id' => $id,
     
 ]);
+
+$id=req('id');
+$stmB=$_db->prepare('DELETE FROM blockeduser WHERE blockedUserID=?');
+$stmB->execute([$id]);
+
     temp('info','This andmin has been UNBLOCKED');
 }
 
