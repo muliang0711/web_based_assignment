@@ -12,6 +12,11 @@ $stm->execute([
     'userID' => $userID,
     
 ]);
+
+$stmB=$_db->prepare('DELETE FROM blockeduser WHERE blockedUserID=?');
+$stmB->execute([$userID]);
+
+
     temp('info','the user has been UNBLOCKED');
 }
 

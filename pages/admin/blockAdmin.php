@@ -12,6 +12,16 @@ $stm->execute([
     'id' => $id,
     
 ]);
+
+
+    $stmB = $_db->prepare('INSERT INTO blockeduser
+                        (blockedUserID, role, status, appealReason)
+                        VALUES(?, ?, ?, ?)');
+    $stmB->execute([$id, "staff", "-", ""]);
+
+
+
+
     temp('info','the admin has been BLOCKED');
 }
 redirect('admin_Management.php');
