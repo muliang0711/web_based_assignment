@@ -58,7 +58,7 @@ if (is_post()) {
         if ($u && pwMatch($password, $u->passwordHash)) {
             // If the user is blocked, redirect them to a page that notifies them as such and allows them to make an appeal
             if (is_blocked("user", $u->userID)) {
-                redirect('blocked.php'); // TODO
+                redirect("blocked.php?userID={$u->userID}"); // TODO
             }
 
             login($u->userID, "user");
