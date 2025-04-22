@@ -1,19 +1,88 @@
 <?php
 require '../../_base.php';
-
-
+$id=req('id');
+if (!(is_blocked("admin", $id))) {
+    redirect("admin_login.php"); 
+}
 if (is_post()) {
-    $id=req('id');
-    $stm = $_db->prepare('UPDATE admin 
-    SET blockedStatus="request" 
-    WHERE id = :id
-');
+  
+    $appealReason = req('appealReason');
+
+    if ($appealReason == '') {
+        $_errors['appealReason'] = 'Required';
+    } else if (strlen($appealReason) > 30) {
+        $_errors['appealReason'] = 'Maximum length 30';
+    }
+
+
+
+    if (!$_errors) {
+        $id=req('id');
+        $stm = $_db->prepare('UPDATE blockeduser 
+        SET status="request",appealReason=:appealReason
+        WHERE blockedUserID = :id
+    ');
+
 $stm->execute([
     'id' => $id,
-    
+    'appealReason'=>$appealReason
 ]);
-        temp('info','You have request unblock to the admin');
-    }
-    redirect('admin_login.php');
+temp('info','You have request unblock to the admin');
+redirect('admin_login.php');
+}
+
+    
+}
+
+?>
+<?php
+$stylesheetArray = ['../user/user.css','/css/admin_login.css'];   // 注意：这边只放特定于此页面的 .css file(s)。所有 admin 页面都会用到的 .css files 应放在 /css/admin.css
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <?= link_stylesheet($stylesheetArray ?? ''); ?>
+      
+    <title>Admin Login</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+
+
+<body>
+    <div class="container">
+    <h2 class="store-name">Request Unblock</h2>
+    <h1 class="welcome">Sorry</h1>
+    <div class="instruction">You have been blocked by admin.</div>
+
+    <form class="form" method="post">
+        <p>Your User ID : <?= $id ?></p>
+        <div class="form-item">
+            <label for="appealReason"></label>
+            <br>
+            <?php input_text('appealReason') ?>
+            <?php error("appealReason"); ?>
+        </div>
+
+        
+        <!-- <a href="#" class="forgot-pw">Forgot password?</a> -->
+        <button class="button" type="submit">Submit</button>            
+    </form>
+
+
+</div>
+
+
+
+
+</body>
+<script src="../user/user.js"></script>
+</html>
+
+
+
+
+
 
 

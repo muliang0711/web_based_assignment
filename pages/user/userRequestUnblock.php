@@ -1,13 +1,17 @@
 <?php
 require '../../_base.php';
+$userID=req('userID');
+if (!(is_blocked("user", $userID))) {
+    redirect("user-login.php"); 
+}
 if (is_post()) {
   
-    $requestReason = req('requestReason');
+    $appealReason = req('appealReason');
 
-    if ($requestReason == '') {
-        $_errors['requestReason'] = 'Required';
-    } else if (strlen($requestReason) > 20) {
-        $_errors['requestReason'] = 'Maximum length 20';
+    if ($appealReason == '') {
+        $_errors['appealReason'] = 'Required';
+    } else if (strlen($appealReason) > 30) {
+        $_errors['appealReason'] = 'Maximum length 30';
     }
 
 
@@ -15,17 +19,18 @@ if (is_post()) {
     if (!$_errors) {
         $userID=req('userID');
         $stm = $_db->prepare('UPDATE blockeduser 
-        SET status="request" 
+        SET status="request",appealReason=:appealReason
         WHERE blockedUserID = :userID
     ');
 
 $stm->execute([
     'userID' => $userID,
-    
+    'appealReason'=>$appealReason
 ]);
 temp('info','You have request unblock to the admin');
-}
 redirect('/pages/user/user-login.php');
+}
+
     
 }
 
@@ -54,10 +59,10 @@ $stylesheetArray = ['../user/user.css','/css/admin_login.css'];   // 注意：�
     <form class="form" method="post">
         <p>Your User ID : <?= $userID ?></p>
         <div class="form-item">
-            <label for="requestReason"></label>
+            <label for="appealReason"></label>
             <br>
-            <?php input_text('requestReason') ?>
-            <?php error("requestReason"); ?>
+            <?php input_text('appealReason') ?>
+            <?php error("appealReason"); ?>
         </div>
 
         

@@ -32,6 +32,12 @@ if (is_post()) {
 
         // If id exists, and password is correct
         if ($u && pwMatch($password, $u->passwordHash)) {
+            if (is_blocked("admin", $u->id)) {
+                redirect("adminRequestUnblock.php?id={$u->id}"); // TODO
+            }
+
+            
+            
             login($u->id, "admin");
             
             temp('info', "Logged in as $u->id");
