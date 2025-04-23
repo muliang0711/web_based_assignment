@@ -157,7 +157,7 @@ p{
 }
 
 .product img{
-  width: 100%;
+  width: 400px;
   height: auto;
   background-color: rgb(252, 252, 252);
   display:inline-block;
@@ -167,8 +167,25 @@ p{
   justify-content: flex-start;
 }
 
+.prev{
+  position: absolute;
+  top:30%;
+  font-size: 20px;
+  left:2%;
+  cursor: pointer;
+}
 
+.next{
+  position: absolute;
+  top:30%;
+  font-size: 20px;
+  left: 24%;
+  cursor: pointer;
+}
 
+.mySlides {
+  display: none;
+}
 .racketName{
   font-size: 50px;
   font-weight: bold;
@@ -304,6 +321,7 @@ p{
 }
 
 .AddCart button{
+  margin-left: 5px;
   font-size: 30px;
   /* position: absolute; */
   right:25%;
@@ -563,7 +581,10 @@ p{
   .product {
     width: 70%;
     align-self: center;
+    position: relative;
   }
+
+ 
 
   .playerPhoto img {
     float: none;

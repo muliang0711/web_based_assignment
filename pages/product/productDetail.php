@@ -100,8 +100,42 @@ include '../../_head.php';
 <div class="error"><?= temp("login"); ?></div> -->
 
     <!-- racket information -->
+    <div class="image-container">
+      <a class="prev" onclick="prevSlides(-1, 1)">&#10094;</a>
+      <div class="product">
+        <!-- racket image -->
+        <div class="mySlides"><img src="../../../File/<?php echo $imgUrl; ?>" alt="Image"></div>
+        <div class="mySlides"><img src="badmintonRacket.jpg" alt="Image2"></div>
+        <div class="mySlides"><img src="badmintonRacket2.jpg" alt="Image3"></div>
+      </div>
+      <a class="next" onclick="nextSlides(1, 1)">&#10095;</a>
+    </div>
 
-    <div class="product"><img src="../../../File/<?php echo $imgUrl; ?>" alt="Image"></div>
+    <!-- mutliple image slide-->
+    <script>
+      let slideIndex = 0;
+
+      function showSlides(n) {
+        const slides = document.getElementsByClassName("mySlides");
+        if (n >= slides.length) slideIndex = 0;     // reset slide index
+        if (n < 0) slideIndex = slides.length - 1;  // move to last index
+        for (let i = 0; i < slides.length; i++) {   // display all the image to none
+          slides[i].style.display = "none";
+        }
+        slides[slideIndex].style.display = "block"; // and then display one image
+      }
+
+      showSlides(slideIndex);
+
+      function nextSlides(n) {
+        showSlides(slideIndex += n);
+      }
+
+      function prevSlides(n) {
+        showSlides(slideIndex -= n);
+      }
+
+    </script>
 
     <div class="detail">
       <div class="racketName"><?php echo $racketName ?></div>
@@ -137,7 +171,7 @@ include '../../_head.php';
 
           <div class="radios">
             <div class="radioOne">
-              <input type="radio" id="gripSize" name="gripSize" value='3UG5'> 
+              <input type="radio" id="gripSize" name="gripSize" value='3UG5'>
               <label for="gripSize">
                 <strong>
                   <span>3UG5</span>
