@@ -122,10 +122,26 @@ header nav > a:hover::after {
 /*********************************************
     Styling for cart button and cart popup 
 **********************************************/
+.cart-btn {
+    position: relative; /* anchor for the red circle's absolute positioning */
+}
 
 .cart-btn img {
     cursor: pointer;
     width: 50px;
+}
+
+.itemCount{
+    position: absolute;
+    color: white;
+    background-color: rgb(255, 81, 0);
+    border-radius: 50%;
+    width: 1.5em;
+    height: 1.5em;
+    text-align: center;
+    font-size: 0.8em;
+    top: 5%;
+    right: 0;
 }
 
 .cart-popup {
@@ -647,18 +663,7 @@ span.error br {
     padding: 50px 0;
 }
 
-.itemCount{
-    position: absolute;
-    color: white;
-    background-color: rgb(255, 81, 0);
-    border-radius: 50%;
-    width: 22px;
-    height: 22px;
-    text-align: center;
-    font-size: 15px;
-    top: 15%;
-    right:185px;
-}
+
 
 
 /* Responsiveness for mobile devices */
