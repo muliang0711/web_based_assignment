@@ -1,5 +1,6 @@
 <?php
 // include __DIR__ . '/../../admin_login_guard.php';
+admin_if_blocked();
 ?> 
 
 <!DOCTYPE html>
