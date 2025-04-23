@@ -17,6 +17,7 @@ admin_if_blocked();
   <link rel="stylesheet" href="/css/sidebar.css">
   <link rel="stylesheet" href="/css/admin.css">
 
+  <link rel="stylesheet" href="../../lang.js">
   <?php link_stylesheet($stylesheetArray ?? ''); ?>
   
 </head>
