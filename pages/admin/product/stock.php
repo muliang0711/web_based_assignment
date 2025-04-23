@@ -2,6 +2,12 @@
 require_once __DIR__ . "/../../../_base.php";
 include_once __DIR__ . "/../../../admin_login_guard.php";
 include __DIR__ . "/../main.php";
+include __DIR__ . "/../../../controller/stockManager.php";
+
+$productManager = new ProductManager($_db);
+$productManager->loadLowStockProductsToSession();
+
+print_r($_SESSION['low_stock_product']);
 
 $lowStockProducts = $_SESSION['low_stock_product'] ?? [];
 if (!is_array($lowStockProducts)) $lowStockProducts = [];
@@ -59,7 +65,7 @@ $totalPages = ceil($totalProducts / $productsPerPage);
                                     <td class="td"><?= htmlspecialchars($product->seriesID ?? '-') ?></td>
                                     <td class="td"><?= htmlspecialchars($product->sizeID ?? '-') ?></td>
                                     <td class="td">RM<?= number_format($product->price, 2) ?></td>
-                                    <td class="td"><?= htmlspecialchars($product->total_stock ?? '0') ?></td>
+                                    <td class="td"><?= htmlspecialchars($product->stock ?? '0') ?></td>
                                     <td class="td">
                                         <a href="../product/productDetail.php?racket=<?= $product->productID ?>" class="action-btn-details">
                                             <i class="fas fa-eye"></i>
