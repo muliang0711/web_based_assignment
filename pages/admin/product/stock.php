@@ -46,9 +46,6 @@ $totalPages = ceil($totalProducts / $productsPerPage);
     z-index: 999;
 }
 
-#qr-reader {
-
-}
 #cancel-scan {
     background-color: #ff4d4d;
     color: white;

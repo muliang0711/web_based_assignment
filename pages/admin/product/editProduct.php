@@ -59,7 +59,7 @@ link_stylesheet($stylesheetArray);
 
       <div class="form-group">
         <label>Stock</label>
-        <input type="number" name="stock" value="<?php echo $product['total_stock']; ?>" required>
+        <input type="number" name="stock" value="<?php echo $product['total_stock']; ?>" readonly>
       </div>
 
       <div class="form-group">

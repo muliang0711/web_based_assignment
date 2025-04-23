@@ -46,8 +46,9 @@ include '../../admin_login_guard.php';
 
       <div class="form-group">
         <label for="stock">Stock</label>
-        <input type="number" id="stock" name="stock" required>
+        <input type="number" id="stock" name="stock" value="0" hidden>
       </div>
+      
       <div class="form-group">
         <label>Introduction</label>
         <textarea name="introduction" rows="3"></textarea>
