@@ -71,10 +71,6 @@
                 <img width="80" height="50" src="/assets/img/visa.png">
                 <img width="60" height="45" src="/assets/img/mastercard.png">
             </div>
-            <div data-method="Ewallet">
-                <span>E-Wallet</span><br>
-                <img width="60" height="60" src="/assets/img/tng.png">
-            </div>
 
             <div data-method="Banking">
                 <span>Online Banking</span><br>

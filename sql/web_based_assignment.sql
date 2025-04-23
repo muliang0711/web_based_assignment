@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 17, 2025 at 06:08 PM
+-- Generation Time: Apr 23, 2025 at 07:53 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -29,6 +29,7 @@ USE `web_based_assignment`;
 -- Table structure for table `admin`
 --
 
+DROP TABLE IF EXISTS `admin`;
 CREATE TABLE `admin` (
   `id` varchar(10) NOT NULL,
   `name` varchar(30) NOT NULL,
@@ -42,14 +43,12 @@ CREATE TABLE `admin` (
 -- Dumping data for table `admin`
 --
 
-INSERT INTO `admin` (`id`,`name`, `department`, `passwordHash`, `adminLevel`, `status`) VALUES
+INSERT INTO `admin` (`id`, `name`, `department`, `passwordHash`, `adminLevel`, `status`) VALUES
 ('A001', 'Alice Wong', 'SA', '$2y$10$5Y2WIZtHCoElCeI6IXp94.4TiLKeTcbOK5AgTswY9oAwbFw9FViFi', 'main', 'Active'),
 ('A002', 'Bob Tan', 'IT', '$2y$10$2ioQwFoTCz3dH1AjoKG7NuOAHqKjzmecG7b.8BPW5aGiuImR9oji2', 'staff', 'Active'),
 ('A003', 'Charlie Lim', 'CS', '$2y$10$AeTa6/0xSoeDf2gz0.bXE.i1/kG56Alerke8pFPhe9NSVBVOKA3wi', 'main', 'Active'),
 ('A004', 'Daphne Teo', 'PD', '$2y$10$rYBjsAfzbPMGCn4MANIZ.ef78dfu/MnSbq8RwOKHnY272KCo9h8gK', 'staff', 'Blocked'),
 ('A005', 'Hannah Yeo', 'TS', '$2y$10$.2ZxTbzEPRnm0H9EYwJQnOG2YBQL8plEmxN3K7WzIAJHO1FUUYVFW', 'staff', 'Blocked');
-
-
 
 -- --------------------------------------------------------
 
@@ -57,6 +56,7 @@ INSERT INTO `admin` (`id`,`name`, `department`, `passwordHash`, `adminLevel`, `s
 -- Table structure for table `blockeduser`
 --
 
+DROP TABLE IF EXISTS `blockeduser`;
 CREATE TABLE `blockeduser` (
   `blockedUserID` varchar(15) NOT NULL,
   `role` enum('user','staff') NOT NULL,
@@ -71,6 +71,7 @@ CREATE TABLE `blockeduser` (
 -- Table structure for table `cartitem`
 --
 
+DROP TABLE IF EXISTS `cartitem`;
 CREATE TABLE `cartitem` (
   `userID` int(11) NOT NULL,
   `productID` varchar(5) NOT NULL,
@@ -95,6 +96,7 @@ INSERT INTO `cartitem` (`userID`, `productID`, `sizeID`, `quantity`) VALUES
 -- Table structure for table `orders`
 --
 
+DROP TABLE IF EXISTS `orders`;
 CREATE TABLE `orders` (
   `orderId` int(5) NOT NULL,
   `userId` int(11) NOT NULL,
@@ -106,15 +108,17 @@ CREATE TABLE `orders` (
   `deliveryMethod` varchar(20) NOT NULL,
   `deliveredDate` date DEFAULT NULL,
   `tracking` int(30) DEFAULT NULL,
-  `discount` decimal(10,2) NOT NULL DEFAULT 0.00
+  `discount` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `notify` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`orderId`, `userId`, `orderDate`, `status`, `orderAddress`, `orderName`, `orderPhone`, `deliveryMethod`, `deliveredDate`, `tracking`, `discount`) VALUES
-(1, 1, '2025-03-31', 'Canceled', 'PV18 RESIDENCE, JALAN LANGKAWI, 53000, Kuala Lumpur', 'Wayne Gan', '60126289399', 'Standard', NULL, 0, 119.70);
+INSERT INTO `orders` (`orderId`, `userId`, `orderDate`, `status`, `orderAddress`, `orderName`, `orderPhone`, `deliveryMethod`, `deliveredDate`, `tracking`, `discount`, `notify`) VALUES
+(1, 1, '2025-03-31', 'Canceled', 'PV18 RESIDENCE, JALAN LANGKAWI, 53000, Kuala Lumpur', 'Wayne Gan', '60126289399', 'Standard', NULL, 0, 119.70, 1),
+(2, 1, '2025-04-23', 'Pending', 'Straits Court, JALAN Ujong pasir, 75050, Melaka', 'MR lolipop', '60126289399', 'Standard', NULL, 1, 0.00, 0);
 
 -- --------------------------------------------------------
 
@@ -122,6 +126,7 @@ INSERT INTO `orders` (`orderId`, `userId`, `orderDate`, `status`, `orderAddress`
 -- Table structure for table `order_items`
 --
 
+DROP TABLE IF EXISTS `order_items`;
 CREATE TABLE `order_items` (
   `orderId` int(5) NOT NULL,
   `productId` varchar(5) NOT NULL,
@@ -135,7 +140,8 @@ CREATE TABLE `order_items` (
 --
 
 INSERT INTO `order_items` (`orderId`, `productId`, `quantity`, `subtotal`, `gripSize`) VALUES
-(1, 'R0005', 1, 399.00, '3UG5');
+(1, 'R0005', 1, 399.00, '3UG5'),
+(2, 'R0060', 1, 199.00, '3UG5');
 
 -- --------------------------------------------------------
 
@@ -143,6 +149,7 @@ INSERT INTO `order_items` (`orderId`, `productId`, `quantity`, `subtotal`, `grip
 -- Table structure for table `product`
 --
 
+DROP TABLE IF EXISTS `product`;
 CREATE TABLE `product` (
   `productID` varchar(5) NOT NULL,
   `productName` varchar(100) NOT NULL,
@@ -258,14 +265,13 @@ INSERT INTO `product` (`productID`, `productName`, `price`, `seriesID`, `introdu
 ('R0099', 'AeroSharp Neo', 289.00, 'AS', 'Sharp feel and nimble handling for advancing players.', 'Mina Kwon. Clean strokes and growing confidence.'),
 ('R0100', 'Phantom Rise', 319.00, 'PHM', 'Lightweight Phantom tuned for beginners ready to level up.', 'Jake Fields. Learning to rise, one swing at a time.');
 
-
-
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `productstock`
 --
 
+DROP TABLE IF EXISTS `productstock`;
 CREATE TABLE `productstock` (
   `productID` varchar(5) NOT NULL,
   `sizeID` varchar(4) NOT NULL,
@@ -293,7 +299,6 @@ INSERT INTO `productstock` (`productID`, `sizeID`, `stock`, `status`, `low_stock
 ('R0005', '4UG5', 6, 'onsales', 5, 0, NULL),
 ('R0006', '3UG5', 2, 'onsales', 5, 1, NULL),
 ('R0006', '4UG5', 3, 'onsales', 5, 1, NULL),
--- R0007 to R0012
 ('R0007', '3UG5', 4, 'onsales', 5, 1, NULL),
 ('R0007', '4UG5', 5, 'onsales', 5, 0, NULL),
 ('R0008', '3UG5', 3, 'onsales', 5, 1, NULL),
@@ -306,8 +311,6 @@ INSERT INTO `productstock` (`productID`, `sizeID`, `stock`, `status`, `low_stock
 ('R0011', '4UG5', 5, 'onsales', 5, 0, NULL),
 ('R0012', '3UG5', 3, 'onsales', 5, 1, NULL),
 ('R0012', '4UG5', 4, 'onsales', 5, 1, NULL),
-
--- R0013 to R0024
 ('R0013', '3UG5', 4, 'onsales', 5, 1, NULL),
 ('R0013', '4UG5', 5, 'onsales', 5, 0, NULL),
 ('R0014', '3UG5', 2, 'onsales', 5, 1, NULL),
@@ -332,7 +335,6 @@ INSERT INTO `productstock` (`productID`, `sizeID`, `stock`, `status`, `low_stock
 ('R0023', '4UG5', 5, 'onsales', 5, 0, NULL),
 ('R0024', '3UG5', 3, 'onsales', 5, 1, NULL),
 ('R0024', '4UG5', 4, 'onsales', 5, 1, NULL),
--- R0025 to R0036
 ('R0025', '3UG5', 4, 'onsales', 5, 1, NULL),
 ('R0025', '4UG5', 5, 'onsales', 5, 0, NULL),
 ('R0026', '3UG5', 2, 'onsales', 5, 1, NULL),
@@ -357,7 +359,6 @@ INSERT INTO `productstock` (`productID`, `sizeID`, `stock`, `status`, `low_stock
 ('R0035', '4UG5', 5, 'onsales', 5, 0, NULL),
 ('R0036', '3UG5', 3, 'onsales', 5, 1, NULL),
 ('R0036', '4UG5', 4, 'onsales', 5, 1, NULL),
--- R0037 to R0048
 ('R0037', '3UG5', 4, 'onsales', 5, 1, NULL),
 ('R0037', '4UG5', 5, 'onsales', 5, 0, NULL),
 ('R0038', '3UG5', 2, 'onsales', 5, 1, NULL),
@@ -382,7 +383,6 @@ INSERT INTO `productstock` (`productID`, `sizeID`, `stock`, `status`, `low_stock
 ('R0047', '4UG5', 5, 'onsales', 5, 0, NULL),
 ('R0048', '3UG5', 3, 'onsales', 5, 1, NULL),
 ('R0048', '4UG5', 4, 'onsales', 5, 1, NULL),
--- R0049 to R0060
 ('R0049', '3UG5', 4, 'onsales', 5, 1, NULL),
 ('R0049', '4UG5', 5, 'onsales', 5, 0, NULL),
 ('R0050', '3UG5', 2, 'onsales', 5, 1, NULL),
@@ -407,7 +407,6 @@ INSERT INTO `productstock` (`productID`, `sizeID`, `stock`, `status`, `low_stock
 ('R0059', '4UG5', 5, 'onsales', 5, 0, NULL),
 ('R0060', '3UG5', 3, 'onsales', 5, 1, NULL),
 ('R0060', '4UG5', 4, 'onsales', 5, 1, NULL),
--- R0061 to R0072
 ('R0061', '3UG5', 4, 'onsales', 5, 1, NULL),
 ('R0061', '4UG5', 5, 'onsales', 5, 0, NULL),
 ('R0062', '3UG5', 2, 'onsales', 5, 1, NULL),
@@ -432,7 +431,6 @@ INSERT INTO `productstock` (`productID`, `sizeID`, `stock`, `status`, `low_stock
 ('R0071', '4UG5', 5, 'onsales', 5, 0, NULL),
 ('R0072', '3UG5', 3, 'onsales', 5, 1, NULL),
 ('R0072', '4UG5', 4, 'onsales', 5, 1, NULL),
--- R0073 to R0084
 ('R0073', '3UG5', 4, 'onsales', 5, 1, NULL),
 ('R0073', '4UG5', 5, 'onsales', 5, 0, NULL),
 ('R0074', '3UG5', 2, 'onsales', 5, 1, NULL),
@@ -457,7 +455,6 @@ INSERT INTO `productstock` (`productID`, `sizeID`, `stock`, `status`, `low_stock
 ('R0083', '4UG5', 5, 'onsales', 5, 0, NULL),
 ('R0084', '3UG5', 3, 'onsales', 5, 1, NULL),
 ('R0084', '4UG5', 4, 'onsales', 5, 1, NULL),
--- R0085 to R0096
 ('R0085', '3UG5', 4, 'onsales', 5, 1, NULL),
 ('R0085', '4UG5', 5, 'onsales', 5, 0, NULL),
 ('R0086', '3UG5', 2, 'onsales', 5, 1, NULL),
@@ -482,7 +479,6 @@ INSERT INTO `productstock` (`productID`, `sizeID`, `stock`, `status`, `low_stock
 ('R0095', '4UG5', 5, 'onsales', 5, 0, NULL),
 ('R0096', '3UG5', 3, 'onsales', 5, 1, NULL),
 ('R0096', '4UG5', 4, 'onsales', 5, 1, NULL),
--- R0097 to R0100
 ('R0097', '3UG5', 4, 'onsales', 5, 1, NULL),
 ('R0097', '4UG5', 5, 'onsales', 5, 0, NULL),
 ('R0098', '3UG5', 2, 'onsales', 5, 1, NULL),
@@ -491,12 +487,14 @@ INSERT INTO `productstock` (`productID`, `sizeID`, `stock`, `status`, `low_stock
 ('R0099', '4UG5', 6, 'onsales', 5, 0, NULL),
 ('R0100', '3UG5', 3, 'onsales', 5, 1, NULL),
 ('R0100', '4UG5', 4, 'onsales', 5, 1, NULL);
+
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `product_images`
 --
 
+DROP TABLE IF EXISTS `product_images`;
 CREATE TABLE `product_images` (
   `id` int(11) NOT NULL,
   `productID` varchar(50) DEFAULT NULL,
@@ -508,7 +506,6 @@ CREATE TABLE `product_images` (
 --
 -- Dumping data for table `product_images`
 --
-
 
 INSERT INTO `product_images` (`id`, `productID`, `image_path`, `image_type`, `created_at`) VALUES
 (1, 'R0001', 'product_R0001_1744986637.png', 'product', '2025-04-18 14:30:37'),
@@ -709,13 +706,13 @@ INSERT INTO `product_images` (`id`, `productID`, `image_path`, `image_type`, `cr
 (210, 'R0100', 'product_R0100_1744989707.png', 'product', '2025-04-18 15:21:47'),
 (211, 'R0100', 'player_R0100_1744989707.png', 'player', '2025-04-18 15:21:47');
 
-
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `restock_history`
 --
 
+DROP TABLE IF EXISTS `restock_history`;
 CREATE TABLE `restock_history` (
   `restockID` int(11) NOT NULL,
   `productID` varchar(20) NOT NULL,
@@ -731,6 +728,7 @@ CREATE TABLE `restock_history` (
 -- Table structure for table `savedaddress`
 --
 
+DROP TABLE IF EXISTS `savedaddress`;
 CREATE TABLE `savedaddress` (
   `userID` int(11) NOT NULL,
   `address` varchar(200) NOT NULL,
@@ -753,6 +751,7 @@ INSERT INTO `savedaddress` (`userID`, `address`, `phoneNo`, `name`, `defaultAdd`
 -- Table structure for table `series`
 --
 
+DROP TABLE IF EXISTS `series`;
 CREATE TABLE `series` (
   `seriesID` varchar(3) NOT NULL,
   `seriesName` varchar(15) DEFAULT NULL
@@ -764,10 +763,10 @@ CREATE TABLE `series` (
 
 INSERT INTO `series` (`seriesID`, `seriesName`) VALUES
 ('AS', 'AeroSharp'),
+('PHM', 'Phantom'),
 ('SHD', 'Shadow'),
 ('TSM', 'TurboSmash'),
-('TST', 'ThunderStrike'),
-('PHM', 'Phantom');
+('TST', 'ThunderStrike');
 
 -- --------------------------------------------------------
 
@@ -775,6 +774,7 @@ INSERT INTO `series` (`seriesID`, `seriesName`) VALUES
 -- Table structure for table `token`
 --
 
+DROP TABLE IF EXISTS `token`;
 CREATE TABLE `token` (
   `id` varchar(100) NOT NULL,
   `type` enum('verify-email','change-password') NOT NULL,
@@ -788,6 +788,7 @@ CREATE TABLE `token` (
 -- Table structure for table `user`
 --
 
+DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `userID` int(11) NOT NULL,
   `username` varchar(255) NOT NULL,
@@ -818,6 +819,7 @@ INSERT INTO `user` (`userID`, `username`, `passwordHash`, `address`, `birthdate`
 -- Table structure for table `vouchers`
 --
 
+DROP TABLE IF EXISTS `vouchers`;
 CREATE TABLE `vouchers` (
   `voucherCode` varchar(15) NOT NULL,
   `amount` int(3) NOT NULL,
@@ -950,7 +952,7 @@ ALTER TABLE `orders`
 -- AUTO_INCREMENT for table `product_images`
 --
 ALTER TABLE `product_images`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=212;
 
 --
 -- AUTO_INCREMENT for table `restock_history`
