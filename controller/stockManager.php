@@ -24,4 +24,6 @@ class ProductManager {
     }
 }
 
+// 6. Example usage
+$productManager = new ProductManager($_db);
 ?>

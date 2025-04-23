@@ -1,14 +1,18 @@
 <?php
 require_once __DIR__ . "/../../../_base.php";
 include_once __DIR__ . "/../../../admin_login_guard.php";
-include __DIR__ . "/../main.php";
+//include __DIR__ . "/../main.php";
 include __DIR__ . "/../../../controller/stockManager.php";
+require_once "../../../controller/productController.php";
 
-$productManager = new ProductManager($_db);
 $productManager->loadLowStockProductsToSession();
 
 $lowStockProducts = $_SESSION['low_stock_product'] ?? [];
 if (!is_array($lowStockProducts)) $lowStockProducts = [];
+
+$seriesIdList = $productController->getAllSeriesID();
+$productIDList = $productController->getAllProductID();
+
 
 $productsPerPage = 10;
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;

@@ -388,9 +388,5 @@ $(document).ready(function () {
             }
         });
     });
-
-
-
-
 });
 </script>
