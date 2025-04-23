@@ -167,7 +167,7 @@ class CheckStock {
     }
     
     public function getProductByIDAndSize($productID , $sizeID){
-        $sql = "SELECT productID , sizeID FROM productStock WHERE productID = ? AND sizeID = ? ";
+        $sql = "SELECT * FROM productStock WHERE productID = ? AND sizeID = ? ";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([$productID , $sizeID]);
         return $stmt->fetchAll();
