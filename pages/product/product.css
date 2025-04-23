@@ -22,6 +22,8 @@ main {
 .top-sideFunction{
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 50px 50px 10px 50px;
 }
 
 .sidebar{
@@ -180,11 +182,15 @@ p{
   justify-content: flex-start;
 }
 
+.prev:hover, .next:hover {
+  color:rgb(255, 97, 95);
+}
+
 .prev{
   position: absolute;
   top:30%;
   font-size: 20px;
-  left:2%;
+  left:10%;
   cursor: pointer;
 }
 
@@ -192,7 +198,7 @@ p{
   position: absolute;
   top:30%;
   font-size: 20px;
-  right: 2%;
+  right: 10%;
   cursor: pointer;
 }
 
@@ -294,8 +300,8 @@ p{
 .searchContainer{
   width: 220px;
   position: relative;
-  margin-top:10px;
-  margin-left:50px;
+  /* margin-top:10px;
+  margin-left:50px; */
 }
 
 .input{
