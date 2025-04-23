@@ -29,7 +29,7 @@ $product = $stmt->fetch(PDO::FETCH_ASSOC);
 
 
 if ($product) {
-    $redirectUrl = "update.php?productID={$productID}&sizeID={$sizeID}";
+    $redirectUrl = "update-stock.php?productID={$productID}&sizeID={$sizeID}";
     header("Location: $redirectUrl");
     exit;
 } else {
