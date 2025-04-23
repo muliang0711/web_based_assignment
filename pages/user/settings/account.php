@@ -3,8 +3,8 @@ require '../../../_base.php';
 
 /********* You can change these to suit the specific needs of your page *********/
 $title = 'Profile';
-$stylesheetArray = ['profile.css']; // Put CSS files that are specific to this page here. If you want to change the styling of the header and the footer, go to /css/app.cs
-$scriptArray = [];      // Put JS files that are specific to this page here. If you want to change the JavaScript for the header and the footer, go to /js/app.js
+$stylesheetArray = ['profile.css', '/css/password.css']; // Put CSS files that are specific to this page here. If you want to change the styling of the header and the footer, go to /css/app.cs
+$scriptArray = ['/js/password.js'];      // Put JS files that are specific to this page here. If you want to change the JavaScript for the header and the footer, go to /js/app.js
 
 include '../../../_login_guard.php';
 
@@ -20,22 +20,25 @@ $_genders = [
 if (is_post()) {
     $action = post('action');
     if ($action == 'changePassword') {
-        // Generate token ID
-        $id = sha1(uniqid() . rand()); // question: why need both uniqid() and rand() ah? is it to increase randomness?
+        $currentPassword = post('currentPassword');
+        $newPassword     = post('newPassword');
 
-        // Delete old and insert new token
-        $stm = $_db->prepare('
-            DELETE FROM token WHERE userID = :userID;
+        // // Generate token ID
+        // $id = sha1(uniqid() . rand()); // question: why need both uniqid() and rand() ah? is it to increase randomness?
 
-            INSERT INTO token (id, type, expire, userID)
-            VALUES (:tokenID, "change-password", ADDTIME(NOW(), "00:05"), :userID);
-        ');
-        $stm->execute([
-            'userID' => $_user->userID,
-            'tokenID' => $id,
-        ]);
+        // // Delete old and insert new token
+        // $stm = $_db->prepare('
+        //     DELETE FROM token WHERE userID = :userID;
 
-        redirect("change-password.php?id=$id");
+        //     INSERT INTO token (id, type, expire, userID)
+        //     VALUES (:tokenID, "change-password", ADDTIME(NOW(), "00:05"), :userID);
+        // ');
+        // $stm->execute([
+        //     'userID' => $_user->userID,
+        //     'tokenID' => $id,
+        // ]);
+
+        // redirect("reset-password.php?id=$id");
     }   
     else if ($action == 'deleteAccount') {
         redirect('verify_identity.php');
@@ -54,11 +57,35 @@ include 'profile_dynamic_navbar.php';
     </section> -->
 
     <h1 class="heading"><?= $current_title ?></h1>
-    <div class="section-container">
+    <div class="left-col"> <!-- .left-col is just a regular div as far as this page is concerned. It is originally used as a flex item of a two-column container. -->
         <section>
             <h2>Change password</h2>
             <form method="post">
                 <input type="hidden" name="action" value="changePassword"/>
+
+                <div class="form-group">
+                    <label class="label">Current password</label>
+                    <div class="password-input-box">
+                        <?php input_password('currentPassword') ?>
+                        <img class="visibility-toggle-icon" src="../../../assets/img/visibility-off.svg" alt="Visibility toggle icon"/>
+                    </div>
+                    <?= error('currentPassword'); ?>
+                </div>              
+               
+                <div class="form-group">
+                    <label class="label">New password</label>
+                    <div class="password-input-box">
+                        <?php input_password('newPassword', 'class="strength-testable"') ?>
+                        <img class="visibility-toggle-icon" src="/assets/img/visibility-off.svg" alt="Visibility toggle icon"/>
+                    </div>
+                    <?= error('newPassword'); ?>
+                    <div class="password-strength-tester">
+                        <p class="checks" id="charCount">At least 8 characters</p>
+                        <p class="checks" id="bothCase">Contains uppercase and lowercase letters</p>
+                        <p class="checks" id="specialSymbols">Contains special symbol(s)</p>
+                    </div>
+                </div>
+
                 <button 
                     type="submit" 
                     class="btn-simple btn-green"

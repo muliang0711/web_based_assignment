@@ -104,15 +104,16 @@ include '../../../_head.php';
     <div class="instruction"></div>
 
     <form class="form" method="post">
-        <div class="form-item">
+        <!-- The user got here because they forgot their password, so don't ask them for their current password! -->
+        <!-- <div class="form-item">
             <label for="password">Current password</label>
             <br>
             <div class="password-input-box">
-                <?php input_password('password') ?>
+                <?php //input_password('password') ?>
                 <img class="visibility-toggle-icon" src="../../../assets/img/visibility-off.svg" alt="Visibility toggle icon"/>
             </div>
-            <?php error("password"); ?>
-        </div>
+            <?php //error("password"); ?>
+        </div> -->
 
         <div class="form-item">
             <label for="newPassword">New password</label>
