@@ -5,7 +5,7 @@ $(() => {
         console.log("eye clicked");
         var imgSrc = $(this).prop('src'); // prop('src') returns something like "http://domain.com/assets/img/image.png"
         // console.log($(this).prop('src'));
-        if (imgSrc === location.origin + '/assets/img/visibility-off.svg') {
+        if (imgSrc === location.origin + '/assets/img/visibility-off.svg') { // location.origin = "protocol://domain"
             $(this).prop('src', '/assets/img/visibility-on.svg');
         } else if (imgSrc === location.origin + '/assets/img/visibility-on.svg') {
             $(this).prop('src', '/assets/img/visibility-off.svg');
