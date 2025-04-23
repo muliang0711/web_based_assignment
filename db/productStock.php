@@ -166,12 +166,20 @@ class CheckStock {
         return $stmt->execute([$productID, $sizeID, $quantity, $admin ]);
     }
     
-    public function getProductByIDAndSize($productID , $sizeID){
-        $sql = "SELECT * FROM productStock WHERE productID = ? AND sizeID = ? ";
+    public function getDetailedProductInfo($productID, $sizeID) {
+        $sql = "SELECT 
+                    p.productName, p.price, 
+                    ps.stock, ps.alert_sent, ps.low_stock_threshold 
+                FROM productstock ps
+                JOIN product p ON p.productID = ps.productID
+                WHERE ps.productID = ? AND ps.sizeID = ?
+                LIMIT 1";
         $stmt = $this->pdo->prepare($sql);
-        $stmt->execute([$productID , $sizeID]);
-        return $stmt->fetchAll();
+        $stmt->execute([$productID, $sizeID]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+    
+    
 }
 // here is just for test ; 
 $check = new CheckStock($_db);

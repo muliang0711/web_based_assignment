@@ -21,7 +21,7 @@ class ProductManager {
     }
 
     public function getProductInfo($productID, $sizeID) {
-        return $this->checkStock->getProductByIDAndSize($productID, $sizeID);
+        return $this->checkStock->getDetailedProductInfo($productID, $sizeID);
     }
 
     public function updateStock($productID, $sizeID, $quantity, $adminName) {
