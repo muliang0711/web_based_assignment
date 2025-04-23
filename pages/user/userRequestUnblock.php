@@ -31,7 +31,7 @@ if (is_post()) {
             'userID' => $userID,
             'appealReason' => $appealReason
         ]);
-        temp('info', 'You have request unblock to the admin');
+        temp('info', 'Appeal successfully submitted to the admin.');
         redirect('/pages/user/user-login.php');
     }
 }
