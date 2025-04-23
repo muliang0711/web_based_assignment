@@ -538,7 +538,16 @@ function logout_and_redirect_if_blocked() {
         redirect('/pages/user/blocked.php');
     }
 }
-
+function admin_if_blocked() {
+    global $_admin;
+    if (!$_admin) {
+        return;
+    }
+    if (is_blocked("admin", $_admin->id)) {
+        logout("admin");
+        redirect('/pages/admin/adminRequestUnblock.php');
+    }
+}
 //password hashing
 function pwHash($pw){
     return password_hash($pw, PASSWORD_DEFAULT);
