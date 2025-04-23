@@ -98,9 +98,7 @@ include '../../_head.php';
 </div>
 
 <div class="main-container">
-<?php 
-/*
-$order = isset($_GET['dir']) && $_GET['dir'] == 'desc' ? 'DESC' : 'ASC'; */?>
+<div class="top-sideFunction">
   <form method="get" action="../product/searchResult.php?search=?">
     <div class="searchContainer">
       <input type="text" id="search" name="search" maxlength="30" class="input" placeholder="S E A R C H">
@@ -110,30 +108,8 @@ $order = isset($_GET['dir']) && $_GET['dir'] == 'desc' ? 'DESC' : 'ASC'; */?>
     </div>
   </form>
 
-  <!-- show price range -->
-  <div class="priceRangeOutput">
+  <!--   pagination   -->
   <?php
-   echo "Price Range: RM"; echo $min_price; echo " - RM" ;echo $max_price;
-  ?>
-
-  </div>
-  <!-- ad image -->
-  <div class="image-box">
-    <img src="aerosharp ad2.jpg" alt="Ad image">
-  </div>
-
-
-  <hr>
-
-  <!-- product Image -->
-  <?php
-  $_db = new PDO('mysql:dbname=web_based_assignment', 'root', '', [
-    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
-  ]);
-  ?>
-
-<!--   pagination   -->
-   <?php
    require_once __DIR__ . '\SimplePager.php';
    $page = req('page',1);
    // Reminder: the `limit` parameter of the SimplePager constructor must be a string, e.g. "10". Can't pass an int due to the use of ctype_digit(). This behavior seems to be deliberate (look up the constructor definition), which makes it weirder. 
@@ -159,6 +135,30 @@ $order = isset($_GET['dir']) && $_GET['dir'] == 'desc' ? 'DESC' : 'ASC'; */?>
      $p->html("dir=$order&min=$min_price&max=$max_price");
    }
    ?>
+</div>
+
+  <!-- show price range -->
+  <div class="priceRangeOutput">
+  <?php
+   echo "Price Range: RM"; echo $min_price; echo " - RM" ;echo $max_price;
+  ?>
+
+  </div>
+  <!-- ad image -->
+  <div class="image-box">
+    <img src="aerosharp ad2.jpg" alt="Ad image">
+  </div>
+
+
+  <hr>
+
+  <!-- product Image -->
+  <?php
+  $_db = new PDO('mysql:dbname=web_based_assignment', 'root', '', [
+    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
+  ]);
+  ?>
+
 
 <!-- product listing -->
   <div class="list" id="productList">

@@ -3,11 +3,9 @@ ul {
     position: relative;
     padding: 0 50px;
     background: #999;
-    display: flex;
     font-family: Arial, sans-serif;
     font-weight: bold;
     right: 10%;
-    top:5px;
 }
 
 ul a {
@@ -24,7 +22,6 @@ ul a:hover {
 
 /* Pager */
 ul.pager {
-    position: absolute;
     padding: 0;
     background: transparent;
 }
