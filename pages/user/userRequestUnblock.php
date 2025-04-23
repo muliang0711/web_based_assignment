@@ -59,9 +59,9 @@ $stylesheetArray = ['../user/user.css', '/css/admin_login.css'];   // 注意：�
 
 <body>
     <div class="container">
-        <h2 class="store-name">Request Unblock</h2>
-        <h1 class="welcome">Sorry</h1>
-        <div class="instruction">You have been blocked by admin.</div>
+        <h2 class="store-name">You have been blocked</h2>
+        <h1 class="welcome">Appeal form</h1>
+        <div class="instruction">Sorry, an admin has blocked you. You may fill out this form to make an appeal. </div>
 
         <form class="form" method="post">
             <p>Your User ID : <?= $userID ?></p>

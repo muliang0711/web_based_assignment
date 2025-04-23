@@ -275,6 +275,8 @@ header nav > a:hover::after {
     right: -200px;
     z-index: 1000;
 
+    max-width: 500px;
+
     /* color: #222;
     background: #bcedff; */
     opacity: 0;
@@ -283,7 +285,7 @@ header nav > a:hover::after {
     border-radius: 3px;
     padding: 20px 40px 20px 70px;
 
-    text-align: center;
+    text-align: left;
     /* font-size: 18px; */
 }
 
