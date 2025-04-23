@@ -1,21 +1,5 @@
 $(()=>{
 
-    $(".checkbox").on('click', e=>{
-        let box = $(e.target);
-        if(box.hasClass("fa-square")){
-            box.css("color","#007bff");
-            box.removeClass("far fa-square").addClass("fas fa-square-check");
-        }
-        else{
-            box.css("color","");
-            box.removeClass("fas fa-square-check").addClass("far fa-square");
-            
-        }
-    });
-
-
-
-
 
 
     var formdiv = $(".formwrapper");
@@ -140,4 +124,22 @@ $(()=>{
         
     })
 
+    $("#order-search").on('input', function(e){
+        let value = $(this).val();
+        let tbody = $("tbody");
+        let datas = {
+            search : value
+        };
+
+        //use ajax to get the records and replace the tablebody datas
+        $.ajax({
+            url : "/api/adminGetOrder.php",
+            type : "POST",
+            data : datas,
+            success : function(res){
+                tbody.html(res);
+            }
+        });
+
+    })
 });

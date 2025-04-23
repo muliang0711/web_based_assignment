@@ -56,6 +56,14 @@ th {
 }
 
 
+#order-search{
+    height: 2rem;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    font-weight: bold;
+
+}
+
 
 .formwrapper {
     display: none;
