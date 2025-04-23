@@ -26,7 +26,7 @@ $p = new Pager("SELECT * FROM user WHERE username like ? ORDER BY $sort $dir", [
 $arr = $p->result;
 
 // $arr = $_db->query("SELECT * FROM user order by $sort $dir")->fetchAll();
-$stmA = $_db->prepare("SELECT COUNT(*) AS TotalRequest FROM blockeduser WHERE role ='user'");
+$stmA = $_db->prepare("SELECT COUNT(*) AS TotalRequest FROM blockeduser WHERE role ='user' AND status='request'");
 $stmA->execute();
 $resultA = $stmA->fetch();
 
@@ -47,7 +47,7 @@ padding: 1rem;">
     </form>
     </div>
     <div style="position: absolute; right: 0;">
-    <a href="/pages/admin/adminAdd.php" class="btn-add"><i class="fa-solid fa-envelope-open-text"></i> Request <?= htmlspecialchars($resultA->TotalRequest) ?></a>
+    <a href="/pages/admin/view_customer_request.php" class="btn-add"><i class="fa-solid fa-envelope-open-text"></i> Request <?= htmlspecialchars($resultA->TotalRequest) ?></a>
 
     </div>
 

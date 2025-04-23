@@ -6,7 +6,7 @@ if (is_post()) {
     $id = post('id');
     $password = post('password');
     
-    var_dump($password);
+    // var_dump($password);
 
     if (!$id) {
         $_errors['id'] = 'Required';
