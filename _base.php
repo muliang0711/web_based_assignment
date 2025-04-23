@@ -535,7 +535,7 @@ function logout_and_redirect_if_blocked() {
     }
     if (is_blocked("user", $_user->userID)) {
         logout("user");
-        redirect('/pages/user/blocked.php');
+        redirect('/pages/user/userRequestUnblock.php');
     }
 }
 function admin_if_blocked() {
