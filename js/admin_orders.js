@@ -15,32 +15,6 @@ $(()=>{
 
 
 
-    $("[data-delete]").on('click', function(e){
-        orderid = $(this)[0].dataset.delete;
-        let status = $(`td.stat.${orderid}`);
-        if(status.text()!="Canceled"){
-            alert("Only Canceled Order Can Be Deleted!");
-        }
-        else {
-            if(confirm("Deleted Orders Cannot Be Reverted!")){
-                $.ajax({
-                    url: "/pages/admin/admin_order_delete.php",
-                    type: "POST",
-                    data: {id : orderid},
-                    success: function(res){
-                        console.log(res);
-                        if(res=="success"){
-                            let row = $(`tr#${orderid}`);
-                            row.remove();
-                        }
-                    }
-                });
-            }
-            
-        }
-
-   })
-
 
 
 
@@ -70,11 +44,31 @@ $(()=>{
             formDelivered.val("");
         }
         
+        if(formStatus.val() == "Pending"){
+            formTracking.prop("readonly", true);
+            formDelivered.prop("readonly", true);
+        }else {
+            formTracking.prop("readonly", false);
+            formDelivered.prop("readonly", false);
+
+        }
 
         formdiv.css("display","flex");
 
     })
 
+    formStatus.on('change', function(e){
+        if(formStatus.val() == "Pending"){
+            formTracking.prop("readonly", true).val("");
+            formDelivered.prop("readonly", true).val("");
+
+            
+        }else {
+            formTracking.prop("readonly", false);
+            formDelivered.prop("readonly", false);
+
+        }
+    })
 
     $(".exitButton").on('click', function(e){
         formdiv.css("display","none");

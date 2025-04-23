@@ -79,7 +79,6 @@ $orders = $_db->query("Select o.*, sum(oi.subtotal) as total from orders o JOIN 
             <td class="td stat <?= $order->orderId ?>"><?= $order->status ?></td>
             <td class="td action">
                 <i class="fa-solid fa-pen-to-square update" data-update="<?= $order->orderId ?>"></i>
-                <i class="fas fa-trash delete" data-delete="<?= $order->orderId ?>"></i>
             </td>
         </tr>
         <?php endforeach ?>

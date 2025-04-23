@@ -1,7 +1,7 @@
 <?php
-
+require $_SERVER["DOCUMENT_ROOT"] . "/_base.php";
 require $_SERVER["DOCUMENT_ROOT"] . "/vendor/autoload.php";
-session_start();
+
 
 
 
@@ -65,7 +65,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             
             $checkout_session = \Stripe\Checkout\Session::create([
                 "mode" => "payment",
-                "success_url" => "http://localhost/pages/order/success.php",
+                "success_url" => base("pages/order/success.php"),
                 "line_items" => $line,
                 "discounts" => [
                     [
@@ -84,7 +84,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         else{
             $checkout_session = \Stripe\Checkout\Session::create([
                 "mode" => "payment",
-                "success_url" => "http://localhost/pages/order/success.php",
+                "success_url" => base("pages/order/success.php"),
                 "line_items" => $line
     
             ]);
@@ -108,7 +108,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             'name'               => 'Customer Test',
             'amount'             => ($total*100),
             'callback_url'       => 'https://discord.com/api/webhooks/1361803121478602783/SAi3ovGPbyldJxzS_uMvLZitCeurljdSPPkftr1mE8KkYZ5UlOSn4LQKHfqj5JR-3c6B',
-            'redirect_url'       => 'http://localhost/pages/order/success.php'
+            'redirect_url'       => base("pages/order/success.php")
         ];
 
         $ch = curl_init();
