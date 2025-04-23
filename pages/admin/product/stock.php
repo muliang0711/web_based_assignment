@@ -1,10 +1,10 @@
 <?php
 require_once __DIR__ . "/../../../_base.php";
 include_once __DIR__ . "/../../../admin_login_guard.php";
-//include __DIR__ . "/../main.php";
+include __DIR__ . "/../main.php";
 include __DIR__ . "/../../../controller/stockManager.php";
 require_once "../../../controller/productController.php";
-
+include __DIR__  . '/../../../admin_login_guard.php';
 $productManager->loadLowStockProductsToSession();
 
 $lowStockProducts = $_SESSION['low_stock_product'] ?? [];
@@ -32,8 +32,36 @@ $totalPages = ceil($totalProducts / $productsPerPage);
     <meta charset="UTF-8">
     <title>Low Stock Products</title>
     <link rel="stylesheet" href="../../../css/admin_product.css">
-</head>
+    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
 
+</head>
+<style>#qr-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 999;
+}
+
+#qr-reader {
+
+}
+#cancel-scan {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+#cancel-scan:hover {
+    background-color: #cc0000;
+}
+</style>
 <body>
     <div class="main-content">
 
@@ -91,12 +119,19 @@ $totalPages = ceil($totalProducts / $productsPerPage);
                 <button type="submit">Apply Filter</button>
             </form>
 
-            <!-- Add Product -->
-            <a href="addProduct.php" class="action-btn-add" title="Add New Product">
-                <i class="fa-solid fa-plus"></i> Add Product
-            </a>
+            <!-- Restock Product -->
+            <button class="action-btn-restock" style="margin-top: 10px; background-color: #28a745; color: white; padding: 10px; border: none; border-radius: 5px;">
+                Restock Product <i class="fas fa-qrcode"></i>
+            </button>
+
+            <div id="qr-wrapper" style="display: none;">
+                <div id="qr-reader" style="width: 300px;"></div>
+                <button id="cancel-scan" style="margin-top: 10px;">Cancel</button>
+            </div>
+
 
         </div>
+
         <div class="container-table">
             <div class="tb-title">
                 <h5 style="margin: 0;"><i class="fas fa-table"></i> Product </h5>
@@ -129,9 +164,9 @@ $totalPages = ceil($totalProducts / $productsPerPage);
                                     <td class="td">RM<?= number_format($product->price, 2) ?></td>
                                     <td class="td"><?= htmlspecialchars($product->stock ?? '0') ?></td>
                                     <td class="td">
-                                        <a href="../product/productDetail.php?racket=<?= $product->productID ?>" class="action-btn-details">
-                                            <i class="fas fa-eye"></i>
-                                        </a>
+                                    <a href="productDetails.php?productID=<?php echo $product->productID; ?>&sizeID=<?php echo $product->sizeID; ?>" class="action-btn-details">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -159,6 +194,47 @@ $totalPages = ceil($totalProducts / $productsPerPage);
         </div>
 
     </div>
-</body>
 
+    <script>
+const restockBtn = document.querySelector(".action-btn-restock");
+const qrWrapper = document.getElementById("qr-wrapper");
+const cancelBtn = document.getElementById("cancel-scan");
+let html5QrCode = null;
+
+restockBtn.addEventListener("click", function () {
+    qrWrapper.style.display = "flex";
+    html5QrCode = new Html5Qrcode("qr-reader");
+
+    html5QrCode.start(
+        { facingMode: "environment" },
+        { fps: 10, qrbox: 350 },
+        (decodedText) => {
+            html5QrCode.stop().then(() => {
+                qrWrapper.style.display = "none";
+                if (decodedText.includes("verify-stock.php?")) {
+                    window.location.href = decodedText;
+                } else {
+                    alert("Invalid QR Code.");
+                }
+            });
+        },
+        (errorMessage) => { /* no match */ }
+    ).catch(err => {
+        console.error("Camera start error:", err);
+    });
+});
+
+cancelBtn.addEventListener("click", function () {
+    if (html5QrCode) {
+        html5QrCode.stop().then(() => {
+            qrWrapper.style.display = "none";
+        }).catch(err => {
+            console.error("Error stopping scanner:", err);
+        });
+    } else {
+        qrWrapper.style.display = "none";
+    }
+});
+</script>
+</body>
 </html>

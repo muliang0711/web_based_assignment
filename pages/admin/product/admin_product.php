@@ -1,5 +1,4 @@
 <?php
-require_once __DIR__ . "/../../../db_connection.php";
 require_once "../../../controller/productController.php";
 require_once "../../../_base.php";
 include __DIR__ . "/../main.php";
@@ -197,9 +196,6 @@ unset($_SESSION['Delete_ErrorMsg']);
               <td class="td">RM<?php echo number_format($product->price, 2); ?></td>
               <td class="td"><?php echo htmlspecialchars($product->total_stock); ?></td>
               <td class="td">
-                <!-- Add -->
-
-
                 <!-- View Details -->
                 <a href="productDetails.php?productID=<?php echo $product->productID; ?>&sizeID=<?php echo $product->sizeID; ?>" class="action-btn-details">
                   <i class="fas fa-eye"></i>
@@ -388,5 +384,9 @@ $(document).ready(function () {
             }
         });
     });
+
+
+
+
 });
 </script>
