@@ -6,21 +6,32 @@ session_start();
 include_once __DIR__ . '/../db_connection.php';
 include_once __DIR__ . '/../db/productStock.php'; // Assuming this is where your CheckStock class is
 
-// 3. Declare the ProductManager class
 class ProductManager {
     private $pdo;
     private $checkStock;
 
-    // 4. Constructor to initialize PDO and CheckStock
     public function __construct($pdo) {
         $this->pdo = $pdo;
         $this->checkStock = new CheckStock($pdo);
     }
 
-    // 5. Load low stock products into session
     public function loadLowStockProductsToSession() {
         $lowStockProducts = $this->checkStock->get_low_stock_product();
         $_SESSION['low_stock_product'] = $lowStockProducts;
+    }
+
+    public function getProductInfo($productID, $sizeID) {
+        return $this->checkStock->getProductByIDAndSize($productID, $sizeID);
+    }
+
+    public function updateStock($productID, $sizeID, $quantity, $adminName) {
+        $success = $this->checkStock->update_product_stock($quantity, $productID, $sizeID);
+        if ($success) {
+            $this->checkStock->record_restock($productID, $sizeID, $quantity, $adminName);
+            return ['success' => true, 'message' => 'Stock updated and restock recorded.'];
+        } else {
+            return ['success' => false, 'message' => 'Update failed or no stock change.'];
+        }
     }
 }
 

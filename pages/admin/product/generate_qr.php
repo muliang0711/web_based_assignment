@@ -1,7 +1,7 @@
 <?php
 require __DIR__ . '/../../../db_connection.php'; 
 include_once __DIR__ . '/../../../vendor/autoload.php'; 
-require_once __DIR__ . '../../../_base.php';
+require_once __DIR__ . '/../../../_base.php';
 
 use Endroid\QrCode\Builder\Builder;
 use Endroid\QrCode\Encoding\Encoding;
@@ -29,7 +29,7 @@ function generateQRCode($pdo, $productID, $sizeID) {
     
     function get_domain() {
         $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off'
-                    || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+                    || $_SERVER['SERVER_PORT'] == 8080) ? "https://" : "http://";
         
         $host = $_SERVER['HTTP_HOST']; // includes domain and port (if not 80/443)
         // $uri = $_SERVER['REQUEST_URI']; // everything after domain
@@ -38,8 +38,8 @@ function generateQRCode($pdo, $productID, $sizeID) {
     }
 
     // 4. Build verification URL
-    $verifyUrl = base("pages/admin/product/verify-stock.php?productID=$productID&sizeID=$sizeID&token=$token");
-    // $verifyUrl = "https://wbproject.local/pages/admin/product/verify-stock.php?productID=$productID&sizeID=$sizeID&token=$token";
+    // $verifyUrl = base("pages/admin/product/verify-stock.php?productID=$productID&sizeID=$sizeID&token=$token");
+    $verifyUrl = "https://wbproject.local/pages/admin/product/verify-stock.php?productID=$productID&sizeID=$sizeID&token=$token";
 
     // 5. Generate QR code
     $result = Builder::create()
@@ -57,5 +57,5 @@ function generateQRCode($pdo, $productID, $sizeID) {
     echo "QR Code generated and saved: $filePath\n";
 }
 $p = "R0001";
-$s = "3UG5";
+$s = "4UG5";
 generateQRCode($_db, $p , $s); // Example: productID=5, sizeID=2

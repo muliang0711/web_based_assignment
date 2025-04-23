@@ -166,6 +166,12 @@ class CheckStock {
         return $stmt->execute([$productID, $sizeID, $quantity, $admin ]);
     }
     
+    public function getProductByIDAndSize($productID , $sizeID){
+        $sql = "SELECT productID , sizeID FROM productStock WHERE productID = ? AND sizeID = ? ";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([$productID , $sizeID]);
+        return $stmt->fetchAll();
+    }
 }
 // here is just for test ; 
 $check = new CheckStock($_db);
