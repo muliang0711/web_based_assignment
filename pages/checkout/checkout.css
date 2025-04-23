@@ -95,7 +95,7 @@ main {
     }
 
     >.border {
-        width: calc(100%/3 - 5px);
+        width: calc(100%/2 - 5px);
         position: absolute;
         border: 5px solid rgba(68, 186, 255, 0.801);
         background: transparent;

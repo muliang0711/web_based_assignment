@@ -96,10 +96,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }
 
 
-    else if($payment == "Ewallet"){
-        echo "/api/tng.php";
-    }
-
     else if($payment == "Banking"){
         $billplz = "https://www.billplz-sandbox.com/api/v3/bills";
         $collectionId = "0inp33zt";
