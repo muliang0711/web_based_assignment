@@ -7,14 +7,12 @@ include __DIR__ . "/../../../controller/stockManager.php";
 $productManager = new ProductManager($_db);
 $productManager->loadLowStockProductsToSession();
 
-print_r($_SESSION['low_stock_product']);
-
 $lowStockProducts = $_SESSION['low_stock_product'] ?? [];
 if (!is_array($lowStockProducts)) $lowStockProducts = [];
 
 $productsPerPage = 10;
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-$page = max($page, 1); 
+$page = max($page, 1);
 $startFrom = ($page - 1) * $productsPerPage;
 
 
@@ -35,6 +33,66 @@ $totalPages = ceil($totalProducts / $productsPerPage);
 <body>
     <div class="main-content">
 
+        <div class="filter-container">
+
+            <!-- Search Bar -->
+            <form class="search-box" method="GET" action="/controller/productController.php">
+                <input type="hidden" name="action" value="search">
+                <input type="text" name="searchText" placeholder="Search product..." required>
+                <button type="submit">Search</button>
+            </form>
+
+            <!-- Filter Form -->
+            <form class="filter-form" method="POST" action="/controller/productController.php">
+                <input type="hidden" name="action" value="filter">
+
+                <label for="productID">Product ID</label>
+                <select name="productID" id="productID">
+                    <option value="">All</option>
+                    <?php foreach ($productIDList as $IdList): ?>
+                        <option value="<?= htmlspecialchars($IdList->productID) ?>">
+                            <?= htmlspecialchars($IdList->productID) ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+
+                <label for="seriesID">Series</label>
+                <select name="seriesID" id="seriesID">
+                    <option value="">All</option>
+                    <?php foreach ($seriesIdList as $series): ?>
+                        <option value="<?= htmlspecialchars($series->seriesID) ?>">
+                            <?= htmlspecialchars($series->seriesID) ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+
+                <label for="sizeID">Size</label>
+                <select name="sizeID" id="sizeID">
+                    <option value="">All</option>
+                    <option value="3UG5">3UG5</option>
+                    <option value="4GG5">4UG5</option>
+                </select>
+
+                <label for="minPrice">Min Price</label>
+                <input type="number" name="minPrice" id="minPrice"
+                    min="10" max="1000" value="10" step="100">
+
+                <label for="maxPrice">Max Price</label>
+                <input type="number" name="maxPrice" id="maxPrice"
+                    min="100" max="1000" value="100" step="100">
+
+                <small id="priceError" style="color: red; display: none;"></small>
+
+
+                <button type="submit">Apply Filter</button>
+            </form>
+
+            <!-- Add Product -->
+            <a href="addProduct.php" class="action-btn-add" title="Add New Product">
+                <i class="fa-solid fa-plus"></i> Add Product
+            </a>
+
+        </div>
         <div class="container-table">
             <div class="tb-title">
                 <h5 style="margin: 0;"><i class="fas fa-table"></i> Product </h5>
