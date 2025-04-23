@@ -10,7 +10,7 @@ $(()=>{
     var formDelivered = form.children("input[type='date']");
     var orderid;
 
-    $("[data-update]").on('click', function(e){
+    $("tbody").on('click', "[data-update]", function(e){
          orderid = $(this)[0].dataset.update;
         let status = $(`td.stat.${orderid}`);
         let tracking = $(`td.tracking.${orderid}`);
