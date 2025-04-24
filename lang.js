@@ -381,4 +381,4 @@ const translations = {
     const savedLang = localStorage.getItem('lang') || (navigator.language.startsWith('zh') ? 'zh' : (navigator.language.startsWith('ms') ? 'ms' : 'en'));
     switchLanguage(savedLang);
   }
-  //test
+  
