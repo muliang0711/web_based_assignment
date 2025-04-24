@@ -125,12 +125,21 @@ $totalPages = ceil($totalProducts / $productsPerPage);
             </div>
 
             <!-- Button Section -->
-            <div class="button-section" style="flex-direction: column;">
+            <div class="button-section" style="flex-direction: row;">
                 <!-- Restock Button -->
                 <button class="action-btn-restock" style="background-color: #28a745; color: white; padding: 10px; border: none; border-radius: 5px;">
                     Restock Product <i class="fas fa-qrcode"></i>
                 </button>
+                
+                <button class="btn email" style="background-color: #28a745; color: white; padding: 10px; border: none; border-radius: 5px;"
+                            onclick="window.location='/pages/admin/product/emailForm.php'  ">
+                    Send Email
+                </button>
 
+                <button class="btn sms  " style="background-color: #28a745; color: white; padding: 10px; border: none; border-radius: 5px;"
+                            onclick="window.location='/sendSMS.php' ">
+                    Send Sms
+                </button  >
                 <!-- QR Code Scanner -->
                 <div id="qr-wrapper" style="display: none; margin-top: 10px;">
                     <div id="qr-reader" style="width: 300px;"></div>
