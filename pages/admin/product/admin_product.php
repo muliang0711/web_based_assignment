@@ -107,6 +107,7 @@ unset($_SESSION['Delete_ErrorMsg']);
       <a href="addProduct.php" class="action-btn-add" title="Add New Product">
         <i class="fa-solid fa-plus"></i> Add Product
       </a>
+            
     </div>
 
   </div>

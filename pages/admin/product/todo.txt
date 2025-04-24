@@ -12,3 +12,17 @@
 
 10 . js file can not load in admin_product 
 11. composer download ;
+
+
+12. add a send email buutton for supplierment ; 
+    : button -> js direct to sendEmail.php(just prvide a structure form and email overview ) -> productStock Handle logic
+
+13. add a send sms button for show case ;
+    : button --> js direct to sendSMS.php(just simple provide a form )-> productStock Handle logic 
+
+14. add a change lowSTock alert quantity button on each product action 
+    : button --> js direct to changeLowStockAlertQuantity.php (just a form to change quantity and back to stovk.php) -> productStock handle logic 
+
+15. execute the alert function after the payment process is success  
+
+

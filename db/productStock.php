@@ -44,8 +44,40 @@ class CheckStock {
         }
     }
 
+    public function sendEmail($toEmail, $subject, $message)
+    {
+        $mail = new PHPMailer(true);
+
+        try {
+            // 1. SMTP setup
+            $mail->isSMTP();
+            $mail->Host       = 'smtp.gmail.com';
+            $mail->SMTPAuth   = true;
+            $mail->Username   = 'puihy-wm24@student.tarc.edu.my'; 
+            $mail->Password   = 'mqps lalr ujvo fbqx';             
+            $mail->SMTPSecure = 'tls';
+            $mail->Port       = 587;
+
+            // 2. Email setup
+            $mail->setFrom('puihy-wm24@student.tarc.edu.my', 'Inventory System');
+            $mail->addAddress($toEmail);
+
+            $mail->isHTML(true);
+            $mail->Subject = $subject;
+            $mail->Body    = nl2br(htmlspecialchars($message)); 
+
+            // 3. Send
+            $mail->send();
+            return true;
+
+        } catch (Exception $e) {
+            error_log("Email error: " . $mail->ErrorInfo);
+            return false;
+        }
+    }
+
     // 1. send sms ; 
-    private function sendLowStockSMS(){
+    private function sendSMS(){
         return ; 
     }
     
