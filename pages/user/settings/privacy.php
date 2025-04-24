@@ -9,7 +9,6 @@ $scriptArray = [];      // Put JS files that are specific to this page here. If 
 include '../../../_login_guard.php';
 
 extract((array)$_user);
-echo $bio;
 
 $_genders = [
     'F' => 'Female',

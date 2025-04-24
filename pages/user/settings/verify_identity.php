@@ -43,8 +43,8 @@ if (is_post()) {
 
 // ----------------------------------------------------------------------------
 
-$_title = 'Verify Identity';
-$stylesheetArray = ['../user.css']; // Put CSS files that are specific to this page here. If you want to change the styling of the header and the footer, go to /css/app.cs
+$title = 'Verify Identity';
+$stylesheetArray = ['../user.css', '/css/password.css']; // Put CSS files that are specific to this page here. If you want to change the styling of the header and the footer, go to /css/app.cs
 $scriptArray = ['../user.js'];      // Put JS files that are specific to this page here. If you want to change the JavaScript for the header and the footer, go to /js/app.js
 
 include '../../../_head.php';
@@ -58,12 +58,16 @@ include '../../../_head.php';
 </style>
 
 <div class="container">
+    <a class="back-label" href="account.php">
+        <span>🡨</span>
+        Back
+    </a>
     <h2 class="store-name">
         The Shuttle Store
         <img src="../../../assets/img/shuttlecock.svg" style="height:1em;transform:rotate(45deg);color:inherit;"/>
     </h2>
-    <h1 class="welcome">Verify identity</h1>
-    <div class="instruction">We want to be <i>extra</i> sure it's actually you before deleting your account. This is a big deal, after all!</div>
+    <h1 class="welcome">Verify your identity</h1>
+    <div class="instruction">We want to be <i>extra</i> sure it's actually you before we poof your account from existence. This is a pretty big deal, after all!</div>
 
     <form class="form" method="post">
         <div class="form-item">

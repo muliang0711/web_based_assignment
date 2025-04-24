@@ -235,3 +235,26 @@ input[type="text"], input[type="password"] {
 input:required:invalid {
     border: 1px solid red;
 }
+
+/* Appears in verify-identity.php */
+.back-label, .back-label span {
+    transition: all 0.3s;
+}
+a.back-label {
+    display: block;
+    text-decoration: none;
+    color: #888;
+    cursor: pointer;
+}
+.back-label:hover {
+    color: #555;
+    text-decoration: none !important;
+}
+.back-label span {
+    display: inline-block;
+    margin-right: 10px;
+    transform: translateX(20%);
+}
+.back-label:hover span {
+    transform: translateX(-20%);
+}

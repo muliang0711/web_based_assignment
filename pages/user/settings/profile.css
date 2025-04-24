@@ -57,7 +57,7 @@ section {
     margin-bottom: 10px;
 }
 .form-group input[type=text], .form-group input[type=password], .form-group textarea , .form-group select{
-    background-color: #f0f0f0;
+    background-color: #f8f8f8;
     border: 1px solid var(--semitransparent-gray);
     border-radius: 5px;
     padding: 5px 10px;
@@ -131,6 +131,11 @@ section {
     background-color: #eee;
 }
 
+/* Hide the arrow icon that comes with a dropdown label (a general style defined in app.css) */
+.edit-label::after {
+    display: none;
+}
+
 .profile-pic-dropdown {
     background-color: #333;
     color: #ddd;
@@ -190,4 +195,9 @@ input[type=file] {
        `align-items: flex-start` prevents this. */
     align-items: flex-start; 
     gap: 10px;
+}
+
+/* Account page */
+.password-input-box {
+    width: fit-content;
 }

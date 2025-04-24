@@ -9,7 +9,6 @@ $scriptArray = [];      // Put JS files that are specific to this page here. If 
 include '../../../_login_guard.php';
 
 extract((array)$_user);
-echo $bio;
 
 $_genders = [
     'F' => 'Female',
@@ -71,7 +70,7 @@ include 'profile_dynamic_navbar.php';
         <div role="alert" class="info-box error"><?= temp('error') ?></div>
     </section>
 
-    <h1 class="heading">Public profile</h1>
+    <h1 class="heading">Personal details</h1>
     <div class="section-container">
         <!-- <section class="left-col">
             <form method="post">

@@ -20,6 +20,7 @@ function openPopup(activationTriggerElement) {
 // ============================================================================
 
 $(() => {
+    console.log("i am app.js");
 
     // Hamburger icon for header nav menu (only on mobile)
     $('.hamburger').on('click', () => {
@@ -27,9 +28,10 @@ $(() => {
     });
 
     // Autofocus
-    $('form :input:not(button):first').focus();
-    $('.err:first').prev().focus();
-    $('.err:first').prev().find(':input:first').focus();
+    $('form:not(.no-autofocus-first) :input:not(button):not([type=hidden]):first').focus(); // can apply the class "no-autofocus-first" on a form to disable this for that form.
+    $('.error:first').prev().focus();
+    console.log($('.error:first'));
+    $('.error:first').prev().find(':input:first').focus();
     
     // Confirmation message
     $('[data-confirm]').on('click', e => {

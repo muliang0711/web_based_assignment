@@ -146,7 +146,7 @@ include 'profile_dynamic_navbar.php';
     <div class="section-container">
         <section class="left-col">
             <!-- <div role="alert" class="info-box warning">You have unsaved changes!</div> -->
-            <form method="post">
+            <form method="post" class="no-autofocus-first">
                 <div class="form-group">
                     <label class="label">Username</label>
                     <?= input_text('username') ?>
