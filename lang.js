@@ -373,12 +373,15 @@ const translations = {
       el.textContent = translations[lang][key] || key;
     });
   
-    // 可选：保存语言偏好（如使用 localStorage）
+   //save language prefer
     localStorage.setItem('lang', lang);
   }
   
   function autoDetectLanguage() {
-    const savedLang = localStorage.getItem('lang') || (navigator.language.startsWith('zh') ? 'zh' : (navigator.language.startsWith('ms') ? 'ms' : 'en'));
-    switchLanguage(savedLang);
+    const savedLang =
+    localStorage.getItem('lang') ||
+    (navigator.language.startsWith('zh') ? 'zh' :
+     navigator.language.startsWith('ms') ? 'ms' : 'en');
+  switchLanguage(savedLang);
   }
   

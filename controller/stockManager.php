@@ -25,6 +25,7 @@ class ProductManager {
         $allowedActions = [
             'filter'        => 'filterProducts',
             'search'        => 'searchProduct',
+            'sendEmail'   => 'emailSubmit'
         ];
 
         if (!array_key_exists($action, $allowedActions)) {
@@ -84,6 +85,37 @@ class ProductManager {
         }
     }
 
+    private function emailSubmit()
+    {
+        // 1. Get data
+        $to = $_POST['to'] ?? '';
+        $subject = $_POST['subject'] ?? '';
+        $message = $_POST['message'] ?? '';
+    
+        // 2. Validate
+        if (empty($to) || empty($subject) || empty($message)) {
+            $this->addErrorAndRedirect("All fields are required.");
+            return;
+        }
+    
+        if (!filter_var($to, FILTER_VALIDATE_EMAIL)) {
+            $this->addErrorAndRedirect("Invalid email address.");
+            return;
+        }
+    
+        // 3. Send email (using PHPMailer helper)
+        $success = $this->checkStock->sendEmail($to, $subject, $message);
+    
+        // 4. Handle result
+        if ($success) {
+            $_SESSION['EmailSuccess'] = "Email successfully sent to $to.";
+        } else {
+            $_SESSION['EmailError'] = "Failed to send email. Please try again later.";
+        }
+    
+        $this->redirectToAdmin();
+    }
+    
     private function searchProduct()
     {
         // Minimal check for search input
@@ -178,7 +210,7 @@ class ProductManager {
     
     private function redirectToAdmin()
     {
-        header('Location: ../pages/admin/product/stock.php');
+        header('Location: ../pages/admin/product/emailForm.php');
         exit();
     }
 }
