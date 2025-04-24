@@ -21,6 +21,18 @@ main {
     margin-left: calc(var(--side-nav-width) + 100px)
 }
 
+.info-banner {
+    padding: 20px;
+    
+    background-color: var(--color-warning-background);
+    color: var(--color-warning-text);
+    border: 3px solid var(--color-warning-border);
+    border-radius: 10px;
+}
+.info-banner-heading {
+    margin: 0 auto 12px;
+}
+
 .heading {
     margin: 0 0 20px;
     padding-bottom: 5px;

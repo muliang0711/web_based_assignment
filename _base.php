@@ -333,6 +333,54 @@ function get_reset_pw_email_body($username, $email, $home_url, $reset_pw_url) {
         ";
 }
 
+function get_verify_email_body($username, $email, $home_url, $verify_email_url) {
+    return "
+            <body style='background-color: #fff; font-family: sans-serif; font-size: 14px; line-height: 1.4; margin: 0; padding: 0; width: 100%; box-sizing: border-box;'>
+  <div class='container' style='display: block; margin: 0 auto !important; max-width: 580px; padding: 50px; width: 100%; box-sizing: border-box;'>
+    
+    <header style='margin-bottom: 30px; box-sizing: border-box;'>
+      <a href='$home_url' style='box-sizing: border-box;'>
+        <img class='logo' alt='The Shuttle Store' src='cid:logo' style='border: none; width: 100%; max-width: 100px; box-sizing: border-box;'>
+      </a>
+    </header>
+
+    <main style='box-sizing: border-box;'>
+      <p style='color: initial; font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px; box-sizing: border-box;'>
+        Hello, <b>$username</b>!
+      </p>
+
+      <p style='color: initial; font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px; box-sizing: border-box;'>
+        Click on the link below to verify your email (
+        <a href='mailto:$email' style='color: rgb(47, 96, 255); text-decoration: underline; box-sizing: border-box;'>$email</a>).
+      </p>
+
+      <p style='color: initial; font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px; box-sizing: border-box;'>
+        Note that this link will <b>expire in 5 minutes.</b>
+      </p>
+
+      <p style='color: initial; font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px; box-sizing: border-box;'>
+        <a class='btn-rounded' href='$verify_email_url' style='display: inline-block; border: 0; border-radius: 20px; background-color: rgb(47, 96, 255) !important; opacity: 1; color: white; text-decoration: none; cursor: pointer; padding: 10px 20px; transition: all 0.3s; box-sizing: border-box;'>
+          Verify email
+        </a>
+      </p>
+
+      <p style='color: initial; font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px; box-sizing: border-box;'>
+        Best regards,<br>The Shuttle Store
+      </p>
+    </main>
+
+    <footer style='margin-top: 30px; box-sizing: border-box;'>
+      <small style='opacity: 0.5; box-sizing: border-box;'>
+        If you did not request a password reset, please feel free to ignore this message.
+      </small>
+    </footer>
+
+  </div>
+</body>
+
+        ";
+}
+
 // ============================================================================
 // Database Setups and Functions
 // ============================================================================
@@ -499,6 +547,20 @@ function is_logged_in($role, $adminLevel = null): bool {
     else {
         return false;
     }
+}
+
+/** Check if a user has verified their email
+ *
+ */ 
+function is_email_verified() {
+    if (!is_logged_in('user')) return;
+
+    global $_user;
+    global $_db;
+
+    $stm = $_db->query("SELECT emailVerified FROM user WHERE userID = {$_user->userID}");
+    $is_email_verified = $stm->fetchColumn();
+    return $is_email_verified == 1;
 }
 
 // Testing the is_logged_in() function

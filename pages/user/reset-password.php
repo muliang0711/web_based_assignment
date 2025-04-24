@@ -6,7 +6,7 @@ include '../../_base.php';
 // (1) Delete expired tokens
 $_db->query('DELETE FROM token WHERE expire < NOW()');
 
-$id = req('id');
+$id = req('id'); // token id
 
 
 // (2) Is token id valid? 
@@ -44,6 +44,12 @@ if (is_post()) {
     $stm = $_db->prepare('SELECT passwordHash FROM user WHERE userID = :userID');
     $stm->execute(['userID' => $tokenObj->userID]);
     $currentPwHash = $stm->fetchColumn();
+
+    $stm = $_db->prepare('SELECT * FROM user WHERE userID = :userID');
+    $stm->execute(['userID' => $tokenObj->userID]);
+    $user = $stm->fetch();
+
+    var_dump($user);
 
     // Validate: new password
     if ($newPassword == '') {
@@ -89,7 +95,7 @@ if (is_post()) {
 
 // ----------------------------------------------------------------------------
 
-$_title = 'Change Password';
+$_title = 'Reset Password';
 $stylesheetArray = ['/css/password.css', 'user.css']; // Put CSS files that are specific to this page here. If you want to change the styling of the header and the footer, go to /css/app.cs
 $scriptArray = ['/js/password.js', 'user.js'];      // Put JS files that are specific to this page here. If you want to change the JavaScript for the header and the footer, go to /js/app.js
 
@@ -108,7 +114,7 @@ include '../../_head.php';
         The Shuttle Store
         <img src="../../../assets/img/shuttlecock.svg" style="height:1em;transform:rotate(45deg);color:inherit;"/>
     </h2>
-    <h1 class="welcome">Change password</h1>
+    <h1 class="welcome">Reset password</h1>
     <div class="instruction"></div>
 
     <form class="form" method="post">

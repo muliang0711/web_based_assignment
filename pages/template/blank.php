@@ -17,8 +17,9 @@ require '../product/SimplePager.php';
 // $page = 1;
 // $p = new SimplePager('SELECT * FROM user', [], 1, $page);
 // var_dump($p->result);
-echo base("pages/youre/dumb");
-echo $_SERVER['HTTP_HOST'];
+// echo base("pages/youre/dumb");
+// echo $_SERVER['HTTP_HOST'];
+var_dump( is_email_verified());
 ?>
 
 
