@@ -132,7 +132,7 @@ $totalPages = ceil($totalProducts / $productsPerPage);
 
         <div class="container-table">
             <div class="tb-title">
-                <h5 style="margin: 0;"><i class="fas fa-table"></i> Product </h5>
+                <h5 style="margin: 0;"><i class="fas fa-table"></i> Low Stock Product </h5>
             </div>
 
             <div style="padding: 1rem;">
