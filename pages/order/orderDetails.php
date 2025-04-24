@@ -137,7 +137,7 @@
             <span title="track order">
                 Tracking ID: 
                 <a <?= $trackingId != "Coming Soon!" ? "href='https://spx.com.my/track?$trackingId' style='color: rgb(10,132,255);'" : "" ?>  target="_blank">
-                    <?= $trackingId . " (Click To Track)"?>
+                    <?= $trackingId != "Coming Soon!"? $trackingId . " (Click To Track)" : $trackingId?>
                 </a> 
             </span>
         </div>

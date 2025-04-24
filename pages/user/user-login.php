@@ -2,8 +2,8 @@
 require '../../_base.php';
 
 $title = 'Login';
-$stylesheetArray = ['user.css']; // Put CSS files that are specific to this page here. If you want to change the styling of the header and the footer, go to /css/app.cs
-$scriptArray = ['user.js'];      // Put JS files that are specific to this page here. If you want to change the JavaScript for the header and the footer, go to /js/app.js
+$stylesheetArray = ['user.css', '/css/password.css']; // Put CSS files that are specific to this page here. If you want to change the styling of the header and the footer, go to /css/app.cs
+$scriptArray = ['user.js', '/js/password.js'];      // Put JS files that are specific to this page here. If you want to change the JavaScript for the header and the footer, go to /js/app.js
 
 if (is_logged_in('user')) {
     redirect('/');

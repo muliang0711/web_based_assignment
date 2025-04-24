@@ -1,47 +1,5 @@
 $(()=>{
 
-    $(".checkbox").on('click', e=>{
-        let box = $(e.target);
-        if(box.hasClass("fa-square")){
-            box.css("color","#007bff");
-            box.removeClass("far fa-square").addClass("fas fa-square-check");
-        }
-        else{
-            box.css("color","");
-            box.removeClass("fas fa-square-check").addClass("far fa-square");
-            
-        }
-    });
-
-
-
-    $("[data-delete]").on('click', function(e){
-        orderid = $(this)[0].dataset.delete;
-        let status = $(`td.stat.${orderid}`);
-        if(status.text()!="Canceled"){
-            alert("Only Canceled Order Can Be Deleted!");
-        }
-        else {
-            if(confirm("Deleted Orders Cannot Be Reverted!")){
-                $.ajax({
-                    url: "/pages/admin/admin_order_delete.php",
-                    type: "POST",
-                    data: {id : orderid},
-                    success: function(res){
-                        console.log(res);
-                        if(res=="success"){
-                            let row = $(`tr#${orderid}`);
-                            row.remove();
-                        }
-                    }
-                });
-            }
-            
-        }
-
-   })
-
-
 
 
     var formdiv = $(".formwrapper");
@@ -52,7 +10,7 @@ $(()=>{
     var formDelivered = form.children("input[type='date']");
     var orderid;
 
-    $("[data-update]").on('click', function(e){
+    $("tbody").on('click', "[data-update]", function(e){
          orderid = $(this)[0].dataset.update;
         let status = $(`td.stat.${orderid}`);
         let tracking = $(`td.tracking.${orderid}`);
@@ -70,11 +28,31 @@ $(()=>{
             formDelivered.val("");
         }
         
+        if(formStatus.val() == "Pending"){
+            formTracking.prop("readonly", true);
+            formDelivered.prop("readonly", true);
+        }else {
+            formTracking.prop("readonly", false);
+            formDelivered.prop("readonly", false);
+
+        }
 
         formdiv.css("display","flex");
 
     })
 
+    formStatus.on('change', function(e){
+        if(formStatus.val() == "Pending"){
+            formTracking.prop("readonly", true).val("");
+            formDelivered.prop("readonly", true).val("");
+
+            
+        }else {
+            formTracking.prop("readonly", false);
+            formDelivered.prop("readonly", false);
+
+        }
+    })
 
     $(".exitButton").on('click', function(e){
         formdiv.css("display","none");
@@ -146,4 +124,22 @@ $(()=>{
         
     })
 
+    $("#order-search").on('input', function(e){
+        let value = $(this).val();
+        let tbody = $("tbody");
+        let datas = {
+            search : value
+        };
+
+        //use ajax to get the records and replace the tablebody datas
+        $.ajax({
+            url : "/api/adminGetOrder.php",
+            type : "POST",
+            data : datas,
+            success : function(res){
+                tbody.html(res);
+            }
+        });
+
+    })
 });

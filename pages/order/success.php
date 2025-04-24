@@ -25,10 +25,16 @@
                              VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)");
     $stm->execute([$orderID, $details->userId, $details->orderDate, "Pending", $details->orderAddress, $details->orderName, $details->orderPhone, "Standard", $details->discount]);
 
+    
     foreach($items as $i){
         $stm = $_db->prepare("INSERT into order_items(orderId, productId, quantity, subtotal, gripSize)
                              VALUES(?, ?, ?, ?, ?)");
         $stm->execute([$orderID, $i->productID, $i->quantity, $i->subtotal, $i->sizeID]);
+
+        //subtracting the stock from database
+
+        $stm = $_db->prepare("UPDATE productstock set stock=stock-1 WHERE productID = ? AND sizeID = ?");
+        $stm->execute([$i->productID, $i->sizeID]);
     }
     
 
@@ -76,14 +82,10 @@
     </div>
 
     <div class="buttoncontainer">
-        <button onclick="gohome()">Back to Homepage</button>
+        <button onclick="location='/pages/order/orderDetails.php?id=<?= $orderID ?>'">View Order</button>
     </div>
 </div>
-<script>
-    function gohome(){
-        location = "/";
-    }
-</script>
+
 
 <?php 
 include '../../_foot.php';

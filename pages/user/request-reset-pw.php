@@ -41,7 +41,7 @@ if (is_post()) {
         // $stm->execute([$u->id, $id, $u->id]);
 
         // (4) Generate token url
-        $reset_pw_url = base("pages/user/settings/change-password.php?id=$id");
+        $reset_pw_url = base("pages/user/reset-password.php?id=$id");
         $home_url = base('/');
 
         // (5) Send email
