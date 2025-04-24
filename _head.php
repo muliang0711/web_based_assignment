@@ -71,6 +71,7 @@ if (is_post()) {
             <a href="/">Home</a>
             <a href="/pages/product/productlist.php">Shop</a>
             <a href="/pages/About/about.php">About us</a>
+            <a href="/contact.php">Contact</a>
 
             <?php if (is_logged_in("user")): ?>
 
@@ -82,7 +83,7 @@ if (is_post()) {
                 </div> 
 
                 <div class="account dropdown">
-                    <div class="dropdown-label">
+                    <div class="dropdown-label with-dropdown-icon">
                         <img class="account-icon" src="/assets/img/profile-default-icon-dark.svg" alt="Account" title="Account" />
                     </div>
                     <div class="dropdown-content">
@@ -219,7 +220,7 @@ if (is_post()) {
             <span class="info-text"><?= temp('info') ?></span>
         </div>
         
-        <div class="info-container error">
+        <div class="info-container error-toast">
             <div class="progress-bar"></div>
             <span class="info-text"><?= temp('error') ?></span>
         </div>

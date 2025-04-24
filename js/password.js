@@ -37,9 +37,10 @@ $(() => {
 
     $('input.strength-testable').on('input', e => {
         $inputPassword = $(e.target);
-        $passwordTesterBox = $inputPassword.closest('.form-item').find('.password-strength-tester');
-
+        $passwordTesterBox = $inputPassword.closest('.password-input-box').siblings('.password-strength-tester');
+        
         const password = e.target.value;
+        console.log(password.length >= 8);
         let passes = 0;
         const totalChecks = $passwordTesterBox.children('.checks').length;
 

@@ -2,14 +2,13 @@
 require '../../../_base.php';
 
 /********* You can change these to suit the specific needs of your page *********/
-$title = 'Profile';
+$title = 'Account settings';
 $stylesheetArray = ['/css/password.css', 'profile.css']; // Put CSS files that are specific to this page here. If you want to change the styling of the header and the footer, go to /css/app.cs
 $scriptArray = ['/js/password.js'];      // Put JS files that are specific to this page here. If you want to change the JavaScript for the header and the footer, go to /js/app.js
 
 include '../../../_login_guard.php';
 
 extract((array)$_user);
-echo $bio;
 
 $_genders = [
     'F' => 'Female',
@@ -20,8 +19,68 @@ $_genders = [
 if (is_post()) {
     $action = post('action');
     if ($action == 'changePassword') {
-        $currentPassword = post('currentPassword');
-        $newPassword     = post('newPassword');
+
+        $password = post('password');
+        $newPassword = post('newPassword');
+        $confirmNew  = post('confirmNew');
+
+        // Validate: password
+        if ($password == '') {
+            $_errors['password'] = 'Required';
+        }
+        else {
+            // Get password hash from database
+            $stm = $_db->prepare('SELECT passwordHash FROM user WHERE userID = :userID');
+            $stm->execute(['userID' => $_user->userID]);
+            $pwHash = $stm->fetchColumn();
+
+            if (!pwMatch($password, $pwHash)) {
+                $_errors['password'] = 'Incorrect password';
+            }
+        }
+
+        // Validate: new password
+        if ($newPassword == '') {
+            $_errors['newPassword'] = 'Required';
+        }
+        else if ($newPassword == $password) {
+            $_errors['newPassword'] = 'Same as what you filled in the "Current password" field';
+        }
+        else if (!is_strong_password($newPassword)) {
+            $_errors['newPassword'] = 'Password not strong enough';
+        }
+        else if (strlen($newPassword) < 5 || strlen($newPassword) > 100) {
+            $_errors['newPassword'] = 'Between 5-100 characters';
+        }
+
+        // Validate: confirm new password
+        if ($confirmNew == '') {
+            $_errors['confirmNew'] = 'Required';
+        }
+        else if ($confirmNew != $newPassword) {
+            $_errors['confirmNew'] = 'Does not match with new password';
+        }
+    
+        if (!$_errors) {
+            try {
+                $passwordHash = pwHash($newPassword);
+        
+                $stm = $_db->prepare("UPDATE user SET passwordHash = :passwordHash WHERE userID = :userID");
+                $stm->execute([
+                    ':passwordHash' => $passwordHash,
+                    ':userID' => $_user->userID,
+                ]);
+        
+                temp('info', 'Password successfully changed.');
+                redirect();
+
+            } catch (PDOException $e) {
+                temp('error', 'Sorry, there was a technical issue. Please <a href="/contact.php">contact</a> the admin.');
+                redirect();
+            }
+        }
+    
+    
 
         // // Generate token ID
         // $id = sha1(uniqid() . rand()); // question: why need both uniqid() and rand() ah? is it to increase randomness?
@@ -58,18 +117,19 @@ include 'profile_dynamic_navbar.php';
 
     <h1 class="heading"><?= $current_title ?></h1>
     <div class="left-col"> <!-- .left-col is just a regular div as far as this page is concerned. It is originally used as a flex item of a two-column container. -->
+        <!-- CHANGE PASSWORD -->
         <section>
             <h2>Change password</h2>
-            <form method="post">
+            <form method="post" class="no-autofocus-first">
                 <input type="hidden" name="action" value="changePassword"/>
 
                 <div class="form-group">
                     <label class="label">Current password</label>
                     <div class="password-input-box">
-                        <?php input_password('currentPassword') ?>
+                        <?php input_password('password') ?>
                         <img class="visibility-toggle-icon" src="../../../assets/img/visibility-off.svg" alt="Visibility toggle icon"/>
                     </div>
-                    <?= error('currentPassword'); ?>
+                    <?= error('password'); ?>
                 </div>              
                
                 <div class="form-group">
@@ -86,13 +146,24 @@ include 'profile_dynamic_navbar.php';
                     </div>
                 </div>
 
+                <div class="form-group">
+                    <label class="label">Confirm new password</label>
+                    <div class="password-input-box">
+                        <?php input_password('confirmNew') ?>
+                        <!-- <img class="visibility-toggle-icon" src="/assets/img/visibility-off.svg" alt="Visibility toggle icon"/> -->
+                    </div>
+                    <?= error('confirmNew'); ?>
+                </div>
+
                 <button 
                     type="submit" 
                     class="btn-simple btn-green"
                 >Change password</button>
+
             </form>
         </section>
 
+        <!-- DELETE ACCOUNT -->
         <section>
             <h2>Account maintenance</h2>
             <form method="post">
@@ -103,6 +174,8 @@ include 'profile_dynamic_navbar.php';
                 >Delete account</button>
             </form>
         </section>
+
+
         <!-- <section class="left-col">
             <form method="post">
                 <div class="form-group">

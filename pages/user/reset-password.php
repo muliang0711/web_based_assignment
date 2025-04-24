@@ -1,5 +1,5 @@
 <?php
-include '../../../_base.php';
+include '../../_base.php';
 
 // ----------------------------------------------------------------------------
 
@@ -21,28 +21,36 @@ $stm->execute(['tokenID' => $id]);
 $tokenObj = $stm->fetch();
 
 if (is_post()) {
-    $password = post('password');
+    // $password = post('password');
     $newPassword = post('newPassword');
     $confirmNew  = post('confirmNew');
 
     // Validate: password
-    if ($password == '') {
-        $_errors['password'] = 'Required';
-    }
-    else {
-        // Get password hash from database
-        $stm = $_db->prepare('SELECT passwordHash FROM user WHERE userID = :userID');
-        $stm->execute(['userID' => $tokenObj->userID]);
-        $pwHash = $stm->fetchColumn();
+    // if ($password == '') {
+    //     $_errors['password'] = 'Required';
+    // }
+    // else {
+        // // Get password hash from database
+        // $stm = $_db->prepare('SELECT passwordHash FROM user WHERE userID = :userID');
+        // $stm->execute(['userID' => $tokenObj->userID]);
+        // $pwHash = $stm->fetchColumn();
 
-        if (!pwMatch($password, $pwHash)) {
-            $_errors['password'] = 'Incorrect password';
-        }
-    }
+    //     if (!pwMatch($password, $pwHash)) {
+    //         $_errors['password'] = 'Incorrect password';
+    //     }
+    // }
+
+    // Get current password hash from database
+    $stm = $_db->prepare('SELECT passwordHash FROM user WHERE userID = :userID');
+    $stm->execute(['userID' => $tokenObj->userID]);
+    $currentPwHash = $stm->fetchColumn();
 
     // Validate: new password
     if ($newPassword == '') {
         $_errors['newPassword'] = 'Required';
+    }
+    else if (pwMatch($newPassword, $currentPwHash)) {
+        $_errors['newPassword'] = 'Same as current password';
     }
     else if (!is_strong_password($newPassword)) {
         $_errors['newPassword'] = 'Password not strong enough';
@@ -75,17 +83,17 @@ if (is_post()) {
         ]);
 
         temp('info', 'Password successfully changed.');
-        redirect('../user-login.php');
+        redirect('user-login.php');
     }
 }
 
 // ----------------------------------------------------------------------------
 
 $_title = 'Change Password';
-$stylesheetArray = ['../user.css']; // Put CSS files that are specific to this page here. If you want to change the styling of the header and the footer, go to /css/app.cs
-$scriptArray = ['../user.js'];      // Put JS files that are specific to this page here. If you want to change the JavaScript for the header and the footer, go to /js/app.js
+$stylesheetArray = ['/css/password.css', 'user.css']; // Put CSS files that are specific to this page here. If you want to change the styling of the header and the footer, go to /css/app.cs
+$scriptArray = ['/js/password.js', 'user.js'];      // Put JS files that are specific to this page here. If you want to change the JavaScript for the header and the footer, go to /js/app.js
 
-include '../../../_head.php';
+include '../../_head.php';
 ?>
 
 <style>
@@ -142,4 +150,4 @@ include '../../../_head.php';
 </div>
 
 <?php
-include '../../../_foot.php';
+include '../../_foot.php';
