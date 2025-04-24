@@ -191,3 +191,8 @@ input[type=file] {
     align-items: flex-start; 
     gap: 10px;
 }
+
+/* Account page */
+.password-input-box {
+    width: fit-content;
+}

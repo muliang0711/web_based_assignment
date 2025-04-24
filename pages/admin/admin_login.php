@@ -50,7 +50,7 @@ if (is_post()) {
 }
 ?>
 <?php
-$stylesheetArray = ['../user/user.css','/css/admin_login.css'];   // 注意：这边只放特定于此页面的 .css file(s)。所有 admin 页面都会用到的 .css files 应放在 /css/admin.css
+$stylesheetArray = ['../user/user.css','/css/admin_login.css', '/css/password.css'];   // 注意：这边只放特定于此页面的 .css file(s)。所有 admin 页面都会用到的 .css files 应放在 /css/admin.css
 ?>
 <!DOCTYPE html>
 <html lang="en">
