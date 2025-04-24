@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 23, 2025 at 07:53 AM
+-- Generation Time: Apr 24, 2025 at 05:09 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -796,6 +796,7 @@ CREATE TABLE `user` (
   `address` text DEFAULT NULL,
   `birthdate` date DEFAULT NULL,
   `email` varchar(255) NOT NULL,
+  `emailVerified` tinyint(1) NOT NULL DEFAULT 0 COMMENT 'tinyint(1) is the same as boolean. 0 is false, 1 is true.',
   `phoneNo` varchar(15) DEFAULT NULL,
   `gender` enum('F','M','R') NOT NULL DEFAULT 'R' COMMENT 'F: Female. \r\nM: Male.\r\nR: Rather not say',
   `profilePic` varchar(255) DEFAULT NULL,
@@ -808,10 +809,10 @@ CREATE TABLE `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`userID`, `username`, `passwordHash`, `address`, `birthdate`, `email`, `phoneNo`, `gender`, `profilePic`, `bio`, `memberStatus`, `isDeleted`) VALUES
-(1, 'cookie', '$2y$10$82Iz4eXE.Ar4s99CF11A2u8tIiOQd3Qr65apYOZ1lVsNimp8oumwG', NULL, NULL, 'cookie@mail.com', '012-3456789', 'R', NULL, 'I love cookies, as you may have already guessed', 'Inactive', 0),
-(2, 'icecream', '$2y$10$HN1VCP3xMBQkkD4fsxUMUe4Ri/ujjDaoJ9u1vZTdibF8yyXjfQ3LG', NULL, NULL, 'icecream@mail.com', '012-9876543', 'R', NULL, 'I love ice cream!', 'Inactive', 0),
-(4, 'cookie2', '$2y$10$hqZuPAzuEtD0oBYuqIfiNu/ul/Z8N.8Yjv5sN/2HUBSAVtUVUKkFi', NULL, NULL, 'jasonlhtown@gmail.com', NULL, 'R', NULL, NULL, 'Inactive', 1);
+INSERT INTO `user` (`userID`, `username`, `passwordHash`, `address`, `birthdate`, `email`, `emailVerified`, `phoneNo`, `gender`, `profilePic`, `bio`, `memberStatus`, `isDeleted`) VALUES
+(1, 'cookie', '$2y$10$y9w5iLGDpKgYyStjoM1.G.sWRoSTKVHIZ/Tk125N7CIVdBZ/iITuC', NULL, NULL, 'cookie@mail.com', 0, '012-3456789', 'R', NULL, 'I love cookies, as you may have already guessed', 'Inactive', 0),
+(2, 'icecream', '$2y$10$HN1VCP3xMBQkkD4fsxUMUe4Ri/ujjDaoJ9u1vZTdibF8yyXjfQ3LG', NULL, NULL, 'icecream@mail.com', 0, '012-9876543', 'R', NULL, 'I love ice cream!', 'Inactive', 0),
+(4, 'cookie2', '$2y$10$j3VTdYyGhsqKo8f0Fn1NMe1lt2Kr9fLKJLEW.AXALN6J6EVqCTpFy', NULL, NULL, 'jasonlhtown@gmail.com', 0, NULL, 'R', NULL, NULL, 'Inactive', 0);
 
 -- --------------------------------------------------------
 
