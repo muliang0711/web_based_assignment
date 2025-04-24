@@ -2,7 +2,7 @@
 require_once __DIR__ . "/../_base.php";
 require_once __DIR__ . "/../db_connection.php";
 require_once __DIR__ . "/../db/productDb.php";
-
+require_once __DIR__ . "/../pages/admin/product/generate_qr.php";
 class ProductController
 {
     private $productDb;
@@ -163,6 +163,9 @@ class ProductController
         }
 
         $this->redirectToAdmin();
+        
+        generateQRCode($_db , $productInformation['productId'] , $productInformation['seriesId']);
+
     }
 
     private function updateProduct()

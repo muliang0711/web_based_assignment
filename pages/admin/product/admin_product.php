@@ -1,5 +1,5 @@
 <?php
-require_once "../../../controller/productController.php";
+require_once "../../../controller/productManager.php";
 require_once "../../../_base.php";
 include __DIR__ . "/../main.php";
 include __DIR__  . '/../../../admin_login_guard.php';
@@ -50,14 +50,14 @@ unset($_SESSION['Delete_ErrorMsg']);
   <div class="filter-container">
 
     <!-- Search Bar -->
-    <form class="search-box" method="GET" action="/controller/productController.php">
+    <form class="search-box" method="GET" action="/controller/productManager.php">
       <input type="hidden" name="action" value="search">
       <input type="text" name="searchText" placeholder="Search product..." required>
       <button type="submit">Search</button>
     </form>
 
     <!-- Filter Form -->
-    <form class="filter-form" method="POST" action="/controller/productController.php">
+    <form class="filter-form" method="POST" action="/controller/productManager.php">
       <input type="hidden" name="action" value="filter">
 
       <label for="productID">Product ID</label>
@@ -260,37 +260,38 @@ include "../../../admin_foot.php"
 <script>
 
 
-$(document).ready(function () {
+document.addEventListener('DOMContentLoaded', () => {
     console.log("product.js loaded!");
-    const $minInput = $('#minPrice');
-    const $maxInput = $('#maxPrice');
-    const $form = $('.filter-form');
-    const $errorMsg = $('#priceError');
 
-    // Set default values if empty or out of range
-    $minInput.on('blur', function () {
+    const minInput = document.getElementById('minPrice');
+    const maxInput = document.getElementById('maxPrice');
+    const form = document.querySelector('.filter-form');
+    const errorMsg = document.getElementById('priceError');
+    const deleteForms = document.querySelectorAll('.delete-form');
+    const statusButtons = document.querySelectorAll('.status-toggle-btn');
 
-        let val = parseInt($(this).val());
+    // 1. Min price validation
+    minInput.addEventListener('blur', () => {
+        let val = parseInt(minInput.value);
         if (isNaN(val) || val < 10) {
-            $(this).val(10);
+            minInput.value = 10;
         }
-
     });
 
-    $maxInput.on('blur', function () {
-        let val = parseInt($(this).val());
+    // 2. Max price validation
+    maxInput.addEventListener('blur', () => {
+        let val = parseInt(maxInput.value);
         if (isNaN(val) || val < 100) {
-            $(this).val(100);
+            maxInput.value = 100;
         } else if (val > 1000) {
-            $(this).val(1000);
+            maxInput.value = 1000;
         }
     });
 
-    // Validate before submit
-    $form.on('submit', function (e) {
-        const min = parseInt($minInput.val());
-        const max = parseInt($maxInput.val());
-
+    // 3. Validate price range on form submit
+    form.addEventListener('submit', (e) => {
+        const min = parseInt(minInput.value);
+        const max = parseInt(maxInput.value);
         let error = "";
 
         if (isNaN(min) || isNaN(max)) {
@@ -304,82 +305,69 @@ $(document).ready(function () {
         }
 
         if (error) {
-            $errorMsg.text(error).show();
-            e.preventDefault(); // stop submission
+            errorMsg.textContent = error;
+            errorMsg.style.display = 'block';
+            e.preventDefault();
         } else {
-            $errorMsg.hide(); // hide error if all good
-        }
-    });
-    $('.delete-form').on('submit', function (e) {
-        const productID = $(this).find('button').data('productid');
-        const sizeID = $(this).find('button').data('sizeid');
-
-        const confirmDelete = confirm(`Are you sure you want to delete this product?\nProduct ID: ${productID}\nSize ID: ${sizeID}`);
-
-        if (!confirmDelete) {
-            e.preventDefault(); // Cancel submission
+            errorMsg.style.display = 'none';
         }
     });
 
-    document.querySelectorAll('.status-toggle-btn').forEach(button => {
+    // 4. Handle delete confirmation
+    deleteForms.forEach(form => {
+        form.addEventListener('submit', (e) => {
+            const button = form.querySelector('button');
+            const productID = button.dataset.productid;
+            const sizeID = button.dataset.sizeid;
+
+            const confirmDelete = confirm(`Are you sure you want to delete this product?\nProduct ID: ${productID}\nSize ID: ${sizeID}`);
+            if (!confirmDelete) {
+                e.preventDefault();
+            }
+        });
+    });
+
+    // 5. Handle status toggle with async/await
+    statusButtons.forEach(button => {
         button.addEventListener('click', async () => {
-            
-            // 1. fetch  element form html tag : 
             const productID = button.dataset.productid;
             const sizeID = button.dataset.sizeid;
             const currentStatus = button.dataset.status;
             const newStatus = currentStatus === 'onsales' ? 'notonsales' : 'onsales';
 
-
-            // 2. use try catch to improve the process structure ; 
             try {
-                // 3. sending the data to target file ;
                 const response = await fetch('/controller/api/statusSwtich.php', {
-                    // 3.1 mention the request method ；
                     method: 'POST',
-                    // 3.2 mention how will the data convert into what type string or json or somelse in here is json 
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    // 3.3 modify the request body , what we want to send ; 
                     body: JSON.stringify({
-                        productID: productID,
-                        sizeID: sizeID,
+                        productID,
+                        sizeID,
                         status: newStatus
                     })
                 });
 
-                // 4. get http res body
                 const result = await response.json();
 
-                // repsonse.ok to ensure the request is send successfully 
-                // response.success to ensure the backend is correctly processing the data 
                 if (!response.ok || !result.success) {
-                    throw new Error(result.error || 'Unknown error');
+                    throw new Error(result.error || 'Unknown error occurred.');
                 }
 
-                // update status 
+                // Update button state
                 button.dataset.status = newStatus;
+                button.classList.toggle('onsales', newStatus === 'onsales');
+                button.classList.toggle('notonsales', newStatus === 'notonsales');
+                button.innerHTML = newStatus === 'onsales'
+                    ? `<i class="fas fa-toggle-on"></i> On Sale`
+                    : `<i class="fas fa-toggle-off"></i> Not On Sale`;
 
-                if (newStatus === 'onsales') {
-                    button.classList.remove('notonsales');
-                    button.classList.add('onsales');
-                    button.innerHTML = `<i class="fas fa-toggle-on"></i> On Sale`;
-                } else {
-                    button.classList.remove('onsales');
-                    button.classList.add('notonsales');
-                    button.innerHTML = `<i class="fas fa-toggle-off"></i> Not On Sale`;
-                }
-                // error handle 
             } catch (error) {
                 console.error('Failed to update status:', error);
                 alert('Failed to update status. Please try again.');
             }
         });
     });
-
-
-
-
 });
+
 </script>

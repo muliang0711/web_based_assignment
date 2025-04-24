@@ -1,6 +1,6 @@
 <?php
 require_once "../../../db_connection.php";
-require_once "../../../controller/productController.php";
+require_once "../../../controller/productManager.php";
 
 $productID    = $_GET['productID'] ?? '';
 $sizeID       = $_GET['sizeID'] ?? '';
@@ -19,7 +19,7 @@ link_stylesheet($stylesheetArray);
 
 
 <div class="container">
-  <form action="/controller/productController.php" method="POST" enctype="multipart/form-data" class="form-container">
+  <form action="/controller/productManager.php" method="POST" enctype="multipart/form-data" class="form-container">
   <input type="hidden" name="action" value="updateProduct">
     <!-- LEFT -->
     <div class="left-side box">

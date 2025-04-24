@@ -116,7 +116,7 @@ class CheckStock {
         return $low_stock_product ; 
     }
 
-    // pending 
+
     public function change_low_stock_threshold($low_stock_threshold , $productID , $sizeID) {
         $sql = "UPDATE productstock 
                 SET low_stock_threshold = ? 
@@ -179,7 +179,92 @@ class CheckStock {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
     
+    public function filterProduct($filters)
+    {
+        try {
+            $sql = "SELECT 
+                        p.productID, 
+                        p.productName, 
+                        p.price, 
+                        p.seriesID, 
+                        s.seriesName, 
+                        ps.sizeID,
+                        p.introduction,
+                        p.playerInfo,
+                        ps.status,
+                        ps.stock AS total_stock
+                    FROM product p
+                    LEFT JOIN productstock ps ON p.productID = ps.productID
+                    LEFT JOIN series s ON p.seriesID = s.seriesID
+                    WHERE 1=1
+            ";
+            $params = [];
     
+            if (!empty($filters['productID'])) {
+                $sql .= " AND p.productID = ?";
+                $params[] = $filters['productID'];
+            }
+            if (!empty($filters['seriesID'])) {  
+                $sql .= " AND p.seriesID = ?";
+                $params[] = $filters['seriesID'];
+            }
+            if (isset($filters['priceMin'])) {
+                $sql .= " AND p.price >= ?";
+                $params[] = $filters['priceMin'];
+            }
+            if (isset($filters['priceMax'])) {
+                $sql .= " AND p.price <= ?";
+                $params[] = $filters['priceMax'];
+            }
+            if (!empty($filters['sizeID'])) {
+                $sql .= " AND ps.sizeID = ?";
+                $params[] = $filters['sizeID'];
+            }
+    
+            // Only include under-threshold stocks
+            $sql .= " AND ps.stock < ps.low_stock_threshold";
+    
+            $sql .= " ORDER BY p.productID, ps.sizeID";
+    
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute($params);
+            return $stmt->fetchAll();
+        } catch (Exception $e) {
+            throw new Exception("Error filtering products: " . $e->getMessage());
+        }
+    }
+    
+    public function search($searchText)
+    {
+        try {
+            $like = '%' . $searchText . '%';
+            $sql = "SELECT 
+                        p.productID, 
+                        p.productName, 
+                        p.price, 
+                        p.seriesID, 
+                        s.seriesName, 
+                        ps.sizeID, 
+                        ps.status,
+                        ps.stock AS total_stock
+                    FROM product p
+                    JOIN series s ON p.seriesID = s.seriesID 
+                    JOIN productstock ps ON p.productID = ps.productID 
+                    WHERE (
+                        p.productName LIKE ? 
+                        OR p.productID LIKE ? 
+                        OR s.seriesName LIKE ? 
+                        OR s.seriesID LIKE ?
+                        )
+                    AND ps.stock < ps.low_stock_threshold
+            ";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute([$like, $like, $like , $like]);
+            return $stmt->fetchAll();
+        } catch (Exception $e) {
+            throw new Exception("Error searching products: " . $e->getMessage());
+        }
+    }
 }
 // here is just for test ; 
 $check = new CheckStock($_db);

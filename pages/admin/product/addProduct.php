@@ -1,12 +1,13 @@
 
 <?php
 require_once "../../../_base.php";      
+
 $stylesheetArray = ['../../../css/editAnddetails.css'];
 link_stylesheet($stylesheetArray);
 include '../../admin_login_guard.php';
 ?>
 <div class="container">
-  <form action="/controller/productController.php" method="POST" enctype="multipart/form-data" class="form-container">
+  <form action="/controller/productManager.php" method="POST" enctype="multipart/form-data" class="form-container">
     
   <input type="hidden" name="action" value="addProduct">
     <!-- Left Side: Product Details -->

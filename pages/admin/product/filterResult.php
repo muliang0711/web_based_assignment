@@ -1,6 +1,6 @@
 <?php
 require_once "../../../_base.php";
-require_once "../../../controller/productController.php";
+require_once "../../../controller/productManager.php";
 $stylesheetArray = ['../../../css/main.css'];
 link_stylesheet($stylesheetArray);
 include '../../admin_login_guard.php';
@@ -25,7 +25,7 @@ $pagedProducts  = array_slice($filterResult, $startFrom, $productsPerPage);
 $totalPages     = ceil($totalProducts / $productsPerPage);
 
 
-var_dump($filterResult);
+// var_dump($filterResult);
 // handle error 
 if ($totalProducts === 0) {
     echo "<p>No search results found.</p>";
@@ -98,14 +98,14 @@ if (empty($filterResult)) {
                                         <i class="fa-solid fa-pen-to-square"></i>
                                     </a>
 
-                                    <form method="POST" action="/controller/productController.php" class="delete-form" style="display:inline;">
+                                    <!--<form method="POST" action="/controller/productManager.php" class="delete-form" style="display:inline;">
                                         <input type="hidden" name="action" value="deleteProduct">
-                                        <input type="hidden" name="productId" value="<?php echo $product->productID; ?>">
-                                        <input type="hidden" name="sizeId" value="<?php echo $product->sizeID; ?>">
-                                        <button type="submit" class="action-btn-delete" data-productid="<?php echo $product->productID; ?>" data-sizeid="<?php echo $product->sizeID; ?>">
+                                        <input type="hidden" name="productId" value="<?// php echo $product->productID; ?>">
+                                        <input type="hidden" name="sizeId" value="<?// php echo $product->sizeID; ?>">
+                                        <button type="submit" class="action-btn-delete" data-productid="<?// php echo $product->productID; ?>" data-sizeid="<?// php echo $product->sizeID; ?>">
                                             <i class="fas fa-trash"></i>
                                         </button>
-                                    </form>
+                                    </form> -->
 
 
                                     <button class="status-toggle-btn toggle-btn 

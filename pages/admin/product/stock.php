@@ -3,9 +3,10 @@ require_once __DIR__ . "/../../../_base.php";
 include_once __DIR__ . "/../../../admin_login_guard.php";
 include __DIR__ . "/../main.php";
 include __DIR__ . "/../../../controller/stockManager.php";
-require_once "../../../controller/productController.php";
+require_once "../../../controller/productManager.php";
 include __DIR__  . '/../../../admin_login_guard.php';
-$productManager->loadLowStockProductsToSession();
+
+$stockManager->loadLowStockProductsToSession();
 
 $lowStockProducts = $_SESSION['low_stock_product'] ?? [];
 if (!is_array($lowStockProducts)) $lowStockProducts = [];
@@ -65,14 +66,14 @@ $totalPages = ceil($totalProducts / $productsPerPage);
         <div class="filter-container">
 
             <!-- Search Bar -->
-            <form class="search-box" method="GET" action="/controller/productController.php">
+            <form class="search-box" method="GET" action="/controller/stockManager.php">
                 <input type="hidden" name="action" value="search">
                 <input type="text" name="searchText" placeholder="Search product..." required>
                 <button type="submit">Search</button>
             </form>
 
             <!-- Filter Form -->
-            <form class="filter-form" method="POST" action="/controller/productController.php">
+            <form class="filter-form" method="POST" action="/controller/stockManager.php">
                 <input type="hidden" name="action" value="filter">
 
                 <label for="productID">Product ID</label>

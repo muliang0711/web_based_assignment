@@ -15,6 +15,26 @@ class ProductManager {
         $this->checkStock = new CheckStock($pdo);
     }
 
+    public function handleAction()
+    {
+        $action = $_POST['action'] ?? $_GET['action'] ?? null;
+        if (!$action) {
+            $this->addErrorAndRedirect('No action specified.');
+        }
+
+        $allowedActions = [
+            'filter'        => 'filterProducts',
+            'search'        => 'searchProduct',
+        ];
+
+        if (!array_key_exists($action, $allowedActions)) {
+            $this->addErrorAndRedirect('Invalid action specified.');
+        }
+
+        $method = $allowedActions[$action];
+        $this->$method();
+    }
+
     public function loadLowStockProductsToSession() {
         $lowStockProducts = $this->checkStock->get_low_stock_product();
         $_SESSION['low_stock_product'] = $lowStockProducts;
@@ -33,8 +53,139 @@ class ProductManager {
             return ['success' => false, 'message' => 'Update failed or no stock change.'];
         }
     }
+
+    private function filterProducts()
+    {
+        // Minimal validation logic for filter
+        $minPrice = isset($_POST['minPrice']) && $_POST['minPrice'] !== '' ? (float)$_POST['minPrice'] : null;
+        $maxPrice = isset($_POST['maxPrice']) && $_POST['maxPrice'] !== '' ? (float)$_POST['maxPrice'] : null;
+
+        // Price sanity check
+        if ($minPrice !== null && $maxPrice !== null && $minPrice > $maxPrice) {
+            $_SESSION['errors'] = ["Minimum price cannot exceed maximum price."];
+            header("Location: ../pages/admin/product/filterResult.php");
+            exit();
+        }
+
+        $filters = [
+            'productID' => $_POST['productID'] ?? null,
+            'priceMin'  => $minPrice,
+            'priceMax'  => $maxPrice,
+            'seriesID'  => $_POST['seriesID'] ?? null,
+            'sizeID'    => $_POST['sizeID'] ?? null,
+        ];
+
+        try {
+            $_SESSION['filterResult'] = $this->checkStock->filterProduct($filters);
+            header("Location: ../pages/admin/product/filterResult.php");
+            exit();
+        } catch (Exception $e) {
+            $this->addErrorAndRedirect("Error filtering products: " . $e->getMessage());
+        }
+    }
+
+    private function searchProduct()
+    {
+        // Minimal check for search input
+        if (empty($_GET['searchText'])) {
+            $_SESSION['errors'] = ["Search text cannot be empty."];
+            header("Location: ../pages/admin/product/searchResult.php");
+            exit();
+        }
+
+        $searchText = $_GET['searchText'];
+
+        try {
+            $_SESSION['searchResult'] = $this->checkStock->search($searchText);
+            $encoded = urlencode($searchText);
+            header("Location: ../pages/admin/product/searchResult.php?search=" . $encoded);
+            exit();
+        } catch (Exception $e) {
+            $this->addErrorAndRedirect("Error searching products: " . $e->getMessage());
+        }
+    }
+
+    private function validation($productInformation)
+    {
+        $errors = [];
+
+        // Validate productId
+        if (empty($productInformation['productId'])) {
+            $errors[] = "Product ID cannot be null!";
+        } elseif (strlen($productInformation['productId']) > 5) {
+            $errors[] = "Product ID cannot exceed 5 characters.";
+        }
+
+        // Validate productName
+        if (empty($productInformation['productName'])) {
+            $errors[] = "Product name cannot be null!";
+        } elseif (strlen($productInformation['productName']) > 100) {
+            $errors[] = "Product name cannot exceed 100 characters.";
+        }
+
+        // Validate seriesId
+        if (empty($productInformation['seriesId'])) {
+            $errors[] = "Series ID cannot be null!";
+        } elseif (strlen($productInformation['seriesId']) > 3) {
+            $errors[] = "Series ID cannot exceed 3 characters.";
+        }
+
+        // Validate seriesName
+        if (empty($productInformation['seriesName'])) {
+            $errors[] = "Series Name cannot be null!";
+        } elseif (strlen($productInformation['seriesName']) > 15) {
+            $errors[] = "Series Name cannot exceed 15 characters.";
+        }
+
+        // Validate price
+        if ($productInformation['price'] === '' || $productInformation['price'] === null) {
+            $errors[] = "Price must have a value!";
+        } elseif (!is_numeric($productInformation['price']) || (float)$productInformation['price'] < 0) {
+            $errors[] = "Price must be a non-negative number!";
+        }
+
+        // Validate stock
+        if ($productInformation['stock'] === '' || $productInformation['stock'] === null) {
+            $errors[] = "Stock must have a value!";
+        } elseif (!is_numeric($productInformation['stock']) || (int)$productInformation['stock'] < 0) {
+            $errors[] = "Stock must be a non-negative integer!";
+        }
+
+        // Validate sizeId
+        if (empty($productInformation['sizeId'])) {
+            $errors[] = "Size ID cannot be null!";
+        } elseif (strlen($productInformation['sizeId']) > 4) {
+            $errors[] = "Size ID cannot exceed 4 characters.";
+        }
+
+        // Optional: Validate introduction length
+        if (!empty($productInformation['introduction']) && strlen($productInformation['introduction']) > 2000) {
+            $errors[] = "Introduction cannot exceed 2000 characters.";
+        }
+
+        // Optional: Validate playerInfo length
+        if (!empty($productInformation['playerInfo']) && strlen($productInformation['playerInfo']) > 2000) {
+            $errors[] = "Player Info cannot exceed 2000 characters.";
+        }
+
+        return $errors;
+    }
+    private function addErrorAndRedirect($msg)
+    {
+        $_SESSION['errors'] = [$msg];
+        $this->redirectToAdmin();
+    }
+    
+    private function redirectToAdmin()
+    {
+        header('Location: ../pages/admin/product/stock.php');
+        exit();
+    }
 }
 
 // 6. Example usage
-$productManager = new ProductManager($_db);
+$stockManager = new ProductManager($_db);
+if (isset($_GET['action']) || isset($_POST['action'])) {
+    $stockManager->handleAction();
+}
 ?>

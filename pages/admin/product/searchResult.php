@@ -1,6 +1,6 @@
 <?php
 require_once "../../../_base.php";   
-require_once "../../../controller/productController.php";
+require_once "../../../controller/productManager.php";
 include '../../admin_login_guard.php';
 $stylesheetArray = ['../../../css/main.css'];
 link_stylesheet($stylesheetArray);
@@ -97,7 +97,7 @@ if (empty($searchResult)) {
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </a>
 
-                                <form method="POST" action="/controller/productController.php" class="delete-form" style="display:inline;">
+                                <form method="POST" action="/controller/productManager.php" class="delete-form" style="display:inline;">
                                     <input type="hidden" name="action" value="deleteProduct">  
                                     <input type="hidden" name="productId" value="<?php echo $product->productID; ?>">
                                     <input type="hidden" name="sizeId" value="<?php echo $product->sizeID; ?>">

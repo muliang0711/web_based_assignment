@@ -108,7 +108,7 @@ link_stylesheet($stylesheetArray);
         const data = await fetchReportData(reportType, from, to);
         renderChartPreview(reportType, data);
       } catch (error) {
-        showChartMessage(`❌ ${error.message}`);
+        showChartMessage(` ${error.message}`);
       } 
     });
   });
