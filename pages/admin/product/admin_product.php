@@ -50,12 +50,20 @@ unset($_SESSION['Delete_ErrorMsg']);
   <div class="filter-container">
 
     <!-- Search Section -->
-    <div class="search-section">
+    <div class="search-section" style="display: flex; justify-content: space-between; align-items: center; padding: 10px;">
+      <div>
       <form class="search-box" method="GET" action="/controller/productManager.php">
         <input type="hidden" name="action" value="search">
         <input type="text" name="searchText" placeholder="Search product..." required>
         <button type="submit">Search</button>
       </form>
+      </div>
+          <!-- Button Section -->
+    <div class="button-section" >
+      <a href="addProduct.php" class="action-btn-add" title="Add New Product">
+        <i class="fa-solid fa-plus"></i> Add Product
+      </a>
+    </div>
     </div>
 
     <!-- Filter Section -->
@@ -102,12 +110,7 @@ unset($_SESSION['Delete_ErrorMsg']);
       </form>
     </div>
 
-    <!-- Button Section -->
-    <div class="button-section">
-      <a href="addProduct.php" class="action-btn-add" title="Add New Product">
-        <i class="fa-solid fa-plus"></i> Add Product
-      </a>
-    </div>
+
 
   </div>
 
