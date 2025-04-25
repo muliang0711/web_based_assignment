@@ -165,6 +165,16 @@ input[type="file"] {
   cursor: pointer;
 }
 
+/* 
+This @media rule ensures that
+if viewport height is equal to or smaller than form height,
+give container auto height so it grows with the form and allows scrolling if the form overflows the viewport.
+
+The regular styling assumes that the form is smaller than the viewport,
+and applies 100vh to .container's height so that the form can be center-aligned within the container.
+This, however, causes overflow without easy scrolling as the form would be fixed to the center of the viewport
+and some of the top and bottom parts of the form would be inevitably inaccessible.
+*/
 @media (max-height: 850px) {
   .container {
     height: auto;
