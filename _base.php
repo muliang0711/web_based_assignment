@@ -448,6 +448,14 @@ function logout($role) {
     validateRole($role);
 
     if ($role == 'user') {
+        // Delete `remember_me` cookie (if it doesn't exist, this line does nothing)
+        setcookie('remember_me', '', time() - 3600, '/');
+
+        // Delete all `remember-user`-type tokens for the user from DB
+        global $_db;
+        $stmt = $_db->prepare("DELETE FROM token WHERE type = 'remember-user' AND userID = :userID");
+        $stmt->execute(['userID' => $_SESSION['userID']]);
+
         unset($_SESSION['userID']);
     }
     else if ($role == 'admin') {
@@ -464,13 +472,18 @@ $_user;
 // global admin object
 $_admin;
 
-// If is logged in, fetch user object to a global variable
-if (is_logged_in("user")) {
+// If userID session variable is set OR if there is a valid remember_me cookie, fetch user data to $_user.
+if (is_logged_in("user") || verify_remember_me_cookie()) {
     global $_db;
     global $_user;
     // Reminder: userID is a NUMBER, therefore does not require single quotes
     $_user = $_db->query("SELECT * FROM user WHERE userID = {$_SESSION['userID']}")->fetch();
 }
+// else {
+//     // If $_SESSION['userID'] isn't set, check if a `remember_me` cookie is stored on the browser, and verify it.
+//     // If the cookie exists and is valid, log user in (setting the userID session variable).
+//     verify_remember_me_cookie();
+// }
 
 // If is logged in, fetch admin object to a global variable
 if (is_logged_in("admin")) {
@@ -478,6 +491,84 @@ if (is_logged_in("admin")) {
     global $_admin;
     // Reminder: admin's id column is a VARCHAR, therefore requires single quotes
     $_admin = $_db->query("SELECT * FROM `admin` WHERE id = '{$_SESSION['adminID']}'")->fetch();
+}
+
+
+/** Verify a user's `remember_me` cookie against the `remember-user`-type `token` saved in DB.
+ * <br>If valid, logs user in, and returns `true`.
+ * <br>If invalid, clears the `remember_me` cookie, and returns `false`.
+ * <br>Only works for customers, not admins
+ * IMPORTANT: This is one-time use only. Use once before any output of HTML content.
+ */
+function verify_remember_me_cookie() {
+    if (!isset($_COOKIE['remember_me'])) {
+        // No remember_me cookie is set
+        return false;
+    }
+
+    // Get selector and validator (not hashed) from saved cookie
+    list($selector, $validator) = explode(':', $_COOKIE['remember_me']);
+    // var_dump($_COOKIE);
+    // var_dump($_COOKIE['remember_me']);
+    // var_dump($selector);
+    // var_dump($validator);
+
+    // Get remember-me token from DB with selector from cookie
+    global $_db;
+    $stmt = $_db->prepare("SELECT * FROM token WHERE `type` = 'remember-user' AND selector = :selector AND expire >= NOW()");
+    $stmt->execute(['selector' => $selector]);
+    $token = $stmt->fetch();
+    // echo '$token: ';
+    // var_dump($token);
+
+    if ($token && hash_equals($token->hashedValidator, hash('sha256', $validator))) {
+        // echo "token is valid!";
+
+        // Token is valid: Set userID session variable.
+        login($token->userID, 'user');
+
+        // Rotate token (for improved security)
+        $new_selector = bin2hex(random_bytes(6));
+        $new_validator = bin2hex(random_bytes(32));
+        $new_hashed = hash('sha256', $new_validator);
+        $new_expires = date('Y-m-d H:i:s', time() + 60 * 60 * 24 * 30);
+
+        // Store new one
+        $stmt = $_db->prepare("INSERT INTO token (userID, selector, hashedValidator, expire, `type`)
+                                        VALUES (:userID, :selector, :hashedValidator, :expire, 'remember-user')");
+        $stmt->execute([
+            'userID' => $token->userID,
+            'selector' => $new_selector,
+            'hashedValidator' => $new_hashed,
+            'expire' => $new_expires,
+        ]);
+
+        // Delete old one
+        $stmt = $_db->prepare("DELETE FROM token WHERE type = 'remember-user' AND selector = :selector");
+        $stmt->execute(['selector' => $selector]);
+
+        // var_dump($new_selector);
+        // var_dump($new_hashed);
+
+        // Set new cookie
+        setcookie(
+            'remember_me',
+            "$new_selector:$new_validator",
+            time() + 60 * 60 * 24 * 30,
+            '/',  // allows use of this cookie on the entire domain
+            '',
+            false,  // true is for HTTPS only, but this project uses HTTP
+            true  // HttpOnly: JS can't touch it
+        );
+
+        return true;
+    } else {
+        // echo "cookie invalid somehow :(";
+        // Invalid or tampered token. Clear it
+        setcookie('remember_me', '', time() - 3600, '/');
+        
+        return false;
+    }
 }
 
 /**
@@ -495,6 +586,9 @@ function is_logged_in($role, $adminLevel = null): bool {
 
     // Is logged in as customer?
     if ($role == "user" ) {
+        // if (isset($_COOKIE['remember_me'])) {
+        //     return verify_remember_me_cookie(); // If user has a valid `remember_me` cookie, this function will log user in, and return true. Else, this function clears the invalid cookie and returns false.
+        // }
         return isset($_SESSION['userID']);
     }
     // Is logged in as admin?
