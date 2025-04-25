@@ -3,7 +3,7 @@
 
 # Environment config
 .env
-
+sms.env
 # Logs
 /logs/
 /*.log

@@ -137,6 +137,7 @@ include '../../_head.php';
 
     </script>
 
+    <!-- output the racket informations -->
     <div class="detail">
       <div class="racketName"><?php echo $racketName ?></div>
       <div class="price"><?php echo "RM " ?>
