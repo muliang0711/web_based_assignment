@@ -33,7 +33,7 @@ DROP TABLE IF EXISTS `admin`;
 CREATE TABLE `admin` (
   `id` varchar(10) NOT NULL,
   `name` varchar(30) NOT NULL,
-  `department` varchar(2) NOT NULL,
+  `department` enum('SA','IT','IN','CS','PD','TS','FI') NOT NULL,
   `passwordHash` varchar(255) NOT NULL,
   `adminLevel` enum('main','staff') NOT NULL,
   `status` enum('Active','Blocked') NOT NULL
