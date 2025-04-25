@@ -74,7 +74,7 @@ if (is_post()) {
             ':username' => $username,
             ':email' => $email,
             ':passwordHash' => $passwordHash,
-            ':memberStatus' => 'Inactive',
+            ':memberStatus' => 'Active',
         ]);
 
         redirect('./user-login.php');

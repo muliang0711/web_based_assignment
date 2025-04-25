@@ -5,7 +5,7 @@ require '../../_base.php';
 if (is_post()) {
     $userID=req('userID');
     $stm = $_db->prepare('UPDATE user 
-    SET memberStatus="Inactive" 
+    SET memberStatus="Active" 
     WHERE userID = :userID
 ');
 $stm->execute([
