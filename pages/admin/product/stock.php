@@ -137,7 +137,7 @@ $totalPages = ceil($totalProducts / $productsPerPage);
                 </button>
 
                 <button class="btn sms  " style="background-color: #28a745; color: white; padding: 10px; border: none; border-radius: 5px;"
-                            onclick="window.location='/sendSMS.php' ">
+                            onclick="window.location='/pages/admin/product/sendSMS.php' ">
                     Send Sms
                 </button  >
                 <!-- QR Code Scanner -->
