@@ -79,7 +79,7 @@ padding: 1rem;">
                         <td class="content td">
                             <div class="action">
                                 <button class="action-btn-details" data-get="customer_detail.php?userID=<?= $c->userID ?>"><i class="fas fa-eye"></i></button>
-                                <?php if ($c->memberStatus=='Inactive'||$c->memberStatus=='Active'): ?>
+                                <?php if ($c->memberStatus=='Active'): ?>
                                 <button class="action-btn-delete" data-post="/pages/admin/blockCustomer.php?userID=<?= $c->userID ?>" data-confirm="Are you sure you want to block this user?"><i class="fas fa-ban"></i></button>
                                 <?php endif ?>
                                 <?php if ($c->memberStatus=='Blocked'): ?>

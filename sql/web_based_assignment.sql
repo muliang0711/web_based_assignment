@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 25, 2025 at 04:07 PM
+-- Generation Time: Apr 25, 2025 at 04:41 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -803,7 +803,7 @@ CREATE TABLE `user` (
   `gender` enum('F','M','R') NOT NULL DEFAULT 'R' COMMENT 'F: Female. \r\nM: Male.\r\nR: Rather not say',
   `profilePic` varchar(255) DEFAULT NULL,
   `bio` varchar(1000) DEFAULT NULL,
-  `memberStatus` enum('Active','Inactive','Blocked') NOT NULL COMMENT 'Inactive means not registered as a member (as in a customer who enjoys certain privileges).',
+  `memberStatus` enum('Active','Blocked') NOT NULL DEFAULT 'Active' COMMENT 'Active: regular registered user. Blocked: barred from admin from logging in.',
   `isDeleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT 'tinyint(1) is the same as boolean. 0 is false, 1 is true.'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -812,9 +812,12 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`userID`, `username`, `passwordHash`, `address`, `birthdate`, `email`, `emailVerified`, `phoneNo`, `gender`, `profilePic`, `bio`, `memberStatus`, `isDeleted`) VALUES
-(1, 'cookie', '$2y$10$y9w5iLGDpKgYyStjoM1.G.sWRoSTKVHIZ/Tk125N7CIVdBZ/iITuC', NULL, NULL, 'cookie@mail.com', 0, '012-3456789', 'R', NULL, 'I love cookies, as you may have already guessed', 'Inactive', 0),
-(2, 'icecream', '$2y$10$HN1VCP3xMBQkkD4fsxUMUe4Ri/ujjDaoJ9u1vZTdibF8yyXjfQ3LG', NULL, NULL, 'icecream@mail.com', 0, '012-9876543', 'R', NULL, 'I love ice cream!', 'Inactive', 0),
-(4, 'cookie2', '$2y$10$j3VTdYyGhsqKo8f0Fn1NMe1lt2Kr9fLKJLEW.AXALN6J6EVqCTpFy', NULL, NULL, 'jasonlhtown@gmail.com', 0, NULL, 'R', NULL, NULL, 'Inactive', 0);
+(1, 'cookie', '$2y$10$y9w5iLGDpKgYyStjoM1.G.sWRoSTKVHIZ/Tk125N7CIVdBZ/iITuC', NULL, NULL, 'cookie@mail.com', 0, '012-3456789', 'R', NULL, 'I love cookies, as you may have already guessed', 'Active', 1),
+(2, 'icecream', '$2y$10$HN1VCP3xMBQkkD4fsxUMUe4Ri/ujjDaoJ9u1vZTdibF8yyXjfQ3LG', NULL, NULL, 'icecream@mail.com', 0, '012-9876543', 'R', NULL, 'I love ice cream!', 'Active', 0),
+(4, 'cookie2', '$2y$10$j3VTdYyGhsqKo8f0Fn1NMe1lt2Kr9fLKJLEW.AXALN6J6EVqCTpFy', NULL, NULL, 'jasonlhtown@gmail.com', 0, NULL, 'R', NULL, NULL, 'Active', 0),
+(5, 'cookie', '$2y$10$8CTUED9iJRZu/B4rNLnVge75vzIivuBxiiOM2nNuV8LDQyO.SLrum', NULL, NULL, 'cookie@mail.com', 0, NULL, 'R', NULL, NULL, 'Active', 1),
+(6, 'cookie', '$2y$10$9NRvfqQwZ9276XmS1BYob.ZsLtRPZ8.2RAo4K.O8r2sWRGqJC0Nx6', NULL, NULL, 'cookie@mail.com', 0, NULL, 'R', NULL, NULL, 'Active', 0),
+(7, 'cookie3', '$2y$10$.zhdWmdm3mkXIwefOI.9IeHO1vrboeWbKDcYhob0lpwqAH6iluPaq', NULL, NULL, 'haha@mail.com', 0, NULL, 'R', NULL, NULL, 'Active', 0);
 
 -- --------------------------------------------------------
 
@@ -929,8 +932,6 @@ ALTER TABLE `token`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`userID`),
-  ADD UNIQUE KEY `email_unique` (`email`),
-  ADD UNIQUE KEY `username_unique` (`username`),
   ADD KEY `email` (`email`),
   ADD KEY `username` (`username`);
 
@@ -979,7 +980,7 @@ ALTER TABLE `token`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Constraints for dumped tables

@@ -23,7 +23,7 @@ if (is_post()) {
     else if (!is_valid_username($username, $tempErrorMsg)) {
         $_errors['username'] = $tempErrorMsg;
     }
-    else if (exists_in_db($username, 'user', 'username')) {
+    else if (!is_unique_excl_del($username, 'username')) {
         $_errors['username'] = 'Sorry! Username is taken.';
     }
 
@@ -34,7 +34,7 @@ if (is_post()) {
     else if (!is_email($email)) {
         $_errors['email'] = "Sorry, invalid email format";
     } 
-    else if (exists_in_db($email, 'user', 'email')) {
+    else if (!is_unique_excl_del($email, 'email')) {
         $_errors['email'] = "Looks like you've already signed up with this email. <a href='user-login.php' style='color:#306c80'>Click here to log in!</a>";
     }
 
@@ -74,10 +74,11 @@ if (is_post()) {
             ':username' => $username,
             ':email' => $email,
             ':passwordHash' => $passwordHash,
-            ':memberStatus' => 'Inactive',
+            ':memberStatus' => 'Active',
         ]);
 
-        redirect('./user-login.php');
+        temp('info', "You're signed up! Welcome to the family 🏸");
+        redirect('./user-login.php'); 
     }
 
 
