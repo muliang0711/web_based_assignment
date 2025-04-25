@@ -115,6 +115,20 @@ include 'profile_dynamic_navbar.php';
         <div role="alert" class="info-box error"><?= temp('error') ?></div>
     </section> -->
 
+    <?php if (!is_email_verified()): ?>
+    <section class="info-banner">
+        <h2 class="info-banner-heading">Verify your email</h2>
+        <div>We'll send a <b>verification link</b> straight to your mailbox, and all you have to do is click on the link. Simple as that.</div>
+        <button data-real-post="verify-email.php" class="btn-simple" style="background-color:#cb3816;color:white;margin-top:20px;">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <rect x="2" y="4" width="20" height="16" rx="2" />
+                <path d="M22 7L12 14L2 7" />
+            </svg>
+            Verify now
+        </button>
+    </section>
+    <?php endif ?>
+
     <h1 class="heading"><?= $current_title ?></h1>
     <div class="left-col"> <!-- .left-col is just a regular div as far as this page is concerned. It is originally used as a flex item of a two-column container. -->
         <!-- CHANGE PASSWORD -->

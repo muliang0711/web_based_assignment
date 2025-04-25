@@ -102,9 +102,15 @@ if (is_post()) {
         }
 
         // Validate email
-        if (!is_email($email)) {
+        if (!$email) {
+            $_errors['email'] = 'Required';
+        } 
+        else if (!is_email($email)) {
             $_errors['email'] = "Sorry, invalid email format";
         } 
+        else if (exists_in_db($email, 'user', 'email')) {
+            $_errors['email'] = "Duplicate email found! Another account has been created with this email.";
+        }
 
         if (!$_errors) {
             // Update db
@@ -137,10 +143,24 @@ include 'profile_dynamic_navbar.php';
 ?>
 
 <div class="main">
-    <section class="info-boxes">
+    <!-- <section class="info-boxes">
         <div role="alert" class="info-box success"><?= temp('info') ?></div>
         <div role="alert" class="info-box error"><?= temp('error') ?></div>
+    </section> -->
+
+    <?php if (!is_email_verified()): ?>
+    <section class="info-banner">
+        <h2 class="info-banner-heading">Verify your email</h2>
+        <div>We'll send a <b>verification link</b> straight to your mailbox, and all you have to do is click on the link. Simple as that.</div>
+        <button data-real-post="verify-email.php" class="btn-simple" style="background-color:#cb3816;color:white;margin-top:20px;">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <rect x="2" y="4" width="20" height="16" rx="2" />
+                <path d="M22 7L12 14L2 7" />
+            </svg>
+            Verify now
+        </button>
     </section>
+    <?php endif ?>
 
     <h1 class="heading"><?= $current_title ?></h1>
     <div class="section-container">

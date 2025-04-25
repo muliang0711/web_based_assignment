@@ -7,6 +7,10 @@ table{
     left:20%;
 }
 
+.cartRacket{
+    position: relative;
+}
+
 .tableHead th{
     background-color: rgb(246, 246, 246);
     font-size: 30px;
@@ -24,10 +28,16 @@ table{
     left: 10%;
 }
 
+.cartImage{
+    width: 70px;
+    height: auto;
+}
+
+
+
 .paymentBtn button{
     background: radial-gradient(circle 280px at 0% 0%, #5ce973, #018a38);
     border: none;
-    margin-top: 10px;
     font-size: 30px;
     padding: 20px;
     padding-left: 10px;
@@ -84,6 +94,5 @@ table{
     display: flex;
     flex-direction: row;
     padding: 20px;
-    margin-top: 15%;
     margin-left: 13%;
 }
