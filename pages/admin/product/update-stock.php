@@ -96,7 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <label>Current Stock</label>
         <input type="text" value="<?= htmlspecialchars($product['stock']) ?>" readonly>
-
+        
         <label>Restock Quantity</label>
         <input type="number" name="quantity" min="1" required>
 
@@ -109,4 +109,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </div>
 
 </body>
-</html>
+</html>  

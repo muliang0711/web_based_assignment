@@ -41,8 +41,9 @@
         if (!empty($_SESSION['EmailError'])) {
             echo "<div style='color: red;'>" . $_SESSION['EmailError'] . "</div>";
             unset($_SESSION['EmailError']);
-            
+
         }?>
+
 <form method="POST" action="/controller/stockManager.php">
     <input type="hidden" name="action" value="sendEmail">
     <h2>Compose Email</h2>
@@ -57,6 +58,9 @@
     <textarea name="message" id="message" rows="10" placeholder="Write your message here..." required></textarea>
 
     <button type="submit">Send</button>
+
+    <button style="color: white;  background-color:rgb(97, 114, 133); "
+    onclick="window.location='/pages/admin/product/stock.php'"> Back to Menu </button>
 </form>
 
 </body>
