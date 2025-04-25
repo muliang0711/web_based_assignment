@@ -60,6 +60,13 @@
 </head>
 
 <body>
+    <?php if (!empty($_SESSION['SMSSuccess'])): ?>
+    <div class="success-message"><?= $_SESSION['SMSSuccess']; unset($_SESSION['SMSSuccess']); ?></div>
+    <?php endif; ?>
+
+    <?php if (!empty($_SESSION['SMSError'])): ?>
+    <div class="error-message"><?= $_SESSION['SMSError']; unset($_SESSION['SMSError']); ?></div>
+    <?php endif; ?>
 
     <form class="sms-form" method="POST" action="/controller/stockManager.php">
         <h2>Send SMS</h2>

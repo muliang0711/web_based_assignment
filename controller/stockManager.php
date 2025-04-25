@@ -25,7 +25,8 @@ class ProductManager {
         $allowedActions = [
             'filter'        => 'filterProducts',
             'search'        => 'searchProduct',
-            'sendEmail'   => 'emailSubmit'
+            'sendEmail'     => 'emailSubmit',
+            'sendSMS'       => 'SMSSubmit'
         ];
 
         if (!array_key_exists($action, $allowedActions)) {
@@ -137,6 +138,32 @@ class ProductManager {
         }
     }
 
+    private function SMSSubmit()
+    {
+        $phone = $_POST['phone'] ?? '';
+        $message = $_POST['message'] ?? '';
+    
+        if (empty($phone) || empty($message)) {
+            $this->addErrorAndRedirect("Phone number and message are required.");
+            return;
+        }
+    
+        if (!preg_match('/^\+\d{9,15}$/', $phone)) {
+            $this->addErrorAndRedirect("Invalid phone number format. Example: +60123456789");
+            return;
+        }
+    
+        $success = $this->checkStock->sendSMS($phone, $message);
+
+        if ($success) {
+            $_SESSION['SMSSuccess'] = "SMS successfully sent to $phone.";
+        } else {
+            $_SESSION['SMSError'] = "Failed to send SMS. Please try again later.";
+        }
+    
+        // 5. Redirect back to admin dashboard or appropriate page
+        $this->redirectToAdmin();
+    }
     private function validation($productInformation)
     {
         $errors = [];
