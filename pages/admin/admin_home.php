@@ -57,10 +57,10 @@ try {
 }
 ?>
 
-<div class="title">Today Sales</div>
 <div class="main-content" style="  margin-left: var(--sidebar-width);
-  margin-top: 10px;
+  margin-top: var(--topbar-height);
   padding: 1rem;">
+    <div class="title">Today Sales</div>
     <table class="block">
         <tr>
             <th>Total Product</th>

@@ -19,7 +19,7 @@
       </button>
       <ul class="dropdown-menu">
         <li>
-          <a href="#"><i class="fas fa-user-cog"></i> Profile</a>
+          <a href="/pages/admin/admin_change_password.php"><i class="fas fa-user-cog"></i>Change password</a>
         </li>
         <li>
           <a href="/admin_logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
