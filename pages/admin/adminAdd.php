@@ -38,16 +38,9 @@ function random_id()
     return $randomId;
 }
 
-// handle random id and password generation
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['generate'])) {
-    $_SESSION['id'] = random_id();
-    $_SESSION['password'] = random_password();
-    header("Location: " . $_SERVER['PHP_SELF']); // 刷新页面，避免重复提交
-    exit();
-}
 
-$id = $_SESSION['id'] ?? 'click to generate';
-$password = $_SESSION['password'] ?? 'click to generate';
+
+
 
 $department = [
     'SA' => 'Sales Department',
@@ -60,74 +53,95 @@ $department = [
 ];
 
 
+
+
 // Handle POST request
 if (is_post()) {
-    // $id=req('id'); // no need this, because this won't be submitted by the form. `$id = $_SESSION['id']` already store the id value.
-    $name = req('name');
-    // $password=req('password'); // no need this, because this won't be submitted by the form. `$password = $_SESSION['password']` already store the password value.
-    $level = req('level');
-    $department = req('department');
-    // Validate id
-    if ($id == '' || $id == 'click to generate') {
-        $_errors['id'] = 'Required';
+    // handle random id and password generation
+    if (isset($_POST['generate'])) {
+        // $_SESSION['id'] = random_id();
+        // $_SESSION['password'] = random_password();
+        $id = random_id();
+        $password = random_password();
+        // header("Location: " . $_SERVER['PHP_SELF']); // 刷新页面，避免重复提交
+        // exit();
+    }
+    else {
+
+        // $id=req('id'); // no need this, because this won't be submitted by the form. `$id = $_SESSION['id']` already store the id value.
+        $name = req('name');
+        // $password=req('password'); // no need this, because this won't be submitted by the form. `$password = $_SESSION['password']` already store the password value.
+        $level = req('level');
+        $department = req('department');
+        $id = req('id');
+        $password = req('password');
+
+        // Validate id
+        if ($id == '' || $id == 'click to generate') {
+            $_errors['id'] = 'Required';
+        }
+    
+        // NOTE BY COOKIE: no need for this else block; it does the same thing as the else if block.
+        // else { 
+    
+        //     $stm = $_db->prepare("SELECT COUNT(*) FROM admin WHERE id = ?");
+        //     $stm->execute([$id]);
+    
+        //     if($stm->fetchColumn() > 0)
+        //     {
+        //         $_errors['id'] = 'Duplicated';
+        //     }
+        // }  
+    
+        // Validate name
+        if ($name == '') {
+            $_errors['name'] = 'Required';
+        } else if (strlen($name) > 20) {
+            $_errors['name'] = 'Maximum length 20';
+        }
+        if ($department == '') {
+            $_errors['department'] = 'Required';
+        } else if (strlen($department) > 2) {
+            $_errors['department'] = 'Error';
+        }
+    
+        // Validate password
+        if ($password == '' || $password == 'click to generate') {
+            $_errors['password'] = 'Required';
+        }
+    
+    
+    
+        // Validate level
+        if ($level == '') {
+            $_errors['level'] = 'Required';
+        }
+        // var_dump($_errors);
+        // var_dump($_POST);
+    
+        // If no error, insert data into db and reload page
+        if (!$_errors) {
+            // echo "helloooo\n";
+            
+            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+            $stm = $_db->prepare('INSERT INTO admin
+                                (id, name, department, passwordHash, adminLevel)
+                                VALUES(?, ?, ?, ?, ?)');
+            $stm->execute([$id, $name, $department, $hashed_password, $level]);
+    
+            // Destory id and password SESSION variables
+            // unset($_SESSION['id']);
+            // unset($_SESSION['password']);
+    
+            temp('info', 'User added successfully');
+            redirect("admin_Management.php");
+        }
     }
 
-    // NOTE BY COOKIE: no need for this else block; it does the same thing as the else if block.
-    // else { 
-
-    //     $stm = $_db->prepare("SELECT COUNT(*) FROM admin WHERE id = ?");
-    //     $stm->execute([$id]);
-
-    //     if($stm->fetchColumn() > 0)
-    //     {
-    //         $_errors['id'] = 'Duplicated';
-    //     }
-    // }  
-
-    // Validate name
-    if ($name == '') {
-        $_errors['name'] = 'Required';
-    } else if (strlen($name) > 20) {
-        $_errors['name'] = 'Maximum length 20';
-    }
-    if ($department == '') {
-        $_errors['department'] = 'Required';
-    } else if (strlen($department) > 2) {
-        $_errors['department'] = 'Error';
-    }
-
-    // Validate password
-    if ($password == '' || $password == 'click to generate') {
-        $_errors['password'] = 'Required';
-    }
-
-
-
-    // Validate level
-    if ($level == '') {
-        $_errors['level'] = 'Required';
-    }
-    // var_dump($_errors);
-    // var_dump($_POST);
-
-    // If no error, insert data into db and reload page
-    if (!$_errors) {
-        // echo "helloooo\n";
-        
-        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-        $stm = $_db->prepare('INSERT INTO admin
-                            (id, name, department, passwordHash, adminLevel)
-                            VALUES(?, ?, ?, ?, ?)');
-        $stm->execute([$id, $name, $department, $hashed_password, $level]);
-
-        // Destory id and password SESSION variables
-        unset($_SESSION['id']);
-        unset($_SESSION['password']);
-
-        temp('info', 'User added successfully');
-        redirect("admin_Management.php");
-    }
 }
+
+$id ??= 'click to generate';
+$password ??= 'click to generate';
 
 
 ?>
@@ -153,9 +167,13 @@ if (is_post()) {
         <?= error('level') ?>
 
         <!--  htmlspecialchars to prevent attack -->
-        <p>User ID: <?php echo htmlspecialchars($id); ?><?= error('id') ?></p>
+        <!-- <p>User ID: <?php echo htmlspecialchars($id); ?><?= error('id') ?></p> -->
+        <p>
+            User ID: <input type="hidden" name="id" value="<?= $id ?>"><?php echo htmlspecialchars($id); ?></input>
+            <?= error('id') ?>
+        </p>
 
-        <p>Password: <?php echo htmlspecialchars($password); ?><?= error('password') ?></p>
+        <p>Password: <input type="hidden" name="password" value="<?= $password ?>"><?php echo htmlspecialchars($password); ?></input><?= error('password') ?></p>
 
         <br>
         <form method="POST">
