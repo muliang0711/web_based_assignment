@@ -414,6 +414,14 @@ function exists_in_db($value, $table, $field) {
     return $select_stm->fetchColumn() > 0;
 }
 
+// Like is_unique() but specifically for `user` fields, and it *excludes deleted accounts* (`user` records with `isDeleted` = 1) from the uniqueness check.
+function is_unique_excl_del($value, $field) {
+    global $_db;
+    $select_stm = $_db->prepare("SELECT COUNT(*) FROM user WHERE $field = :value AND isDeleted = 0");
+    $select_stm->execute(['value' => $value]);
+    return $select_stm->fetchColumn() == 0;
+}
+
 // ============================================================================
 // Authentication functions
 // ============================================================================
