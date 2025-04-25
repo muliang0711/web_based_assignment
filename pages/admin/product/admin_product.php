@@ -50,12 +50,20 @@ unset($_SESSION['Delete_ErrorMsg']);
   <div class="filter-container">
 
     <!-- Search Section -->
-    <div class="search-section">
+    <div class="search-section" style="display: flex; justify-content: space-between; align-items: center; padding: 10px;">
+      <div>
       <form class="search-box" method="GET" action="/controller/productManager.php">
         <input type="hidden" name="action" value="search">
         <input type="text" name="searchText" placeholder="Search product..." required>
         <button type="submit">Search</button>
       </form>
+      </div>
+          <!-- Button Section -->
+    <div class="button-section" >
+      <a href="addProduct.php" class="action-btn-add" title="Add New Product">
+        <i class="fa-solid fa-plus"></i> Add Product
+      </a>
+    </div>
     </div>
 
     <!-- Filter Section -->
@@ -102,13 +110,7 @@ unset($_SESSION['Delete_ErrorMsg']);
       </form>
     </div>
 
-    <!-- Button Section -->
-    <div class="button-section">
-      <a href="addProduct.php" class="action-btn-add" title="Add New Product">
-        <i class="fa-solid fa-plus"></i> Add Product
-      </a>
-            
-    </div>
+
 
   </div>
 
@@ -238,15 +240,38 @@ unset($_SESSION['Delete_ErrorMsg']);
 
   </div>
   <div class="pagination" style="text-align: center; margin-top: 1rem;">
+    <?php 
+    $num_links = 5;
+    $first_link = max(1, min($totalPages - $num_links + 1, $page - 2)); // x = $this->page - 2, 1 <= x <= $this->page_count - $num_links + 1
+    if ($totalPages < $num_links) {
+        $last_link = $totalPages;
+    }
+    else {
+        $last_link  = max($num_links, min($totalPages, $page + 2));         // y = $this->page + 2, $num_links <= y <= $this->page_count
+    }
+
+    // for ($p = $first_link; $p <= $last_link; $p++) {
+    //     $c = $p == $this->page ? 'active' : '';
+    //     echo "<a href='?page=$p&$href' class='$c'>$p</a>";
+    // }
+    ?>
     <?php if ($page > 1): ?>
       <a href="?page=<?php echo $page - 1; ?>">&laquo; Prev</a>
     <?php endif; ?>
 
-    <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+    <!-- <?php //for ($i = 1; $i <= $totalPages; $i++): ?>
+      <a href="?page=<?php //echo $i; ?>" style="margin: 0 4px; <?php //if ($i == $page) echo 'font-weight: bold;'; ?>">
+        <?php //echo $i; ?>
+      </a>
+    <?php //endfor; ?> -->
+
+    <?php for ($i = $first_link; $i <= $last_link; $i++): ?>
       <a href="?page=<?php echo $i; ?>" style="margin: 0 4px; <?php if ($i == $page) echo 'font-weight: bold;'; ?>">
-        <?php echo $i; ?>
+      <?php echo $i; ?>
       </a>
     <?php endfor; ?>
+
+    
 
     <?php if ($page < $totalPages): ?>
       <a href="?page=<?php echo $page + 1; ?>">Next &raquo;</a>

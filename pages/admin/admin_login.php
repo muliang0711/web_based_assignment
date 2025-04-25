@@ -65,6 +65,11 @@ $stylesheetArray = ['../user/user.css','/css/admin_login.css', '/css/password.cs
 
 
 <body>
+    <div id="info">
+        <div id="progress-bar"></div>
+        <span id="info-text"><?= temp('info') ?></span>
+    </div>
+
     <div class="container">
     <h2 class="store-name">Admin Login</h2>
     <h1 class="welcome">Welcome</h1>

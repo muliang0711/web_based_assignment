@@ -29,7 +29,7 @@ if (is_post()) {
 
         // (3) Delete old and insert new token
         $stm = $_db->prepare('
-            DELETE FROM token WHERE userID = :userID;
+            DELETE FROM token WHERE userID = :userID AND type = "change-password";
 
             INSERT INTO token (id, type, expire, userID)
             VALUES (:tokenID, "change-password", ADDTIME(NOW(), "00:05"), :userID);
@@ -53,7 +53,7 @@ if (is_post()) {
         $m->Body = get_reset_pw_email_body($u->username, $u->email, $home_url, $reset_pw_url);
         $m->send();
 
-        temp('info', 'Email sent. Please check your inbox (and spam).');
+        temp('info', 'Email sent. Please check your inbox (and spam too).');
         redirect('/');
     }
 }

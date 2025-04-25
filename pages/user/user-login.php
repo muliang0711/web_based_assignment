@@ -40,11 +40,13 @@ if (is_post()) {
         $_errors['password'] = 'Required';
     }
 
-    $stm = $_db->prepare('SELECT * FROM user WHERE username = :username');
-    $stm->execute([
-        ':username' => $username,
-    ]);
-    $u = $stm->fetch();
+    // var_dump($password);
+
+    // $stm = $_db->prepare('SELECT * FROM user WHERE username = :username');
+    // $stm->execute([
+    //     ':username' => $username,
+    // ]);
+    // $u = $stm->fetch();
 
     // If inputs are valid, authenticate user
     if (!$_errors) {
@@ -53,6 +55,7 @@ if (is_post()) {
             ':username' => $username,
         ]);
         $u = $stm->fetch();
+        // var_dump($u);
 
         // If username exists, and password is correct
         if ($u && pwMatch($password, $u->passwordHash)) {

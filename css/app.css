@@ -21,8 +21,8 @@
     --color-error-text: rgb(171, 0, 0); 
     --color-error-border: rgb(71, 0, 0); 
     --color-warning-background: rgb(237, 238, 205); 
-    --color-warning-text: rgb(128, 64, 0); 
-    --color-warning-border: rgb(97, 48, 0); 
+    --color-warning-text: rgb(96, 48, 0); 
+    --color-warning-border: rgb(235, 192, 149); 
 
     --green: rgb(27, 140, 27);
     --red: rgb(211, 1, 1);
@@ -489,16 +489,33 @@ footer a:hover {
 ***************************************************************/
 
 .btn-simple {
-    padding: 10px;
+    padding: 10px 15px;
     border-radius: 6px;
     border: none;
     font-family: inherit;
     font-size: inherit;
     line-height: 1em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #cb3816;
+    color: white;
+    margin-top: 20px;
 }
 .btn-simple:hover {
     opacity: 0.8;
     cursor: pointer;
+}
+
+/* Icon inside button beside text */
+.btn-simple svg {
+    width: 18px;
+    height: 18px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
 }
 
 .btn-green {

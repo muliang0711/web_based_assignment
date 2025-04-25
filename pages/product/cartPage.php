@@ -144,20 +144,28 @@ include '../../_head.php';
             <div class="tableHead">
                 <table>
                     <tr>
+                        <th></th>
                         <th>Racket Name</th>
                         <th>Grip Size</th>
                         <th>Quantity</th>
                         <th>Total Price</th>
                     </tr>
                     <?php foreach ($cartItemArray as $cartObject): ?>
+                        <?php $cstm = $_db->prepare('SELECT image_path 
+                                               FROM product_images 
+                                               WHERE productID = ? 
+                                               AND image_type = "product"');
+                        $cstm->execute([$cartObject->productID]);
+                        $picture = $cstm->fetch(); ?>
                         <?php $price = $cartObject->price * $cartObject->quantity ?>
                         <tr>
+                            <td> <img class = "cartImage" src="../../../File/<?php echo  $picture->image_path; ?>" ></td>
                             <td> <?php echo $cartObject->productName ?> </td>
                             <td> <?php echo $cartObject->sizeID ?> </td>
                             <td> <?php echo $cartObject->quantity ?> </td>
                             <td>RM <?php echo $price ?>.00</td>
-                            <!-- Minus button -->
                             <td>
+                             <!-- Minus button -->
                                 <form method="POST">
                                     <input type="hidden" name="actionGroup" value="cart" />
                                     <input type="hidden" name="action" value="minus" />
@@ -208,9 +216,9 @@ include '../../_head.php';
             //     $cartItem = $statement->fetchAll();
             // }
             ?>
-            </div>
+    </div>
 
-            <?php
+    <?php
             $overproduct = null;
             foreach ($cartItemArray as $cart) {
                 $product = $cart->productID;
@@ -224,27 +232,27 @@ include '../../_head.php';
                     $overproduct = $cart->productName;
                 }
             }
-            ?>
-            <div class="bottom-container">
-            <div class="sum">
-                <p>Total Item(s): <?php echo $totalItem ?></p>
-                <p>Total Amount: RM <?php echo $totalAmount ?> .00</p>
-            </div>
-            <?php if (!$overproduct): ?>
-                <a onclick="onclick()" class="paymentBtn">
-                    <button onclick="location='/pages/checkout/checkout.php?' ">Proceed to Payment </button>
-                </a>
-            <?php else: ?>
-                <div class="errorButton">
-                    <p><?php echo $overproduct ?> is out of current stock limit. Please decrease the quantity from the cart to procced to payment. Thank you.</p>
-                </div>
-            <?php endif ?>
+    ?>
+    <div class="bottom-container">
+        <div class="sum">
+            <p>Total Item(s): <?php echo $totalItem ?></p>
+            <p>Total Amount: RM <?php echo $totalAmount ?> .00</p>
+        </div>
+        <?php if (!$overproduct): ?>
+            <a onclick="onclick()" class="paymentBtn">
+                <button onclick="location='/pages/checkout/checkout.php?' ">Proceed to Payment </button>
+            </a>
         <?php else: ?>
-
-            <p>Your cart is empty.</p>
-
-        <?php endif ?>
+            <div class="errorButton">
+                <p><?php echo $overproduct ?> is out of current stock limit. Please decrease the quantity from the cart to procced to payment. Thank you.</p>
             </div>
+        <?php endif ?>
+    <?php else: ?>
+
+        <p>Your cart is empty.</p>
+
+    <?php endif ?>
+    </div>
 
 </body>
 <?php
