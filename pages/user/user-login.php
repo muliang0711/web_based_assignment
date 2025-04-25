@@ -23,6 +23,7 @@ if (is_post()) {
 
     $username = post('username');
     $password = post('password');
+    $remember = post('remember-me');
 
     // Validate username
     if (!$username) {
@@ -32,9 +33,7 @@ if (is_post()) {
     // Validate email
     // if (!is_email($email)) {
     //     $_errors['email'] = "Sorry, invalid email format";
-    // } 
-
-    
+    // }     
 
     if (!$password) {
         $_errors['password'] = 'Required';
@@ -64,9 +63,46 @@ if (is_post()) {
                 redirect("userRequestUnblock.php?userID={$u->userID}"); // TODO
             }
 
+            // Is "Remember me" checked?
+            if ($remember) {
+                // echo "remembered";
+
+                // Generate a secure selector and validator
+                $selector = bin2hex(random_bytes(6)); // public part (for DB lookup)
+                $validator = bin2hex(random_bytes(32)); // secret part
+                $hashedValidator = hash('sha256', $validator);
+                $expire = date('Y-m-d H:i:s', time() + 60 * 60 * 24 * 30); // token expires after 30 days
+
+                // Store `remember-user` token in DB
+                $stmt = $_db->prepare("INSERT INTO token (userID, selector, hashedValidator, expire, `type`)
+                                    VALUES (:userID, :selector, :hashedValidator, :expire, 'remember-user')");
+                $stmt->execute([
+                    'userID' => $u->userID,
+                    'selector' => $selector,
+                    'hashedValidator' => $hashedValidator,
+                    'expire' => $expire,
+                ]);
+
+                // Set cookie: selector + validator (not hashed)   -> store in browser
+                setcookie(
+                    'remember_me',
+                    "$selector:$validator",
+                    time() + 60 * 60 * 24 * 30,
+                    '/',  // allows use of this cookie on the entire domain
+                    '',
+                    false,  // true is for HTTPS only, but this project uses HTTP
+                    true   // HttpOnly: JS can't touch it
+                );
+            }
+
+            // var_dump($_COOKIE);
+            // var_dump($_COOKIE['remember_me']);
+
             login($u->userID, "user");
+
+            // redirect('/pages/template/blank.php');
             
-            // temp('info', "Logged in as $u->username");
+            temp('info', "Logged in as $u->username");
             
             // If user was redirected here from a "boomerang" page 
             // user will redirected back to that page upon successful login.
@@ -123,7 +159,7 @@ include '../../_head.php';
         </div>
 
         <div class="form-item">
-            <input type="checkbox" name="remember-me" value="yes" id="remember-me" />
+            <input type="checkbox" name="remember-me" id="remember-me" />
             <label for="remember-me">Remember me</label>
         </div>
 
