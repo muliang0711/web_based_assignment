@@ -1,9 +1,9 @@
 <?php
 $paths = [
     'profile.php' => 'Public profile',
-    'personal.php' => 'Personal details',
+    // 'personal.php' => 'Personal details',
     'account.php' => 'Account settings',
-    'privacy.php' => 'Privacy settings',
+    // 'privacy.php' => 'Privacy settings',
     'address.php' => 'Saved address',
     'editaddress.php' => 'Edit address'
 ];
