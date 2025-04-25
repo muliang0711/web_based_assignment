@@ -182,9 +182,8 @@ $totalPages = ceil($totalProducts / $productsPerPage);
                                     <td class="td">RM<?= number_format($product->price, 2) ?></td>
                                     <td class="td"><?= htmlspecialchars($product->stock ?? '0') ?></td>
                                     <td class="td">
-                                        <a href="productDetails.php?productID=<?php echo $product->productID; ?>&sizeID=<?php echo $product->sizeID; ?>" class="action-btn-details">
-                                            <i class="fas fa-eye"></i>
-                                        </a>
+                                        <a href="change_low_stock_alert.php?productID=<?php echo $product->productID; ?>&sizeID=<?php echo $product->sizeID; ?>" class="action-btn-details">
+                                        <i class="fas fa-eye"></i>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
