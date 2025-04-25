@@ -1,5 +1,8 @@
 <?php
 // 1. Start session to use session variables
+
+use Stripe\Terminal\Location;
+
 session_start();
 
 // 2. Include required files
@@ -140,8 +143,8 @@ class ProductManager {
 
     private function SMSSubmit()
     {
-        $phone = $_POST['phone'] ?? '';
-        $message = $_POST['message'] ?? '';
+        $phone      = $_POST['phone'] ?? '';
+        $message    = $_POST['message'] ?? '';
     
         if (empty($phone) || empty($message)) {
             $this->addErrorAndRedirect("Phone number and message are required.");
@@ -162,73 +165,10 @@ class ProductManager {
         }
     
         // 5. Redirect back to admin dashboard or appropriate page
-        $this->redirectToAdmin();
+        header("Location : ../pages/admin/product/sendSMS.php");
+        exit();
     }
-    private function validation($productInformation)
-    {
-        $errors = [];
 
-        // Validate productId
-        if (empty($productInformation['productId'])) {
-            $errors[] = "Product ID cannot be null!";
-        } elseif (strlen($productInformation['productId']) > 5) {
-            $errors[] = "Product ID cannot exceed 5 characters.";
-        }
-
-        // Validate productName
-        if (empty($productInformation['productName'])) {
-            $errors[] = "Product name cannot be null!";
-        } elseif (strlen($productInformation['productName']) > 100) {
-            $errors[] = "Product name cannot exceed 100 characters.";
-        }
-
-        // Validate seriesId
-        if (empty($productInformation['seriesId'])) {
-            $errors[] = "Series ID cannot be null!";
-        } elseif (strlen($productInformation['seriesId']) > 3) {
-            $errors[] = "Series ID cannot exceed 3 characters.";
-        }
-
-        // Validate seriesName
-        if (empty($productInformation['seriesName'])) {
-            $errors[] = "Series Name cannot be null!";
-        } elseif (strlen($productInformation['seriesName']) > 15) {
-            $errors[] = "Series Name cannot exceed 15 characters.";
-        }
-
-        // Validate price
-        if ($productInformation['price'] === '' || $productInformation['price'] === null) {
-            $errors[] = "Price must have a value!";
-        } elseif (!is_numeric($productInformation['price']) || (float)$productInformation['price'] < 0) {
-            $errors[] = "Price must be a non-negative number!";
-        }
-
-        // Validate stock
-        if ($productInformation['stock'] === '' || $productInformation['stock'] === null) {
-            $errors[] = "Stock must have a value!";
-        } elseif (!is_numeric($productInformation['stock']) || (int)$productInformation['stock'] < 0) {
-            $errors[] = "Stock must be a non-negative integer!";
-        }
-
-        // Validate sizeId
-        if (empty($productInformation['sizeId'])) {
-            $errors[] = "Size ID cannot be null!";
-        } elseif (strlen($productInformation['sizeId']) > 4) {
-            $errors[] = "Size ID cannot exceed 4 characters.";
-        }
-
-        // Optional: Validate introduction length
-        if (!empty($productInformation['introduction']) && strlen($productInformation['introduction']) > 2000) {
-            $errors[] = "Introduction cannot exceed 2000 characters.";
-        }
-
-        // Optional: Validate playerInfo length
-        if (!empty($productInformation['playerInfo']) && strlen($productInformation['playerInfo']) > 2000) {
-            $errors[] = "Player Info cannot exceed 2000 characters.";
-        }
-
-        return $errors;
-    }
     private function addErrorAndRedirect($msg)
     {
         $_SESSION['errors'] = [$msg];
@@ -237,7 +177,7 @@ class ProductManager {
     
     private function redirectToAdmin()
     {
-        header('Location: ../pages/admin/product/emailForm.php');
+        header('Location: ../pages/admin/product/stock.php');
         exit();
     }
 }

@@ -60,6 +60,7 @@
 </head>
 
 <body>
+
     <?php if (!empty($_SESSION['SMSSuccess'])): ?>
     <div class="success-message"><?= $_SESSION['SMSSuccess']; unset($_SESSION['SMSSuccess']); ?></div>
     <?php endif; ?>
@@ -70,7 +71,7 @@
 
     <form class="sms-form" method="POST" action="/controller/stockManager.php">
         <h2>Send SMS</h2>
-
+        <input type="hidden" name="action" value="sendSMS">
         <label for="phone">Phone Number</label>
         <input type="text" name="phone" id="phone" placeholder="e.g. +60123456789" required>
 

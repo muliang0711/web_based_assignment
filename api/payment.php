@@ -99,7 +99,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     else if($payment == "Banking"){
         $billplz = "https://www.billplz-sandbox.com/api/v3/bills";
         $collectionId = "0inp33zt";
-        $apikey = "d56323c3-e5cd-46aa-83ab-88eae4cbcc1c";
+        $apikey = "d56323c3-e5cd-46aa-83ab-88eae4cbcc1c";                       
 
         $data = [
             'collection_id'      => $collectionId,

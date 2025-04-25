@@ -5,6 +5,10 @@ require __DIR__ . "/../vendor/autoload.php"; // Composer autoload
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
+use Vonage\Client;
+use Vonage\Client\Credentials\Basic;
+use Vonage\SMS\Message\SMS;
+
 class CheckStock {
     private $pdo;
 
@@ -76,9 +80,35 @@ class CheckStock {
         }
     }
 
-    // 1. send sms ; 
-    private function sendSMS(){
-        return ; 
+
+    public function sendSMS($toPhone, $textMessage)
+    {
+        // Load env variables if not already loaded
+        if (!isset($_ENV['VONAGE_KEY'])) {
+            require_once __DIR__ . '/../config/bootstrap.php';
+        }
+
+        $key    = $_ENV['VONAGE_KEY'];
+        $secret = $_ENV['VONAGE_SECRET'];
+
+        try {
+            $basic = new Basic($key, $secret);
+            $client = new Client($basic);
+
+            $response = $client->sms()->send(
+                new SMS($toPhone, "VonageSMS", $textMessage)
+            );
+
+            $message = $response->current();
+
+            if ($message->getStatus() == 0) {
+                return ['success' => true];
+            } else {
+                return ['success' => false, 'error' => "Status: " . $message->getStatus()];
+            }
+        } catch (Exception $e) {
+            return ['success' => false, 'error' => $e->getMessage()];
+        }
     }
     
     public function check_low_stock() {
@@ -266,6 +296,7 @@ class CheckStock {
         }
     }
     
+
     public function search($searchText)
     {
         try {
