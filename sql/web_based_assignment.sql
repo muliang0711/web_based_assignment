@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 24, 2025 at 05:09 PM
+-- Generation Time: Apr 25, 2025 at 04:07 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -291,7 +291,7 @@ INSERT INTO `productstock` (`productID`, `sizeID`, `stock`, `status`, `low_stock
 ('R0001', '4UG5', 1, 'onsales', 5, 1, '9e22411d04b7c9b04584a1339265e142'),
 ('R0002', '3UG5', 5, 'onsales', 5, 1, NULL),
 ('R0002', '4UG5', 6, 'onsales', 5, 0, NULL),
-('R0003', '3UG5', 2, 'onsales', 5, 1, NULL),
+('R0003', '3UG5', 2, 'onsales', 5, 1, 'f76d3e735389999bf414f1ca64b081bd'),
 ('R0003', '4UG5', 3, 'onsales', 5, 1, NULL),
 ('R0004', '3UG5', 4, 'onsales', 5, 1, NULL),
 ('R0004', '4UG5', 5, 'onsales', 5, 1, NULL),
@@ -776,8 +776,10 @@ INSERT INTO `series` (`seriesID`, `seriesName`) VALUES
 
 DROP TABLE IF EXISTS `token`;
 CREATE TABLE `token` (
-  `id` varchar(100) NOT NULL,
-  `type` enum('verify-email','change-password') NOT NULL,
+  `id` int(11) NOT NULL,
+  `type` enum('verify-email','change-password','remember-user') NOT NULL,
+  `selector` char(12) DEFAULT NULL COMMENT 'for remember-user tokens',
+  `hashedValidator` char(64) DEFAULT NULL COMMENT 'for remember-user tokens. Hashed with SHA256\r\n',
   `expire` datetime NOT NULL,
   `userID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -966,6 +968,12 @@ ALTER TABLE `restock_history`
 --
 ALTER TABLE `savedaddress`
   MODIFY `addressIndex` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `token`
+--
+ALTER TABLE `token`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `user`
