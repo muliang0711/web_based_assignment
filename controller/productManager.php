@@ -359,7 +359,7 @@ class ProductController
                 continue;
             }
 
-            $newFileName = "{$type}_{$productId}_" . time() . "." . $fileExt;
+            $newFileName = "{$type}_{$productId}_" . time() . "{$i}" ."." . $fileExt;
             $targetPath = $uploadDir . '/' . $newFileName;
 
             if (!move_uploaded_file($fileTmpPath, $targetPath)) {
