@@ -71,7 +71,7 @@ if (is_post()) {
             <a href="/">Home</a>
             <a href="/pages/product/productlist.php">Shop</a>
             <a href="/pages/About/about.php">About us</a>
-            <a href="/contact.php">Contact</a>
+            <!-- <a href="/contact.php">Contact</a> -->
 
             <?php if (is_logged_in("user")): ?>
 

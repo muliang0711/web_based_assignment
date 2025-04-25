@@ -62,22 +62,22 @@ if (is_post()) {
         }
     
         if (!$_errors) {
-            try {
-                $passwordHash = pwHash($newPassword);
-        
-                $stm = $_db->prepare("UPDATE user SET passwordHash = :passwordHash WHERE userID = :userID");
-                $stm->execute([
-                    ':passwordHash' => $passwordHash,
-                    ':userID' => $_user->userID,
-                ]);
-        
-                temp('info', 'Password successfully changed.');
-                redirect();
+            // try {
+            $passwordHash = pwHash($newPassword);
+    
+            $stm = $_db->prepare("UPDATE user SET passwordHash = :passwordHash WHERE userID = :userID");
+            $stm->execute([
+                ':passwordHash' => $passwordHash,
+                ':userID' => $_user->userID,
+            ]);
+    
+            temp('info', 'Password successfully changed.');
+            redirect();
 
-            } catch (PDOException $e) {
-                temp('error', 'Sorry, there was a technical issue. Please <a href="/contact.php">contact</a> the admin.');
-                redirect();
-            }
+            // } catch (PDOException $e) {
+            //     temp('error', 'Sorry, there was a technical issue. Please <a href="/contact.php">contact</a> the admin.');
+            //     redirect();
+            // }
         }
     
     
