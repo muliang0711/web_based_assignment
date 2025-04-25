@@ -97,8 +97,14 @@ if (is_post()) {
 
         // Validate username
         $tempErrorMsg = ''; // temporary variable for storing the error message (cannot directly pass $_errors['username'] as reference because it doesn't exist yet)
-        if (!is_valid_username($username, $tempErrorMsg)) {
+        if (!$username) {
+            $_errors['username'] = 'Ha, nice try, but nope &mdash; you can\'t empty out your username!';
+        }
+        else if (!is_valid_username($username, $tempErrorMsg)) {
             $_errors['username'] = $tempErrorMsg;
+        }
+        else if (!is_unique_excl_del($username, 'username') && $username != $_user->username) {
+            $_errors['username'] = 'Sorry! Username is taken.';
         }
 
         // Validate email
@@ -108,8 +114,13 @@ if (is_post()) {
         else if (!is_email($email)) {
             $_errors['email'] = "Sorry, invalid email format";
         } 
-        else if (exists_in_db($email, 'user', 'email')) {
+        else if (!is_unique_excl_del($email, 'email') && $email != $_user->email) {
             $_errors['email'] = "Duplicate email found! Another account has been created with this email.";
+        }
+
+        // Validate bio
+        if (strlen($bio) > 160) {
+            $_errors['bio'] = "Sorry, that's too long! We do appreciate your eagerness though 🫶";
         }
 
         if (!$_errors) {
@@ -170,19 +181,46 @@ include 'profile_dynamic_navbar.php';
                 <div class="form-group">
                     <label class="label">Username</label>
                     <?= input_text('username') ?>
+                    <br/>
                     <?= error('username'); ?>
                 </div>
 
                 <div class="form-group">
                     <label class="label">Email</label>
                     <?= input_text('email') ?>
+                    <br/>
                     <?= error('email'); ?>
                 </div>
 
                 <div class="form-group">
                     <label class="label">Bio</label>
                     <?= html_textarea('bio', 'placeholder="Tell us something interesting about yourself"') ?>
+                    <div id="charCount" style="text-align:right;padding:5px 10px;color:#888;"><span>0</span> / <span>0</span></div>
+                    <br/>
+                    <?= error('bio'); ?>
                 </div>
+
+                <script>
+                    $('textarea#bio ~ #charCount').css('display', 'none');
+
+                    // Update charsLeft and maxChars on input
+                    $('textarea#bio').on('input', e => {
+                        $('textarea#bio ~ #charCount').css('display', 'block');
+                        const length = e.target.value.length;
+                        const maxChars = 160;
+                        const charsLeft = maxChars - length;
+
+                        const spanCharsLeft = $(e.target).siblings('#charCount').children('span')[0];
+                        const spanMaxChars = $(e.target).siblings('#charCount').children('span')[1];
+                        
+                        spanCharsLeft.innerHTML = charsLeft;
+                        spanMaxChars.innerHTML = maxChars;
+
+                        if (charsLeft < 20) {
+                            spanCharsLeft.style.color = '#ca1f1f';
+                        }
+                    });
+                </script>
 
                 <div class="form-group gender">
                     <label class="label">Gender</label>
