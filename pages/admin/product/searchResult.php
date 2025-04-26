@@ -1,7 +1,7 @@
 <?php
 require_once "../../../_base.php";   
 require_once "../../../controller/productManager.php";
-include '../../admin_login_guard.php';
+include __DIR__ . "/../../../admin_login_guard.php";
 $stylesheetArray = ['../../../css/main.css'];
 link_stylesheet($stylesheetArray);
 

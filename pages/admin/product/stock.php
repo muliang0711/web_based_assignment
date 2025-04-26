@@ -79,7 +79,18 @@ $totalPages = ceil($totalProducts / $productsPerPage);
                     <button type="submit">Search</button>
                 </form>
             </div>
+            <?php 
 
+if (!empty($_SESSION['EmailSuccess'])) {
+    echo "<div style='color: green;'>" . $_SESSION['EmailSuccess'] . "</div>";
+    unset($_SESSION['EmailSuccess']);
+}
+
+if (!empty($_SESSION['EmailError'])) {
+    echo "<div style='color: red;'>" . $_SESSION['EmailError'] . "</div>";
+    unset($_SESSION['EmailError']);
+
+}?>
             <!-- Filter Section -->
             <div class="filter-section">
                 <form class="filter-form" method="POST" action="/controller/stockManager.php">
