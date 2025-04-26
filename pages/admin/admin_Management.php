@@ -52,7 +52,7 @@ $resultA = $stmA->fetch();
     <div class="searchBar" style="display:flex;">
         <!-- <div> -->
             <div>
-    <form class="search-box" method="get">
+<form class="search-box" method="get">
 
     <?= html_search('name', 'Search admin name...', 'padding: 6px; border-radius: 4px; border: 1px solid #ccc; width: 300px;') ?>
 
@@ -60,7 +60,16 @@ $resultA = $stmA->fetch();
       <!-- <input type="text" name="searchText" placeholder="Search..." required> -->
 
       
-      <button type="submit">Search</button>
+      <button onclick="playSound()" type="submit">Search</button>
+      <audio id="clickSound" src="../../sound/click.mp3"></audio>
+
+    <script>
+    function playSound() {
+        const audio = document.getElementById("clickSound");
+        audio.currentTime = 0; // 每次点击从头播放
+        audio.play();
+  }
+</script>
     </form>
     
 </div>
