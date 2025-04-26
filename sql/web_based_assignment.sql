@@ -438,6 +438,7 @@ INSERT INTO `product` (`productID`, `productName`, `price`, `seriesID`, `introdu
 --
 -- Table structure for table `productstock`
 --
+--
 
 DROP TABLE IF EXISTS `productstock`;
 CREATE TABLE `productstock` (

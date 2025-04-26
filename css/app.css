@@ -728,3 +728,43 @@ span.error br {
     }
 
 }   
+
+/***************************************************************
+        *************Home Page Categories *****************
+***************************************************************/
+.categories{
+    display: flex;
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    justify-content: space-evenly;
+    font-size: 20px;
+}
+
+.cateOne, .cateThree, .cateFive{
+    background-color: black;
+    color: white;
+    width: 15%;
+    text-align: center;
+    height: 75px;
+    box-shadow: 0 0 10px rgb(0, 0, 0);
+    border: none;
+    padding-top: 22px;
+}
+
+.cateTwo, .cateFour{
+    background-color: #888;
+    color: white;
+    text-align: center;
+    width: 15%;
+    height: 75px;
+    box-shadow: 0 0 10px rgb(0, 0, 0);
+    border: none;
+    padding-top: 22px;
+}
+
+.cateOne:hover,.cateTwo:hover, .cateThree:hover, .cateFour:hover, .cateFive:hover{
+    background-color: white;
+    color: black;
+}
+

@@ -17,19 +17,30 @@
 
     if(is_get() && isset($_GET["id"])){
         $orderId = $_GET["id"];
+        $stm = $_db->prepare("
+                Select * from orders where orderId = ? and userId = ?
+                ");
+        $stm->execute([$orderId, $userId]);
+        $orders = $stm->fetchAll();
+        if(count($orders)<1){
+            redirect("/pages/order/order.php");
+        }
     }
     else{
-        if(is_post() &&  isset($_POST["reason"])){
+        if(is_post() &&  isset($_POST["reason"]) && isset($_GET["id"])){
             $reason = $_POST["reason"];
+            $orderId = $_GET["id"];
             try{
                 $stm = $_db->prepare("
-                UPDATE `order`
-                SET status = 'Canceled'
-                WHERE 
+                UPDATE `orders`
+                SET status = 'Canceled', cancel_reason = ?
+                WHERE orderId = ? AND userId = ?
                 ");
+                $stm->execute([$reasons[$reason], $orderId, $userId]);
+                temp('info',"Order Canceled!");
             }
             catch (Exception $e){
-                
+                ; // probably order not found
             }
             finally {
                 redirect("/pages/order/order.php");
