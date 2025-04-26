@@ -2,7 +2,7 @@
     "require": {
         "phpmailer/phpmailer": "^6.9",
         "endroid/qr-code": "^4.8",
-        "stripe/stripe-php": "^16.6",
+        "stripe/stripe-php": "^17.1",
         "vonage/client": "^4.0",
         "vlucas/phpdotenv": "^5.6"
     }
