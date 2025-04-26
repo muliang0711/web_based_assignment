@@ -200,6 +200,7 @@ include 'profile_dynamic_navbar.php';
                     <?= error('bio'); ?>
                 </div>
 
+                <!-- JS for calculating and showing character count and limit for bio -->
                 <script>
                     $('textarea#bio ~ #charCount').css('display', 'none');
 
