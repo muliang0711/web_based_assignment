@@ -143,6 +143,12 @@
 <script>
 
     $("#paymentbutton").on('click', function(e){
+        try{
+            const response =  fetch('/api/checkStock.php');
+            const data =  response.json();
+        }catch (error) {
+            window.location.href = "/pages/product/cartPage.php";
+          }
         let payMethod = $(".selected[data-method]")[0].dataset.method;
         let addressSelect = $(".card.selected");
         if(addressSelect.length==0){
