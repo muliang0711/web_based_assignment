@@ -1,7 +1,7 @@
 <?php
 // 1. Set header to tell the client we will send back JSON
 header('Content-Type: application/json');
-
+require __DIR__ . "/../db_connection.php";
 // 2. Start session and extract user data
 session_start();
 global $_user;
