@@ -220,5 +220,10 @@ $(() => {
     });
 
     
-    
+    function playSound() {
+        const audio = document.getElementById("clickSound");
+        audio.currentTime = 0; // 每次点击从头播放
+        audio.play();
+  }
+
 });

@@ -43,16 +43,9 @@ padding: 1rem;">
     <?= html_search('username', 'Search customer name...', 'padding: 6px; border-radius: 4px; border: 1px solid #ccc; width: 200px;') ?>
 
       
-    <button onclick="playSound()" type="submit">Search</button>
-      <audio id="clickSound" src="../../sound/click.mp3"></audio>
+    <button  type="submit">Search</button>
+     
 
-    <script>
-    function playSound() {
-        const audio = document.getElementById("clickSound");
-        audio.currentTime = 0; // 每次点击从头播放
-        audio.play();
-  }
-</script>
     </form>
     </div>
     <div style="position: absolute; right: 0;">
@@ -89,11 +82,14 @@ padding: 1rem;">
                             <div class="action">
                                 <button class="action-btn-details" data-get="customer_detail.php?userID=<?= $c->userID ?>"><i class="fas fa-eye"></i></button>
                                 <?php if ($c->memberStatus=='Active'): ?>
-                                <button class="action-btn-delete" data-post="/pages/admin/blockCustomer.php?userID=<?= $c->userID ?>" data-confirm="Are you sure you want to block this user?"><i class="fas fa-ban"></i></button>
+                                <button onclick="playSound()" class="action-btn-delete" data-post="/pages/admin/blockCustomer.php?userID=<?= $c->userID ?>" data-confirm="Are you sure you want to block this user?"><i class="fas fa-ban"></i></button>
                                 <?php endif ?>
                                 <?php if ($c->memberStatus=='Blocked'): ?>
-                                <button class="action-btn-unblocked" data-post="/pages/admin/unblockCustomer.php?userID=<?= $c->userID ?>" data-confirm="Are you sure you want to unblock this user?"><i class="fas fa-unlock"></i></button>
+                                <button onclick="playSound()" class="action-btn-unblocked" data-post="/pages/admin/unblockCustomer.php?userID=<?= $c->userID ?>" data-confirm="Are you sure you want to unblock this user?"><i class="fas fa-unlock"></i></button>
+                                 
+
                                 <?php endif ?>
+                                <audio id="clickSound" src="../../sound/m4.mp3"></audio>
                             </div>
                         </td>
 
@@ -108,7 +104,13 @@ padding: 1rem;">
                                 </div>
 </div>
 
-
+<script>
+    function playSound() {
+        const audio = document.getElementById("clickSound");
+        audio.currentTime = 0; // 每次点击从头播放
+        audio.play();
+  }
+</script>
 <?php
 require '../../admin_foot.php';
 ?>

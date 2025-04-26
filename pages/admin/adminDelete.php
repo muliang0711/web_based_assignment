@@ -8,4 +8,6 @@ if (is_post()) {
     $stm->execute([$id]);
     temp('info','Record deleted');
 }
+
+
 redirect('admin_Management.php');
