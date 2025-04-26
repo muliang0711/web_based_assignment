@@ -3,7 +3,7 @@ require '../../../_base.php';
 
 /********* You can change these to suit the specific needs of your page *********/
 $title = 'Profile';
-$stylesheetArray = ['profile.css']; // Put CSS files that are specific to this page here. If you want to change the styling of the header and the footer, go to /css/app.cs
+$stylesheetArray = ['profile.css', '/css/zoomable-img.css']; // Put CSS files that are specific to this page here. If you want to change the styling of the header and the footer, go to /css/app.cs
 $scriptArray = ['profilePic.js'];      // Put JS files that are specific to this page here. If you want to change the JavaScript for the header and the footer, go to /js/app.js
 
 auth("user");
@@ -153,6 +153,13 @@ include '../../../_head.php';
 include 'profile_dynamic_navbar.php';
 ?>
 
+<!-- Modal Zoom Viewer -->
+<div id="imageModal" class="modal">
+  <span class="close">&times;</span>
+  <img class="modal-content" id="zoomedImage">
+</div>
+
+<!-- Main content -->
 <div class="main">
     <!-- <section class="info-boxes">
         <div role="alert" class="info-box success"><?= temp('info') ?></div>
@@ -200,6 +207,7 @@ include 'profile_dynamic_navbar.php';
                     <?= error('bio'); ?>
                 </div>
 
+                <!-- JS for calculating and showing character count and limit for bio -->
                 <script>
                     $('textarea#bio ~ #charCount').css('display', 'none');
 
@@ -241,14 +249,34 @@ include 'profile_dynamic_navbar.php';
                 <div class="label">Profile picture</div>
                 <div class="errorMsg" style="color: var(--color-error-text);margin-bottom:5px;"></div>
                 <div class="profile-pic-button dropdown-label" id="profile-pic-button">
-                    <img src="<?= $_user->profilePic ? "/File/user-profile-pics/{$_user->profilePic}" : '/assets/img/profile-default-icon-light.svg' ?>" alt="Profile picture">
+                    <img id="profile-pic-img" src="<?= $_user->profilePic ? "/File/user-profile-pics/{$_user->profilePic}" : '/assets/img/profile-default-icon-light.svg' ?>" alt="Profile picture">
                     <!-- <img src="/assets/img/profile-default-icon-light.svg" alt="Profile picture"> -->
                     <!-- <img src="/assets/img/logo.jpg" alt="Profile picture"> -->
                     <div class="edit-label">Edit</div>
                 </div>
                 <ul class="profile-pic-dropdown dropdown-content">
-                    <li class="dropdown-item"><button id="viewPhotoBtn">View photo (TODO)</button></li>
-                    <!-- <li class="dropdown-item">Take photo (TODO)</li> -->
+                    <li class="dropdown-item" id="viewPhotoBtn">View photo</li>
+                    <!-- <li class="dropdown-item">Take photo</li> -->
+
+                    <script>
+                        $(document).ready(function () {
+                            // Zoom modal logic
+                            $("#viewPhotoBtn").on("click", function () {
+                                $("#zoomedImage").attr("src", $("#profile-pic-img").attr("src"));
+                                $("#imageModal").fadeIn();
+                            });
+
+                            $(".close").on("click", function () {
+                                $("#imageModal").fadeOut();
+                            });
+
+                            $("#imageModal").on("click", function (e) {
+                                if (e.target === this) {
+                                    $(this).fadeOut();
+                                }
+                            });
+                        });
+                    </script>
 
                     <li>
                         <form method="POST" enctype="multipart/form-data" id="profilePicForm">
@@ -260,12 +288,16 @@ include 'profile_dynamic_navbar.php';
                         </form>
                     </li>
 
-                    <li class="dropdown-item">
+                    <!-- <li class="dropdown-item">
                         <button 
                             data-real-post="?action=removeProfPic" 
                             data-confirm="Are you sure you want to remove your profile picture?"
                         >Remove photo</button>
-                    </li>
+                    </li> -->
+                    <li class="dropdown-item"
+                        data-real-post="?action=removeProfPic" 
+                        data-confirm="Are you sure you want to remove your profile picture?"
+                    >Remove photo</li>
                 </ul>
             </div>
 
