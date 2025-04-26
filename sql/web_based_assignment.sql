@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 25, 2025 at 04:41 PM
+-- Generation Time: Apr 26, 2025 at 11:57 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -44,11 +44,6 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`id`, `name`, `department`, `passwordHash`, `adminLevel`, `status`) VALUES
-('A001', 'Alice Wong', 'SA', '$2y$10$5Y2WIZtHCoElCeI6IXp94.4TiLKeTcbOK5AgTswY9oAwbFw9FViFi', 'main', 'Active'),
-('A002', 'Bob Tan', 'IT', '$2y$10$2ioQwFoTCz3dH1AjoKG7NuOAHqKjzmecG7b.8BPW5aGiuImR9oji2', 'staff', 'Active'),
-('A003', 'Charlie Lim', 'CS', '$2y$10$AeTa6/0xSoeDf2gz0.bXE.i1/kG56Alerke8pFPhe9NSVBVOKA3wi', 'main', 'Active'),
-('A004', 'Daphne Teo', 'PD', '$2y$10$rYBjsAfzbPMGCn4MANIZ.ef78dfu/MnSbq8RwOKHnY272KCo9h8gK', 'staff', 'Blocked'),
-('A005', 'Hannah Yeo', 'TS', '$2y$10$.2ZxTbzEPRnm0H9EYwJQnOG2YBQL8plEmxN3K7WzIAJHO1FUUYVFW', 'staff', 'Blocked'),
 ('0Adjmlte9d', 'Lucas Johnson', 'IT', '$2y$10$2ioQwFoTCz3dH1AjoKG7NuOAHqKjzmecG7b.8BPW5aGiuImR9oji2', 'staff', 'Blocked'),
 ('0nOWwqj4lJ', 'Emma Johnson', 'TS', '$2y$10$.2ZxTbzEPRnm0H9EYwJQnOG2YBQL8plEmxN3K7WzIAJHO1FUUYVFW', 'main', 'Active'),
 ('13GRGMg0Ry', 'Emma Brown', 'SA', '$2y$10$5Y2WIZtHCoElCeI6IXp94.4TiLKeTcbOK5AgTswY9oAwbFw9FViFi', 'staff', 'Active'),
@@ -65,6 +60,11 @@ INSERT INTO `admin` (`id`, `name`, `department`, `passwordHash`, `adminLevel`, `
 ('8TtvXVfo9C', 'Ava Jones', 'IT', '$2y$10$2ioQwFoTCz3dH1AjoKG7NuOAHqKjzmecG7b.8BPW5aGiuImR9oji2', 'staff', 'Active'),
 ('8yab2LZSUS', 'Olivia Johnson', 'IN', '$2y$10$5Y2WIZtHCoElCeI6IXp94.4TiLKeTcbOK5AgTswY9oAwbFw9FViFi', 'main', 'Blocked'),
 ('9VUf61kT0c', 'Liam Brown', 'IN', '$2y$10$5Y2WIZtHCoElCeI6IXp94.4TiLKeTcbOK5AgTswY9oAwbFw9FViFi', 'main', 'Active'),
+('A001', 'Alice Wong', 'SA', '$2y$10$5Y2WIZtHCoElCeI6IXp94.4TiLKeTcbOK5AgTswY9oAwbFw9FViFi', 'main', 'Active'),
+('A002', 'Bob Tan', 'IT', '$2y$10$2ioQwFoTCz3dH1AjoKG7NuOAHqKjzmecG7b.8BPW5aGiuImR9oji2', 'staff', 'Active'),
+('A003', 'Charlie Lim', 'CS', '$2y$10$AeTa6/0xSoeDf2gz0.bXE.i1/kG56Alerke8pFPhe9NSVBVOKA3wi', 'main', 'Active'),
+('A004', 'Daphne Teo', 'PD', '$2y$10$rYBjsAfzbPMGCn4MANIZ.ef78dfu/MnSbq8RwOKHnY272KCo9h8gK', 'staff', 'Blocked'),
+('A005', 'Hannah Yeo', 'TS', '$2y$10$.2ZxTbzEPRnm0H9EYwJQnOG2YBQL8plEmxN3K7WzIAJHO1FUUYVFW', 'staff', 'Blocked'),
 ('A4FDSheqRt', 'Olivia Williams', 'CS', '$2y$10$AeTa6/0xSoeDf2gz0.bXE.i1/kG56Alerke8pFPhe9NSVBVOKA3wi', 'main', 'Blocked'),
 ('ACe0PGraZt', 'Ava Jones', 'TS', '$2y$10$.2ZxTbzEPRnm0H9EYwJQnOG2YBQL8plEmxN3K7WzIAJHO1FUUYVFW', 'main', 'Active'),
 ('Ayuw0knWRf', 'Noah Anderson', 'IT', '$2y$10$2ioQwFoTCz3dH1AjoKG7NuOAHqKjzmecG7b.8BPW5aGiuImR9oji2', 'main', 'Active'),
@@ -150,7 +150,6 @@ INSERT INTO `admin` (`id`, `name`, `department`, `passwordHash`, `adminLevel`, `
 ('zGC0udksdn', 'Emma Davis', 'PD', '$2y$10$rYBjsAfzbPMGCn4MANIZ.ef78dfu/MnSbq8RwOKHnY272KCo9h8gK', 'main', 'Blocked'),
 ('zxsWNP3Jhf', 'Ava Anderson', 'TS', '$2y$10$.2ZxTbzEPRnm0H9EYwJQnOG2YBQL8plEmxN3K7WzIAJHO1FUUYVFW', 'staff', 'Active');
 
-
 -- --------------------------------------------------------
 
 --
@@ -165,6 +164,56 @@ CREATE TABLE `blockeduser` (
   `status` enum('-','reject','request') NOT NULL,
   `appealReason` varchar(30) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `blockeduser`
+--
+
+INSERT INTO `blockeduser` (`blockedUserID`, `role`, `blockedReason`, `status`, `appealReason`) VALUES
+('0Adjmlte9d', 'staff', 'Violation', 'reject', 'Wrongfully accused'),
+('1N6SuAbpK6', 'staff', 'Spam', '-', NULL),
+('3nca0DuNF0', 'staff', 'Violation', 'request', 'Wrongfully accused'),
+('7rwKpgKwFO', 'staff', 'Policy breach', '-', NULL),
+('8yab2LZSUS', 'staff', 'Policy breach', '-', NULL),
+('A4FDSheqRt', 'staff', 'Policy breach', 'reject', 'Please reconsider'),
+('bNiwkROGri', 'staff', 'Spam', 'reject', 'Wrongfully accused'),
+('bQeJ0Icbm8', 'staff', 'Spam', 'request', 'Wrongfully accused'),
+('DhzbQs12Fk', 'staff', 'Spam', '-', NULL),
+('EbpShAA6QW', 'staff', 'Spam', 'reject', 'I didn’t do it'),
+('ecr2A1CGTk', 'staff', 'Policy breach', 'request', 'I didn’t do it'),
+('EQG9j5jgLl', 'staff', 'Policy breach', 'reject', 'Please reconsider'),
+('ERQbmWz3Op', 'staff', 'Suspicious login', 'reject', NULL),
+('GG5Z90YTn3', 'staff', 'Spam', 'request', 'I didn’t do it'),
+('gILvMJJHyp', 'staff', 'Policy breach', '-', NULL),
+('hBxLANqjk7', 'staff', 'Spam', 'request', 'I didn’t do it'),
+('HlmIHicjfg', 'staff', 'Spam', 'reject', 'I didn’t do it'),
+('I3nwtleBeQ', 'staff', 'Policy breach', '-', NULL),
+('i7ExTJIRWv', 'staff', 'Violation', 'reject', 'Wrongfully accused'),
+('j1ZhBvPP0i', 'staff', 'Spam', '-', NULL),
+('J9HKUi5pUn', 'staff', 'Policy breach', '-', NULL),
+('kUp05RrUWS', 'staff', 'Spam', '-', NULL),
+('MI4XVlD2Sd', 'staff', 'Violation', 'request', 'Please reconsider'),
+('N5t5NOb4nn', 'staff', 'Violation', 'request', 'Please reconsider'),
+('nzKrVHBroR', 'staff', 'Policy breach', '-', NULL),
+('oJwMOdJVUB', 'staff', 'Suspicious login', 'reject', 'I didn’t do it'),
+('OO8dVOEe9J', 'staff', 'Suspicious login', '-', NULL),
+('p18MXFHwgb', 'staff', 'Policy breach', '-', NULL),
+('Pwtar3fdb9', 'staff', 'Suspicious login', 'request', 'Wrongfully accused'),
+('QefDzEF6GA', 'staff', 'Spam', '-', NULL),
+('QUohyKyv1r', 'staff', 'Suspicious login', 'request', 'Please reconsider'),
+('rBH7ScbILA', 'staff', 'Suspicious login', 'reject', 'Wrongfully accused'),
+('S8SStA0xe9', 'staff', 'Violation', '-', NULL),
+('S9xGaudFEa', 'staff', 'Spam', '-', NULL),
+('SnIFuQy45E', 'staff', 'Policy breach', 'reject', 'I didn’t do it'),
+('SohrjZNStE', 'staff', 'Violation', 'reject', 'I didn’t do it'),
+('sQ7s3j9lkM', 'staff', 'Suspicious login', 'reject', 'I didn’t do it'),
+('tr48dbk3Pt', 'staff', 'Suspicious login', 'request', 'Wrongfully accused'),
+('WRgkDAKktf', 'staff', 'Violation', 'request', 'Please reconsider'),
+('WUvKMgl2qh', 'staff', 'Spam', 'request', 'I didn’t do it'),
+('WXNVkHS8ce', 'staff', 'Policy breach', '-', NULL),
+('YXBfQ8AzCF', 'staff', 'Violation', 'request', 'I didn’t do it'),
+('Z2XQzNUNkV', 'staff', 'Policy breach', 'reject', 'Wrongfully accused'),
+('zGC0udksdn', 'staff', 'Policy breach', '-', NULL);
 
 -- --------------------------------------------------------
 
@@ -190,6 +239,21 @@ INSERT INTO `cartitem` (`userID`, `productID`, `sizeID`, `quantity`) VALUES
 (2, 'R0003', '4UG5', 3),
 (2, 'R0004', '4UG5', 5),
 (2, 'R0005', '4UG5', 4);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `messages`
+--
+
+DROP TABLE IF EXISTS `messages`;
+CREATE TABLE `messages` (
+  `messageID` bigint(20) NOT NULL,
+  `senderID` int(11) NOT NULL,
+  `adminID` varchar(10) NOT NULL,
+  `content` varchar(200) NOT NULL,
+  `sent_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -808,56 +872,6 @@ INSERT INTO `product_images` (`id`, `productID`, `image_path`, `image_type`, `cr
 (211, 'R0100', 'player_R0100_1744989707.png', 'player', '2025-04-18 15:21:47');
 
 -- --------------------------------------------------------
---dummy block user
-INSERT INTO `blockeduser` (`blockedUserID`, `role`, `blockedReason`, `status`, `appealReason`) VALUES
-('OO8dVOEe9J', 'staff', 'Suspicious login', '-', NULL),
-('rBH7ScbILA', 'staff', 'Suspicious login', 'reject', 'Wrongfully accused'),
-('8yab2LZSUS', 'staff', 'Policy breach', '-', NULL),
-('bNiwkROGri', 'staff', 'Spam', 'reject', 'Wrongfully accused'),
-('A4FDSheqRt', 'staff', 'Policy breach', 'reject', 'Please reconsider'),
-('YXBfQ8AzCF', 'staff', 'Violation', 'request', 'I didn’t do it'),
-('QefDzEF6GA', 'staff', 'Spam', '-', NULL),
-('bQeJ0Icbm8', 'staff', 'Spam', 'request', 'Wrongfully accused'),
-('Pwtar3fdb9', 'staff', 'Suspicious login', 'request', 'Wrongfully accused'),
-('I3nwtleBeQ', 'staff', 'Policy breach', '-', NULL),
-('hBxLANqjk7', 'staff', 'Spam', 'request', 'I didn’t do it'),
-('j1ZhBvPP0i', 'staff', 'Spam', '-', NULL),
-('GG5Z90YTn3', 'staff', 'Spam', 'request', 'I didn’t do it'),
-('ERQbmWz3Op', 'staff', 'Suspicious login', 'reject', NULL),
-('WXNVkHS8ce', 'staff', 'Policy breach', '-', NULL),
-('HlmIHicjfg', 'staff', 'Spam', 'reject', 'I didn’t do it'),
-('SnIFuQy45E', 'staff', 'Policy breach', 'reject', 'I didn’t do it'),
-('tr48dbk3Pt', 'staff', 'Suspicious login', 'request', 'Wrongfully accused'),
-('ecr2A1CGTk', 'staff', 'Policy breach', 'request', 'I didn’t do it'),
-('p18MXFHwgb', 'staff', 'Policy breach', '-', NULL),
-('0Adjmlte9d', 'staff', 'Violation', 'reject', 'Wrongfully accused'),
-('1N6SuAbpK6', 'staff', 'Spam', '-', NULL),
-('gILvMJJHyp', 'staff', 'Policy breach', '-', NULL),
-('kUp05RrUWS', 'staff', 'Spam', '-', NULL),
-('i7ExTJIRWv', 'staff', 'Violation', 'reject', 'Wrongfully accused'),
-('MI4XVlD2Sd', 'staff', 'Violation', 'request', 'Please reconsider'),
-('nzKrVHBroR', 'staff', 'Policy breach', '-', NULL),
-('zGC0udksdn', 'staff', 'Policy breach', '-', NULL),
-('EQG9j5jgLl', 'staff', 'Policy breach', 'reject', 'Please reconsider'),
-('oJwMOdJVUB', 'staff', 'Suspicious login', 'reject', 'I didn’t do it'),
-('7rwKpgKwFO', 'staff', 'Policy breach', '-', NULL),
-('Z2XQzNUNkV', 'staff', 'Policy breach', 'reject', 'Wrongfully accused'),
-('WRgkDAKktf', 'staff', 'Violation', 'request', 'Please reconsider'),
-('N5t5NOb4nn', 'staff', 'Violation', 'request', 'Please reconsider'),
-('sQ7s3j9lkM', 'staff', 'Suspicious login', 'reject', 'I didn’t do it'),
-('S8SStA0xe9', 'staff', 'Violation', '-', NULL),
-('S9xGaudFEa', 'staff', 'Spam', '-', NULL),
-('DhzbQs12Fk', 'staff', 'Spam', '-', NULL),
-('SohrjZNStE', 'staff', 'Violation', 'reject', 'I didn’t do it'),
-('QUohyKyv1r', 'staff', 'Suspicious login', 'request', 'Please reconsider'),
-('3nca0DuNF0', 'staff', 'Violation', 'request', 'Wrongfully accused'),
-('J9HKUi5pUn', 'staff', 'Policy breach', '-', NULL),
-('EbpShAA6QW', 'staff', 'Spam', 'reject', 'I didn’t do it'),
-('WUvKMgl2qh', 'staff', 'Spam', 'request', 'I didn’t do it');
-
-
-
-
 
 --
 -- Table structure for table `restock_history`
@@ -1016,6 +1030,14 @@ ALTER TABLE `cartitem`
   ADD KEY `productID` (`productID`,`sizeID`);
 
 --
+-- Indexes for table `messages`
+--
+ALTER TABLE `messages`
+  ADD PRIMARY KEY (`messageID`),
+  ADD KEY `adminID` (`adminID`),
+  ADD KEY `senderID` (`senderID`);
+
+--
 -- Indexes for table `orders`
 --
 ALTER TABLE `orders`
@@ -1098,6 +1120,12 @@ ALTER TABLE `vouchers`
 --
 
 --
+-- AUTO_INCREMENT for table `messages`
+--
+ALTER TABLE `messages`
+  MODIFY `messageID` bigint(20) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
@@ -1143,6 +1171,13 @@ ALTER TABLE `user`
 ALTER TABLE `cartitem`
   ADD CONSTRAINT `cartitem_ibfk_1` FOREIGN KEY (`productID`,`sizeID`) REFERENCES `productstock` (`productID`, `sizeID`),
   ADD CONSTRAINT `userid_fk` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `messages`
+--
+ALTER TABLE `messages`
+  ADD CONSTRAINT `messages_ibfk_1` FOREIGN KEY (`adminID`) REFERENCES `admin` (`id`),
+  ADD CONSTRAINT `messages_ibfk_2` FOREIGN KEY (`senderID`) REFERENCES `user` (`userID`);
 
 --
 -- Constraints for table `orders`
