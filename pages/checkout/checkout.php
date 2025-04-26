@@ -188,6 +188,7 @@
                     data: datas,
                     type: "POST",
                     success: function(res2){
+                        console.log(res2);
                         if(res2!="failed"){
                             location=res2;
                         }
