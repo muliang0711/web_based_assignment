@@ -101,6 +101,7 @@
     Order #<?= $order->orderId ?>
 </span>
 
+
 <div class="giant-container">
 
 <div class="container1">
@@ -204,7 +205,7 @@
 
     <div class="buttons-container">
         <?php if($order->status == "Pending"): ?>
-            <button data-cancel="">Cancel Order</button>
+            <button data-cancel="<?= $order->orderId ?>">Cancel Order</button>
             <button data-support>Contact Support</button>
 
         <?php elseif($order->status == "In Transit"): ?>
