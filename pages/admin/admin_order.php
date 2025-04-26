@@ -2,10 +2,11 @@
 <?php
 
 require '../../_base.php';
+$title='Admin Orders';
 $stylesheetArray = ['/css/admin_order.css'];
 require  "main.php";
 
-$title='Admin Orders';
+
 $scriptArray = ['/js/admin_orders.js'];    
 
 include '../../admin_login_guard.php';
@@ -62,11 +63,11 @@ $orders = $_db->query("Select o.*, sum(oi.subtotal) as total from orders o JOIN 
         <thead>
             <tr>
                 <th class="th order">Order</th>
-                <th class="th date">Date<span class="fas fa-sort" style="margin-left:5px; cursor:pointer;"></span></th>
+                <th class="th date">Date</span></th>
                 <th class="th cust">Customer</th>
                 <th class="th tracking">Tracking ID</th>
                 <th class="th delivered">Delivered on</th>
-                <th class="th total">Total<span class="fas fa-sort" style="margin-left:5px; cursor:pointer;"></span></th>
+                <th class="th total">Total</span></th>
                 <th class="th fulfil">Fulfillment</th>
                 <th class="th action">Action</th>
             </tr>
@@ -85,6 +86,7 @@ $orders = $_db->query("Select o.*, sum(oi.subtotal) as total from orders o JOIN 
                 <td class="td stat <?= $order->orderId ?>"><?= $order->status ?></td>
                 <td class="td action">
                     <i class="fa-solid fa-pen-to-square update" data-update="<?= $order->orderId ?>"></i>
+                    <a href="admin_orderDetails.php?id=<?= $order->orderId ?>"><i class="fas fa-eye" data-view="<?= $order->orderId ?>"></i></a>
                 </td>
             </tr>
             <?php endforeach ?>
