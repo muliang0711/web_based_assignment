@@ -76,7 +76,7 @@ try {
 
 // --- Functions ---
 
-// 1. function 
+
 function getTop5ProductSales(PDO $_db, string $start, string $end): array {
     $sql = "
         SELECT 

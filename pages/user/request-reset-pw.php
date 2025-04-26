@@ -40,15 +40,15 @@ if (is_post()) {
         ]);
         // $stm->execute([$u->id, $id, $u->id]);
 
-        // (4) Generate token url
-        $reset_pw_url = base("pages/user/reset-password.php?id=$id");
-        $home_url = base('/');
+        // These URLs will be used in the email
+        $reset_pw_url = base("pages/user/reset-password.php?id=$id"); // link for resetting password with token id as parameter
+        $home_url = base('/'); // link to homepage for the logo image in the email 
 
         // (5) Send email
         $m = get_mail();
         $m->addAddress($u->email, $u->username);
-        $m->addEmbeddedImage("../../assets/img/logo.jpg", 'logo');
-        $m->isHTML(true);
+        $m->addEmbeddedImage("../../assets/img/logo.jpg", 'logo'); // add store logo image in email
+        $m->isHTML(true); 
         $m->Subject = 'Reset Password';
         $m->Body = get_reset_pw_email_body($u->username, $u->email, $home_url, $reset_pw_url);
         $m->send();

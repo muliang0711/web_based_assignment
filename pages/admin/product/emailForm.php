@@ -30,23 +30,11 @@
     </style>
 </head>
 <body>
-        <?php 
-        session_start();
 
-        if (!empty($_SESSION['EmailSuccess'])) {
-            echo "<div style='color: green;'>" . $_SESSION['EmailSuccess'] . "</div>";
-            unset($_SESSION['EmailSuccess']);
-        }
-        
-        if (!empty($_SESSION['EmailError'])) {
-            echo "<div style='color: red;'>" . $_SESSION['EmailError'] . "</div>";
-            unset($_SESSION['EmailError']);
-
-        }?>
 
 <form method="POST" action="/controller/stockManager.php">
     <input type="hidden" name="action" value="sendEmail">
-    <h2>Compose Email</h2>
+    <h2>Sending Email</h2>
     
     <label for="to">To:</label>
     <input type="email" name="to" id="to" placeholder="recipient@example.com" required>
