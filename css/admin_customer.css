@@ -21,6 +21,20 @@
     color:white; */
     background-color: aliceblue;
 }
+/* Gray out records of deleted accounts */
+.row.deletedAccount {
+    background-color: #f3f3f3;
+    color: #a4a4a4;
+}
+/* Disable hover effects of the block/unblock button for records of deleted accounts */
+.row.deletedAccount td button:not(.action-btn-details), 
+.row.deletedAccount td button:not(.action-btn-details):hover {
+    background-color: inherit;
+    border-color: #a4a4a4;
+    color: #a4a4a4;
+    cursor: default; 
+}
+
 .searchBar{
     height: 40px;
     /* width: 100%; */
@@ -36,12 +50,16 @@ gap: 5px;
 
 .customer_detail{
     margin:20px 20px;
-    height: 15vh;
+    /* height: 15vh; */
     /* width: 80vw; */
     padding: 10px 10px;
     margin-left: 20px;
     text-align:left;
     border-collapse: collapse;
+}
+.customer_detail .profile-image {
+    width: 100px;
+    height: auto;
 }
 
 td,th{
