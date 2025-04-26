@@ -52,14 +52,28 @@
     }
     //fetching data
     try{
-        $sql = "Select o.*, sum(oi.subtotal) as total_price from
+        if(isset($_GET["orderID"]) && strlen($_GET["orderID"])>0){
+            $od = $_GET["orderID"];
+            $sql = "Select o.*, sum(oi.subtotal) as total_price from
+                                orders o JOIN order_items oi ON (o.orderId = oi.orderId) 
+                                WHERE o.userId = $userId AND o.status in ($showOnlyStatus) AND o.orderId = $od
+                                GROUP BY o.orderId ORDER BY o.orderDate $sort, total_price $price";
+            $orders = $_db->prepare($sql);
+
+            $orders->execute();
+            $orders = $orders->fetchAll();
+        }
+        else {
+            $sql = "Select o.*, sum(oi.subtotal) as total_price from
                                 orders o JOIN order_items oi ON (o.orderId = oi.orderId) 
                                 WHERE o.userId = $userId AND o.status in ($showOnlyStatus)
                                 GROUP BY o.orderId ORDER BY o.orderDate $sort, total_price $price";
-        $orders = $_db->prepare($sql);
+            $orders = $_db->prepare($sql);
 
-       $orders->execute();
-        $orders = $orders->fetchAll();
+            $orders->execute();
+            $orders = $orders->fetchAll();
+        }
+        
 
     }
     catch (PDOException $e){
@@ -71,9 +85,10 @@
 
 
 <ul class="filtermenu">
+    
     <form method="GET">
             
-
+        <input type="search" value="<?= isset($_GET["orderID"]) ? $_GET["orderID"] : "" ?>" name="orderID" placeholder="Search by Order ID" style="outline:none; border: 1px solid rgb(102, 102, 102); border-radius: 5px; margin-top: 15px; padding: 5px;">
             <label>Price</label><br>
                 <div class="pricediv">
                 <div><input class="radio" type="radio" value="desc" name="price" id="pricedesc" <?= $price=="desc"? "checked":"" ?>><label for="pricedesc">Highest</label></div>

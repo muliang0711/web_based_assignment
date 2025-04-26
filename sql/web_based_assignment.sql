@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 26, 2025 at 11:57 AM
+-- Generation Time: Apr 26, 2025 at 02:18 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -274,16 +274,18 @@ CREATE TABLE `orders` (
   `deliveredDate` date DEFAULT NULL,
   `tracking` int(30) DEFAULT NULL,
   `discount` decimal(10,2) NOT NULL DEFAULT 0.00,
-  `notify` tinyint(1) NOT NULL DEFAULT 0
+  `notify` tinyint(1) NOT NULL DEFAULT 0,
+  `cancel_reason` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`orderId`, `userId`, `orderDate`, `status`, `orderAddress`, `orderName`, `orderPhone`, `deliveryMethod`, `deliveredDate`, `tracking`, `discount`, `notify`) VALUES
-(1, 1, '2025-03-31', 'Canceled', 'PV18 RESIDENCE, JALAN LANGKAWI, 53000, Kuala Lumpur', 'Wayne Gan', '60126289399', 'Standard', NULL, 0, 119.70, 1),
-(2, 1, '2025-04-23', 'Pending', 'Straits Court, JALAN Ujong pasir, 75050, Melaka', 'MR lolipop', '60126289399', 'Standard', NULL, 1, 0.00, 0);
+INSERT INTO `orders` (`orderId`, `userId`, `orderDate`, `status`, `orderAddress`, `orderName`, `orderPhone`, `deliveryMethod`, `deliveredDate`, `tracking`, `discount`, `notify`, `cancel_reason`) VALUES
+(1, 1, '2025-03-31', 'Canceled', 'PV18 RESIDENCE, JALAN LANGKAWI, 53000, Kuala Lumpur', 'Wayne Gan', '60126289399', 'Standard', NULL, 0, 119.70, 1, NULL),
+(2, 1, '2025-04-23', 'Pending', 'Straits Court, JALAN Ujong pasir, 75050, Melaka', 'MR lolipop', '60126289399', 'Standard', NULL, 1, 0.00, 0, NULL),
+(3, 6, '2025-04-26', 'Pending', 'PV18 RESIDENCE, JALAN LANGKAWI, 53000, Kuala Lumpur', 'Cookie Le', '60126289399', 'Standard', NULL, NULL, 0.00, 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -306,7 +308,8 @@ CREATE TABLE `order_items` (
 
 INSERT INTO `order_items` (`orderId`, `productId`, `quantity`, `subtotal`, `gripSize`) VALUES
 (1, 'R0005', 1, 399.00, '3UG5'),
-(2, 'R0060', 1, 199.00, '3UG5');
+(2, 'R0060', 1, 199.00, '3UG5'),
+(3, 'R0070', 1, 199.00, '3UG5');
 
 -- --------------------------------------------------------
 
@@ -434,6 +437,7 @@ INSERT INTO `product` (`productID`, `productName`, `price`, `seriesID`, `introdu
 
 --
 -- Table structure for table `productstock`
+--
 --
 
 DROP TABLE IF EXISTS `productstock`;
@@ -590,7 +594,7 @@ INSERT INTO `productstock` (`productID`, `sizeID`, `stock`, `status`, `low_stock
 ('R0068', '4UG5', 5, 'onsales', 5, 1, NULL),
 ('R0069', '3UG5', 5, 'onsales', 5, 0, NULL),
 ('R0069', '4UG5', 6, 'onsales', 5, 0, NULL),
-('R0070', '3UG5', 2, 'onsales', 5, 1, NULL),
+('R0070', '3UG5', 1, 'onsales', 5, 1, NULL),
 ('R0070', '4UG5', 3, 'onsales', 5, 1, NULL),
 ('R0071', '3UG5', 4, 'onsales', 5, 1, NULL),
 ('R0071', '4UG5', 5, 'onsales', 5, 0, NULL),
@@ -908,7 +912,8 @@ CREATE TABLE `savedaddress` (
 --
 
 INSERT INTO `savedaddress` (`userID`, `address`, `phoneNo`, `name`, `defaultAdd`, `addressIndex`) VALUES
-(1, 'Straits Court, JALAN Ujong pasir, 75050, Melaka', '60126289399', 'MR lolipop', 1, 7);
+(1, 'Straits Court, JALAN Ujong pasir, 75050, Melaka', '60126289399', 'MR lolipop', 1, 7),
+(6, 'PV18 RESIDENCE, JALAN LANGKAWI, 53000, Kuala Lumpur', '60126289399', 'Cookie Le', 1, 9);
 
 -- --------------------------------------------------------
 
@@ -1147,7 +1152,7 @@ ALTER TABLE `restock_history`
 -- AUTO_INCREMENT for table `savedaddress`
 --
 ALTER TABLE `savedaddress`
-  MODIFY `addressIndex` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `addressIndex` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `token`
