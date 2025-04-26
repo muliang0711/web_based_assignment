@@ -14,7 +14,6 @@ $_db = new PDO('mysql:dbname=web_based_assignment', 'root', '', [
 ]);
 
 // 4. Prepare and execute query to get user's cart items
-$userID = $_user->userID; // --------------------------------- error user undefind 
 $statement = $_db->prepare('SELECT * FROM cartitem JOIN product USING (productID) WHERE userID = ?');
 $statement->execute([$userID]);
 $cartItemArray = $statement->fetchAll();
