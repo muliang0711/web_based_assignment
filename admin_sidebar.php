@@ -29,11 +29,15 @@
       <a href="/pages/admin/product/adminProductAnlysis.php"><i class="fas fa-chart-line"></i> Reports</a>
     </li>
     <li>
-      <a href="#"><i class="fas fa-cog"></i> Settings</a>
-    </li>
-    <li>
       <a href="/pages/admin/product/stock.php"><i class="fas fa-chart-line"></i> Restock </a>
     </li>
+    <li>
+      <a href="/pages/admin/issueVoucher.php"><i class="fas fa-gift"></i> Issue Voucher </a>
+    </li>
+    <li>
+      <a href="#"><i class="fas fa-cog"></i> Settings</a>
+    </li>
+    
   </ul>
 </div>
 
