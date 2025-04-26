@@ -168,40 +168,24 @@ include $_SERVER["DOCUMENT_ROOT"] . "/_head.php";
             }
         });
 
-        // 3. Check HTTP response status
-        if (!response.ok) {
-            // Response not OK (e.g., 404, 500 error)
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
+        // 2.3 Get JSON data
+        const data = await response.json();
 
-        // 4. Parse JSON safely
-        let data;
-        try {
-            data = await response.json();
-        } catch (jsonError) {
-            throw new Error('Invalid JSON response from server.');
-        }
-
-        // 5. Validate JSON structure
-        if (typeof data.success === 'undefined') {
-            throw new Error('API response missing "success" field.');
-        }
-
-        // 6. Process based on success or failure
+        // 2.4 Validate Response
         if (data.success) {
-            console.log('Stock Check Passed:', data.message);
+            console.log(data.message);
+            // 3. Continue to address validation and payment after stock success
             await proceedToPayment(successUrl);
+            
         } else {
-            console.warn('Stock Check Failed:', data.message);
+            console.log(data.message);
             alert(data.message);
             window.location.href = redirectUrl;
         }
-
-    } catch (error) {
-        // 7. Display detailed error
-        console.error('Error during stock check:', error.message);
-        alert('Error: ' + error.message);
-    }
+        } catch (error) {
+        console.error('Error checking stock:', error);
+        alert('Network error occurred. Please try again.');
+        }
 }
 
 
