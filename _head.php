@@ -76,7 +76,7 @@ if (is_post()) {
             <?php if (is_logged_in("user")): ?>
 
                 <div class="cart-btn">
-                    <a onclick="onclick()" href="/pages/product/cartPage.php" ?>
+                    <a href="/pages/product/cartPage.php" ?>
                         <img src="/assets/img/icon-cart.png" alt="Cart" title="Cart" />
                         <div class="itemCount"><?php echo $totalItem ?></div>
                     </a>
@@ -84,11 +84,11 @@ if (is_post()) {
 
                 <div class="account dropdown">
                     <div class="dropdown-label with-dropdown-icon">
-                        <img class="account-icon" src="/assets/img/profile-default-icon-dark.svg" alt="Account" title="Account" />
+                        <img class="account-icon" src="<?= $_user->profilePic ? "/File/user-profile-pics/{$_user->profilePic}" : '/assets/img/profile-default-icon-dark.svg'?>" alt="Account" title="Account" />
                     </div>
                     <div class="dropdown-content">
                         <div class="dropdown-header">
-                            <img class="profile-pic" src="/assets/img/profile-default-icon-dark.svg" alt="Account" title="Account" />
+                            <img class="profile-pic" src="<?= $_user->profilePic ? "/File/user-profile-pics/{$_user->profilePic}" : '/assets/img/profile-default-icon-dark.svg'?>" alt="Account" title="Account" />
                             <div class="username"><?= $_user->username ?></div>
                         </div>
                         <div class="dropdown-main">

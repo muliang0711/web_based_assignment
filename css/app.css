@@ -498,7 +498,7 @@ footer a:hover {
     display: flex;
     align-items: center;
     gap: 8px;
-    background-color: #cb3816;
+    background-color: #8c8c8c;
     color: white;
     margin-top: 20px;
 }
@@ -537,6 +537,7 @@ footer a:hover {
 .account-icon {
     width: 30px;
     height: 30px;
+    border-radius: 50%;
 }
 
 .account .dropdown-content {
@@ -561,6 +562,7 @@ footer a:hover {
 .account .profile-pic {
     width: 45px;
     height: 45px;
+    border-radius: 50%;
 }
 .account .username {
     font-size: 18px;
