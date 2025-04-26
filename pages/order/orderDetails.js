@@ -2,7 +2,8 @@ $(() => {
 
     $("[data-cancel]").on('click', function(e){
         //load cancel page
-        alert("cancel");
+        let orderId = this.dataset.cancel;
+        location = "orderCancel.php?id=" + orderId;
     });
 
 
