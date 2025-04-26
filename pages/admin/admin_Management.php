@@ -60,19 +60,12 @@ $resultA = $stmA->fetch();
       <!-- <input type="text" name="searchText" placeholder="Search..." required> -->
 
       
-      <button onclick="playSound()" type="submit">Search</button>
-      <audio id="clickSound" src="../../sound/click.mp3"></audio>
+      <button  type="submit">Search</button>
 
-    <script>
-    function playSound() {
-        const audio = document.getElementById("clickSound");
-        audio.currentTime = 0; // 每次点击从头播放
-        audio.play();
-  }
-</script>
     </form>
-    
-</div>
+
+</div>  
+
     <div style="position: absolute; right: 0;">
     <a href="/pages/admin/view_admin_request.php" class="btn-add"><i class="fa-solid fa-envelope-open-text"></i> Request <?= htmlspecialchars($resultA->TotalRequest) ?></a>
     <a href="/pages/admin/adminAdd.php" class="btn-add"><i class="fa-solid fa-plus"></i> Add Admin</a>
@@ -101,11 +94,12 @@ $resultA = $stmA->fetch();
                         <td class="td"><?= $departments[$a->department] ?></td>
                         <td class="td"><button class="action-btn-delete" data-post="/pages/admin/adminDelete.php?id=<?= $a->id ?>" data-confirm="Are you sure you want to delete"><i class="fas fa-trash"></i></button>
                             <?php if ($a->status == 'Active'): ?>
-                                <button class="action-btn-delete" data-post="/pages/admin/blockAdmin.php?id=<?= $a->id  ?>" data-confirm="Are you sure you want to block this user?"><i class="fas fa-ban"></i></button>
+                                <button onclick="playSoundE()" class="action-btn-delete" data-post="/pages/admin/blockAdmin.php?id=<?= $a->id  ?>" data-confirm="Are you sure you want to block this user?"><i class="fas fa-ban"></i></button>
                             <?php endif ?>
                             <?php if ($a->status == 'Blocked'): ?>
-                                <button class="action-btn-unblocked" data-post="/pages/admin/unblockAdmin.php?id=<?= $a->id  ?>" data-confirm="Are you sure you want to unblock this user?"><i class="fas fa-unlock"></i></button>
+                                <button onclick="playSoundE()" class="action-btn-unblocked" data-post="/pages/admin/unblockAdmin.php?id=<?= $a->id  ?>" data-confirm="Are you sure you want to unblock this user?"><i class="fas fa-unlock"></i></button>
                             <?php endif ?>
+                            <audio id="clickSoundE" src="../../sound/m4.mp3"></audio>
                         </td>
 
                     </tr>
@@ -123,6 +117,13 @@ $resultA = $stmA->fetch();
     </div>
 
 </div>
+<script>
+    function playSoundE() {
+        const audio = document.getElementById("clickSoundE");
+        audio.currentTime = 0; // 每次点击从头播放
+        audio.play();
+  }
+</script>
 <?php
 require '../../admin_foot.php';
 ?>

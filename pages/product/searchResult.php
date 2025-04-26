@@ -93,7 +93,7 @@ $currentPage = req('page', 1);
       require_once __DIR__ . '\SimplePager.php';
       $page = req('page', 1);
       // Reminder: the `limit` parameter of the SimplePager constructor must be a string, e.g. "10". Can't pass an int due to the use of ctype_digit(). This behavior seems to be deliberate (look up the constructor definition), which makes it weirder. 
-      $p = new SimplePager("SELECT * FROM product JOIN product_images USING (productID) WHERE image_type = 'product' AND productName LIKE '%$search%' AND price BETWEEN $min_price AND $max_price ORDER BY price $order", [], "6", $page);
+      $p = new SimplePager("SELECT * FROM product JOIN product_images USING (productID) WHERE image_type = 'product' AND productName LIKE '%$search%' AND price BETWEEN $min_price AND $max_price ORDER BY price $order", [], "8", $page);
       /*$statement->execute(["%$search%"]);
    $productObjectArray = $statement->fetchAll();*/
       $arr = $p->result;
@@ -137,8 +137,25 @@ $currentPage = req('page', 1);
 
     <?php if ($arr): ?>
       <div class="list" id="productList">
+      <?php $count = 2 ?>
+        
         <?php
         foreach ($arr as $productObject): ?>
+        <?php $stmt = $_db->prepare("SELECT productID FROM product_images WHERE productID = ? AND image_type = 'product'");
+        $stmt->execute([$productObject->productID]);
+        $result = $stmt->fetch();
+        $ID = $result->productID; 
+        $countstmt = $_db->prepare("SELECT COUNT(productID) AS count FROM product_images WHERE productID = ? AND image_type = 'product'");
+        $countstmt->execute([$productObject->productID]);
+        $countResult = $countstmt->fetch();
+        $num = $countResult->count; 
+        if($num == 1){
+          $count = $num;
+        }
+         if($num > 1){
+          $count--;
+        }?>
+        <?php if ($count == 1): ?>
           <!-- start -->
           <div class="container">
             <!-- top side  -->
@@ -179,6 +196,7 @@ $currentPage = req('page', 1);
             </div>
             <!-- the end  -->
           </div>
+          <?php endif ?>
         <?php endforeach ?>
       </div>
     <?php else: ?>
