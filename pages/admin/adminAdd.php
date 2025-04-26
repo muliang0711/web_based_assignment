@@ -42,7 +42,7 @@ function random_id()
 
 
 
-$department = [
+$_departments = [
     'SA' => 'Sales Department',
     'IT' => 'IT Support',
     'IN' => 'Inventory Department',
@@ -157,7 +157,7 @@ $password ??= 'click to generate';
 
         <br><br>
         <label for="department">Department</label>
-    <?= html_select('department', $department) ?>
+    <?= html_select('department', $_departments) ?>
     <?= error('department') ?>
 
         <br><br>
