@@ -6,9 +6,10 @@ require_once __DIR__ . "/../pages/admin/product/generate_qr.php";
 class ProductController
 {
     private $productDb;
-
+    private $pdo;
     public function __construct($_pdo)
     {
+        $this->pdo = $_pdo;
         $this->productDb = new productDb($_pdo);
     }
 
@@ -149,9 +150,15 @@ class ProductController
                 throw new Exception(implode(", ", $uploadErrors1));
             }
 
+
             $uploadErrors2 = $this->processImages($_FILES['playerImage'] ?? null, $productInformation['productId'], "player");
             if (!empty($uploadErrors2)) {
                 throw new Exception(implode(", ", $uploadErrors2));
+            }
+
+            $success = generateQRCode($this->pdo, $productInformation['productId'], $productInformation['sizeId']);
+            if (!$success) {
+                throw new Exception("Failed to generate QR Code.");
             }
 
             $this->productDb->commitTransaction();
@@ -164,7 +171,7 @@ class ProductController
 
         $this->redirectToAdmin();
         
-        generateQRCode($_db , $productInformation['productId'] , $productInformation['seriesId']);
+        
 
     }
 
@@ -211,6 +218,7 @@ class ProductController
             $this->productDb->rollbackTransaction();
             $_SESSION['Update_ErrorMsg'] = ["Error: " . $e->getMessage()];
         }
+
 
         $this->redirectToAdmin();
     }
