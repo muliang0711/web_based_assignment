@@ -4,7 +4,9 @@ header('Content-Type: application/json');
 
 // 2. Start session and extract user data
 session_start();
-extract((array)$_user); //---------------------------------------- errror user undefind 
+global $_user;
+  $_user = $_db->query("SELECT * FROM user WHERE userID = {$_SESSION['userID']}")->fetch();
+  $userID = $_user->userID;
 
 // 3. Connect to the database
 $_db = new PDO('mysql:dbname=web_based_assignment', 'root', '', [
