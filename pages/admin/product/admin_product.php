@@ -55,7 +55,17 @@ unset($_SESSION['Delete_ErrorMsg']);
       <form class="search-box" method="GET" action="/controller/productManager.php">
         <input type="hidden" name="action" value="search">
         <input type="text" name="searchText" placeholder="Search product..." required>
-        <button type="submit">Search</button>
+        <button onclick="playSound()" type="submit">Search</button>
+    
+      <audio id="clickSound" src="../../../sound/success.mp3"></audio>
+
+    <script>
+    function playSound() {
+        const audio = document.getElementById("clickSound");
+        audio.currentTime = 0; // 每次点击从头播放
+        audio.play();
+  }
+</script>
       </form>
       </div>
           <!-- Button Section -->
@@ -107,6 +117,7 @@ unset($_SESSION['Delete_ErrorMsg']);
         <small id="priceError" style="color: red; display: none;"></small>
 
         <button type="submit">Apply Filter</button>
+        
       </form>
     </div>
 
