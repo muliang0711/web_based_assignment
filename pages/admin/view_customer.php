@@ -108,8 +108,7 @@ function playSoundx() {
                         <td class="content td"><?= $c->userID ?></td>
                         <td class="content td"><?= $c->username ?></td>
                         <td class="content td"><?= $c->phoneNo ?></td>
-                        
-                        <td class="content td"><?=  $c->memberStatus ?></td>
+                        <td class="content td"><?= $c->isDeleted == 1 ? 'Deleted' : $c->memberStatus ?></td> <!-- If this record is a deleted account, show "Deleted". If not, show memberStatus, which is either "Active" or "Blocked". -->
                         <td class="content td">
                             <div class="action">
                                 <button class="action-btn-details" data-get="customer_detail.php?userID=<?= $c->userID ?>"><i class="fas fa-eye"></i></button>
