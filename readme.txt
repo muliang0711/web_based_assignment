@@ -1,9 +1,9 @@
 Main admin
-	Admin ID:A001
-	Password :pass123
+	Admin ID: A001
+	Password: pass123
 Staff admin
-	Admin ID:A002
-	Password :itpass
+	Admin ID: A002
+	Password: itpass
 User: 
 	Username: - cookie
 			  - icecream
