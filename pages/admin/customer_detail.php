@@ -65,7 +65,11 @@ if (!isset($order_items) || !is_array($order_items)) {
     <table class="customer_container customer_detail">
         <tr>
             <th>Picture</th>
+            <?php if ($s->profilePic): ?>
             <td><img class="profile-image zoomable-img" src="/File/user-profile-pics/<?= htmlspecialchars($s->profilePic) ?>"/></td>
+            <?php else: ?>
+            <td><i>No profile image added</i></td>
+            <?php endif ?>
         </tr>
         <tr>
             <th>User Id</th>
