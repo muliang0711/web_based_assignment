@@ -19,7 +19,17 @@ http://localhost:8000/pages/product/cartPage.php
 About Us page
 http://localhost:8000/pages/About/about.php
 
+add product page 
+https://wbproject.local/pages/admin/product/addProduct.php
 
+product report 
+https://wbproject.local/pages/admin/product/adminProductAnlysis.php
+
+product list page 
+https://wbproject.local/pages/admin/product/admin_product.php
+
+restock history page 
+https://wbproject.local/pages/admin/product/restock_history.php
 Admin Login
 	http://localhost:8000/pages/admin/admin_login.php
 Admin Home
