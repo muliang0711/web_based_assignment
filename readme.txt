@@ -20,6 +20,12 @@ http://localhost:8000/pages/user/user-login.php?fromPage=/
 Home page(Member)
 http://localhost:8000/
 
+Profile Settings (Member)
+http://localhost:8000/pages/user/settings/profile.php
+
+Account Settings (Member)
+http://localhost:8000/pages/user/settings/account.php
+
 Product List page(Member)
 http://localhost:8000/pages/product/productlist.php
 
@@ -41,11 +47,17 @@ http://localhost:8000/pages/order/orderDetails.php?id=?
 Checkout page(Member)
 http://localhost:8000/pages/checkout/checkout.php?
 
-Profile Settings (Member)
-http://localhost:8000/pages/user/settings/profile.php
+Order List page (Member)
+http://localhost:8000/pages/order/order.php
 
-Account Settings (Member)
-http://localhost:8000/pages/user/settings/account.php
+Order Details (Member)
+http://localhost:8000/pages/order/orderDetails.php
+
+Cancel Order (Member)
+http://localhost:8000/pages/order/orderCancel.php
+
+
+
 
 Account Address (Member)
 http://localhost:8000/pages/user/settings/address.php
