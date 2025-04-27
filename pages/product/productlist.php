@@ -118,7 +118,8 @@ include '../../_head.php';
         "SELECT * FROM product 
     JOIN product_images 
     USING (productID) 
-    WHERE image_type = 'product' 
+    WHERE (SELECT image_path FROM product_images GROUP BY productID)
+    AND image_type = 'product' 
     AND price BETWEEN $min_price AND $max_price 
     ORDER BY price $order",
         [],
@@ -164,23 +165,8 @@ include '../../_head.php';
 
     <!-- product listing -->
     <div class="list" id="productList">
-      <?php $count = 2 ?>
       <?php foreach ($arr as $productObject): ?>
-        <?php $stmt = $_db->prepare("SELECT productID FROM product_images WHERE productID = ? AND image_type = 'product'");
-        $stmt->execute([$productObject->productID]);
-        $result = $stmt->fetch();
-        $ID = $result->productID; 
-        $countstmt = $_db->prepare("SELECT COUNT(productID) AS count FROM product_images WHERE productID = ? AND image_type = 'product'");
-        $countstmt->execute([$productObject->productID]);
-        $countResult = $countstmt->fetch();
-        $num = $countResult->count; 
-        if($num == 1){
-          $count = $num;
-        }
-         if($num > 1){
-          $count--;
-        }?>
-        <?php if ($count == 1): ?>
+
           <!-- start -->
           <div class="container">
             <!-- top side  -->
@@ -225,7 +211,6 @@ include '../../_head.php';
             </div>
             <!-- the end  -->
           </div>
-        <?php endif ?>
       <?php endforeach ?>
     </div>
   </div>
