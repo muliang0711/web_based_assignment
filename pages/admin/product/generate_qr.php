@@ -2,7 +2,7 @@
 require __DIR__ . '/../../../db_connection.php'; 
 include_once __DIR__ . '/../../../vendor/autoload.php'; 
 require_once __DIR__ . '/../../../_base.php';
-
+include_once __DIR__ . "/../../../admin_login_guard.php";
 use Endroid\QrCode\Builder\Builder;
 use Endroid\QrCode\Encoding\Encoding;
 use Endroid\QrCode\Writer\PngWriter;

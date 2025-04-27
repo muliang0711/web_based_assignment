@@ -2,6 +2,7 @@
 require_once "../../../db_connection.php";
 require_once "../../../controller/productManager.php";
 include __DIR__ . "/../../../controller/stockManager.php";
+include_once __DIR__ . "/../../../admin_login_guard.php";
 $productID    = $_GET['productID'] ?? '';
 $sizeID       = $_GET['sizeID'] ?? '';
 
