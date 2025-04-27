@@ -2,11 +2,11 @@
 require '../../_base.php';
 
 $title = 'View Customer';
-$stylesheetArray = ['/css/admin_customer_detail.css','/css/admin_customer.css'];
-$scriptArray = ['/js/app.js', '/js/admin.js'];
+$stylesheetArray = ['/css/admin_customer_detail.css','/css/admin_customer.css', '/css/zoomable-img.css'];
+$scriptArray = ['/js/app.js', '/js/admin.js', '/js/zoomable-img.js'];
 
-require_once  "../admin/main.php";
 include '../../admin_login_guard.php';
+require_once  "../admin/main.php";
 ?>
 
 <?php
@@ -50,6 +50,12 @@ if (!isset($order_items) || !is_array($order_items)) {
 }
 ?>
 
+<!-- Modal Zoom Viewer -->
+<div id="imageModal" class="modal">
+  <span class="close">&times;</span>
+  <img class="modal-content" id="zoomedImage">
+</div>
+
 <div class="main-content" style="  margin-left: var(--sidebar-width);
   margin-top: 50px;
   padding: 1rem;">
@@ -59,7 +65,11 @@ if (!isset($order_items) || !is_array($order_items)) {
     <table class="customer_container customer_detail">
         <tr>
             <th>Picture</th>
-            <td><?= htmlspecialchars($s->profilePic) ?></td>
+            <?php if ($s->profilePic): ?>
+            <td><img class="profile-image zoomable-img" src="/File/user-profile-pics/<?= htmlspecialchars($s->profilePic) ?>"/></td>
+            <?php else: ?>
+            <td><i>No profile image added</i></td>
+            <?php endif ?>
         </tr>
         <tr>
             <th>User Id</th>

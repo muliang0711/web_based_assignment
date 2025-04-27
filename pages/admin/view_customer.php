@@ -5,8 +5,8 @@ $title = 'View Customer';
 $stylesheetArray = ['/css/admin_product.css', '/css/admin_customer.css'];   // 注意：这边只放特定于此页面的 .css file(s)。所有 admin 页面都会用到的 .css files 应放在 /css/admin.css
 $scriptArray = ['/js/app.js'];       // 注意：这边只放特定于此页面的 .js file(s)。所有 admin 页面都会用到的 .js files 应放在 /js/admin.js
 
-require_once  "../admin/main.php";
 include '../../admin_login_guard.php';
+require_once  "../admin/main.php";
 ?>
 <?php
 $fields = [
@@ -43,16 +43,9 @@ padding: 1rem;">
     <?= html_search('username', 'Search customer name...', 'padding: 6px; border-radius: 4px; border: 1px solid #ccc; width: 200px;') ?>
 
       
-    <button onclick="playSound()" type="submit">Search</button>
-      <audio id="clickSound" src="../../sound/click.mp3"></audio>
+    <button  type="submit">Search</button>
+     
 
-    <script>
-    function playSound() {
-        const audio = document.getElementById("clickSound");
-        audio.currentTime = 0; // 每次点击从头播放
-        audio.play();
-  }
-</script>
     </form>
     </div>
     <div style="position: absolute; right: 0;">
@@ -80,20 +73,23 @@ padding: 1rem;">
         <th>Action</th> 
                 </tr>
                 <?php foreach ($arr as $c): ?>
-                    <tr class="row">
+                    <tr class="row <?php if ($c->isDeleted == 1) echo 'deletedAccount' ?>"> <!-- If $c is a record of a deleted account, apply the CSS class `deletedAccount` to it to gray out the row. -->
                         <td class="content td"><?= $c->userID ?></td>
                         <td class="content td"><?= $c->username ?></td>
                         <td class="content td"><?= $c->phoneNo ?></td>
-                        <td class="content td"><?= $c->memberStatus ?></td>
+                        <td class="content td"><?= $c->isDeleted == 1 ? 'Deleted' : $c->memberStatus ?></td> <!-- If this record is a deleted account, show "Deleted". If not, show memberStatus, which is either "Active" or "Blocked". -->
                         <td class="content td">
                             <div class="action">
                                 <button class="action-btn-details" data-get="customer_detail.php?userID=<?= $c->userID ?>"><i class="fas fa-eye"></i></button>
                                 <?php if ($c->memberStatus=='Active'): ?>
-                                <button class="action-btn-delete" data-post="/pages/admin/blockCustomer.php?userID=<?= $c->userID ?>" data-confirm="Are you sure you want to block this user?"><i class="fas fa-ban"></i></button>
+                                <button <?php if ($c->isDeleted == 1) echo 'disabled' ?>onclick="playSound()" class="action-btn-delete" data-post="/pages/admin/blockCustomer.php?userID=<?= $c->userID ?>" data-confirm="Are you sure you want to block this user?"><i class="fas fa-ban"></i></button>
                                 <?php endif ?>
                                 <?php if ($c->memberStatus=='Blocked'): ?>
-                                <button class="action-btn-unblocked" data-post="/pages/admin/unblockCustomer.php?userID=<?= $c->userID ?>" data-confirm="Are you sure you want to unblock this user?"><i class="fas fa-unlock"></i></button>
+                                <button <?php if ($c->isDeleted == 1) echo 'disabled' ?>onclick="playSound()" class="action-btn-unblocked" data-post="/pages/admin/unblockCustomer.php?userID=<?= $c->userID ?>" data-confirm="Are you sure you want to unblock this user?"><i class="fas fa-unlock"></i></button>
+                                 
+
                                 <?php endif ?>
+                                <audio id="clickSound" src="../../sound/m4.mp3"></audio>
                             </div>
                         </td>
 
@@ -108,7 +104,13 @@ padding: 1rem;">
                                 </div>
 </div>
 
-
+<script>
+    function playSound() {
+        const audio = document.getElementById("clickSound");
+        audio.currentTime = 0; // 每次点击从头播放
+        audio.play();
+  }
+</script>
 <?php
 require '../../admin_foot.php';
 ?>

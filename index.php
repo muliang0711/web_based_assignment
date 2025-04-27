@@ -15,11 +15,11 @@ include '_head.php';
 <section class="main-section">
     <h1> Categories </h1>
     <div class="categories">
-        <div class="cateOne"><a onclick="onclick()" href="/pages/product/searchResult.php?search=AeroSharp">AeroSharp</a></div>
-        <div class="cateTwo"><a onclick="onclick()" href="/pages/product/searchResult.php?search=Phantom">Phantom</a></div>
-        <div class="cateThree"><a onclick="onclick()" href="/pages/product/searchResult.php?search=Shadow">Shadow</a></div>
-        <div class="cateFour"><a onclick="onclick()" href="/pages/product/searchResult.php?search=TurboSmash">TurboSmash</a></div>
-        <div class="cateFive"><a onclick="onclick()" href="/pages/product/searchResult.php?search=ThunderStrike">ThunderStrike</a></div>
+        <div class="categ-black"><a href="/pages/product/searchResult.php?search=AeroSharp">AeroSharp</a></div>
+        <div class="categ-gray"><a href="/pages/product/searchResult.php?search=Phantom">Phantom</a></div>
+        <div class="categ-black"><a href="/pages/product/searchResult.php?search=Shadow">Shadow</a></div>
+        <div class="categ-gray"><a href="/pages/product/searchResult.php?search=TurboSmash">TurboSmash</a></div>
+        <div class="categ-black"><a href="/pages/product/searchResult.php?search=ThunderStrike">ThunderStrike</a></div>
     </div>
     <h1>Here's some random text for scrolling lol</h1>
     Lorem ipsum, dolor sit amet consectetur adipisicing elit. Architecto animi a esse minima dolores temporibus saepe nihil, vitae distinctio aut. Ea neque voluptatum quo incidunt porro eos minus, veniam necessitatibus?

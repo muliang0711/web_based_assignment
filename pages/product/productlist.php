@@ -122,7 +122,7 @@ include '../../_head.php';
     AND price BETWEEN $min_price AND $max_price 
     ORDER BY price $order",
         [],
-        "6", // Reminder: the `limit` parameter of the SimplePager constructor must be a string, e.g. "10". Can't pass an int due to the use of ctype_digit(). This behavior seems to be deliberate (look up the constructor definition), which makes it weirder. 
+        "8", // Reminder: the `limit` parameter of the SimplePager constructor must be a string, e.g. "10". Can't pass an int due to the use of ctype_digit(). This behavior seems to be deliberate (look up the constructor definition), which makes it weirder. 
         $page
       );
       $arr = $p->result;
@@ -164,53 +164,68 @@ include '../../_head.php';
 
     <!-- product listing -->
     <div class="list" id="productList">
-      <?php
-      foreach ($arr as $productObject): ?>
-        <!-- start -->
-        <div class="container">
-          <!-- top side  -->
-          <div class="product-card">
-            <div class="top-side">
-              <div class="true-card">
-                <div class="picture-card">
-                  <div class="picture">
-                    <img width="150px" height="250px" id="productImage" src="../../../File/<?php echo  $productObject->image_path; ?>" alt="Product Image" />
+      <?php $count = 2 ?>
+      <?php foreach ($arr as $productObject): ?>
+        <?php $stmt = $_db->prepare("SELECT productID FROM product_images WHERE productID = ? AND image_type = 'product'");
+        $stmt->execute([$productObject->productID]);
+        $result = $stmt->fetch();
+        $ID = $result->productID; 
+        $countstmt = $_db->prepare("SELECT COUNT(productID) AS count FROM product_images WHERE productID = ? AND image_type = 'product'");
+        $countstmt->execute([$productObject->productID]);
+        $countResult = $countstmt->fetch();
+        $num = $countResult->count; 
+        if($num == 1){
+          $count = $num;
+        }
+         if($num > 1){
+          $count--;
+        }?>
+        <?php if ($count == 1): ?>
+          <!-- start -->
+          <div class="container">
+            <!-- top side  -->
+            <div class="product-card">
+              <div class="top-side">
+                <div class="true-card">
+                  <div class="picture-card">
+                    <div class="picture">
+                      <img width="150px" height="250px" id="productImage" src="../../../File/<?php echo  $productObject->image_path; ?>" alt="Product Image" />
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <!-- middle side  -->
-            <div class="middle-side">
-              <div class="true-card">
-                <div class="information">
-                  <div class="product-name dsc">
-                    <h2><?php echo $productObject->productName ?></h2>
+              <!-- middle side  -->
+              <div class="middle-side">
+                <div class="true-card">
+                  <div class="information">
+                    <div class="product-name dsc">
+                      <h2><?php echo $productObject->productName ?></h2>
+                    </div>
+                    <div class="product-series-name dsc"><span>
+                        <p>RM <?php echo $productObject->price ?>.00</p>
+                      </span></div>
+                    <div class="size-id dsc"><span>3UG5 / 4UG5</span></div>
                   </div>
-                  <div class="product-series-name dsc"><span>
-                      <p>RM <?php echo $productObject->price ?>.00</p>
-                    </span></div>
-                  <div class="size-id dsc"><span>3UG5 / 4UG5</span></div>
                 </div>
               </div>
-            </div>
-            <!-- bottom side  -->
-            <div class="bottom-side">
-              <div class="true-card">
-                <div class="function">
-                  <!-- <div class="btn"><button class="btn">Add to Cart</button></div>
+              <!-- bottom side  -->
+              <div class="bottom-side">
+                <div class="true-card">
+                  <div class="function">
+                    <!-- <div class="btn"><button class="btn">Add to Cart</button></div>
                 <div class="btn"><button class="btn">Buy</button></div> -->
-                  <div class="btn"><button class="btn" onclick="window.location.href='../product/productDetail.php?racket=<?php echo $productObject->productID ?>'">View Details</button></div>
-                  <!--<?php //if (!$userID) {
-                      //prompt_user_login("Please log in to add to cart.");
-                      //}
-                      ?> -->
+                    <div class="btn"><button class="btn" onclick="window.location.href='../product/productDetail.php?racket=<?php echo $productObject->productID ?>'">View Details</button></div>
+                    <!--<?php //if (!$userID) {
+                        //prompt_user_login("Please log in to add to cart.");
+                        //}
+                        ?> -->
+                  </div>
                 </div>
               </div>
             </div>
+            <!-- the end  -->
           </div>
-          <!-- the end  -->
-        </div>
-
+        <?php endif ?>
       <?php endforeach ?>
     </div>
   </div>

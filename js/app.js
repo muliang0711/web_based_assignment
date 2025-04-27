@@ -35,9 +35,9 @@ $(() => {
     
     // Confirmation message
     $('[data-confirm]').on('click', e => {
-        // sometimes the element that triggers this event handler might not be the <button> but its child. 
-        // this ensures that we get the [data-confirm] text from the <button>, even if we clicked on one of its children.
-        const button = e.target.closest('button'); 
+        // sometimes the element that triggers this event handler might not be the actual element with [data-confirm] but its child. 
+        // this ensures that we get the [data-confirm] text from the element with [data-confirm] (not necessarily a <button>), even if we clicked on one of its children.
+        const button = e.target.closest('[data-confirm]'); 
         const text = button.dataset.confirm || 'Are you sure?';
 
         if (!confirm(text)) {
@@ -48,8 +48,8 @@ $(() => {
 
     // Initiate GET request
     $('[data-get]').on('click', e => {
-        // sometimes the element that triggers this event handler might not be the <button> but its child. 
-        // this ensures that we get the [data-confirm] text from the <button>, even if we clicked on one of its children.
+        // sometimes the element that triggers this event handler might not be the actual element with [data-get] but its child. 
+        // this ensures that we get the [data-get] text from the element (not necessarily a button), even if we clicked on one of its children.
         const button = e.target.closest('button'); 
         
         e.preventDefault();
@@ -75,7 +75,9 @@ $(() => {
     // there's also an added functionality: you can define the id of the <form> created, so as to link to <input>s outside the <form> with the same form id
     $('[data-real-post]').on('click', e => {
         e.preventDefault();
-        const button = e.target.closest('button');
+        // sometimes the element that triggers this event handler might not be the actual element with [data-real-post] but its child. 
+        // this ensures that we get the [data-real-post] text from the actual element with [data-real-post] (not necessarily a button), even if we clicked on one of its children.
+        const button = e.target.closest('[data-real-post]');
         const url = button?.dataset.realPost;
         if (!url) return;
     
@@ -220,5 +222,10 @@ $(() => {
     });
 
     
-    
+    function playSound() {
+        const audio = document.getElementById("clickSound");
+        audio.currentTime = 0; // 每次点击从头播放
+        audio.play();
+  }
+
 });

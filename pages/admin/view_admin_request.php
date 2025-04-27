@@ -5,8 +5,8 @@ $title = 'Admin Management';
 $stylesheetArray = ['/css/admin_management.css'];   // 注意：这边只放特定于此页面的 .css file(s)。所有 admin 页面都会用到的 .css files 应放在 /css/admin.css
 
 $scriptArray = ['/js/app.js'];       // 注意：这边只放特定于此页面的 .js file(s)。所有 admin 页面都会用到的 .js files 应放在 /js/admin.js
-require __DIR__ . "/../admin/main.php";
 include '../../admin_login_guard.php';
+require __DIR__ . "/../admin/main.php";
 auth("admin", "main");
 ?>
 
@@ -60,12 +60,14 @@ $p = new Pager("SELECT * FROM blockeduser WHERE role ='staff' AND status='reques
                         <td class="td"><?= $a->blockedUserID ?></td>
                         <td class="td"><?= $a->appealReason ?></td>
                         <td class="td">
-                        <button class="action-btn-unblocked" data-post="/pages/admin/unblockAdmin.php?id=<?= $a->blockedUserID  ?> " 
+                        <button onclick="playSoundE()" class="action-btn-unblocked" data-post="/pages/admin/unblockAdmin.php?id=<?= $a->blockedUserID  ?> " 
                         data-confirm="Are you sure you want to unblock this user?"><i class="fas fa-unlock"></i></button>
-                       
-                        <button class="action-btn-delete" data-post="/pages/admin/rejectUnblock.php?blockedUserID=<?= $a->blockedUserID ?>&role=<?= $a->role ?>" 
-                        data-confirm="Are you sure you want to reject unblock this user?"><i class="fa-solid fa-xmark"></i></button>
+                        <audio id="clickSoundE" src="../../sound/m4.mp3"></audio>
 
+
+                        <button onclick="playSoundB()" class="action-btn-delete" data-post="/pages/admin/rejectUnblock.php?blockedUserID=<?= $a->blockedUserID ?>&role=<?= $a->role ?>" 
+                        data-confirm="Are you sure you want to reject unblock this user?"><i class="fa-solid fa-xmark"></i></button>
+                        <audio id="clickSoundB" src="../../sound/m5.mp3"></audio>
                     </td>
 
                     </tr>
@@ -83,6 +85,20 @@ $p = new Pager("SELECT * FROM blockeduser WHERE role ='staff' AND status='reques
     </div>
 
 </div>
+<script>
+    function playSoundE() {
+        const audio = document.getElementById("clickSoundE");
+        audio.currentTime = 0; // 每次点击从头播放
+        audio.play();
+  }
+</script>
+<script>
+    function playSoundB() {
+        const audio = document.getElementById("clickSoundB");
+        audio.currentTime = 0; // 每次点击从头播放
+        audio.play();
+  }
+</script>
 <?php
 require '../../admin_foot.php';
 ?>

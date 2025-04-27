@@ -28,12 +28,13 @@ $(() => {
         const img = new Image();
         img.src = URL.createObjectURL(f);
         img.onload = function () {
+            // NOTE: no need validate dimension la. PHP will auto-resize image also. Big big dimension also nvm one.
             // 3. Validate image dimension
-            const maxWidth = 1920, maxHeight = 1080;
-            if (img.width > maxWidth || img.height > maxHeight) {
-                $errorMsg.html(`Image dimensions must be at most ${maxWidth}x${maxHeight}px!`);
-                return;
-            }
+            // const maxWidth = 1920, maxHeight = 1080;
+            // if (img.width > maxWidth || img.height > maxHeight) {
+            //     $errorMsg.html(`Image dimensions must be at most ${maxWidth}x${maxHeight}px!`);
+            //     return;
+            // }
 
             // At this point, image is valid and loaded
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 26, 2025 at 02:18 PM
+-- Generation Time: Apr 27, 2025 at 03:02 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -160,7 +160,7 @@ DROP TABLE IF EXISTS `blockeduser`;
 CREATE TABLE `blockeduser` (
   `blockedUserID` varchar(15) NOT NULL,
   `role` enum('user','staff') NOT NULL,
-  `blockedReason` varchar(30) DEFAULT NULL,
+  
   `status` enum('-','reject','request') NOT NULL,
   `appealReason` varchar(30) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -168,52 +168,77 @@ CREATE TABLE `blockeduser` (
 --
 -- Dumping data for table `blockeduser`
 --
+INSERT INTO `blockeduser` (`blockedUserID`, `role`, `status`, `appealReason`) VALUES
+('10', 'user', 'request', 'Not Me'),
+('12', 'user', 'request', 'Not Me'),
+('13', 'user', 'request', 'Not Me'),
+('14', 'user', 'request', 'Not Me'),
+('16', 'user', 'request', 'Not Me'),
+('17', 'user', 'request', 'Not Me'),
+('19', 'user', 'request', 'Not Me'),
+('1N6SuAbpK6', 'staff', '-', NULL),
+('20', 'user', 'request', 'Not Me'),
+('23', 'user', 'request', 'Not Me'),
+('27', 'user', 'request', 'Not Me'),
+('28', 'user', 'request', 'Not Me'),
+('30', 'user', 'request', 'Not Me'),
+('32', 'user', 'request', 'Not Me'),
+('34', 'user', 'request', 'Not Me'),
+('35', 'user', 'request', 'Not Me'),
+('3nca0DuNF0', 'staff', 'request', 'Wrongfully accused'),
+('40', 'user', 'request', 'Not Me'),
+('41', 'user', 'request', 'Not Me'),
+('44', 'user', 'request', 'Not Me'),
+('45', 'user', 'request', 'Not Me'),
+('47', 'user', 'request', 'Not Me'),
+('49', 'user', 'request', 'Not Me'),
+('51', 'user', 'request', 'Not Me'),
+('53', 'user', 'request', 'Not Me'),
+('7rwKpgKwFO', 'staff', '-', NULL),
+('8', 'user', 'request', 'Not Me'),
+('8yab2LZSUS', 'staff', '-', NULL),
+('9', 'user', 'request', 'Not Me'),
+('A002', 'staff', '-', ''),
+('A4FDSheqRt', 'staff', 'reject', 'Please reconsider'),
+('bNiwkROGri', 'staff', 'reject', 'Wrongfully accused'),
+('bQeJ0Icbm8', 'staff', 'request', 'Wrongfully accused'),
+('DhzbQs12Fk', 'staff', '-', NULL),
+('EbpShAA6QW', 'staff', 'reject', 'I didn’t do it'),
+('ecr2A1CGTk', 'staff', 'request', 'I didn’t do it'),
+('EQG9j5jgLl', 'staff', 'reject', 'Please reconsider'),
+('ERQbmWz3Op', 'staff', 'reject', NULL),
+('GG5Z90YTn3', 'staff', 'request', 'I didn’t do it'),
+('gILvMJJHyp', 'staff', '-', NULL),
+('hBxLANqjk7', 'staff', 'request', 'I didn’t do it'),
+('HlmIHicjfg', 'staff', 'reject', 'I didn’t do it'),
+('I3nwtleBeQ', 'staff', '-', NULL),
+('i7ExTJIRWv', 'staff', 'reject', 'Wrongfully accused'),
+('j1ZhBvPP0i', 'staff', '-', NULL),
+('J9HKUi5pUn', 'staff', '-', NULL),
+('kUp05RrUWS', 'staff', '-', NULL),
+('MI4XVlD2Sd', 'staff', 'request', 'Please reconsider'),
+('N5t5NOb4nn', 'staff', 'request', 'Please reconsider'),
+('nzKrVHBroR', 'staff', '-', NULL),
+('oJwMOdJVUB', 'staff', 'reject', 'I didn’t do it'),
+('OO8dVOEe9J', 'staff', '-', NULL),
+('p18MXFHwgb', 'staff', '-', NULL),
+('Pwtar3fdb9', 'staff', 'request', 'Wrongfully accused'),
+('QefDzEF6GA', 'staff', '-', NULL),
+('QUohyKyv1r', 'staff', 'request', 'Please reconsider'),
+('rBH7ScbILA', 'staff', 'reject', 'Wrongfully accused'),
+('S8SStA0xe9', 'staff', '-', NULL),
+('S9xGaudFEa', 'staff', '-', NULL),
+('SnIFuQy45E', 'staff', 'reject', 'I didn’t do it'),
+('SohrjZNStE', 'staff', 'reject', 'I didn’t do it'),
+('sQ7s3j9lkM', 'staff', 'reject', 'I didn’t do it'),
+('tr48dbk3Pt', 'staff', 'request', 'Wrongfully accused'),
+('WRgkDAKktf', 'staff', 'request', 'Please reconsider'),
+('WUvKMgl2qh', 'staff', 'request', 'I didn’t do it'),
+('WXNVkHS8ce', 'staff', '-', NULL),
+('YXBfQ8AzCF', 'staff', 'request', 'I didn’t do it'),
+('Z2XQzNUNkV', 'staff', 'reject', 'Wrongfully accused'),
+('zGC0udksdn', 'staff', '-', NULL);
 
-INSERT INTO `blockeduser` (`blockedUserID`, `role`, `blockedReason`, `status`, `appealReason`) VALUES
-('0Adjmlte9d', 'staff', 'Violation', 'reject', 'Wrongfully accused'),
-('1N6SuAbpK6', 'staff', 'Spam', '-', NULL),
-('3nca0DuNF0', 'staff', 'Violation', 'request', 'Wrongfully accused'),
-('7rwKpgKwFO', 'staff', 'Policy breach', '-', NULL),
-('8yab2LZSUS', 'staff', 'Policy breach', '-', NULL),
-('A4FDSheqRt', 'staff', 'Policy breach', 'reject', 'Please reconsider'),
-('bNiwkROGri', 'staff', 'Spam', 'reject', 'Wrongfully accused'),
-('bQeJ0Icbm8', 'staff', 'Spam', 'request', 'Wrongfully accused'),
-('DhzbQs12Fk', 'staff', 'Spam', '-', NULL),
-('EbpShAA6QW', 'staff', 'Spam', 'reject', 'I didn’t do it'),
-('ecr2A1CGTk', 'staff', 'Policy breach', 'request', 'I didn’t do it'),
-('EQG9j5jgLl', 'staff', 'Policy breach', 'reject', 'Please reconsider'),
-('ERQbmWz3Op', 'staff', 'Suspicious login', 'reject', NULL),
-('GG5Z90YTn3', 'staff', 'Spam', 'request', 'I didn’t do it'),
-('gILvMJJHyp', 'staff', 'Policy breach', '-', NULL),
-('hBxLANqjk7', 'staff', 'Spam', 'request', 'I didn’t do it'),
-('HlmIHicjfg', 'staff', 'Spam', 'reject', 'I didn’t do it'),
-('I3nwtleBeQ', 'staff', 'Policy breach', '-', NULL),
-('i7ExTJIRWv', 'staff', 'Violation', 'reject', 'Wrongfully accused'),
-('j1ZhBvPP0i', 'staff', 'Spam', '-', NULL),
-('J9HKUi5pUn', 'staff', 'Policy breach', '-', NULL),
-('kUp05RrUWS', 'staff', 'Spam', '-', NULL),
-('MI4XVlD2Sd', 'staff', 'Violation', 'request', 'Please reconsider'),
-('N5t5NOb4nn', 'staff', 'Violation', 'request', 'Please reconsider'),
-('nzKrVHBroR', 'staff', 'Policy breach', '-', NULL),
-('oJwMOdJVUB', 'staff', 'Suspicious login', 'reject', 'I didn’t do it'),
-('OO8dVOEe9J', 'staff', 'Suspicious login', '-', NULL),
-('p18MXFHwgb', 'staff', 'Policy breach', '-', NULL),
-('Pwtar3fdb9', 'staff', 'Suspicious login', 'request', 'Wrongfully accused'),
-('QefDzEF6GA', 'staff', 'Spam', '-', NULL),
-('QUohyKyv1r', 'staff', 'Suspicious login', 'request', 'Please reconsider'),
-('rBH7ScbILA', 'staff', 'Suspicious login', 'reject', 'Wrongfully accused'),
-('S8SStA0xe9', 'staff', 'Violation', '-', NULL),
-('S9xGaudFEa', 'staff', 'Spam', '-', NULL),
-('SnIFuQy45E', 'staff', 'Policy breach', 'reject', 'I didn’t do it'),
-('SohrjZNStE', 'staff', 'Violation', 'reject', 'I didn’t do it'),
-('sQ7s3j9lkM', 'staff', 'Suspicious login', 'reject', 'I didn’t do it'),
-('tr48dbk3Pt', 'staff', 'Suspicious login', 'request', 'Wrongfully accused'),
-('WRgkDAKktf', 'staff', 'Violation', 'request', 'Please reconsider'),
-('WUvKMgl2qh', 'staff', 'Spam', 'request', 'I didn’t do it'),
-('WXNVkHS8ce', 'staff', 'Policy breach', '-', NULL),
-('YXBfQ8AzCF', 'staff', 'Violation', 'request', 'I didn’t do it'),
-('Z2XQzNUNkV', 'staff', 'Policy breach', 'reject', 'Wrongfully accused'),
-('zGC0udksdn', 'staff', 'Policy breach', '-', NULL);
 
 -- --------------------------------------------------------
 
@@ -252,8 +277,23 @@ CREATE TABLE `messages` (
   `senderID` int(11) NOT NULL,
   `adminID` varchar(10) NOT NULL,
   `content` varchar(200) NOT NULL,
-  `sent_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `sent_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `userSent` tinyint(4) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `messages`
+--
+
+INSERT INTO `messages` (`messageID`, `senderID`, `adminID`, `content`, `sent_at`, `userSent`) VALUES
+(55, 6, 'A001', 'i wanna know how', '2025-04-27 00:58:28', 1),
+(56, 6, 'A001', 'wdym', '2025-04-27 00:58:40', 0),
+(57, 55, 'A001', 'just wanted to ask something', '2025-04-27 01:00:06', 1),
+(58, 55, 'A001', 'alright no problem! 🥰', '2025-04-27 01:00:40', 0),
+(59, 55, 'A001', 'gotcha! 😁', '2025-04-27 01:00:56', 1),
+(60, 6, 'A001', 'nothing much', '2025-04-27 01:01:38', 1),
+(61, 6, 'A001', 'ok i see whatchu mean', '2025-04-27 01:01:51', 0),
+(62, 6, 'A001', 'your price is too high 😢', '2025-04-27 01:02:04', 1);
 
 -- --------------------------------------------------------
 
@@ -437,7 +477,6 @@ INSERT INTO `product` (`productID`, `productName`, `price`, `seriesID`, `introdu
 
 --
 -- Table structure for table `productstock`
---
 --
 
 DROP TABLE IF EXISTS `productstock`;
@@ -987,7 +1026,55 @@ INSERT INTO `user` (`userID`, `username`, `passwordHash`, `address`, `birthdate`
 (4, 'cookie2', '$2y$10$j3VTdYyGhsqKo8f0Fn1NMe1lt2Kr9fLKJLEW.AXALN6J6EVqCTpFy', NULL, NULL, 'jasonlhtown@gmail.com', 0, NULL, 'R', NULL, NULL, 'Active', 0),
 (5, 'cookie', '$2y$10$8CTUED9iJRZu/B4rNLnVge75vzIivuBxiiOM2nNuV8LDQyO.SLrum', NULL, NULL, 'cookie@mail.com', 0, NULL, 'R', NULL, NULL, 'Active', 1),
 (6, 'cookie', '$2y$10$9NRvfqQwZ9276XmS1BYob.ZsLtRPZ8.2RAo4K.O8r2sWRGqJC0Nx6', NULL, NULL, 'cookie@mail.com', 0, NULL, 'R', NULL, NULL, 'Active', 0),
-(7, 'cookie3', '$2y$10$.zhdWmdm3mkXIwefOI.9IeHO1vrboeWbKDcYhob0lpwqAH6iluPaq', NULL, NULL, 'haha@mail.com', 0, NULL, 'R', NULL, NULL, 'Active', 0);
+(7, 'cookie3', '$2y$10$.zhdWmdm3mkXIwefOI.9IeHO1vrboeWbKDcYhob0lpwqAH6iluPaq', NULL, NULL, 'haha@mail.com', 0, NULL, 'R', NULL, NULL, 'Active', 0),
+(8, 'dlewis', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '2404 Vincent Lake Apt. 343, Lake Suzanne, MI 50120', '1992-09-10', 'anelson@hotmail.com', 1, '(262)205-8820', 'F', 'profPic3.jpg', 'Professional overthinker. I put the \"mental\" in \"fundamental\". Currently training my cat to bring me snacks - so far he just brings me dead bugs.', 'Blocked', 0),
+(9, 'eric36', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '66386 Murphy Garden Apt. 911, West Edgar, WA 26275', '1985-06-14', 'thomaspearson@gmail.com', 1, '(329)906-3769', 'F', 'profPic5.jpg', 'I\'m not weird, I\'m a limited edition. My hobbies include arguing with inanimate objects and pretending to remember people\'s names.', 'Blocked', 1),
+(10, 'lisa26', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '9676 Edwards Fork, Gregorytown, MD 02923', '1988-08-09', 'ruizmelissa@yahoo.com', 1, '001-504-468-814', 'R', 'profPic9.jpg', 'I\'m not short, I\'m concentrated awesome. My spirit animal is a disgruntled panda who just wants to eat bamboo in peace.', 'Blocked', 0),
+(11, 'omurray', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '969 Monica Wells Apt. 367, Port Rebecca, DE 41245', '1990-03-09', 'ksolis@yahoo.com', 0, '001-023-170-243', 'M', 'profPic6.jpg', 'I\'m not arguing, I\'m just passionately expressing my point of view while completely dismissing yours. Also, I can recite the entire script of The Princess Bride backwards.', 'Active', 0),
+(12, 'perezgloria', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '005 David Cliff, South Shelby, VT 49228', '2002-07-20', 'charlesbrown@rodriguez.com', 0, '(283)461-0606', 'F', 'profPic5.jpg', 'I\'m not a morning person, not an afternoon person, and definitely not an evening person. Basically, I\'m not a person until I\'ve had coffee.', 'Blocked', 0),
+(13, 'martinezdarryl', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '499 Rodriguez Brook, Tyroneburgh, RI 91186', '1992-10-19', 'sarahnelson@mccall-lopez.com', 0, '+1-000-962-1322', 'R', 'profPic5.jpg', 'I\'m not lazy, I\'m just on energy-saving mode. My spirit animal is a sloth riding a turtle while reading a \"Go Faster\" manual.', 'Blocked', 0),
+(14, 'brianmoore', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '128 Beasley Tunnel, Lake Rebeccaland, AK 42809', '1991-04-03', 'rgreen@gmail.com', 1, '479.858.7590', 'M', 'profPic3.jpg', 'I\'m not arguing, I\'m just explaining why I\'m right. Also, I can identify over 50 different species of dinosaurs but can\'t remember what I had for breakfast.', 'Blocked', 0),
+(15, 'travissmith', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '3346 King Ridges, Keithbury, IN 16341', '1992-10-21', 'jkelley@christensen.com', 1, '(741)317-4475x3', 'M', 'profPic7.jpg', 'I put the \"pro\" in procrastination. Currently writing a novel in my head - the hard part is transferring it to paper. Maybe tomorrow.', 'Active', 0),
+(16, 'maddenjordan', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '49087 Michael Mall, Bryanview, AZ 08019', '2005-12-22', 'zknapp@gmail.com', 0, '398-229-0996x32', 'R', 'profPic8.jpg', 'I\'m not short, I\'m fun-sized. My spirit animal is a raccoon who\'s just discovered espresso. I can quote entire episodes of The Office but can\'t remember my own phone number.', 'Blocked', 0),
+(17, 'wbaker', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '4376 Bailey Trail, Martinside, AZ 90015', '2005-03-26', 'twashington@sanchez.com', 0, '297.509.6645x65', 'M', 'profPic4.jpg', 'I\'m not arguing, I\'m just explaining why I\'m right in a loud voice. My hobbies include misplacing important items and finding them immediately after replacing them.', 'Blocked', 0),
+(18, 'adavis', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '15863 Wright Mission Apt. 422, Christopherport, HI 03357', '2003-08-22', 'houstongary@lloyd-jones.com', 0, '139.125.8003', 'R', 'profPic3.jpg', 'I\'m not weird, I\'m a limited edition. My brain has too many tabs open and they\'re all playing different songs at the same time.', 'Active', 1),
+(19, 'sjohnson', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '79042 David Green Apt. 431, Carloston, MI 74458', '1985-06-08', 'smithpatricia@hebert.com', 1, '201-566-6201', 'R', 'profPic5.jpg', 'I\'m not lazy, I\'m just in energy-saving mode. My spirit animal is a cat who knocks things off tables while maintaining intense eye contact.', 'Blocked', 0),
+(20, 'yvettechapman', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '2802 Walters Fort, Berryland, MT 04537', '1997-11-09', 'oholt@yahoo.com', 1, '868.997.0626x55', 'F', 'profPic3.jpg', 'I\'m 98% caffeine and 2% questionable decisions. My hobbies include starting books I\'ll never finish and finishing snacks I probably shouldn\'t have started.', 'Blocked', 0),
+(21, 'pollardjames', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '003 Tammy Glens Apt. 598, Feliciabury, NJ 03941', '1996-05-04', 'sarah43@hall.biz', 1, '(347)814-3533', 'M', 'profPic1.jpg', 'I\'m not arguing, I\'m just explaining why I\'m right in a louder voice. My spirit animal is a honey badger who\'s had too much coffee.', 'Active', 1),
+(22, 'helliott', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '63621 Figueroa Roads, Kevinview, SC 96900', '2005-09-06', 'brooke59@schwartz.com', 1, '+1-851-356-7855', 'F', 'profPic3.jpg', 'I\'m not short, I\'m concentrated awesome. My hobbies include correcting people\'s grammar and then immediately making typos in my own messages.', 'Active', 0),
+(23, 'kylegarrison', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '7880 Green Divide, Joshuaport, TN 37606', '1989-02-09', 'ayersbrandon@gmail.com', 0, '+1-661-839-2761', 'F', 'profPic4.jpg', 'I\'m not weird, I\'m a limited edition. My brain is like an internet browser: 20 tabs open, 3 are frozen, and I have no idea where the music is coming from.', 'Blocked', 0),
+(24, 'rebecca12', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '486 Flores Spurs, North Stephaniefort, NY 27735', '1993-08-31', 'lorimartin@fisher.com', 1, '+1-026-125-4810', 'F', 'profPic7.jpg', 'I\'m not lazy, I\'m just on energy-saving mode. My spirit animal is a sloth riding a turtle with a \"Go Faster\" bumper sticker.', 'Active', 0),
+(25, 'vowens', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '7895 Jesse Cliffs, Kellyburgh, FL 43772', '2004-12-15', 'barronadrian@tate.com', 1, '001-129-593-543', 'M', 'profPic2.jpg', 'I speak fluent sarcasm and bad decisions. Currently writing my autobiography: \"I Can\'t Believe It\'s Not Better\"', 'Active', 0),
+(26, 'brookehanson', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '668 Cruz Loop Apt. 558, Jenniferchester, IL 19115', '1986-05-27', 'arielallen@hotmail.com', 1, '1018329202', 'R', 'profPic6.jpg', 'I\'m 99% caffeine and 1% questionable life choices. My hobbies include starting projects with enthusiasm and finishing them with existential dread.', 'Active', 0),
+(27, 'lbell', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '533 Jones Loaf Apt. 979, Michaelberg, NH 82682', '2003-09-19', 'jennifer07@olson.com', 1, '(149)397-3244x8', 'M', 'profPic4.jpg', 'I\'m not arguing, I\'m just explaining why I\'m right in a louder voice while waving my hands dramatically. Also, I can recite the entire script of Monty Python and the Holy Grail.', 'Blocked', 0),
+(28, 'qhicks', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '158 Meredith Gateway, Georgeshire, MN 03325', '1993-06-14', 'alexander89@gmail.com', 0, '+1-800-991-0780', 'R', 'profPic5.jpg', 'I\'m not short, I\'m concentrated awesome. My spirit animal is a disgruntled raccoon who\'s judging your life choices from the dumpster.', 'Blocked', 0),
+(29, 'jonescarolyn', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '126 William Loop Apt. 535, Port Stephanieside, LA 12818', '1999-11-03', 'cgonzalez@gmail.com', 1, '984-698-1356x48', 'R', 'profPic6.jpg', 'I\'m not weird, I\'m a limited edition. My brain has too many tabs open and they\'re all playing different songs at the same time while buffering.', 'Active', 1),
+(30, 'westnancy', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '22470 Angela Canyon, Thomasside, DC 46664', '1988-10-25', 'toddmunoz@hotmail.com', 1, '001-984-016-964', 'F', 'profPic7.jpg', 'I\'m not lazy, I\'m just in energy-saving mode. My spirit animal is a panda who\'s given up on bamboo and is now mainlining espresso.', 'Blocked', 0),
+(31, 'larsenbrandon', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '2346 Nathan Stream, East Robert, DE 77107', '1994-07-10', 'ikirk@sparks-mason.com', 0, '+1-741-420-8183', 'R', 'profPic2.jpg', 'I\'m 98% caffeine and 2% questionable decisions. My hobbies include misplacing important items and finding them immediately after replacing them.', 'Active', 1),
+(32, 'hollandandrew', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '8184 Taylor River Suite 237, Port David, MN 95270', '1998-08-03', 'byrdstephanie@hotmail.com', 0, '(921)488-4421', 'M', 'profPic10.jpg', 'I\'m not arguing, I\'m just explaining why I\'m right in a louder voice while waving my hands dramatically. Also, I can identify every Pokemon but can\'t remember where I left my keys.', 'Blocked', 0),
+(33, 'fberry', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '5604 Diane Trail, Johnton, IA 68097', '1988-01-09', 'michael19@peters-jackson.com', 1, '001-409-737-704', 'R', 'profPic1.jpg', 'I\'m not short, I\'m fun-sized. My spirit animal is a sloth riding a turtle with a \"Go Faster\" bumper sticker while reading a self-help book.', 'Active', 0),
+(34, 'jenny91', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '98181 Calvin Falls Suite 559, Shafferview, VA 66824', '1991-05-30', 'claytonleslie@johnson.com', 0, '(456)796-5426x1', 'R', 'profPic5.jpg', 'I\'m not weird, I\'m a limited edition. My brain is like an internet browser: 20 tabs open, 3 are frozen, and I have no idea where the music is coming from.', 'Blocked', 0),
+(35, 'reyesstephanie', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '2932 Flynn Extensions, West Shannon, MA 71984', '1998-05-18', 'sandersjanet@gmail.com', 0, '491-354-4593x72', 'R', 'profPic4.jpg', 'I\'m not lazy, I\'m just in energy-saving mode. My hobbies include starting books I\'ll never finish and finishing snacks I probably shouldn\'t have started.', 'Blocked', 0),
+(36, 'katiemendoza', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '96580 Pitts Ways Apt. 582, South Brandonmouth, IA 01797', '2004-11-15', 'jenny34@klein.net', 1, '+1-158-550-3110', 'R', 'profPic2.jpg', 'I speak fluent sarcasm and bad decisions. Currently writing my autobiography: \"Oops: A Series of Unfortunate Events\"', 'Active', 0),
+(37, 'ibaker', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '64769 Eileen Lodge Suite 503, New Monica, AL 58284', '1989-06-15', 'jshah@gmail.com', 1, '+1-232-584-0674', 'F', 'profPic9.jpg', 'I\'m 99% caffeine and 1% questionable life choices. My spirit animal is a raccoon who\'s just stolen your leftovers and is judging your Netflix queue.', 'Active', 0),
+(38, 'bryan52', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '0992 Sanchez Inlet, Garciafort, ND 86825', '2004-07-09', 'martinezjeremy@gmail.com', 0, '(566)252-8665x7', 'F', 'profPic5.jpg', 'I\'m not arguing, I\'m just explaining why I\'m right in a louder voice. My hobbies include correcting people\'s grammar and then immediately making typos in my own messages.', 'Active', 0),
+(39, 'matthewwilson', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '78843 Harmon Row, Kochton, MO 41029', '2005-08-28', 'meghanbishop@yahoo.com', 1, '127.827.7407x81', 'M', 'profPic3.jpg', 'I\'m not weird, I\'m a limited edition. My brain has too many tabs open and they\'re all playing different songs at the same time while buffering.', 'Active', 0),
+(40, 'toddhopkins', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '94211 William Valleys, Kathleenfort, NH 66752', '2007-02-17', 'moralesdaniel@hotmail.com', 1, '+1-089-971-3863', 'F', 'profPic6.jpg', 'I\'m not lazy, I\'m just on energy-saving mode. My spirit animal is a sloth riding a turtle with a \"Go Faster\" bumper sticker while reading a self-help book.', 'Blocked', 0),
+(41, 'herbert35', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '95360 Wright Forges, East Karenland, WI 45002', '1989-06-23', 'danielle36@gmail.com', 1, '001-592-697-970', 'R', 'profPic7.jpg', 'I speak fluent sarcasm and bad decisions. Currently writing my memoir: \"The Art of Selective Listening (When I Feel Like It)\"', 'Blocked', 0),
+(42, 'zacharyeaton', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '99338 Williams Hill, Port Alexisbury, TN 95919', '1985-07-09', 'maria64@gmail.com', 0, '657.411.0943', 'R', 'profPic8.jpg', 'I\'m not short, I\'m concentrated awesome. My hobbies include starting projects with enthusiasm and finishing them with existential dread.', 'Active', 0),
+(43, 'jason31', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '2434 Warren Lock Apt. 786, West Michael, LA 99802', '2001-01-15', 'wattsevelyn@yahoo.com', 0, '3393153990', 'M', 'profPic1.jpg', 'I\'m 98% caffeine and 2% questionable decisions. My spirit animal is a honey badger who\'s had too much coffee and is now questioning all life choices.', 'Active', 1),
+(44, 'donaldarias', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '93793 Amanda Locks, Ortizhaven, AK 57544', '2006-05-02', 'ashleydaniel@hotmail.com', 0, '+1-389-272-9299', 'F', 'profPic7.jpg', 'I\'m not arguing, I\'m just explaining why I\'m right in a louder voice. My hobbies include misplacing important items and finding them immediately after replacing them.', 'Blocked', 0),
+(45, 'jennifer60', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '79216 Russell Summit Apt. 775, Linchester, OH 88895', '2000-07-22', 'richardsongloria@hotmail.com', 0, '(675)684-7044x5', 'M', 'profPic1.jpg', 'I\'m not weird, I\'m a limited edition. My brain is like an internet browser: 20 tabs open, 3 are frozen, and I have no idea where the music is coming from.', 'Blocked', 0),
+(46, 'brandyrichard', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '08546 Cohen Plain Apt. 027, Beckshire, NC 75899', '2000-01-08', 'contreraslisa@hotmail.com', 1, '382.734.3641x00', 'M', 'profPic1.jpg', 'I\'m not lazy, I\'m just in energy-saving mode. My spirit animal is a panda who\'s given up on bamboo and is now mainlining espresso.', 'Active', 0),
+(47, 'xwhite', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '05259 Christopher Heights Suite 197, Marcburgh, MA 98772', '1994-11-29', 'gainesryan@yahoo.com', 1, '045.079.7332x92', 'M', 'profPic3.jpg', 'I speak fluent sarcasm and bad decisions. Currently writing my autobiography: \"I Can\'t Believe It\'s Not Better: The Director\'s Cut\"', 'Blocked', 0),
+(48, 'carlsonsherri', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '509 Kristine Mission, Wilsonland, MI 40445', '1990-04-20', 'djones@gmail.com', 1, '962.076.7835x73', 'M', 'profPic1.jpg', 'I\'m not short, I\'m concentrated awesome. My hobbies include correcting people who use \"literally\" figuratively and pretending to understand blockchain.', 'Active', 0),
+(49, 'dianecasey', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '3806 Berry Trafficway, New Monicashire, WI 90514', '1998-02-02', 'dgonzalez@vang.biz', 1, '+1-697-839-5454', 'F', 'profPic5.jpg', 'I\'m 99% caffeine and 1% questionable life choices. My spirit animal is a raccoon who\'s just stolen your leftovers and is judging your Netflix queue.', 'Blocked', 0),
+(50, 'baileytiffany', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '811 Dunn Village, North Jessicaside, NY 44776', '1994-12-10', 'kevin05@yahoo.com', 0, '001-049-881-906', 'M', 'profPic4.jpg', 'I\'m not arguing, I\'m just explaining why I\'m right in a louder voice while waving my hands dramatically. Also, I can recite the entire script of The Princess Bride backwards.', 'Active', 0),
+(51, 'andrew13', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '86344 Sara Fort, Phillipsfurt, MS 83572', '1987-10-17', 'stevenjackson@sanders-trujillo.info', 1, '667-777-7507x60', 'M', 'profPic8.jpg', 'I\'m not weird, I\'m a limited edition. My brain has too many tabs open and they\'re all playing different songs at the same time while buffering.', 'Blocked', 0),
+(52, 'troymiller', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '0499 Brittney Rapid, Port Deborah, KY 85990', '2000-03-11', 'edward05@hansen-taylor.com', 1, '001-139-945-788', 'F', 'profPic4.jpg', 'I\'m not lazy, I\'m just on energy-saving mode. My spirit animal is a sloth riding a turtle with a \"Go Faster\" bumper sticker while reading a self-help book.', 'Active', 1),
+(53, 'huberanita', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '3117 Julia Land, Patrickstad, CO 19181', '1999-06-15', 'rodney78@franklin.info', 0, '+1-350-380-0853', 'M', 'profPic2.jpg', 'I speak fluent sarcasm and bad decisions. Currently writing my autobiography: \"Oops: A Series of Unfortunate Events\"', 'Blocked', 0),
+(54, 'duane14', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '6193 Dennis Junctions, Jamesland, MA 15603', '1989-01-14', 'nathanjames@hotmail.com', 0, '6909842246', 'M', 'profPic8.jpg', 'I\'m not short, I\'m concentrated awesome. My hobbies include starting books I\'ll never finish and finishing snacks I probably shouldn\'t have started.', 'Active', 0),
+(55, 'wayne', '$2y$10$bRT7HgBLMQLkOBkTvSApee3CDGcqV/KV4f1rJIoby59YzZu7bVkPC', NULL, NULL, 'waynegyw-wm24@student.tarc.edu.my', 0, NULL, 'R', NULL, NULL, 'Active', 0);
 
 -- --------------------------------------------------------
 
@@ -1128,7 +1215,7 @@ ALTER TABLE `vouchers`
 -- AUTO_INCREMENT for table `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `messageID` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `messageID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
 
 --
 -- AUTO_INCREMENT for table `orders`
@@ -1164,7 +1251,7 @@ ALTER TABLE `token`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
 -- Constraints for dumped tables

@@ -1,8 +1,8 @@
 <?php
 require_once "../../../controller/productManager.php";
 require_once "../../../_base.php";
-include __DIR__ . "/../main.php";
 include __DIR__  . '/../../../admin_login_guard.php';
+include __DIR__ . "/../main.php";
 // Include CSS
 $stylesheetArray = ['../../../css/admin_product.css'];
 link_stylesheet($stylesheetArray);

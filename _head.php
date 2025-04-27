@@ -35,6 +35,10 @@ if ($_user) {
     $stm->execute([$userID]);
     $total = $stm->fetch();
     $totalItem = $total->total;
+
+    $stm = $_db->prepare("Select * from messages where senderID = ? order by sent_at asc");
+    $stm->execute([$userID]);
+    $messageHistory = $stm->fetchAll();
 }
 
 
@@ -58,6 +62,7 @@ if (is_post()) {
     <title><?= $title ?? 'Untitled' ?></title>
     <link rel="icon" type="image/svg+xml" href="/assets/img/shuttlecock.svg">
     <link rel="stylesheet" href="/css/app.css" />
+    <link rel="stylesheet" href="/css/chat.css" />
     <?php link_stylesheet($stylesheetArray ?? ''); ?>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
@@ -76,7 +81,7 @@ if (is_post()) {
             <?php if (is_logged_in("user")): ?>
 
                 <div class="cart-btn">
-                    <a onclick="onclick()" href="/pages/product/cartPage.php" ?>
+                    <a href="/pages/product/cartPage.php" ?>
                         <img src="/assets/img/icon-cart.png" alt="Cart" title="Cart" />
                         <div class="itemCount"><?php echo $totalItem ?></div>
                     </a>
@@ -84,11 +89,11 @@ if (is_post()) {
 
                 <div class="account dropdown">
                     <div class="dropdown-label with-dropdown-icon">
-                        <img class="account-icon" src="/assets/img/profile-default-icon-dark.svg" alt="Account" title="Account" />
+                        <img class="account-icon" src="<?= $_user->profilePic ? "/File/user-profile-pics/{$_user->profilePic}" : '/assets/img/profile-default-icon-dark.svg'?>" alt="Account" title="Account" />
                     </div>
                     <div class="dropdown-content">
                         <div class="dropdown-header">
-                            <img class="profile-pic" src="/assets/img/profile-default-icon-dark.svg" alt="Account" title="Account" />
+                            <img class="profile-pic" src="<?= $_user->profilePic ? "/File/user-profile-pics/{$_user->profilePic}" : '/assets/img/profile-default-icon-dark.svg'?>" alt="Account" title="Account" />
                             <div class="username"><?= $_user->username ?></div>
                         </div>
                         <div class="dropdown-main">
@@ -229,3 +234,43 @@ if (is_post()) {
             <div class="progress-bar"></div>
             <span class="info-text"><?= temp('warn') ?></span>
         </div>
+
+        <?php 
+        if(is_logged_in('user')){
+            echo '
+                <div class="supportButton">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="rgb(0,0,0)"><path d="M440-120v-80h320v-284q0-117-81.5-198.5T480-764q-117 0-198.5 81.5T200-484v244h-40q-33 0-56.5-23.5T80-320v-80q0-21 10.5-39.5T120-469l3-53q8-68 39.5-126t79-101q47.5-43 109-67T480-840q68 0 129 24t109 66.5Q766-707 797-649t40 126l3 52q19 9 29.5 27t10.5 38v92q0 20-10.5 38T840-249v49q0 33-23.5 56.5T760-120H440Zm-80-280q-17 0-28.5-11.5T320-440q0-17 11.5-28.5T360-480q17 0 28.5 11.5T400-440q0 17-11.5 28.5T360-400Zm240 0q-17 0-28.5-11.5T560-440q0-17 11.5-28.5T600-480q17 0 28.5 11.5T640-440q0 17-11.5 28.5T600-400Zm-359-62q-7-106 64-182t177-76q89 0 156.5 56.5T720-519q-91-1-167.5-49T435-698q-16 80-67.5 142.5T241-462Z"/></svg>
+                </div>
+
+                <div class="chatContainer">
+                    <div class="chatBody">
+                        <div class="admin">
+                            Hello, How may I assist you today? 😃
+                        </div>
+                    ';
+            foreach($messageHistory as $m){
+                if($m->userSent=="1"){
+                    echo "<div class='user'>
+                            $m->content
+                        </div>";
+                }
+                else{
+                    echo "<div class='admin'>
+                            $m->content
+                        </div>";
+                }
+            }
+            echo '
+                </div>
+                    <div class="chatInput">
+                        <textarea id="textarealol" type="text" maxlength="200" placeholder="Enter a message"></textarea>
+                        <button type="button" id="emojiBtn"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="rgb(54, 54, 54)"><path d="M620-520q25 0 42.5-17.5T680-580q0-25-17.5-42.5T620-640q-25 0-42.5 17.5T560-580q0 25 17.5 42.5T620-520Zm-280 0q25 0 42.5-17.5T400-580q0-25-17.5-42.5T340-640q-25 0-42.5 17.5T280-580q0 25 17.5 42.5T340-520Zm140 260q68 0 123.5-38.5T684-400H276q25 63 80.5 101.5T480-260Zm0 180q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-400Zm0 320q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Z"/></svg></button>
+                        <div id="emojiPicker" class="emoji-picker">
+                        <span>😁</span> <span>😂</span> <span>🤣</span> <span>😍</span> <span>🥰</span> <span>😎</span> <span>🤔</span> <span>😢</span> <span>🙌</span> <span>🎉</span>
+                        </div>
+                        <button class="send"><svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px" fill="rgb(78, 118, 250)"><path d="M120-160v-640l760 320-760 320Zm80-120 474-200-474-200v140l240 60-240 60v140Zm0 0v-400 400Z"/></svg></button>
+                    </div>
+                </div>
+            ';
+        }
+        ?>

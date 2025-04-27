@@ -1,3 +1,4 @@
+
 </main>
     <footer>
         <div>&copy; 2025 The Shuttle Store Inc.</div>
@@ -5,5 +6,6 @@
     </footer>
 </body>
 <script src="/js/app.js"></script>
+<script src="/js/chat.js"></script>
 <?php link_script($scriptArray ?? ''); ?>
 </html>
