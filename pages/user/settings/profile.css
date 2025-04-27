@@ -225,3 +225,18 @@ input[type=file] {
 .password-input-box {
     width: fit-content;
 }
+
+/* Verify email banner button */
+#verifyEmailForm .submit-btn {
+    background-color:#cb3816;
+    color:white;
+    margin-top:20px;
+}
+#verifyEmailForm .submit-btn.disabled {
+    background-color: #ddd;
+    color: #333;
+}
+#verifyEmailForm .submit-btn.disabled:hover {
+    opacity: 1;
+    cursor: default;
+}
