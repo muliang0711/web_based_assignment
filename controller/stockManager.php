@@ -10,11 +10,10 @@ include_once __DIR__ . '/../db_connection.php';
 include_once __DIR__ . '/../db/productStock.php'; // Assuming this is where your CheckStock class is
 
 class ProductManager {
-    private $pdo;
+
     private $checkStock;
 
     public function __construct($pdo) {
-        $this->pdo = $pdo;
         $this->checkStock = new CheckStock($pdo);
     }
 
@@ -24,22 +23,49 @@ class ProductManager {
         if (!$action) {
             $this->addErrorAndRedirect('No action specified.');
         }
-
+    
+        if ($action === 'updateStock') {
+            // Special handling for updateStock
+            $productID = $_POST['productID'] ?? null;
+            $sizeID = $_POST['sizeID'] ?? null;
+            $quantity = isset($_POST['quantity']) ? (int)$_POST['quantity'] : 0;
+            $price = isset($_POST['restock_price']) ? (float)$_POST['restock_price'] : 0.00;
+            $adminName = $_SESSION['adminID'] ;
+    
+            if (!$productID || !$sizeID || $quantity <= 0 || $price <= 0) {
+                $this->addErrorAndRedirect('Missing or invalid input fields.');
+            }
+    
+            $result = $this->updateStock($productID, $sizeID, $quantity, $price, $adminName);
+    
+            if ($result['success']) {
+                $_SESSION['success'] = $result['message'];
+            } else {
+                $_SESSION['errors'] = [$result['message']];
+            }
+            
+            $url = "../pages/admin/product/update-stock.php?productID=" . urlencode($productID) . "&sizeID=" . urlencode($sizeID);
+            header("Location: $url");
+            
+            exit();
+        }
+    
+        // Normal mappings for other actions
         $allowedActions = [
             'filter'        => 'filterProducts',
             'search'        => 'searchProduct',
             'sendEmail'     => 'emailSubmit',
             'sendSMS'       => 'SMSSubmit'
         ];
-
+    
         if (!array_key_exists($action, $allowedActions)) {
             $this->addErrorAndRedirect('Invalid action specified.');
         }
-
+    
         $method = $allowedActions[$action];
         $this->$method();
     }
-
+    
     public function loadLowStockProductsToSession() {
         $lowStockProducts = $this->checkStock->get_low_stock_product();
         $_SESSION['low_stock_product'] = $lowStockProducts;
@@ -49,12 +75,21 @@ class ProductManager {
         return $this->checkStock->getDetailedProductInfo($productID, $sizeID);
     }
 
-    public function updateStock($productID, $sizeID, $quantity, $adminName) {
+    public function updateStock($productID, $sizeID, $quantity, $price, $adminName) {
+    
         $success = $this->checkStock->update_product_stock($quantity, $productID, $sizeID);
+        
         if ($success) {
-            $this->checkStock->record_restock($productID, $sizeID, $quantity, $adminName);
+            $this->checkStock->record_restock($productID, $sizeID, $quantity, $price, $adminName);
+    
+            $_SESSION['successupdate'] = 'Stock updated and restock recorded.';
+    
             return ['success' => true, 'message' => 'Stock updated and restock recorded.'];
+
         } else {
+
+            $_SESSION['failedupdate'] = 'Update failed or no stock change.';
+    
             return ['success' => false, 'message' => 'Update failed or no stock change.'];
         }
     }

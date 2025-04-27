@@ -108,7 +108,7 @@ class CheckStock
             $productName = $product->product_name ?? "Product #$productID"; // fallback
             $stock = $product->stock;
             $threshold = $product->low_stock_threshold;
-            
+
             $messageLines[] = "Product: <b>$productName</b> (Stock: $stock / Threshold: $threshold)";
         }
 
@@ -245,13 +245,19 @@ class CheckStock
     }
 
     // show restock record ;
-    public function record_restock($productID, $sizeID, $quantity, $admin)
+// 1. This code is for recording a restock history with the newly added restock_price field
+
+    public function record_restock($productID, $sizeID, $quantity, $price, $admin)
     {
-        $sql = "INSERT INTO restock_history (productID, sizeID, restock_quantity, restocked_by)
-                VALUES (?, ?, ?, ?)";
+        // 2. Updated SQL to insert into 5 columns including restock_price
+        $sql = "INSERT INTO restock_history (productID, sizeID, restock_quantity, restock_price, restocked_by)
+                VALUES (?, ?, ?, ?, ?)";
+
+        // 3. Prepare and execute the statement with new price field
         $stmt = $this->pdo->prepare($sql);
-        return $stmt->execute([$productID, $sizeID, $quantity, $admin]);
+        return $stmt->execute([$productID, $sizeID, $quantity, $price, $admin]);
     }
+
 
     public function getDetailedProductInfo($productID, $sizeID)
     {

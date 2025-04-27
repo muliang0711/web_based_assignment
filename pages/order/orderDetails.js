@@ -1,7 +1,19 @@
 $(() => {
     const chatContainer =  $(".chatContainer");
     const chatBody = $(".chatBody");
-    
+    const emailButton = $(".email-button");
+    const unsubEmailButton = $(".unsubscribe-email-button");
+
+
+
+    function alertSuccess(msg){
+        $(".success span.info-text").text(msg);
+        setTimeout(function(){
+            $(".success span.info-text").text("");
+        },3000);
+        
+    }
+
     $("[data-cancel]").on('click', function(e){
         //load cancel page
         let orderId = this.dataset.cancel;
@@ -29,5 +41,46 @@ $(() => {
             document.body.style.overflow = 'hidden'; //disable background scrolling
         }
     });
+
+    emailButton.on("click", function(e){
+        let oid = this.dataset.id;
+        
+        //send ajax to update order id notify to true
+        $.ajax({
+            url: "/api/emailHandler.php",
+            type: "POST",
+            data: {
+                id: oid,
+                task: "setNotify"
+            },
+            success: function(res){
+                if(res=="success"){
+                        location=location;      
+                }
+            }
+        });
+    })
+
+
+
+    unsubEmailButton.on("click", function(e){
+        let oid = this.dataset.id;
+        
+        //send ajax to update order id notify to true
+        $.ajax({
+            url: "/api/emailHandler.php",
+            type: "POST",
+            data: {
+                id: oid,
+                task: "removeNotify"
+            },
+            success: function(res){
+                if(res=="success"){
+                    location=location;
+                    
+                }
+            }
+        });
+    })
 
 });
