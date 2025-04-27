@@ -3,13 +3,13 @@
 
 require '../../_base.php';
 $title='Issue Voucher';
-require  "main.php";
+
 
 
 $scriptArray = ['/js/admin_voucher.js'];    
 
 include '../../admin_login_guard.php';
-
+require  "main.php";
 //get all the voucher details
 $stm = $_db->prepare("Select * from vouchers");
 $stm->execute();

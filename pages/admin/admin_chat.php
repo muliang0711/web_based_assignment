@@ -5,7 +5,7 @@ require '../../_base.php';
 $title='Chats';
 $stylesheetArray = ['/css/admin_chat.css'];
 $scriptArray = ['/js/admin_chat.js']; 
-require  "main.php";
+
 
 $adminID = $_SESSION['adminID'];
 $defaultPic = "/assets/img/profile-default-icon-dark.svg";
@@ -19,7 +19,7 @@ JOIN user u ON (m.senderID = u.userID) WHERE m.sent_at = (
 $chats = $stm->fetchAll();
 
 include '../../admin_login_guard.php';
-
+require  "main.php";
 ?>
 
 <div class="main-content">

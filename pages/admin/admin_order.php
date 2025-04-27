@@ -4,13 +4,13 @@
 require '../../_base.php';
 $title='Admin Orders';
 $stylesheetArray = ['/css/admin_order.css'];
-require  "main.php";
+
 
 
 $scriptArray = ['/js/admin_orders.js'];    
 
 include '../../admin_login_guard.php';
-
+require  "main.php";
 //fetch all order from database;
 $orders = $_db->query("Select o.*, sum(oi.subtotal) as total from orders o JOIN order_items oi
                         ON (o.orderId = oi.orderId) GROUP BY o.orderId")->fetchAll();

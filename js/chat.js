@@ -54,6 +54,7 @@ $(()=>{
             sendMSG();          
         }
     });
+
     
     $(".supportButton").on("click",function(e){
         if(chatContainer.hasClass("show")){
