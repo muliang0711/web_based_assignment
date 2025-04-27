@@ -273,7 +273,8 @@ include 'profile_dynamic_navbar.php';
             verifyPostcode(input,validRange);
         }
         else if(input.length<4){
-            errmsg.setAttribute("hidden","true");
+            errmsg.removeAttribute("hidden");
+            error = true;
         }
         
     });
