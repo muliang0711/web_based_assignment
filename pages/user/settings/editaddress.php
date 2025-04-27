@@ -65,6 +65,9 @@ if(is_get()){
         $postcode = trim($address[2]);
 
     }
+    else{
+        redirect("address.php");
+    }
     
 }
 

@@ -38,6 +38,12 @@ http://localhost:8000/pages/product/cartPage.php
 About Us page(Member)
 http://localhost:8000/pages/About/about.php
 
+Order page(Member)
+http://localhost:8000/pages/order/order.php
+
+Order details page(Member) (Need to add the parameter `?id=xxx` or will redirect to Order page)
+http://localhost:8000/pages/order/orderDetails.php?id=?
+
 Checkout page(Member)
 http://localhost:8000/pages/checkout/checkout.php?
 
@@ -52,6 +58,12 @@ http://localhost:8000/pages/order/orderCancel.php
 
 
 
+
+Account Address (Member)
+http://localhost:8000/pages/user/settings/address.php
+
+Edit Address (Member) (Need to add the parameter `?edit=xxx` or will redirect to Account Address page)
+http://localhost:8000/pages/user/settings/editaddress.php?edit=11
 
 
 ====================== Admin pages ======================
@@ -85,6 +97,18 @@ http://localhost:8000/pages/admin/adminRequestUnblock.php?id=A002
 
 View Customer Detail(Admin)
 http://localhost:8000/pages/admin/customer_detail.php?userID=1
+
+Admin View All Orders(Admin)
+http://localhost:8000/pages/admin/admin_order.php
+
+Admin View Order Details(Admin) (Need to add the parameter `?id=xxx` or will redirect to Admin Home page)
+http://localhost:8000/pages/admin/admin_orderDetails.php?id=1
+
+Admin View Vouchers(Admin)
+http://localhost:8000/pages/admin/issueVoucher.php
+
+Admin View Chats(Admin)
+http://localhost:8000/pages/admin/admin_chat.php
 	
 Admin Change Password(Admin)
 http://localhost:8000/pages/admin/admin_change_password.php
