@@ -49,57 +49,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html>
 <head>
     <title>Change Low Stock Threshold</title>
-    <style>
-        body {
-            font-family: Arial;
-            background-color: #f4f4f4;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
 
-        .form-box {
-            background: white;
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
-            max-width: 400px;
-            width: 100%;
-        }
-
-        .form-box h2 {
-            margin-top: 0;
-        }
-
-        .form-box input[type="number"] {
-            width: 100%;
-            padding: 0.5rem;
-            margin: 1rem 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-
-        .form-box button {
-            padding: 0.5rem 1rem;
-            background-color: #007bff;
-            border: none;
-            color: white;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .msg {
-            margin: 1rem 0;
-            color: green;
-        }
-
-        .error {
-            margin: 1rem 0;
-            color: red;
-        }
-    </style>
 </head>
+<link rel="stylesheet" href="css/checkLowStockAlert.css">
 <body>
 
 <div class="form-box">

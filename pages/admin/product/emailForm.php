@@ -3,32 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Compose Email</title>
-    <style>
-        form {
-            max-width: 600px;
-            margin: 50px auto;
-            background-color: #f9f9f9;
-            padding: 1.5rem;
-            border-radius: 10px;
-        }
-        input, textarea {
-            width: 100%;
-            padding: 0.8rem;
-            margin-top: 0.5rem;
-            margin-bottom: 1rem;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        button {
-            background-color: #007bff;
-            color: white;
-            padding: 0.7rem 1.5rem;
-            border: none;
-            border-radius: 5px;
-            font-weight: bold;
-        }
-    </style>
+
 </head>
+    <link rel="stylesheet" href="css/emailForm.css">
 <body>
 
 
