@@ -105,8 +105,8 @@ include '../../_head.php';
       <div class="product">
         <!-- racket image -->
         <div class="mySlides"><img src="../../../File/<?php echo $imgUrl; ?>" alt="Image"></div>
-        <div class="mySlides"><img src="badmintonRacket.jpg" alt="Image2"></div>
-        <div class="mySlides"><img src="badmintonRacket2.jpg" alt="Image3"></div>
+        <div class="mySlides"><img src="../../../File/product_R0001_17457546301.jpg" alt="Image2"></div>
+        <div class="mySlides"><img src="../../../File/product_R0001_17457546302.jpg" alt="Image3"></div>
       </div>
       <a class="next" onclick="nextSlides(1, 1)">&#10095;</a>
     </div>
