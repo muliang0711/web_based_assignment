@@ -122,14 +122,14 @@ include '../../_head.php';
     // AND image_type = 'product' 
     // AND price BETWEEN $min_price AND $max_price 
     // ORDER BY price $order",
-        "SELECT p.*,
-          (SELECT pi.image_path
-           FROM product_images pi
-           WHERE pi.productID = p.productID
-           LIMIT 1
-          ) AS image_path
+        "SELECT *
         FROM product p
-        WHERE image_type = 'product' 
+        JOIN (
+          SELECT pi.* 
+          FROM product_images pi
+            GROUP BY pi.productID
+        ) pi_subquery USING (productID)
+        WHERE image_type = 'product'
         AND price BETWEEN $min_price AND $max_price 
         ORDER BY price $order",
         [],
