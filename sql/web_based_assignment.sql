@@ -470,9 +470,8 @@ INSERT INTO `product` (`productID`, `productName`, `price`, `seriesID`, `introdu
 ('R0097', 'Shadow Base', 199.00, 'SHD', 'Starter Shadow model built for entry-level agility and touch.', 'Camryn Lee. Fast feet, big dreams.'),
 ('R0098', 'Phantom Loop', 269.00, 'PHM', 'With spin-boost strings and counter-drag design, the Loop brings deceptive rally control.', 'Tariq Amin. Loves to grind out points with spin and placement.'),
 ('R0099', 'AeroSharp Neo', 289.00, 'AS', 'Sharp feel and nimble handling for advancing players.', 'Mina Kwon. Clean strokes and growing confidence.'),
-('R0100', 'Phantom Rise', 319.00, 'PHM', 'Lightweight Phantom tuned for beginners ready to level up.', 'Jake Fields. Learning to rise, one swing at a time.'),
-('xx25', 'xx1', 0.00, 'xx1', 'dqwdq', 'dqwdq'),
-('xx27', 'xx1', 123.00, 'xx1', 'dqdw', 'dqdq');
+('R0100', 'Phantom Rise', 319.00, 'PHM', 'Lightweight Phantom tuned for beginners ready to level up.', 'Jake Fields. Learning to rise, one swing at a time.');
+
 
 -- --------------------------------------------------------
 
