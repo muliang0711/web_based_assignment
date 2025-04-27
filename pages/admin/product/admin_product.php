@@ -64,8 +64,8 @@ unset($_SESSION['Delete_ErrorMsg']);
         const audio = document.getElementById("clickSound");
         audio.currentTime = 0; // 每次点击从头播放
         audio.play();
-  }
-</script>
+      }
+    </script>
       </form>
       </div>
           <!-- Button Section -->
@@ -79,7 +79,7 @@ unset($_SESSION['Delete_ErrorMsg']);
     <!-- Filter Section -->
     <div class="filter-section">
       <form class="filter-form" method="POST" action="/controller/productManager.php">
-        <input type="hidden" name="action" value="filter">
+        <input type="hidden" name="action" value="filterRecord">
 
         <label for="productID">Product ID</label>
         <select name="productID" id="productID">

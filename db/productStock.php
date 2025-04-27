@@ -213,7 +213,7 @@ class CheckStock
                 LEFT JOIN 
                     product_images img ON p.productID = img.productID AND img.image_type = 'product'
                 WHERE 
-                    ps.stock < ps.low_stock_threshold ";
+                    ps.stock <= ps.low_stock_threshold ";
 
 
         $stmt = $this->pdo->prepare($sql);
@@ -266,7 +266,78 @@ class CheckStock
         }
     }
 
-    // show restock record ;
+
+    public function getAllRestockRecords() {
+        try {
+            $sql = "SELECT rh.*, p.seriesID 
+                    FROM restock_history rh
+                    JOIN product p ON rh.productID = p.productID
+                    ORDER BY rh.restock_time DESC";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Error fetching restock records: " . $e->getMessage());
+            return [];
+        }
+    }
+    public function getFilteredRestockRecords($filters) {
+        try {
+            // 4. Base SQL with LEFT JOIN and starting WHERE 1=1
+            $sql = "SELECT 
+                        rh.*, 
+                        p.seriesID
+                    FROM restock_history rh
+                    LEFT JOIN product p ON rh.productID = p.productID
+                    WHERE 1=1
+            ";
+    
+            $params = [];
+    
+            // 5. Dynamic filters
+            if (!empty($filters['productID'])) {
+                $sql .= " AND rh.productID = ?";
+                $params[] = $filters['productID'];
+            }
+    
+            if (!empty($filters['sizeID'])) {
+                $sql .= " AND rh.sizeID = ?";
+                $params[] = $filters['sizeID'];
+            }
+    
+            if (!empty($filters['restocked_by'])) {
+                $sql .= " AND rh.restocked_by = ?";
+                $params[] = $filters['restocked_by'];
+            }
+    
+            if (!empty($filters['startDate']) && !empty($filters['endDate'])) {
+                $sql .= " AND rh.restock_time BETWEEN ? AND ?";
+                $params[] = $filters['startDate'] . " 00:00:00";
+                $params[] = $filters['endDate'] . " 23:59:59";
+            }
+    
+            // 6. Order by latest restock time
+            $sql .= " ORDER BY rh.restock_time DESC";
+    
+            // 7. Prepare and execute the statement
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute($params);
+            
+            // 8. Return the result
+            $records = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            //echo '<pre>';
+            //print_r($records);
+            // echo '</pre>';
+
+            return $records ; 
+    
+        } catch (Exception $e) {
+            // 9. Catch and throw exception with specific message
+            throw new Exception("Error filtering restock records: " . $e->getMessage());
+        }
+    }
+    
 
 
     public function record_restock($productID, $sizeID, $quantity, $price, $admin)

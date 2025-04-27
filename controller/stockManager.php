@@ -50,7 +50,8 @@ class ProductManager {
             'filter'        => 'filterProducts',
             'search'        => 'searchProduct',
             'sendEmail'     => 'emailSubmit',
-            'sendSMS'       => 'SMSSubmit'
+            'sendSMS'       => 'SMSSubmit',
+            'filterRecord'  => 'filterRecord'  
         ];
     
         if (!array_key_exists($action, $allowedActions)) {
@@ -89,35 +90,44 @@ class ProductManager {
         }
     }
 
-    private function filterProducts()
+    private function filterRecord()
     {
-        // Minimal validation logic for filter
-        $minPrice = isset($_POST['minPrice']) && $_POST['minPrice'] !== '' ? (float)$_POST['minPrice'] : null;
-        $maxPrice = isset($_POST['maxPrice']) && $_POST['maxPrice'] !== '' ? (float)$_POST['maxPrice'] : null;
-
-        // Price sanity check
-        if ($minPrice !== null && $maxPrice !== null && $minPrice > $maxPrice) {
-            $_SESSION['errors'] = ["Minimum price cannot exceed maximum price."];
-            header("Location: ../pages/admin/product/filterResult.php");
-            exit();
-        }
-
+        session_start();
+        // echo '<pre>';
+        // print_r($_POST);
+        // echo '</pre>';
+        // 1. Minimal validation
+        $startDate = $_POST['startDate'] ?? '';
+        $endDate = $_POST['endDate'] ?? '';
+    
+    
+        // 2. Build Filters
         $filters = [
-            'productID' => $_POST['productID'] ?? null,
-            'priceMin'  => $minPrice,
-            'priceMax'  => $maxPrice,
-            'seriesID'  => $_POST['seriesID'] ?? null,
-            'sizeID'    => $_POST['sizeID'] ?? null,
+            'productID'    => $_POST['productID'] ?? null,
+            'sizeID'       => $_POST['sizeID'] ?? null,
+            'restocked_by' => $_POST['restocked_by'] ?? null,
+            'startDate'    => $startDate,
+            'endDate'      => $endDate
         ];
-
+        
+        // echo '<pre>';
+        // print_r($filters);
+        // echo '</pre>';
+        // 3. Query Filtered Records
         try {
-            $_SESSION['filterResult'] = $this->checkStock->filterProduct($filters);
-            header("Location: ../pages/admin/product/filterResult.php");
+            // $records = $this->checkStock->getFilteredRestockRecords($filters);
+
+            $_SESSION['filterRecordResult'] = $this->checkStock->getFilteredRestockRecords($filters);
+            // echo '<pre>';
+            // print_r($_SESSION['filterRecordResult']);
+            // echo '</pre>';
+            header("Location: ../pages/admin/product/filterRecordResult.php"); // new page
             exit();
         } catch (Exception $e) {
-            $this->addErrorAndRedirect("Error filtering products: " . $e->getMessage());
+            $this->addErrorAndRedirect("Error filtering restock history: " . $e->getMessage());
         }
     }
+    
 
     private function emailSubmit()
     {
