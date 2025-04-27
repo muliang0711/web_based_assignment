@@ -182,7 +182,7 @@ new Chart("salesChart", {
       
             title: {
                 display: true,
-                text: "Product Sold Percentage"
+                text: "Top 5 Product Sold Percentage"
             }
             
         
@@ -202,7 +202,7 @@ new Chart("salesChart", {
                 options: {
                     title: {
                         display: true,
-                        text: "Total Sold of Product",
+                        text: "Total Sold of Top 5 Product",
                         font: {size: 20
                         }
                     }
