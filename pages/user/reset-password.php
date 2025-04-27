@@ -56,7 +56,7 @@ if (is_post()) {
         $_errors['newPassword'] = 'Required';
     }
     else if (pwMatch($newPassword, $currentPwHash)) {
-        $_errors['newPassword'] = 'Same as current password';
+        $_errors['newPassword'] = 'Same as current password. <a href="user-login.php" style="color:#306c80;">Log in?</a>';
     }
     else if (strlen($newPassword) > 50) {
         $_errors['password'] = 'Maximum allowed: 50 characters';
