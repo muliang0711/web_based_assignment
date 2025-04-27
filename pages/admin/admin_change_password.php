@@ -86,8 +86,8 @@ if (is_post()) {
 }
 
 
-require_once  "../admin/main.php";
 include '../../admin_login_guard.php';
+require_once  "../admin/main.php";
 
 ?>
 

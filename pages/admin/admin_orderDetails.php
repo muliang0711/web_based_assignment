@@ -2,13 +2,15 @@
 <?php
 
 require '../../_base.php';
+
+include '../../admin_login_guard.php';
+
 $title='View Order Details';
 require  "main.php";
 
 
 $scriptArray = ['/js/admin_orders.js'];    
 
-include '../../admin_login_guard.php';
 
 //fetch order details from database;
 if(isset($_GET["id"])){
