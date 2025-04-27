@@ -1,9 +1,4 @@
 <?php
-// 1. Start session to use session variables
-
-use Stripe\Terminal\Location;
-
-session_start();
 
 // 2. Include required files
 include_once __DIR__ . '/../db_connection.php';
@@ -202,6 +197,27 @@ class ProductManager {
         // 5. Redirect back to admin dashboard or appropriate page
         header("Location : ../pages/admin/product/sendSMS.php");
         exit();
+    }
+
+    public function sumRestockPriceAndQuantity($productID, $sizeID) {
+        return $this->checkStock->getTotalRestockData($productID, $sizeID);
+    }
+
+    public function suggestSellPrice($productID, $sizeID) {
+        $sumData = $this->sumRestockPriceAndQuantity($productID, $sizeID);
+    
+        if ($sumData['totalQuantity'] === 0) {
+            return 0; // Cannot calculate if no quantity
+        }
+    
+        // Calculate average cost per unit
+        $averageCost = $sumData['totalCost'] / $sumData['totalQuantity'];
+    
+        // Add markup
+        $markupRate = 1.3; // 30% markup
+        $suggestedPrice = $averageCost * $markupRate;
+    
+        return round($suggestedPrice, 2);
     }
 
     private function addErrorAndRedirect($msg)
