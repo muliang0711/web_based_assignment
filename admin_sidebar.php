@@ -2,14 +2,14 @@
 
 <div class="sidebar" id="sidebar">
   <div class="sidebar-header">
-    <h4>Admin</h4>
+    <h4>Dashboard</h4>
     <button class="sidebar-toggle-btn" id="sidebarToggle">
       <i class="fas fa-bars"></i>
     </button>
   </div>
   <ul class="nav-links">
     <li>
-      <a href="/pages/admin/admin_home.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+      <a href="/pages/admin/admin_home.php"><i class="fas fa-house"></i> Home Page</a>
     </li>
     <li>
       <a href="/pages/admin/view_customer.php"><i class="fas fa-users"></i> Customer</a>

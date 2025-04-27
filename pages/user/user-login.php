@@ -74,7 +74,7 @@ if (is_post()) {
                 $expire = date('Y-m-d H:i:s', time() + 60 * 60 * 24 * 30); // token expires after 30 days
 
                 // Store `remember-user` token in DB
-                $stmt = $_db->prepare("INSERT INTO token (userID, selector, hashedValidator, expire, `type`)
+                $stmt = $_db->prepare("INSERT INTO token (userID, id, hashedValidator, expire, `type`)
                                     VALUES (:userID, :selector, :hashedValidator, :expire, 'remember-user')");
                 $stmt->execute([
                     'userID' => $u->userID,
@@ -136,8 +136,8 @@ include '../../_head.php';
         The<span>Shuttle</span>Store
         <img src="../../assets/img/shuttlecock.svg" style="height:1em;transform:rotate(45deg);color:inherit;"/>
     </h2>
-    <h1 class="welcome">Welcome</h1>
-    <div class="instruction">Please login to your account</div>
+    <h1 class="welcome">Log in</h1>
+    <div class="instruction">Welcome back!</div>
     <a class="to-signup" href="/pages/user/user-signup.php">Don't have an account? Sign up</a>
 
     <form class="form" method="post">

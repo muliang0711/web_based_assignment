@@ -49,7 +49,7 @@ if (is_post()) {
     $stm->execute(['userID' => $tokenObj->userID]);
     $user = $stm->fetch();
 
-    var_dump($user);
+    // var_dump($user);
 
     // Validate: new password
     if ($newPassword == '') {
@@ -58,12 +58,13 @@ if (is_post()) {
     else if (pwMatch($newPassword, $currentPwHash)) {
         $_errors['newPassword'] = 'Same as current password';
     }
+    else if (strlen($newPassword) > 50) {
+        $_errors['password'] = 'Maximum allowed: 50 characters';
+    }
     else if (!is_strong_password($newPassword)) {
         $_errors['newPassword'] = 'Password not strong enough';
     }
-    else if (strlen($newPassword) < 5 || strlen($newPassword) > 100) {
-        $_errors['newPassword'] = 'Between 5-100 characters';
-    }
+   
 
     // Validate: confirm new password
     if ($confirmNew == '') {
@@ -95,7 +96,7 @@ if (is_post()) {
 
 // ----------------------------------------------------------------------------
 
-$_title = 'Reset Password';
+$title = 'Reset Password';
 $stylesheetArray = ['/css/password.css', 'user.css']; // Put CSS files that are specific to this page here. If you want to change the styling of the header and the footer, go to /css/app.cs
 $scriptArray = ['/js/password.js', 'user.js'];      // Put JS files that are specific to this page here. If you want to change the JavaScript for the header and the footer, go to /js/app.js
 

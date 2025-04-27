@@ -42,8 +42,8 @@ if (is_post()) {
     if (!$password) {
         $_errors['password'] = 'Required';
     }
-    else if (strlen($password) < 5 || strlen($password) > 100) {
-        $_errors['password'] = 'Between 5-100 characters';
+    else if (strlen($password) > 50) {
+        $_errors['password'] = 'Maximum allowed: 50 characters';
     }
     else if (!is_strong_password($password)) {
         $_errors['password'] = 'Password not strong enough';

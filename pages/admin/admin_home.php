@@ -32,6 +32,21 @@ try {
     $stmD->execute();
     $resultD = $stmD->fetch();
 
+    $stmE = $_db->prepare("SELECT ROW_NUMBER() OVER (ORDER BY SUM(oi.quantity) DESC) AS rank,
+    p.productName, oi.productId, 
+    SUM(oi.quantity) AS total_quantity
+        FROM order_items oi
+        JOIN product p ON oi.productId = p.productID
+        GROUP BY oi.productId, p.productName
+        ORDER BY total_quantity DESC
+        LIMIT 5;");
+    $stmE->execute();
+    // $resultE = $stmE->fetch();
+
+
+
+
+
     //percentage of the product
     $stmC = $_db->prepare("SELECT 
         od.productId, 
@@ -62,8 +77,11 @@ try {
 <div class="main-content" style="  margin-left: var(--sidebar-width);
   margin-top: var(--topbar-height);
   padding: 1rem;">
+
     <div class="title">Sales</div>
+    <div style="margin-left:10%;">
     <table class="block">
+        
         <tr>
             <th>Total Product</th>
         </tr>
@@ -87,7 +105,7 @@ try {
             <td><?= htmlspecialchars($resultD->TotalOrder) ?></td>
         </tr>
     </table>
-
+</div>
 <!-- 
     <table>
         ?php foreach ($resultB as $s): ?>
@@ -97,6 +115,36 @@ try {
             </tr>
         ?php endforeach ?>
     </table> -->
+    <br>
+    <br>
+    <br>
+
+    <div class ="ranking">
+
+             <table>
+             <caption style="caption-side: top; font-weight: bold; font-size: 20px; padding: 10px; color:hsl(206, 100%, 30%)">
+        Top 5 Best-Selling Products
+    </caption>
+             <tr >
+                <th class="td">Ranking</th>
+                <th class="td">Product ID</th>
+                <th class="td">Product Name</th>
+                <th class="td">Total Quantity</th>
+        </tr>
+        <?php foreach ($stmE as $e): ?>
+             <tr class="th">
+
+             <td class="td" ><?= $e->rank ?></td>
+             <td class="td"><?= $e->productId ?></td>
+             <td class="td"><?= $e->productName ?></td>
+             <td class="td"><?= $e->total_quantity ?></td>
+             </tr>  
+             
+             
+             <?php endforeach ?>
+             </table>
+        </div>
+        <br>
 <br>
     <div class="Chart">
         <div class="pie">

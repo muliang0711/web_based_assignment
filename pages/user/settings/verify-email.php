@@ -24,7 +24,7 @@ if (is_post()) {
         DELETE FROM token WHERE userID = :userID AND type = "verify-email"; 
 
         INSERT INTO token (id, type, expire, userID)
-        VALUES (:tokenID, "change-password", ADDTIME(NOW(), "00:05"), :userID);
+        VALUES (:tokenID, "verify-email", ADDTIME(NOW(), "00:05"), :userID);
     ');
     $stm->execute([
         'userID' => $_user->userID,
@@ -65,7 +65,7 @@ if (!exists_in_db($id, 'token', 'id')) {
     redirect('/');
 }
 
-// Set `emailVerified` of the user to TRUE in DB, then delete the token
+// Set `emailVerified` of the user to 1 (TRUE) in DB, then delete the token
 $stm = $_db->prepare('
     UPDATE user u
     JOIN token t ON u.userID = t.userID

@@ -18,13 +18,14 @@ main {
 
 .container {
     position: relative;
-    height: 65vh;
+    /* height: 65vh; */
     width: 500px;
     background-color: white;
     border-radius: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin: 100px auto;
     padding: 0px 40px;
     padding-bottom: 40px;
 }
@@ -105,5 +106,12 @@ h1 {
 
     > button:hover{
         background-color: rgb(33, 236, 236);
+    }
+}
+
+/* When screen size is too small, don't vertically center the div */
+@media (max-height: 830px) {
+    main {
+        align-items: flex-start;
     }
 }
