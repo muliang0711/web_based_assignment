@@ -3,7 +3,7 @@
 // 2. Include required files
 include_once __DIR__ . '/../db_connection.php';
 include_once __DIR__ . '/../db/productStock.php'; // Assuming this is where your CheckStock class is
-
+    session_start();
 class ProductManager {
 
     private $checkStock;
@@ -14,6 +14,7 @@ class ProductManager {
 
     public function handleAction()
     {
+        
         $action = $_POST['action'] ?? $_GET['action'] ?? null;
         if (!$action) {
             $this->addErrorAndRedirect('No action specified.');
@@ -26,6 +27,7 @@ class ProductManager {
             $quantity = isset($_POST['quantity']) ? (int)$_POST['quantity'] : 0;
             $price = isset($_POST['restock_price']) ? (float)$_POST['restock_price'] : 0.00;
             $adminName = $_SESSION['adminID'] ;
+             
     
             if (!$productID || !$sizeID || $quantity <= 0 || $price <= 0) {
                 $this->addErrorAndRedirect('Missing or invalid input fields.');
@@ -92,7 +94,6 @@ class ProductManager {
 
     private function filterRecord()
     {
-        session_start();
         // echo '<pre>';
         // print_r($_POST);
         // echo '</pre>';
