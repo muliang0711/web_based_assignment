@@ -1,30 +1,36 @@
-<?php 
+<?php
 include_once __DIR__ . "/../db_connection.php";
 require __DIR__ . "/../vendor/autoload.php"; // Composer autoload
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
+ini_set('max_execution_time', 300);
+
 use Vonage\Client;
 use Vonage\Client\Credentials\Basic;
 use Vonage\SMS\Message\SMS;
 
-class CheckStock {
+class CheckStock
+{
     private $pdo;
 
-    function __construct($pdo) {
-        $this->pdo = $pdo; //
+    function __construct($pdo)
+    {
+        $this->pdo = $pdo; 
     }
 
-    private function sendLowStockEmail($toEmail, $productName, $stock, $threshold) {
+    private function sendLowStockEmail($toEmail, $subject, $messageBody)
+    {
         $mail = new PHPMailer(true);
 
         try {
+
             $mail->isSMTP();
             $mail->Host = 'smtp.gmail.com';
             $mail->SMTPAuth = true;
             $mail->Username = 'puihy-wm24@student.tarc.edu.my';
-            $mail->Password = 'mqps lalr ujvo fbqx';  // App Password
+            $mail->Password = 'mqps lalr ujvo fbqx'; 
             $mail->SMTPSecure = 'tls';
             $mail->Port = 587;
 
@@ -32,13 +38,14 @@ class CheckStock {
             $mail->addAddress($toEmail);
 
             $mail->isHTML(true);
-            $mail->Subject = "Low Stock Alert: $productName";
+            $mail->Subject = $subject;
+
             $mail->Body = "
-                <p><strong>Product:</strong> $productName</p>
-                <p><strong>Current Stock:</strong> $stock</p>
-                <p><strong>Threshold:</strong> $threshold</p>
-                <p>Please restock soon!</p>
-            ";
+            <h2>Low Stock Notification</h2>
+            <p>The following products are below their stock threshold:</p>
+            $messageBody
+            <br><p><strong>Please restock soon!</strong></p>
+        ";
 
             $mail->send();
             return true;
@@ -57,8 +64,8 @@ class CheckStock {
             $mail->isSMTP();
             $mail->Host       = 'smtp.gmail.com';
             $mail->SMTPAuth   = true;
-            $mail->Username   = 'puihy-wm24@student.tarc.edu.my'; 
-            $mail->Password   = 'mqps lalr ujvo fbqx';             
+            $mail->Username   = 'puihy-wm24@student.tarc.edu.my';
+            $mail->Password   = 'mqps lalr ujvo fbqx';
             $mail->SMTPSecure = 'tls';
             $mail->Port       = 587;
 
@@ -68,15 +75,63 @@ class CheckStock {
 
             $mail->isHTML(true);
             $mail->Subject = $subject;
-            $mail->Body    = nl2br(htmlspecialchars($message)); 
+            $mail->Body    = nl2br(htmlspecialchars($message));
 
             // 3. Send
             $mail->send();
             return true;
-
         } catch (Exception $e) {
             error_log("Email error: " . $mail->ErrorInfo);
             return false;
+        }
+    }
+    // 1. This function checks all low stock products and sends a single email.
+    public function check_low_stock()
+    {
+        // 2. Step: Fetch all low stock products
+        $sql = "SELECT * FROM productstock WHERE stock <= low_stock_threshold AND alert_sent = 0";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        $low_stock_products = $stmt->fetchAll();
+
+        // 3. Step: If no low stock, exit early
+        if (count($low_stock_products) === 0) {
+            return;
+        }
+
+        // 4. Step: Prepare email content
+        $messageLines = [];
+
+        foreach ($low_stock_products as $product) {
+            $productID = $product->productID;
+            $sizeID = $product->sizeID;
+            $productName = $product->product_name ?? "Product #$productID"; // fallback
+            $stock = $product->stock;
+            $threshold = $product->low_stock_threshold;
+            
+            $messageLines[] = "Product: <b>$productName</b> (Stock: $stock / Threshold: $threshold)";
+        }
+
+        $fullMessage = implode('<br>', $messageLines);
+
+        $ownerEmail = 'puihy-wm24@student.tarc.edu.my';
+        $subject = "Low Stock Alert for Multiple Products";
+
+        $emailSent = $this->sendLowStockEmail($ownerEmail, $subject, $fullMessage);
+
+        if ($emailSent) {
+            foreach ($low_stock_products as $product) {
+                $productID = $product->productID;
+                $sizeID = $product->sizeID;
+
+                $updateSql = "UPDATE productstock SET alert_sent = 1 WHERE productID = ? AND sizeID = ?";
+                $updateStmt = $this->pdo->prepare($updateSql);
+                $updateStmt->execute([$productID, $sizeID]);
+            }
+
+            echo "Low stock alert email sent successfully for " . count($low_stock_products) . " products.\n";
+        } else {
+            echo "Failed to send low stock alert email.\n";
         }
     }
 
@@ -110,43 +165,12 @@ class CheckStock {
             return ['success' => false, 'error' => $e->getMessage()];
         }
     }
-    
-    public function check_low_stock() {
-        $sql = "SELECT * FROM productstock WHERE stock <= low_stock_threshold AND alert_sent = 0";
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute();
-        $low_stock_products = $stmt->fetchAll(); 
 
-        if (count($low_stock_products) === 0) {
-            return;
-        }
 
-        foreach ($low_stock_products as $product) {
 
-            $productID = $product->productID;
-            $sizeID = $product->sizeID;
-            $productName = $product->product_name?? "Product #$productID"; // fallback
-            $stock = $product->stock;
-            $threshold = $product->low_stock_threshold;
 
-            $ownerEmail = 'puihy-wm24@student.tarc.edu.my'; 
-
-            $emailSent = $this->sendLowStockEmail($ownerEmail, $productName, $stock, $threshold);
-
-            if ($emailSent) {
-
-                $updateSql = "UPDATE productstock SET alert_sent = 1 WHERE productID = ? AND sizeID = ?";
-                $updateStmt = $this->pdo->prepare($updateSql);
-                $updateStmt->execute([$productID, $sizeID]);
-
-                echo "Alert sent for $productName (Stock: $stock)\n";
-            } else {
-                echo "Failed to send email for $productName\n";
-            }
-        }
-    }
-
-    public function get_low_stock_product(){
+    public function get_low_stock_product()
+    {
 
         $sql = "SELECT 
                     p.productID,
@@ -175,29 +199,30 @@ class CheckStock {
 
         $low_stock_product = $stmt->fetchAll();
 
-        return $low_stock_product ; 
+        return $low_stock_product;
     }
 
 
-    public function change_low_stock_threshold($low_stock_threshold , $productID , $sizeID) {
+    public function change_low_stock_threshold($low_stock_threshold, $productID, $sizeID)
+    {
         $sql = "UPDATE productstock 
                 SET low_stock_threshold = ? 
                 WHERE productID = ? 
-                AND sizeID = ? " ;
+                AND sizeID = ? ";
 
         $stmt = $this->pdo->prepare($sql);
-        $success = $stmt->execute($low_stock_threshold , $productID , $sizeID);
+        $success = $stmt->execute($low_stock_threshold, $productID, $sizeID);
 
         if ($success && $stmt->rowCount() > 0) {
             return true; // Update successful
         } else {
             return false; // Either no such product-size match, or no change needed
         }
-
     }
 
     // update product stock ; 
-    public function update_product_stock($quantity ,$productID , $sizeID ){
+    public function update_product_stock($quantity, $productID, $sizeID)
+    {
         $sql = "UPDATE productstock
                 SET 
                     stock = stock + ?,
@@ -210,25 +235,26 @@ class CheckStock {
                     productID = ? AND
                     sizeID = ? ";
         $stmt = $this->pdo->prepare($sql);
-        $success = $stmt->execute([$quantity ,$quantity , $productID , $sizeID]);
-        
+        $success = $stmt->execute([$quantity, $quantity, $productID, $sizeID]);
+
         if ($success && $stmt->rowCount() > 0) {
             return true; // Update successful
         } else {
             return false; // Either no such product-size match, or no change needed
         }
-        
     }
-    
+
     // show restock record ;
-    public function record_restock($productID, $sizeID, $quantity, $admin  ) {
+    public function record_restock($productID, $sizeID, $quantity, $admin)
+    {
         $sql = "INSERT INTO restock_history (productID, sizeID, restock_quantity, restocked_by)
                 VALUES (?, ?, ?, ?)";
         $stmt = $this->pdo->prepare($sql);
-        return $stmt->execute([$productID, $sizeID, $quantity, $admin ]);
+        return $stmt->execute([$productID, $sizeID, $quantity, $admin]);
     }
-    
-    public function getDetailedProductInfo($productID, $sizeID) {
+
+    public function getDetailedProductInfo($productID, $sizeID)
+    {
         $sql = "SELECT 
                     p.productName, p.price, 
                     ps.stock, ps.alert_sent, ps.low_stock_threshold 
@@ -240,7 +266,7 @@ class CheckStock {
         $stmt->execute([$productID, $sizeID]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
-    
+
     public function filterProduct($filters)
     {
         try {
@@ -261,12 +287,12 @@ class CheckStock {
                     WHERE 1=1
             ";
             $params = [];
-    
+
             if (!empty($filters['productID'])) {
                 $sql .= " AND p.productID = ?";
                 $params[] = $filters['productID'];
             }
-            if (!empty($filters['seriesID'])) {  
+            if (!empty($filters['seriesID'])) {
                 $sql .= " AND p.seriesID = ?";
                 $params[] = $filters['seriesID'];
             }
@@ -282,12 +308,12 @@ class CheckStock {
                 $sql .= " AND ps.sizeID = ?";
                 $params[] = $filters['sizeID'];
             }
-    
+
             // Only include under-threshold stocks
             $sql .= " AND ps.stock < ps.low_stock_threshold";
-    
+
             $sql .= " ORDER BY p.productID, ps.sizeID";
-    
+
             $stmt = $this->pdo->prepare($sql);
             $stmt->execute($params);
             return $stmt->fetchAll();
@@ -295,7 +321,7 @@ class CheckStock {
             throw new Exception("Error filtering products: " . $e->getMessage());
         }
     }
-    
+
 
     public function search($searchText)
     {
@@ -322,7 +348,7 @@ class CheckStock {
                     AND ps.stock < ps.low_stock_threshold
             ";
             $stmt = $this->pdo->prepare($sql);
-            $stmt->execute([$like, $like, $like , $like]);
+            $stmt->execute([$like, $like, $like, $like]);
             return $stmt->fetchAll();
         } catch (Exception $e) {
             throw new Exception("Error searching products: " . $e->getMessage());
@@ -340,6 +366,3 @@ $check->check_low_stock();
 // check : schtasks /Query /TN "CheckLowStock"
 // run : schtasks /Run /TN "CheckLowStock"
 // delete : schtasks /Delete /TN "CheckLowStock" /F
-
-
-?>
