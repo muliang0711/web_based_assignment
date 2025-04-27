@@ -1,5 +1,9 @@
 <?php
 require '../../_base.php';
+if (is_logged_in('admin')) {
+  temp('info', "You have already login");
+  redirect('admin_home.php');
+}
 
 if (is_post()) {
 
