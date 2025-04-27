@@ -1,12 +1,12 @@
 <?php
 require '../../_base.php';
-
+include __DIR__ . "/../../db_connection.php";
 $title = 'Home Page';
 $stylesheetArray = ['/css/admin_home.css'];   // 注意：这边只放特定于此页面的 .css file(s)。所有 admin 页面都会用到的 .css files 应放在 /css/admin.css
 // $scriptArray = [];       // 注意：这边只放特定于此页面的 .js file(s)。所有 admin 页面都会用到的 .js files 应放在 /js/admin.js
 include '../../admin_login_guard.php'; // Note: admin_login_guard contains redirect(), which MUST be before any HTML output
 require_once  "../admin/main.php";
-include __DIR__ . "/../../db/productStock.php";
+include __DIR__ . "/../../controller/stockManager.php";
 $check = new CheckStock($_db);
 $check->check_low_stock();
 ?>
@@ -47,28 +47,35 @@ try {
 
 
 
-    //percentage of the product
     $stmC = $_db->prepare("SELECT 
-        od.productId, 
-        p.productName,
-        SUM(od.subtotal) AS total_sales,
-        SUM(od.quantity) AS total_sold, 
-        (SUM(od.subtotal) / (SELECT SUM(subtotal) FROM order_items)) * 100 AS percentage
-    FROM order_items od
-    JOIN product p ON od.productId = p.productID
-    GROUP BY od.productId, p.productName
-    ORDER BY total_sales DESC
+    od.productId, 
+    p.productName,
+    SUM(od.subtotal) AS total_sales,
+    SUM(od.quantity) AS total_sold, 
+    (SUM(od.subtotal) / (SELECT SUM(subtotal) FROM order_items)) * 100 AS percentage
+FROM order_items od
+JOIN product p ON od.productId = p.productID
+GROUP BY od.productId, p.productName
+ORDER BY total_sales DESC
 ");
-    $stmC->execute();
-    $resultC = $stmC->fetchAll();
-    $count = [];
-    $productName = []; //save the productname
-    $percentage = []; //save the product sales percentage
-    foreach ($resultC as $row) {
-        $productName[] = $row->productName;  //save the product name into productName
-        $percentage[] = round($row->percentage, 2);   //calculate the percentage into 2 小数 and save it into percentage array
-        $count[] = $row->total_sold;
-    }
+$stmC->execute();
+$resultC = $stmC->fetchAll(PDO::FETCH_OBJ); // <<< 必须加上 FETCH_OBJ
+
+$count = [];
+$productName = [];
+$percentage = [];
+
+$counter = 0;
+foreach ($resultC as $row) {
+if ($counter >= 5) {
+    break;
+}
+$productName[] = $row->productName;
+$percentage[] = round($row->percentage, 2);
+$count[] = $row->total_sold;
+$counter++;
+}
+
 } catch (PDOException $e) {
     die("Database error: " . $e->getMessage());  // Handle connection errors
 }
@@ -157,26 +164,30 @@ try {
         <script>
             //get percentage of  the variable $productName,percentage  ,then change it int o javascript array 
             const productName = <?php echo json_encode($productName); ?>;
-            const percentage = <?php echo json_encode($percentage); ?>;
-            const count = <?php echo json_encode($count); ?>;
+const percentage = <?php echo json_encode($percentage); ?>;
+const count = <?php echo json_encode($count); ?>;
 
-            new Chart("salesChart", {
-                type: "pie",
-                data: {
-                    labels: productName,
-                    datasets: [{
-                        backgroundColor: ["#8ecaf6", "#b8e1ff", "#b1d5ef", "#aac9df", "#aac9df", "878c8f"],
-
-                        data: percentage
-                    }]
-                },
-                options: {
-                    title: {
-                        display: true,
-                        text: "Each Product Sold Percentage",
-                    }
-                }
-            });
+new Chart("salesChart", {
+    type: "pie",
+    data: {
+        labels: productName,
+        datasets: [{
+            backgroundColor: ["#8ecaf6", "#b8e1ff", "#b1d5ef", "#aac9df", "#aac9df", "#878c8f"],
+            data: percentage
+        }]
+    },
+    options: {
+        maintainAspectRatio: false,
+        responsive: true,
+      
+            title: {
+                display: true,
+                text: "Product Sold Percentage"
+            }
+            
+        
+    }
+});
 
             new Chart("salesCountChart", {
                 type: "bar",
@@ -191,7 +202,7 @@ try {
                 options: {
                     title: {
                         display: true,
-                        text: "Total Sold of Each Product",
+                        text: "Total Sold of Product",
                         font: {size: 20
                         }
                     }
