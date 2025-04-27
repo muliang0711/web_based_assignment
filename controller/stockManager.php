@@ -47,7 +47,7 @@ class ProductManager {
     
         // Normal mappings for other actions
         $allowedActions = [
-            'filter'        => 'filterProducts',
+            'filter'        => 'filterRecord',
             'search'        => 'searchProduct',
             'sendEmail'     => 'emailSubmit',
             'sendSMS'       => 'SMSSubmit',

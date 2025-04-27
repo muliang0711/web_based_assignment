@@ -94,8 +94,7 @@ link_stylesheet($stylesheetArray);
 
 
       <div class="form-group">
-        <label style="font-size: large; color:red;">Because hacker attack , image you update on this page will override the existing image </label>
-        <img src="/assets/img/hacker.png" alt="" width="200px">
+        <label style="font-size: large; color:red;">Image you update on this page will override the existing image </label>
       </div>
 
       <!-- Existing Product Images -->
