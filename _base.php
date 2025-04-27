@@ -292,6 +292,135 @@ function get_mail() {
     return $m;
 }
 
+
+function get_notify_order_body($username, $url, $oid, $cid){
+    return "
+    <body class='body' style='background-color:#fff;margin:0;padding:0;-webkit-text-size-adjust:none;text-size-adjust:none'>
+  <table class='nl-container' width='100%' border='0' cellpadding='0' cellspacing='0' role='presentation' style='mso-table-lspace:0;mso-table-rspace:0;background-color:#fff'>
+    <tbody>
+      <tr>
+        <td>
+          <table class='row row-1' align='center' width='100%' border='0' cellpadding='0' cellspacing='0' role='presentation' style='mso-table-lspace:0;mso-table-rspace:0'>
+            <tbody>
+              <tr>
+                <td>
+                  <table class='row-content stack' align='center' border='0' cellpadding='0' cellspacing='0' role='presentation' style='mso-table-lspace:0;mso-table-rspace:0;border-radius:0;color:#000;width:900px;margin:0 auto' width='900'>
+                    <tbody>
+                      <tr>
+                        <td class='column column-1' width='16.666666666666668%' style='mso-table-lspace:0;mso-table-rspace:0;font-weight:400;text-align:left;vertical-align:top'>
+                          <div class='spacer_block block-1 mobile_hide' style='height:25px;line-height:25px;font-size:1px'>&#8202;</div>
+                        </td>
+                        <td class='column column-2' width='83.33333333333333%' style='mso-table-lspace:0;mso-table-rspace:0;font-weight:400;text-align:left;vertical-align:top'>
+                          <table class='image_block block-1' width='100%' border='0' cellpadding='0' cellspacing='0' role='presentation' style='mso-table-lspace:0;mso-table-rspace:0'>
+                            <tr>
+                              <td class='pad' style='width:100%'>
+                                <div class='alignment' align='left'>
+                                  <div style='max-width:180px'>
+                                    <img src='cid:$cid' style='display:block;height:auto;border:0' width='180' height='auto'>
+                                  </div>
+                                </div>
+                              </td>
+                            </tr>
+                          </table>
+                          <table class='text_block block-2' width='100%' border='0' cellpadding='0' cellspacing='0' role='presentation' style='mso-table-lspace:0;mso-table-rspace:0;word-break:break-word'>
+                            <tr>
+                              <td class='pad' style='padding-top:40px'>
+                                <div style='font-family:sans-serif'>
+                                  <div style='font-size:14px;font-family:Roboto,Tahoma,Verdana,Segoe,sans-serif;mso-line-height-alt:16.8px;color:#0068a5;line-height:1.2'>
+                                    <p style='margin:0;font-size:14px;mso-line-height-alt:16.8px'>
+                                      <strong><span style='word-break: break-word; font-size: 26px;'>Order #$oid</span></strong>
+                                    </p>
+                                  </div>
+                                </div>
+                              </td>
+                            </tr>
+                          </table>
+                          <table class='divider_block block-3' width='100%' border='0' cellpadding='0' cellspacing='0' role='presentation' style='mso-table-lspace:0;mso-table-rspace:0'>
+                            <tr>
+                              <td class='pad' style='padding-bottom:45px;padding-top:45px'>
+                                <div class='alignment' align='left'>
+                                  <table border='0' cellpadding='0' cellspacing='0' role='presentation' width='85%' style='mso-table-lspace:0;mso-table-rspace:0'>
+                                    <tr>
+                                      <td class='divider_inner' style='font-size:1px;line-height:1px;border-top:2px solid #0068a5'>
+                                        <span style='word-break: break-word;'>&#8202;</span>
+                                      </td>
+                                    </tr>
+                                  </table>
+                                </div>
+                              </td>
+                            </tr>
+                          </table>
+                          <table class='text_block block-4' width='100%' border='0' cellpadding='0' cellspacing='0' role='presentation' style='mso-table-lspace:0;mso-table-rspace:0;word-break:break-word'>
+                            <tr>
+                              <td class='pad'>
+                                <div style='font-family:sans-serif'>
+                                  <div style='font-size:14px;font-family:Roboto,Tahoma,Verdana,Segoe,sans-serif;mso-line-height-alt:16.8px;color:#0068a5;line-height:1.2'>
+                                    <p style='margin:0;font-size:14px;mso-line-height-alt:16.8px'>
+                                      <strong><span style='word-break: break-word; font-size: 26px;'>$username,</span></strong>
+                                    </p>
+                                  </div>
+                                </div>
+                              </td>
+                            </tr>
+                          </table>
+                          <table class='text_block block-5' width='100%' border='0' cellpadding='0' cellspacing='0' role='presentation' style='mso-table-lspace:0;mso-table-rspace:0;word-break:break-word'>
+                            <tr>
+                              <td class='pad' style='padding-bottom:10px;padding-top:10px'>
+                                <div style='font-family:sans-serif'>
+                                  <div style='font-size:14px;font-family:Roboto,Tahoma,Verdana,Segoe,sans-serif;mso-line-height-alt:16.8px;color:#0068a5;line-height:1.2'>
+                                    <p style='margin:0;font-size:14px;mso-line-height-alt:16.8px'>
+                                      <span style='word-break: break-word; font-size: 16px;'>We're glad to announce that your order is a step closer to you! 🥳</span>
+                                    </p>
+                                  </div>
+                                </div>
+                              </td>
+                            </tr>
+                          </table>
+                          <table class='button_block block-6' width='100%' border='0' cellpadding='0' cellspacing='0' role='presentation' style='mso-table-lspace:0;mso-table-rspace:0'>
+                            <tr>
+                              <td class='pad' style='padding-bottom:30px;padding-top:30px;text-align:left'>
+                                <div class='alignment' align='left'>
+                                  <a href='$url' target='_blank' style='color:#ffffff;text-decoration:none;'>
+                                    <span class='button' style='background-color: #0084ff; border-bottom: 0px solid transparent; border-left: 0px solid transparent; border-radius: 4px; border-right: 0px solid transparent; border-top: 0px solid transparent; color: #ffffff; display: inline-block; font-family: Roboto, Tahoma, Verdana, Segoe, sans-serif; font-size: 16px; font-weight: 400; mso-border-alt: none; padding-bottom: 10px; padding-top: 10px; padding-left: 55px; padding-right: 55px; text-align: center; width: auto; word-break: keep-all; letter-spacing: normal;'>
+                                      <span style='word-break: break-word; line-height: 32px;'>View Order</span>
+                                    </span>
+                                  </a>
+                                </div>
+                              </td>
+                            </tr>
+                          </table>
+                          <table class='divider_block block-7' width='100%' border='0' cellpadding='0' cellspacing='0' role='presentation' style='mso-table-lspace:0;mso-table-rspace:0'>
+                            <tr>
+                              <td class='pad' style='padding-bottom:45px;padding-top:45px'>
+                                <div class='alignment' align='left'>
+                                  <table border='0' cellpadding='0' cellspacing='0' role='presentation' width='85%' style='mso-table-lspace:0;mso-table-rspace:0'>
+                                    <tr>
+                                      <td class='divider_inner' style='font-size:1px;line-height:1px;border-top:2px solid #0068a5'>
+                                        <span style='word-break: break-word;'>&#8202;</span>
+                                      </td>
+                                    </tr>
+                                  </table>
+                                </div>
+                              </td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+";
+}
+
+
 function get_reset_pw_email_body($username, $email, $home_url, $reset_pw_url) {
     return "
             <body style='background-color: #fff; font-family: sans-serif; font-size: 14px; line-height: 1.4; margin: 0; padding: 0; width: 100%; box-sizing: border-box;'>
