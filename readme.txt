@@ -78,9 +78,7 @@ https://wbproject.local/pages/admin/product/admin_product.php
 Restock history page(Admin) 
 https://wbproject.local/pages/admin/product/restock_history.php
 
-<<<<<<< HEAD
 
-=======
 Admin Login
 	http://localhost:8000/pages/admin/admin_login.php
 Admin Home
@@ -114,7 +112,6 @@ Customer Profile Settings
 Customer Account Settings
 	http://localhost:8000/pages/user/settings/account.php
 	
->>>>>>> 8b413fc3d38aafd9892c92b69a4eea45839acf0b
 
 	
 
