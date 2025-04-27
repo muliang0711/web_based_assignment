@@ -9,18 +9,29 @@ User:
 			  - icecream
 	password: 1234Abcd!
 
-Home page
+Sign up page(Member)
+http://localhost:8000/pages/user/user-signup.php
+
+Login page(Member)
+http://localhost:8000/pages/user/user-login.php?fromPage=/
+
+Home page(Member)
 http://localhost:8000/
 
-Product list page
+Product list page(Member)
 http://localhost:8000/pages/product/productlist.php
 
-User Cart page
+Product details page(Member) (Need input racket=? or will redirect to product list page)
+http://localhost:8000/pages/product/productDetail.php?racket=?
+
+User Cart page(Member)
 http://localhost:8000/pages/product/cartPage.php
 
-About Us page
+About Us page(Member)
 http://localhost:8000/pages/About/about.php
 
+Checkout page(Member)
+http://localhost:8000/pages/checkout/checkout.php?
 add product page 
 https://wbproject.local/pages/admin/product/addProduct.php
 
