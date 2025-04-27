@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 --
 -- 数据库： `web_based_assignment`
 --
+CREATE DATABASE IF NOT EXISTS `web_based_assignment` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `web_based_assignment`;
 
 -- --------------------------------------------------------
 
