@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- 主机： 127.0.0.1
--- 生成日期： 2025-04-27 11:41:11
--- 服务器版本： 10.4.32-MariaDB
--- PHP 版本： 8.0.30
+-- Host: 127.0.0.1
+-- Generation Time: Apr 27, 2025 at 06:13 PM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- 数据库： `web_based_assignment`
+-- Database: `web_based_assignment`
 --
 CREATE DATABASE IF NOT EXISTS `web_based_assignment` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 USE `web_based_assignment`;
@@ -26,7 +26,7 @@ USE `web_based_assignment`;
 -- --------------------------------------------------------
 
 --
--- 表的结构 `admin`
+-- Table structure for table `admin`
 --
 
 DROP TABLE IF EXISTS `admin`;
@@ -40,7 +40,7 @@ CREATE TABLE `admin` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- 转存表中的数据 `admin`
+-- Dumping data for table `admin`
 --
 
 INSERT INTO `admin` (`id`, `name`, `department`, `passwordHash`, `adminLevel`, `status`) VALUES
@@ -153,7 +153,7 @@ INSERT INTO `admin` (`id`, `name`, `department`, `passwordHash`, `adminLevel`, `
 -- --------------------------------------------------------
 
 --
--- 表的结构 `blockeduser`
+-- Table structure for table `blockeduser`
 --
 
 DROP TABLE IF EXISTS `blockeduser`;
@@ -165,7 +165,7 @@ CREATE TABLE `blockeduser` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- 转存表中的数据 `blockeduser`
+-- Dumping data for table `blockeduser`
 --
 
 INSERT INTO `blockeduser` (`blockedUserID`, `role`, `status`, `appealReason`) VALUES
@@ -242,7 +242,7 @@ INSERT INTO `blockeduser` (`blockedUserID`, `role`, `status`, `appealReason`) VA
 -- --------------------------------------------------------
 
 --
--- 表的结构 `cartitem`
+-- Table structure for table `cartitem`
 --
 
 DROP TABLE IF EXISTS `cartitem`;
@@ -254,7 +254,7 @@ CREATE TABLE `cartitem` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- 转存表中的数据 `cartitem`
+-- Dumping data for table `cartitem`
 --
 
 INSERT INTO `cartitem` (`userID`, `productID`, `sizeID`, `quantity`) VALUES
@@ -267,7 +267,7 @@ INSERT INTO `cartitem` (`userID`, `productID`, `sizeID`, `quantity`) VALUES
 -- --------------------------------------------------------
 
 --
--- 表的结构 `messages`
+-- Table structure for table `messages`
 --
 
 DROP TABLE IF EXISTS `messages`;
@@ -281,7 +281,7 @@ CREATE TABLE `messages` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- 转存表中的数据 `messages`
+-- Dumping data for table `messages`
 --
 
 INSERT INTO `messages` (`messageID`, `senderID`, `adminID`, `content`, `sent_at`, `userSent`) VALUES
@@ -297,7 +297,7 @@ INSERT INTO `messages` (`messageID`, `senderID`, `adminID`, `content`, `sent_at`
 -- --------------------------------------------------------
 
 --
--- 表的结构 `orders`
+-- Table structure for table `orders`
 --
 
 DROP TABLE IF EXISTS `orders`;
@@ -318,18 +318,115 @@ CREATE TABLE `orders` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- 转存表中的数据 `orders`
+-- Dumping data for table `orders`
 --
 
 INSERT INTO `orders` (`orderId`, `userId`, `orderDate`, `status`, `orderAddress`, `orderName`, `orderPhone`, `deliveryMethod`, `deliveredDate`, `tracking`, `discount`, `notify`, `cancel_reason`) VALUES
 (1, 1, '2025-03-31', 'Canceled', 'PV18 RESIDENCE, JALAN LANGKAWI, 53000, Kuala Lumpur', 'Wayne Gan', '60126289399', 'Standard', NULL, 0, 119.70, 1, NULL),
 (2, 1, '2025-04-23', 'Pending', 'Straits Court, JALAN Ujong pasir, 75050, Melaka', 'MR lolipop', '60126289399', 'Standard', NULL, 1, 0.00, 0, NULL),
-(3, 6, '2025-04-26', 'Pending', 'PV18 RESIDENCE, JALAN LANGKAWI, 53000, Kuala Lumpur', 'Cookie Le', '60126289399', 'Standard', NULL, NULL, 0.00, 0, NULL);
+(3, 6, '2025-04-26', 'Pending', 'PV18 RESIDENCE, JALAN LANGKAWI, 53000, Kuala Lumpur', 'Cookie Le', '60126289399', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12433, 15, '2024-01-24', 'Pending', 'PV18 RESIDENCE, JALAN LANGKAWI, 53000, Kuala Lumpur', 'John Tan', '60184567234', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12434, 9, '2023-11-10', 'Delivered', 'SKY SUITES, JALAN AMPANG, 50450, Kuala Lumpur', 'Emily Wong', '60192345678', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12435, 27, '2025-02-18', 'Canceled', 'G RESIDENCE, LORONG MAHANG, 54000, Kuala Lumpur', 'Ahmad Nasir', '60173456782', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12436, 44, '2023-08-30', 'Pending', 'THE HUB SS2, JALAN HARAPAN, 46300, Selangor', 'Sarah Lim', '60181234567', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12437, 6, '2024-03-12', 'Delivered', 'TAMAN SERI AUSTIN, JALAN AUSTIN HEIGHTS, 81100, Johor', 'Jason Leong', '60197654321', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12438, 50, '2023-07-05', 'Pending', 'VISTA ALAM, JALAN IKHTISAS, 40000, Selangor', 'Nur Aina', '60183456219', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12439, 32, '2024-10-19', 'Canceled', 'TAMAN MOLEK, JALAN MOLEK, 81100, Johor', 'Darren Tan', '60175678342', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12440, 8, '2025-03-07', 'Delivered', 'TAMAN DESA, JALAN KLANG LAMA, 58100, Kuala Lumpur', 'Michelle Ng', '60184567213', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12441, 21, '2024-06-01', 'Pending', 'TAMAN CENTURY, JALAN DATO ABDULLAH TAHIR, 80300, Johor', 'Farah Zainal', '60196784523', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12442, 19, '2024-05-14', 'Pending', 'TAMAN TASIK TAIPING, JALAN LAKE GARDENS, 34000, Perak', 'Amanda Ong', '60187456321', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12443, 2, '2024-09-18', 'Delivered', 'TAMAN MELAWATI, JALAN MELAWATI, 53100, Kuala Lumpur', 'Zaidah Ahmad', '60188765432', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12444, 43, '2023-02-03', 'Canceled', 'THE SPRING, JALAN SIMPANG TIGA, 93300, Sarawak', 'Kelvin Toh', '60184561234', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12445, 11, '2025-03-20', 'Pending', 'BANDAR SERI ALAM, JALAN SURIA, 81750, Johor', 'Tan Wei Jian', '60196782345', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12446, 18, '2024-07-07', 'Delivered', 'SETIA CITY RESIDENCES, PERSIARAN SETIA ALAM, 40170, Selangor', 'Nurul Iman', '60192345612', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12447, 7, '2023-05-11', 'Pending', 'THE STRAITS RESIDENCE, JALAN MELAKA RAYA, 75000, Melaka', 'James Lee', '60184567812', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12448, 46, '2024-12-30', 'Delivered', 'TAMAN KEMUMIN, JALAN PANCHOR, 16150, Kelantan', 'Adib Roslan', '60175432198', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12449, 5, '2025-04-05', 'Canceled', 'TAMAN DESA KEMUMIN, JALAN SABAK, 16100, Kelantan', 'Melissa Chong', '60184578932', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12450, 33, '2023-04-25', 'Pending', 'IMAGO SHOPPING MALL, JALAN KUSTI, 88000, Sabah', 'Syafiq Aziz', '60183456789', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12451, 25, '2023-08-13', 'Pending', 'TAMAN BUKIT INDAH, JALAN INDAH, 81200, Johor', 'Faridah Mokhtar', '60196784512', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12452, 31, '2024-11-17', 'Delivered', 'SUNGAI PETANI, JALAN KUALA KETIL, 08000, Kedah', 'Leonard Goh', '60181234987', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12453, 40, '2025-01-22', 'Canceled', 'TAMAN BUKIT DAHLIA, JALAN BUKIT DAHLIA, 81700, Johor', 'Ahmad Hakim', '60197658721', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12454, 10, '2024-03-21', 'Pending', 'PERLING MALL, JALAN PERSISIRAN PERLING, 81200, Johor', 'Vincent Yeo', '60185672143', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12455, 4, '2023-06-15', 'Delivered', 'MAHKOTA CHERAS, JALAN TEMENGGUNG, 43200, Selangor', 'Hannah Tan', '60186749213', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12456, 29, '2024-01-09', 'Pending', 'KOMTAR JBCC, JALAN WONG AH FOOK, 80000, Johor', 'Ridzuan Salleh', '60185432987', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12457, 23, '2024-08-04', 'Delivered', 'TAMAN MIDAH, JALAN MIDAH, 56000, Kuala Lumpur', 'Fatin Zahra', '60181234598', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12458, 12, '2025-03-02', 'Pending', 'TAMAN SRI RAMPAL, JALAN RAMPAL, 72100, Negeri Sembilan', 'Tengku Shahrul', '60183459712', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12459, 26, '2024-04-01', 'Canceled', 'GURNEY PARAGON, GURNEY DRIVE, 10250, Penang', 'Sharifah Nor', '60185672314', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12460, 41, '2023-07-29', 'Delivered', 'THE PEARL, JALAN STONOR, 50450, Kuala Lumpur', 'Justin Foo', '60184561297', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12461, 14, '2023-09-14', 'Pending', 'BANDAR PUTERI, JALAN PUTERI, 47100, Selangor', 'Nadia Hafiz', '60196782145', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12462, 37, '2024-06-24', 'Canceled', 'THE SHORE, JALAN PERNIAGAAN, 75300, Melaka', 'Khairol Anuar', '60184567891', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12463, 30, '2025-02-12', 'Delivered', 'CENTRAL SQUARE, JALAN KUALA KETIL, 08000, Kedah', 'Lim Kok Wing', '60197658432', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12464, 47, '2023-03-18', 'Pending', 'PLAZA MERDEKA, JALAN TUN ABANG HAJI OPENG, 93100, Sarawak', 'Mohd Ikhwan', '60184561278', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12465, 17, '2024-07-02', 'Pending', 'BANDAR SERI PUTRA, JALAN SERI PUTRA, 43000, Selangor', 'Elina Syahirah', '60193456782', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12466, 16, '2023-10-28', 'Delivered', 'TAMAN SRI ANDALAS, JALAN SRI CEMPAKA, 41200, Selangor', 'Aina Natasha', '60187654321', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12467, 35, '2024-08-09', 'Pending', 'TAMAN BUKIT MEWAH, JALAN BUKIT MEWAH, 43000, Selangor', 'Hakim Nordin', '60182345679', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12468, 22, '2025-01-15', 'Delivered', 'BANDAR BARU KLANG, JALAN BATU TIGA, 41150, Selangor', 'Sabrina Lim', '60184567912', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12469, 13, '2024-10-05', 'Pending', 'TAMAN KURNIA JAYA, JALAN SRI KURNIA, 15100, Kelantan', 'Fikri Ahmad', '60185432167', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12470, 49, '2023-12-07', 'Canceled', 'THE GARDENS MALL, JALAN KAMPUNG HAJI ABDULLAH HUKUM, 59200, Kuala Lumpur', 'Carmen Yew', '60182345987', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12471, 45, '2023-09-11', 'Pending', 'TAMAN MUTIARA RINI, JALAN MUTIARA, 81300, Johor', 'Ariff Rahman', '60198765432', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12472, 1, '2025-03-29', 'Delivered', 'BANDAR UTAMA, JALAN BU 3/1, 47800, Selangor', 'Siti Aisyah', '60191234567', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12473, 48, '2024-05-06', 'Canceled', 'PUSAT BANDAR PASIR GUDANG, JALAN TASEK, 81700, Johor', 'Mohamad Hafiz', '60194561234', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12474, 36, '2024-08-20', 'Pending', 'TAMAN INTAN, JALAN INTAN, 85000, Johor', 'Liew Jian Hao', '60192345876', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12475, 20, '2025-04-11', 'Delivered', 'TAMAN RIA JAYA, JALAN TUN RAZAK, 08000, Kedah', 'Chong Mei Ling', '60193456987', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12476, 34, '2024-02-27', 'Canceled', 'TAMAN SRI GADING, JALAN GADING, 83000, Johor', 'Azman Idris', '60185678912', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12477, 42, '2023-10-16', 'Pending', 'BANDAR TENGGARA, JALAN UTAMA, 81000, Johor', 'Rashidah Nor', '60183456987', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12478, 24, '2025-01-06', 'Delivered', 'ALOR SETAR MALL, LEBUHRAYA SULTANAH BAHIYAH, 05350, Kedah', 'Iskandar Halim', '60185671234', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12479, 28, '2024-11-04', 'Canceled', 'MENARA KOMTAR, JALAN PENANG, 10000, Penang', 'Yvonne Gan', '60181234976', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12480, 38, '2023-06-26', 'Pending', '1 BORNEO HYPERMALL, JALAN SULAMAN, 88400, Sabah', 'Jonathan Goh', '60196782345', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12481, 39, '2025-02-02', 'Delivered', 'TAMAN SRI TEBRAU, JALAN TEBRAU, 80050, Johor', 'Nurlina Syed', '60198762134', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12482, 5, '2024-04-22', 'Canceled', 'TAMAN DESA MINES, JALAN DESA MINES, 43300, Selangor', 'Ganesh Subramaniam', '60197658421', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12483, 6, '2024-01-03', 'Pending', 'TAMAN KLEBANG PUTRA, JALAN PUTRA, 75200, Melaka', 'Ong Li Wei', '60184561276', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12484, 7, '2023-12-14', 'Delivered', 'TAMAN KOPERASI POLIS, JALAN BUNGA RAYA, 68100, Kuala Lumpur', 'Aida Fadzil', '60184567239', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12485, 8, '2025-03-10', 'Pending', 'TAMAN DESA CEMPAKA, JALAN DESA, 71400, Negeri Sembilan', 'Yusof Abdullah', '60182345876', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12486, 9, '2024-02-14', 'Canceled', 'TAMAN SRI INDERA MAHKOTA, JALAN IM 6, 25200, Pahang', 'Ling Wei Han', '60183456912', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12487, 10, '2024-10-02', 'Delivered', 'BANDAR INDERA MAHKOTA, JALAN BESAR, 25200, Pahang', 'Roslan Daud', '60184561293', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12488, 11, '2023-11-09', 'Pending', 'DESA COALFIELDS, JALAN DESA 1/1, 47000, Selangor', 'Tan Yin Mei', '60192348912', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12489, 12, '2025-01-01', 'Delivered', 'TAMAN SRI MAHKOTA, JALAN SRI MAHKOTA, 25150, Pahang', 'Nadiah Hasan', '60194567234', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12490, 13, '2023-07-31', 'Pending', 'TAMAN SRI KUANTAN, JALAN BESAR KUANTAN, 25000, Pahang', 'Mohd Shah', '60197654392', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12491, 1, '2024-05-17', 'Pending', 'TAMAN GAYA, JALAN GAYA 1, 81800, Johor', 'Adam Firdaus', '60192348765', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12492, 2, '2025-02-27', 'Delivered', 'SUTERA MALL, JALAN SUTERA TANJUNG, 81300, Johor', 'Wong Pei Yee', '60183457821', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12493, 4, '2023-06-04', 'Canceled', 'DATARAN PAHLAWAN, JALAN MERDEKA, 75000, Melaka', 'Lim Jian Hao', '60184562197', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12494, 5, '2023-11-18', 'Pending', 'KIPMALL BANGI, JALAN BANGI AVENUE, 43000, Selangor', 'Noraini Shah', '60194567832', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12495, 6, '2024-09-12', 'Delivered', 'PAVILION BUKIT JALIL, PERSIARAN BUKIT JALIL, 57000, Kuala Lumpur', 'Chong Yi Wei', '60181239874', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12496, 7, '2024-02-25', 'Pending', 'AMCORP MALL, JALAN PERSIARAN BARAT, 46200, Selangor', 'Nurul Izzati', '60183245976', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12497, 8, '2025-01-06', 'Delivered', 'ALAMANDA, PERSIARAN ALAMANDA, 62000, Putrajaya', 'Arman Zakaria', '60181249765', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12498, 9, '2023-10-21', 'Canceled', 'TAMAN TUN DR ISMAIL, JALAN BURHANUDDIN HELMI, 60000, Kuala Lumpur', 'Shermaine Wong', '60197658321', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12499, 10, '2023-08-08', 'Pending', 'THE MALL MID VALLEY SOUTHKEY, PERSIARAN SOUTHKEY, 80150, Johor', 'Zulhilmi Amir', '60182346789', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12500, 11, '2025-03-26', 'Delivered', 'BANDAR BARU NILAI, JALAN NILAI 3/1, 71800, Negeri Sembilan', 'Daphne Chua', '60182345791', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12501, 12, '2024-07-01', 'Pending', 'TAMAN TAMAN MIDAH, JALAN MIDAH 9, 56000, Kuala Lumpur', 'Raja Muhaimin', '60184569321', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12502, 13, '2023-09-03', 'Canceled', 'SUNWAY CARNIVAL MALL, JALAN TODAK, 13700, Penang', 'Clarence Tan', '60183456721', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12503, 14, '2024-01-20', 'Delivered', 'IMPIAN EMAS, JALAN IMPIAN EMAS 6, 81300, Johor', 'Rina Abd Rahman', '60192345679', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12504, 15, '2025-04-01', 'Pending', 'SUNGAI ARA, JALAN SUNGAI ARA 1, 11900, Penang', 'Goh Zhen Yi', '60197654387', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12505, 16, '2023-05-14', 'Delivered', '1 UTAMA SHOPPING CENTRE, LEBUH BANDAR UTAMA, 47800, Selangor', 'Mohd Aiman', '60184567231', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12506, 17, '2024-06-18', 'Pending', 'TAMAN BAYU PUTERI, JALAN BAYU 1, 80150, Johor', 'Nadira Khalid', '60183459876', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12507, 18, '2024-12-22', 'Delivered', 'WATSONS HQ, JALAN DUNGUN, 50490, Kuala Lumpur', 'Zikri Hamzah', '60184569387', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12508, 19, '2023-03-16', 'Canceled', 'MIDVALLEY MEGAMALL, JALAN SYED PUTRA, 59200, Kuala Lumpur', 'Queenie Ong', '60184567832', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12509, 20, '2023-07-25', 'Pending', 'TAMAN MELATI, JALAN MELATI UTAMA, 53100, Kuala Lumpur', 'Muhammad Faiz', '60184567987', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12510, 21, '2025-02-09', 'Delivered', 'METROPOLITAN SQUARE, JALAN PJU 8/1, 47820, Selangor', 'Karen Sim', '60181239687', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12511, 22, '2024-03-11', 'Pending', 'PLAZA LOW YAT, JALAN BUKIT BINTANG, 55100, Kuala Lumpur', 'Aliya Hashim', '60181234976', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12512, 23, '2024-09-29', 'Canceled', 'CENTRAL I-CITY, PERSIARAN MULTIMEDIA, 40000, Selangor', 'Ryan Lee', '60183459871', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12513, 24, '2023-04-06', 'Pending', 'KOMPLEKS KARAMUNSING, JALAN TUARAN, 88300, Sabah', 'Yong Jun Hao', '60184567891', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12514, 25, '2024-10-24', 'Delivered', 'TAMAN SRI DAGANGAN, JALAN DAGANGAN 5, 25100, Pahang', 'Syahirah Razali', '60185432987', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12515, 26, '2025-01-31', 'Pending', 'TAMAN NUSA BESTARI, JALAN NB2, 81300, Johor', 'Shahril Nizam', '60197653487', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12516, 27, '2023-07-01', 'Delivered', 'TAMAN PUNCAK JALIL, JALAN PUJ, 43300, Selangor', 'Nurul Huda', '60186743291', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12517, 28, '2025-03-14', 'Canceled', 'BANDAR SUNWAY, JALAN PJS 11/28B, 47500, Selangor', 'Louis Tan', '60181249873', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12518, 29, '2023-12-18', 'Pending', 'TAMAN PULAI INDAH, JALAN PULAI 9, 81300, Johor', 'Firdaus Shahril', '60185672398', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12519, 30, '2024-11-08', 'Delivered', 'TAMAN PERLING, JALAN PERLING 3, 81200, Johor', 'Azlina Kamarudin', '60183459287', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12520, 31, '2024-05-30', 'Pending', 'BANDAR TASIK PUTERI, JALAN 1/1, 48020, Selangor', 'Nabilah Shah', '60186743287', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12521, 32, '2025-02-15', 'Delivered', 'TAMAN BUKIT SERDANG, JALAN PBS, 43300, Selangor', 'Tan Jun Ming', '60183459763', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12522, 33, '2023-11-09', 'Pending', 'TAMAN MUTIARA RINI, JALAN MUTIARA RINI, 81300, Johor', 'Zulaikha Azmi', '60185678932', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12523, 34, '2024-08-17', 'Delivered', 'BANDAR PUTERI JAYA, JALAN PUTERI, 08000, Kedah', 'Imran Khalid', '60183459273', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12524, 35, '2023-06-22', 'Canceled', 'TAMAN SERDANG PERDANA, JALAN SP 3/1, 43300, Selangor', 'Yee Mei Lin', '60185432789', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12525, 36, '2024-12-01', 'Pending', 'KSL CITY MALL, JALAN SELADANG, 80250, Johor', 'Faizal Osman', '60181239476', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12526, 37, '2025-01-12', 'Delivered', 'BANDAR MAHKOTA CHERAS, JALAN PERSIARAN MAHKOTA, 43200, Selangor', 'Teo Hui Ling', '60184567932', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12527, 38, '2023-05-27', 'Pending', 'TAMAN DAYA, JALAN RATA, 81100, Johor', 'Nik Afiq', '60184567897', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12528, 39, '2024-09-06', 'Delivered', 'SETIA ECOHILL, JALAN ECOHILL 1, 43500, Selangor', 'Cheryl Wong', '60181239865', 'Standard', NULL, NULL, 0.00, 0, NULL),
+(12529, 40, '2023-07-19', 'Canceled', 'BANDAR BARU SRI PETALING, JALAN RADIN, 57000, Kuala Lumpur', 'Rashid Kamal', '60183457962', 'Standard', NULL, NULL, 0.00, 0, NULL);
 
 -- --------------------------------------------------------
 
 --
--- 表的结构 `order_items`
+-- Table structure for table `order_items`
 --
 
 DROP TABLE IF EXISTS `order_items`;
@@ -342,18 +439,116 @@ CREATE TABLE `order_items` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- 转存表中的数据 `order_items`
+-- Dumping data for table `order_items`
 --
 
 INSERT INTO `order_items` (`orderId`, `productId`, `quantity`, `subtotal`, `gripSize`) VALUES
 (1, 'R0005', 1, 399.00, '3UG5'),
 (2, 'R0060', 1, 199.00, '3UG5'),
-(3, 'R0070', 1, 199.00, '3UG5');
+(3, 'R0070', 1, 199.00, '3UG5'),
+(12433, 'R0001', 2, 998.00, '3UG5'),
+(12433, 'R0045', 1, 529.00, '4UG5'),
+(12434, 'R0072', 3, 837.00, '3UG5'),
+(12435, 'R0033', 1, 599.00, '4UG5'),
+(12436, 'R0099', 2, 578.00, '3UG5'),
+(12437, 'R0025', 1, 699.00, '4UG5'),
+(12438, 'R0050', 4, 2196.00, '3UG5'),
+(12439, 'R0088', 1, 289.00, '4UG5'),
+(12440, 'R0012', 2, 1238.00, '3UG5'),
+(12441, 'R0067', 1, 389.00, '4UG5'),
+(12442, 'R0042', 3, 1497.00, '3UG5'),
+(12443, 'R0095', 1, 349.00, '4UG5'),
+(12444, 'R0022', 2, 998.00, '3UG5'),
+(12445, 'R0076', 1, 409.00, '4UG5'),
+(12446, 'R0037', 3, 1767.00, '3UG5'),
+(12447, 'R0015', 1, 579.00, '4UG5'),
+(12448, 'R0080', 2, 598.00, '3UG5'),
+(12449, 'R0055', 1, 339.00, '4UG5'),
+(12450, 'R0090', 4, 876.00, '3UG5'),
+(12451, 'R0028', 1, 619.00, '4UG5'),
+(12452, 'R0060', 2, 398.00, '3UG5'),
+(12453, 'R0049', 1, 599.00, '4UG5'),
+(12454, 'R0010', 3, 1287.00, '3UG5'),
+(12455, 'R0073', 1, 359.00, '4UG5'),
+(12456, 'R0030', 2, 878.00, '3UG5'),
+(12457, 'R0092', 1, 369.00, '4UG5'),
+(12458, 'R0052', 4, 1716.00, '3UG5'),
+(12459, 'R0018', 1, 449.00, '4UG5'),
+(12460, 'R0085', 2, 738.00, '3UG5'),
+(12461, 'R0040', 1, 669.00, '4UG5'),
+(12462, 'R0097', 3, 597.00, '3UG5'),
+(12463, 'R0020', 1, 649.00, '4UG5'),
+(12464, 'R0065', 2, 438.00, '3UG5'),
+(12465, 'R0035', 1, 559.00, '4UG5'),
+(12466, 'R0013', 4, 2796.00, '3UG5'),
+(12467, 'R0082', 1, 379.00, '4UG5'),
+(12468, 'R0057', 2, 738.00, '3UG5'),
+(12469, 'R0027', 1, 509.00, '4UG5'),
+(12470, 'R0079', 3, 1167.00, '3UG5'),
+(12471, 'R0047', 1, 559.00, '4UG5'),
+(12472, 'R0016', 2, 1278.00, '3UG5'),
+(12473, 'R0094', 1, 289.00, '4UG5'),
+(12474, 'R0062', 4, 1636.00, '3UG5'),
+(12475, 'R0038', 1, 509.00, '4UG5'),
+(12476, 'R0005', 2, 798.00, '3UG5'),
+(12477, 'R0087', 1, 249.00, '4UG5'),
+(12478, 'R0059', 3, 957.00, '3UG5'),
+(12479, 'R0023', 1, 489.00, '4UG5'),
+(12480, 'R0070', 2, 398.00, '3UG5'),
+(12481, 'R0044', 1, 689.00, '4UG5'),
+(12482, 'R0011', 4, 2196.00, '3UG5'),
+(12483, 'R0096', 1, 329.00, '4UG5'),
+(12484, 'R0068', 2, 598.00, '3UG5'),
+(12485, 'R0032', 1, 679.00, '4UG5'),
+(12486, 'R0008', 3, 1827.00, '3UG5'),
+(12487, 'R0083', 1, 319.00, '4UG5'),
+(12488, 'R0054', 2, 598.00, '3UG5'),
+(12489, 'R0026', 1, 479.00, '4UG5'),
+(12490, 'R0075', 4, 996.00, '3UG5'),
+(12491, 'R0046', 1, 499.00, '4UG5'),
+(12492, 'R0017', 2, 1018.00, '3UG5'),
+(12493, 'R0091', 1, 289.00, '4UG5'),
+(12494, 'R0063', 3, 807.00, '3UG5'),
+(12495, 'R0039', 1, 539.00, '4UG5'),
+(12496, 'R0003', 2, 918.00, '3UG5'),
+(12497, 'R0086', 1, 269.00, '4UG5'),
+(12498, 'R0056', 4, 916.00, '3UG5'),
+(12499, 'R0029', 1, 549.00, '4UG5'),
+(12500, 'R0078', 2, 438.00, '3UG5'),
+(12501, 'R0048', 1, 579.00, '4UG5'),
+(12502, 'R0019', 3, 1587.00, '3UG5'),
+(12503, 'R0093', 1, 239.00, '4UG5'),
+(12504, 'R0066', 2, 478.00, '3UG5'),
+(12505, 'R0036', 1, 649.00, '4UG5'),
+(12506, 'R0007', 4, 2036.00, '3UG5'),
+(12507, 'R0089', 1, 399.00, '4UG5'),
+(12508, 'R0058', 2, 398.00, '3UG5'),
+(12509, 'R0024', 1, 659.00, '4UG5'),
+(12510, 'R0071', 3, 957.00, '3UG5'),
+(12511, 'R0043', 1, 579.00, '4UG5'),
+(12512, 'R0014', 2, 918.00, '3UG5'),
+(12513, 'R0098', 1, 269.00, '4UG5'),
+(12514, 'R0069', 4, 1476.00, '3UG5'),
+(12515, 'R0034', 1, 489.00, '4UG5'),
+(12516, 'R0004', 2, 1358.00, '3UG5'),
+(12517, 'R0084', 1, 339.00, '4UG5'),
+(12518, 'R0053', 3, 777.00, '3UG5'),
+(12519, 'R0021', 1, 469.00, '4UG5'),
+(12520, 'R0074', 2, 498.00, '3UG5'),
+(12521, 'R0041', 1, 639.00, '4UG5'),
+(12522, 'R0009', 4, 1956.00, '3UG5'),
+(12523, 'R0081', 1, 279.00, '4UG5'),
+(12524, 'R0051', 2, 758.00, '3UG5'),
+(12525, 'R0031', 1, 529.00, '4UG5'),
+(12526, 'R0006', 3, 1557.00, '3UG5'),
+(12527, 'R0077', 1, 199.00, '4UG5'),
+(12528, 'R0100', 2, 638.00, '3UG5'),
+(12529, 'R0061', 1, 359.00, '4UG5');
 
 -- --------------------------------------------------------
 
 --
--- 表的结构 `product`
+-- Table structure for table `product`
 --
 
 DROP TABLE IF EXISTS `product`;
@@ -367,7 +562,7 @@ CREATE TABLE `product` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- 转存表中的数据 `product`
+-- Dumping data for table `product`
 --
 
 INSERT INTO `product` (`productID`, `productName`, `price`, `seriesID`, `introduction`, `playerInfo`) VALUES
@@ -472,11 +667,10 @@ INSERT INTO `product` (`productID`, `productName`, `price`, `seriesID`, `introdu
 ('R0099', 'AeroSharp Neo', 289.00, 'AS', 'Sharp feel and nimble handling for advancing players.', 'Mina Kwon. Clean strokes and growing confidence.'),
 ('R0100', 'Phantom Rise', 319.00, 'PHM', 'Lightweight Phantom tuned for beginners ready to level up.', 'Jake Fields. Learning to rise, one swing at a time.');
 
-
 -- --------------------------------------------------------
 
 --
--- 表的结构 `productstock`
+-- Table structure for table `productstock`
 --
 
 DROP TABLE IF EXISTS `productstock`;
@@ -491,7 +685,7 @@ CREATE TABLE `productstock` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- 转存表中的数据 `productstock`
+-- Dumping data for table `productstock`
 --
 
 INSERT INTO `productstock` (`productID`, `sizeID`, `stock`, `status`, `low_stock_threshold`, `alert_sent`, `qr_token`) VALUES
@@ -699,7 +893,7 @@ INSERT INTO `productstock` (`productID`, `sizeID`, `stock`, `status`, `low_stock
 -- --------------------------------------------------------
 
 --
--- 表的结构 `product_images`
+-- Table structure for table `product_images`
 --
 
 DROP TABLE IF EXISTS `product_images`;
@@ -712,7 +906,7 @@ CREATE TABLE `product_images` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- 转存表中的数据 `product_images`
+-- Dumping data for table `product_images`
 --
 
 INSERT INTO `product_images` (`id`, `productID`, `image_path`, `image_type`, `created_at`) VALUES
@@ -919,7 +1113,7 @@ INSERT INTO `product_images` (`id`, `productID`, `image_path`, `image_type`, `cr
 -- --------------------------------------------------------
 
 --
--- 表的结构 `restock_history`
+-- Table structure for table `restock_history`
 --
 
 DROP TABLE IF EXISTS `restock_history`;
@@ -934,7 +1128,7 @@ CREATE TABLE `restock_history` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- 转存表中的数据 `restock_history`
+-- Dumping data for table `restock_history`
 --
 
 INSERT INTO `restock_history` (`restockID`, `productID`, `sizeID`, `restock_quantity`, `restock_price`, `restocked_by`, `restock_time`) VALUES
@@ -1142,7 +1336,7 @@ INSERT INTO `restock_history` (`restockID`, `productID`, `sizeID`, `restock_quan
 -- --------------------------------------------------------
 
 --
--- 表的结构 `savedaddress`
+-- Table structure for table `savedaddress`
 --
 
 DROP TABLE IF EXISTS `savedaddress`;
@@ -1156,7 +1350,7 @@ CREATE TABLE `savedaddress` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- 转存表中的数据 `savedaddress`
+-- Dumping data for table `savedaddress`
 --
 
 INSERT INTO `savedaddress` (`userID`, `address`, `phoneNo`, `name`, `defaultAdd`, `addressIndex`) VALUES
@@ -1166,7 +1360,7 @@ INSERT INTO `savedaddress` (`userID`, `address`, `phoneNo`, `name`, `defaultAdd`
 -- --------------------------------------------------------
 
 --
--- 表的结构 `series`
+-- Table structure for table `series`
 --
 
 DROP TABLE IF EXISTS `series`;
@@ -1176,7 +1370,7 @@ CREATE TABLE `series` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- 转存表中的数据 `series`
+-- Dumping data for table `series`
 --
 
 INSERT INTO `series` (`seriesID`, `seriesName`) VALUES
@@ -1189,7 +1383,7 @@ INSERT INTO `series` (`seriesID`, `seriesName`) VALUES
 -- --------------------------------------------------------
 
 --
--- 表的结构 `token`
+-- Table structure for table `token`
 --
 
 DROP TABLE IF EXISTS `token`;
@@ -1204,7 +1398,7 @@ CREATE TABLE `token` (
 -- --------------------------------------------------------
 
 --
--- 表的结构 `user`
+-- Table structure for table `user`
 --
 
 DROP TABLE IF EXISTS `user`;
@@ -1225,7 +1419,7 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- 转存表中的数据 `user`
+-- Dumping data for table `user`
 --
 
 INSERT INTO `user` (`userID`, `username`, `passwordHash`, `address`, `birthdate`, `email`, `emailVerified`, `phoneNo`, `gender`, `profilePic`, `bio`, `memberStatus`, `isDeleted`) VALUES
@@ -1287,7 +1481,7 @@ INSERT INTO `user` (`userID`, `username`, `passwordHash`, `address`, `birthdate`
 -- --------------------------------------------------------
 
 --
--- 表的结构 `vouchers`
+-- Table structure for table `vouchers`
 --
 
 DROP TABLE IF EXISTS `vouchers`;
@@ -1300,37 +1494,47 @@ CREATE TABLE `vouchers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- 转存表中的数据 `vouchers`
+-- Dumping data for table `vouchers`
 --
 
 INSERT INTO `vouchers` (`voucherCode`, `amount`, `issuedBy`, `allowedUsage`, `totalUsage`) VALUES
-('TEST123', 30, 'A003', 10, 0);
+('BLACKFRIDAY', 50, 'A001', 100, 0),
+('FALL40', 40, 'A002', 100, 0),
+('HOLIDAY30', 30, 'A005', 100, 0),
+('LOYALTY5', 5, 'A004', 100, 0),
+('NEWUSER25', 25, 'A002', 100, 0),
+('SPRING15', 15, 'A001', 100, 0),
+('SUMMER20', 20, 'A003', 100, 0),
+('TEST123', 30, 'A003', 10, 0),
+('VIP65', 65, 'A005', 100, 0),
+('WELCOME10', 10, 'A004', 100, 0),
+('WINTER50', 50, 'A003', 100, 0);
 
 --
--- 转储表的索引
+-- Indexes for dumped tables
 --
 
 --
--- 表的索引 `admin`
+-- Indexes for table `admin`
 --
 ALTER TABLE `admin`
   ADD PRIMARY KEY (`id`);
 
 --
--- 表的索引 `blockeduser`
+-- Indexes for table `blockeduser`
 --
 ALTER TABLE `blockeduser`
   ADD PRIMARY KEY (`blockedUserID`);
 
 --
--- 表的索引 `cartitem`
+-- Indexes for table `cartitem`
 --
 ALTER TABLE `cartitem`
   ADD PRIMARY KEY (`userID`,`productID`,`sizeID`),
   ADD KEY `productID` (`productID`,`sizeID`);
 
 --
--- 表的索引 `messages`
+-- Indexes for table `messages`
 --
 ALTER TABLE `messages`
   ADD PRIMARY KEY (`messageID`),
@@ -1338,14 +1542,14 @@ ALTER TABLE `messages`
   ADD KEY `senderID` (`senderID`);
 
 --
--- 表的索引 `orders`
+-- Indexes for table `orders`
 --
 ALTER TABLE `orders`
   ADD PRIMARY KEY (`orderId`),
   ADD KEY `userId` (`userId`);
 
 --
--- 表的索引 `order_items`
+-- Indexes for table `order_items`
 --
 ALTER TABLE `order_items`
   ADD PRIMARY KEY (`orderId`,`productId`,`gripSize`),
@@ -1353,55 +1557,55 @@ ALTER TABLE `order_items`
   ADD KEY `order_items_ibfk_2` (`productId`,`gripSize`);
 
 --
--- 表的索引 `product`
+-- Indexes for table `product`
 --
 ALTER TABLE `product`
   ADD PRIMARY KEY (`productID`),
   ADD KEY `seriesID` (`seriesID`);
 
 --
--- 表的索引 `productstock`
+-- Indexes for table `productstock`
 --
 ALTER TABLE `productstock`
   ADD PRIMARY KEY (`productID`,`sizeID`),
   ADD UNIQUE KEY `qr_token` (`qr_token`);
 
 --
--- 表的索引 `product_images`
+-- Indexes for table `product_images`
 --
 ALTER TABLE `product_images`
   ADD PRIMARY KEY (`id`),
   ADD KEY `productID` (`productID`);
 
 --
--- 表的索引 `restock_history`
+-- Indexes for table `restock_history`
 --
 ALTER TABLE `restock_history`
   ADD PRIMARY KEY (`restockID`),
   ADD KEY `productID` (`productID`,`sizeID`);
 
 --
--- 表的索引 `savedaddress`
+-- Indexes for table `savedaddress`
 --
 ALTER TABLE `savedaddress`
   ADD PRIMARY KEY (`addressIndex`),
   ADD KEY `userID` (`userID`);
 
 --
--- 表的索引 `series`
+-- Indexes for table `series`
 --
 ALTER TABLE `series`
   ADD PRIMARY KEY (`seriesID`);
 
 --
--- 表的索引 `token`
+-- Indexes for table `token`
 --
 ALTER TABLE `token`
   ADD PRIMARY KEY (`id`),
   ADD KEY `userID-fk` (`userID`);
 
 --
--- 表的索引 `user`
+-- Indexes for table `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`userID`),
@@ -1409,122 +1613,122 @@ ALTER TABLE `user`
   ADD KEY `username` (`username`);
 
 --
--- 表的索引 `vouchers`
+-- Indexes for table `vouchers`
 --
 ALTER TABLE `vouchers`
   ADD PRIMARY KEY (`voucherCode`),
   ADD KEY `issuedBy` (`issuedBy`);
 
 --
--- 在导出的表使用AUTO_INCREMENT
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- 使用表AUTO_INCREMENT `messages`
+-- AUTO_INCREMENT for table `messages`
 --
 ALTER TABLE `messages`
   MODIFY `messageID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
 
 --
--- 使用表AUTO_INCREMENT `orders`
+-- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `orderId` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12355;
+  MODIFY `orderId` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12530;
 
 --
--- 使用表AUTO_INCREMENT `product_images`
+-- AUTO_INCREMENT for table `product_images`
 --
 ALTER TABLE `product_images`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=215;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=261;
 
 --
--- 使用表AUTO_INCREMENT `restock_history`
+-- AUTO_INCREMENT for table `restock_history`
 --
 ALTER TABLE `restock_history`
   MODIFY `restockID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=303;
 
 --
--- 使用表AUTO_INCREMENT `savedaddress`
+-- AUTO_INCREMENT for table `savedaddress`
 --
 ALTER TABLE `savedaddress`
   MODIFY `addressIndex` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- 使用表AUTO_INCREMENT `user`
+-- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
   MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
--- 限制导出的表
+-- Constraints for dumped tables
 --
 
 --
--- 限制表 `cartitem`
+-- Constraints for table `cartitem`
 --
 ALTER TABLE `cartitem`
   ADD CONSTRAINT `cartitem_ibfk_1` FOREIGN KEY (`productID`,`sizeID`) REFERENCES `productstock` (`productID`, `sizeID`),
   ADD CONSTRAINT `userid_fk` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`) ON DELETE CASCADE;
 
 --
--- 限制表 `messages`
+-- Constraints for table `messages`
 --
 ALTER TABLE `messages`
   ADD CONSTRAINT `messages_ibfk_1` FOREIGN KEY (`adminID`) REFERENCES `admin` (`id`),
   ADD CONSTRAINT `messages_ibfk_2` FOREIGN KEY (`senderID`) REFERENCES `user` (`userID`);
 
 --
--- 限制表 `orders`
+-- Constraints for table `orders`
 --
 ALTER TABLE `orders`
   ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `user` (`userID`) ON DELETE CASCADE;
 
 --
--- 限制表 `order_items`
+-- Constraints for table `order_items`
 --
 ALTER TABLE `order_items`
   ADD CONSTRAINT `order_items_ibfk_1` FOREIGN KEY (`orderId`) REFERENCES `orders` (`orderId`),
   ADD CONSTRAINT `order_items_ibfk_2` FOREIGN KEY (`productId`,`gripSize`) REFERENCES `productstock` (`productID`, `sizeID`);
 
 --
--- 限制表 `product`
+-- Constraints for table `product`
 --
 ALTER TABLE `product`
   ADD CONSTRAINT `product_ibfk_1` FOREIGN KEY (`seriesID`) REFERENCES `series` (`seriesID`);
 
 --
--- 限制表 `productstock`
+-- Constraints for table `productstock`
 --
 ALTER TABLE `productstock`
   ADD CONSTRAINT `productStock_ibfk_1` FOREIGN KEY (`productID`) REFERENCES `product` (`productID`);
 
 --
--- 限制表 `product_images`
+-- Constraints for table `product_images`
 --
 ALTER TABLE `product_images`
   ADD CONSTRAINT `product_images_ibfk_1` FOREIGN KEY (`productID`) REFERENCES `product` (`productID`) ON DELETE CASCADE;
 
 --
--- 限制表 `restock_history`
+-- Constraints for table `restock_history`
 --
 ALTER TABLE `restock_history`
   ADD CONSTRAINT `restock_history_ibfk_1` FOREIGN KEY (`productID`) REFERENCES `product` (`productID`),
   ADD CONSTRAINT `restock_history_ibfk_2` FOREIGN KEY (`productID`,`sizeID`) REFERENCES `productstock` (`productID`, `sizeID`);
 
 --
--- 限制表 `savedaddress`
+-- Constraints for table `savedaddress`
 --
 ALTER TABLE `savedaddress`
   ADD CONSTRAINT `savedaddress_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`) ON DELETE CASCADE;
 
 --
--- 限制表 `token`
+-- Constraints for table `token`
 --
 ALTER TABLE `token`
   ADD CONSTRAINT `userID-fk` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`) ON DELETE CASCADE;
 
 --
--- 限制表 `vouchers`
+-- Constraints for table `vouchers`
 --
 ALTER TABLE `vouchers`
   ADD CONSTRAINT `vouchers_ibfk_1` FOREIGN KEY (`issuedBy`) REFERENCES `admin` (`id`);

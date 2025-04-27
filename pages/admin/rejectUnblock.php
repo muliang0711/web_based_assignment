@@ -20,6 +20,6 @@ if (is_post()) {
 
 }
     if($role=="staff"){
-redirect('admin_Management.php');}
+redirect('view_admin_request.php');}
 elseif($role=="user"){
-    redirect('view_customer.php');}
+    redirect('view_customer_request.php');}
