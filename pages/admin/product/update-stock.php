@@ -11,18 +11,6 @@ $productManager = new ProductManager($_db);
 $product = $productManager->getProductInfo($productID, $sizeID);
 if (!$product) die("Product not found.");
 
-$message = '';
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $quantity = (int) ($_POST['quantity'] ?? 0);
-    $admin = 'admin123'; // Replace with session value
-
-    if ($quantity > 0) {
-        $result = $productManager->updateStock($productID, $sizeID, $quantity, $admin);
-        $message = "<p style='color:" . ($result['success'] ? 'green' : 'red') . "'>{$result['message']}</p>";
-    } else {
-        $message = "<p style='color:red;'>Please enter a valid quantity.</p>";
-    }
-}
 ?>
 
 
@@ -38,7 +26,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <div class="form-box">
     <h2>Update Stock</h2>
     <?php echo $message; ?>
-    <form method="post">
+    <form method="post" action="/controller/stockManager.php">
+        <input type="hidden " name="action" value="updateStock">
         <label>Product Name</label>
         <input type="text" value="<?= htmlspecialchars($product['productName']) ?>" readonly>
 
@@ -50,6 +39,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         <label>Restock Quantity</label>
         <input type="number" name="quantity" min="1" required>
+
+        <label for="restock_price">Restock Price (per unit):</label>
+        <input type="number" id="restock_price" name="restock_price" min="0" step="0.01" required>
 
         <button type="submit">Update Stock</button>
 

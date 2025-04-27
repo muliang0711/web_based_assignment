@@ -29,7 +29,8 @@ class ProductManager {
             'filter'        => 'filterProducts',
             'search'        => 'searchProduct',
             'sendEmail'     => 'emailSubmit',
-            'sendSMS'       => 'SMSSubmit'
+            'sendSMS'       => 'SMSSubmit',
+            'updateStock'   => 'updateStock'
         ];
 
         if (!array_key_exists($action, $allowedActions)) {
@@ -49,10 +50,10 @@ class ProductManager {
         return $this->checkStock->getDetailedProductInfo($productID, $sizeID);
     }
 
-    public function updateStock($productID, $sizeID, $quantity, $adminName) {
+    public function updateStock($productID, $sizeID, $quantity, $price , $adminName) {
         $success = $this->checkStock->update_product_stock($quantity, $productID, $sizeID);
         if ($success) {
-            $this->checkStock->record_restock($productID, $sizeID, $quantity, $adminName);
+            $this->checkStock->record_restock($productID, $sizeID, $quantity, $price, $adminName);
             return ['success' => true, 'message' => 'Stock updated and restock recorded.'];
         } else {
             return ['success' => false, 'message' => 'Update failed or no stock change.'];
