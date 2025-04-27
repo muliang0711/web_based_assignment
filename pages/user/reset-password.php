@@ -96,7 +96,7 @@ if (is_post()) {
 
 // ----------------------------------------------------------------------------
 
-$_title = 'Reset Password';
+$title = 'Reset Password';
 $stylesheetArray = ['/css/password.css', 'user.css']; // Put CSS files that are specific to this page here. If you want to change the styling of the header and the footer, go to /css/app.cs
 $scriptArray = ['/js/password.js', 'user.js'];      // Put JS files that are specific to this page here. If you want to change the JavaScript for the header and the footer, go to /js/app.js
 

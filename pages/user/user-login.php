@@ -136,8 +136,8 @@ include '../../_head.php';
         The<span>Shuttle</span>Store
         <img src="../../assets/img/shuttlecock.svg" style="height:1em;transform:rotate(45deg);color:inherit;"/>
     </h2>
-    <h1 class="welcome">Welcome</h1>
-    <div class="instruction">Please login to your account</div>
+    <h1 class="welcome">Log in</h1>
+    <div class="instruction">Welcome back!</div>
     <a class="to-signup" href="/pages/user/user-signup.php">Don't have an account? Sign up</a>
 
     <form class="form" method="post">

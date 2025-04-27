@@ -133,7 +133,7 @@ if (is_post()) {
                         </div>
                         <div class="dropdown-main">
                             <a class="dropdown-item" href="/pages/user/settings/profile.php">
-                                <span><img src="/assets/img/icon-profile.svg" /></span>
+                                <span><img src="/assets/img/icon-settings.svg" /></span>
                                 <div>Settings</div>
                             </a>
                             <a class="dropdown-item" href="/pages/order/order.php">
