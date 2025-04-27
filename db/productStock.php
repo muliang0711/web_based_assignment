@@ -17,7 +17,7 @@ class CheckStock
 
     function __construct($pdo)
     {
-        $this->pdo = $pdo; 
+        $this->pdo = $pdo;
     }
 
     private function sendLowStockEmail($toEmail, $subject, $messageBody)
@@ -30,7 +30,7 @@ class CheckStock
             $mail->Host = 'smtp.gmail.com';
             $mail->SMTPAuth = true;
             $mail->Username = 'puihy-wm24@student.tarc.edu.my';
-            $mail->Password = 'mqps lalr ujvo fbqx'; 
+            $mail->Password = 'mqps lalr ujvo fbqx';
             $mail->SMTPSecure = 'tls';
             $mail->Port = 587;
 
@@ -167,7 +167,29 @@ class CheckStock
     }
 
 
-
+    public function getTotalRestockData($productID, $sizeID) {
+        $sql = "SELECT 
+                    SUM(restock_price * restock_quantity) AS totalCost,
+                    SUM(restock_quantity) AS totalQuantity
+                FROM restock_history
+                WHERE productID = ? AND sizeID = ?";
+        
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([$productID, $sizeID]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+        if ($result && $result['totalQuantity'] > 0) {
+            return [
+                'totalCost' => (float)$result['totalCost'],
+                'totalQuantity' => (int)$result['totalQuantity']
+            ];
+        } else {
+            return [
+                'totalCost' => 0,
+                'totalQuantity' => 0
+            ];
+        }
+    }
 
     public function get_low_stock_product()
     {
@@ -245,7 +267,7 @@ class CheckStock
     }
 
     // show restock record ;
-// 1. This code is for recording a restock history with the newly added restock_price field
+
 
     public function record_restock($productID, $sizeID, $quantity, $price, $admin)
     {
@@ -362,8 +384,7 @@ class CheckStock
     }
 }
 // here is just for test ; 
-$check = new CheckStock($_db);
-$check->check_low_stock();
+
 
 // 1. where php
 // 2. copy this file path 
