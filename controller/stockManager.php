@@ -3,7 +3,7 @@
 // 2. Include required files
 include_once __DIR__ . '/../db_connection.php';
 include_once __DIR__ . '/../db/productStock.php'; // Assuming this is where your CheckStock class is
-    session_start();
+include_once __DIR__ . "/../_base.php";
 class ProductManager {
 
     private $checkStock;

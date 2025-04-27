@@ -1,7 +1,9 @@
 <?php
 // 1. Include DB connection
 require_once __DIR__ . '/../../../db_connection.php';
+require_once "../../../_base.php";      
 
+include '../../../admin_login_guard.php';
 // 2. Get productID and sizeID from URL
 $productID = $_GET['productID'] ?? null;
 $sizeID = $_GET['sizeID'] ?? null;
