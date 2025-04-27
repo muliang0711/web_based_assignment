@@ -366,7 +366,7 @@ header nav > a:hover::after {
 }
 
 /* Progress bar of error message */
-.info-container.error .progress-bar {
+.info-container.error-toast .progress-bar {
     background-color: red;
 }
 
