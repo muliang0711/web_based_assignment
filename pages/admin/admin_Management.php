@@ -92,7 +92,9 @@ $resultA = $stmA->fetch();
                         <td class="td"><?= $a->id ?></td>
                         <td class="td"><?= $a->name ?></td>
                         <td class="td"><?= $departments[$a->department] ?></td>
-                        <td class="td"><button class="action-btn-delete" data-post="/pages/admin/adminDelete.php?id=<?= $a->id ?>" data-confirm="Are you sure you want to delete"><i class="fas fa-trash"></i></button>
+                        <td class="td"><button onclick="playSoundG()" class="action-btn-delete" data-post="/pages/admin/adminDelete.php?id=<?= $a->id ?>" data-confirm="Are you sure you want to delete"><i class="fas fa-trash"></i></button>
+
+                        <audio id="clickSoundB" src="../../sound/m5.mp3"></audio>
                             <?php if ($a->status == 'Active'): ?>
                                 <button onclick="playSoundE()" class="action-btn-delete" data-post="/pages/admin/blockAdmin.php?id=<?= $a->id  ?>" data-confirm="Are you sure you want to block this user?"><i class="fas fa-ban"></i></button>
                             <?php endif ?>
@@ -120,6 +122,13 @@ $resultA = $stmA->fetch();
 <script>
     function playSoundE() {
         const audio = document.getElementById("clickSoundE");
+        audio.currentTime = 0; // 每次点击从头播放
+        audio.play();
+  }
+</script>
+<script>
+    function playSoundG() {
+        const audio = document.getElementById("clickSoundB");
         audio.currentTime = 0; // 每次点击从头播放
         audio.play();
   }
