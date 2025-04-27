@@ -1188,8 +1188,7 @@ INSERT INTO `series` (`seriesID`, `seriesName`) VALUES
 ('PHM', 'Phantom'),
 ('SHD', 'Shadow'),
 ('TSM', 'TurboSmash'),
-('TST', 'ThunderStrike'),
-('xx1', 'xx1');
+('TST', 'ThunderStrike');
 
 -- --------------------------------------------------------
 
