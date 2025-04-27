@@ -115,12 +115,23 @@ include '../../_head.php';
       // Reminder: the `limit` parameter of the SimplePager constructor must be a string, e.g. "10". Can't pass an int due to the use of ctype_digit(). This behavior seems to be deliberate (look up the constructor definition), which makes it weirder. 
       // I see.
       $p = new SimplePager(
-        "SELECT * FROM product 
-    JOIN product_images 
-    USING (productID) 
-    WHERE image_type = 'product' 
-    AND price BETWEEN $min_price AND $max_price 
-    ORDER BY price $order",
+    //     "SELECT * FROM product 
+    // JOIN product_images 
+    // USING (productID) 
+    // WHERE (SELECT image_path FROM product_images GROUP BY productID)
+    // AND image_type = 'product' 
+    // AND price BETWEEN $min_price AND $max_price 
+    // ORDER BY price $order",
+        "SELECT *
+        FROM product p
+        JOIN (
+          SELECT pi.* 
+          FROM product_images pi
+            GROUP BY pi.productID
+        ) pi_subquery USING (productID)
+        WHERE image_type = 'product'
+        AND price BETWEEN $min_price AND $max_price 
+        ORDER BY price $order",
         [],
         "8", // Reminder: the `limit` parameter of the SimplePager constructor must be a string, e.g. "10". Can't pass an int due to the use of ctype_digit(). This behavior seems to be deliberate (look up the constructor definition), which makes it weirder. 
         $page
@@ -164,23 +175,8 @@ include '../../_head.php';
 
     <!-- product listing -->
     <div class="list" id="productList">
-      <?php $count = 2 ?>
       <?php foreach ($arr as $productObject): ?>
-        <?php $stmt = $_db->prepare("SELECT productID FROM product_images WHERE productID = ? AND image_type = 'product'");
-        $stmt->execute([$productObject->productID]);
-        $result = $stmt->fetch();
-        $ID = $result->productID; 
-        $countstmt = $_db->prepare("SELECT COUNT(productID) AS count FROM product_images WHERE productID = ? AND image_type = 'product'");
-        $countstmt->execute([$productObject->productID]);
-        $countResult = $countstmt->fetch();
-        $num = $countResult->count; 
-        if($num == 1){
-          $count = $num;
-        }
-         if($num > 1){
-          $count--;
-        }?>
-        <?php if ($count == 1): ?>
+
           <!-- start -->
           <div class="container">
             <!-- top side  -->
@@ -225,7 +221,6 @@ include '../../_head.php';
             </div>
             <!-- the end  -->
           </div>
-        <?php endif ?>
       <?php endforeach ?>
     </div>
   </div>
