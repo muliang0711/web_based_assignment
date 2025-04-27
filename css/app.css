@@ -743,30 +743,29 @@ span.error br {
     font-size: 20px;
 }
 
-.cateOne, .cateThree, .cateFive{
+.categories > * {
+    color: white;
+    width: 15%;
+    text-align: center;
+    height: 75px;
+    border: none;
+    border-radius: 5px;
+    padding-top: 22px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.categ-black {
     background-color: black;
-    color: white;
-    width: 15%;
-    text-align: center;
-    height: 75px;
-    box-shadow: 0 0 10px rgb(0, 0, 0);
-    border: none;
-    padding-top: 22px;
 }
 
-.cateTwo, .cateFour{
+.categ-gray {
     background-color: #888;
-    color: white;
-    text-align: center;
-    width: 15%;
-    height: 75px;
-    box-shadow: 0 0 10px rgb(0, 0, 0);
-    border: none;
-    padding-top: 22px;
 }
 
-.cateOne:hover,.cateTwo:hover, .cateThree:hover, .cateFour:hover, .cateFive:hover{
+.categories > *:hover{
     background-color: white;
     color: black;
+    box-shadow: 7px 7px 0px rgb(0, 0, 0), -7px -7px 0px rgb(191, 49, 42);
 }
 

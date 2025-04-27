@@ -5,8 +5,8 @@ $title = 'View Customer';
 $stylesheetArray = ['/css/admin_product.css', '/css/admin_customer.css'];   // 注意：这边只放特定于此页面的 .css file(s)。所有 admin 页面都会用到的 .css files 应放在 /css/admin.css
 $scriptArray = ['/js/app.js'];       // 注意：这边只放特定于此页面的 .js file(s)。所有 admin 页面都会用到的 .js files 应放在 /js/admin.js
 
-require_once  "../admin/main.php";
 include '../../admin_login_guard.php';
+require_once  "../admin/main.php";
 ?>
 <?php
 $fields = [

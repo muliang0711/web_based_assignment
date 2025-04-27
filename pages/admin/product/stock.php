@@ -4,7 +4,7 @@ include_once __DIR__ . "/../../../admin_login_guard.php";
 include __DIR__ . "/../main.php";
 include __DIR__ . "/../../../controller/stockManager.php";
 require_once "../../../controller/productManager.php";
-include __DIR__  . '/../../../admin_login_guard.php';
+// include __DIR__  . '/../../../admin_login_guard.php';
 
 $stockManager->loadLowStockProductsToSession();
 

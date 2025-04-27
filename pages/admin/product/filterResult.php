@@ -156,4 +156,3 @@ if (empty($filterResult)) {
 </html>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="/pages/admin/product/searchResult.js"></script>
