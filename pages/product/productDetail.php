@@ -13,10 +13,6 @@ $_db = new PDO('mysql:dbname=web_based_assignment', 'root', '', [
   PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
 ]);
 
-$search = req('racket');
-if(!$search){
-  redirect('http://localhost:8000/pages/product/productlist.php');
-}
 
 // SQL query
 $statement = $_db->prepare("SELECT * FROM product WHERE productID = ?");
@@ -33,9 +29,18 @@ $stmm = $_db->prepare("SELECT * FROM product_images WHERE productID = ? AND imag
 $stmm->execute([$productID]);
 $playerImg = $stmm->fetch();
 
+
 if (!$productObject) {
   echo "Error: Undefined racket";
   // redirect('/');
+}
+
+if(!$productID){
+  redirect('http://localhost:8000/pages/product/productlist.php');
+}else{
+  if($productID != $productObject -> productID){
+    redirect('http://localhost:8000/pages/product/productlist.php');
+  }
 }
 
 $racketID = $productObject->productID;
@@ -223,5 +228,6 @@ include '../../_head.php';
     ?>
   </div>
 </body>
+
 <?php
 include '../../_foot.php';
