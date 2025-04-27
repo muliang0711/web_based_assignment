@@ -44,14 +44,15 @@ if (is_post()) {
             $_errors['newPassword'] = 'Required';
         }
         else if ($newPassword == $password) {
-            $_errors['newPassword'] = 'Same as what you filled in the "Current password" field';
+            $_errors['newPassword'] = 'New password must be different from what you entered in the "current password" field.';
+        }
+        else if (strlen($password) > 50) {
+            $_errors['password'] = 'Maximum allowed: 50 characters';
         }
         else if (!is_strong_password($newPassword)) {
             $_errors['newPassword'] = 'Password not strong enough';
         }
-        else if (strlen($newPassword) < 5 || strlen($newPassword) > 100) {
-            $_errors['newPassword'] = 'Between 5-100 characters';
-        }
+        
 
         // Validate: confirm new password
         if ($confirmNew == '') {
