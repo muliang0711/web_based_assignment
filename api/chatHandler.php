@@ -14,6 +14,7 @@ if(is_post() && isset($_POST["message"]) && !isset($_POST["task"])){
         exit;
     }
     $msg = $_POST["message"];
+    $msg = htmlspecialchars($msg);
     $adminID = $_POST["adminID"] ?? "A001";
 
     try{
@@ -66,6 +67,7 @@ else if(is_post() && isset($_POST["task"])){
         $adminID = $_SESSION['adminID'] ?? null;
         $userId = $_POST["userid"];
         $msg = $_POST["message"];
+        $msg = htmlspecialchars($msg);
         if($adminID == null){
             echo "error";
             exit;
