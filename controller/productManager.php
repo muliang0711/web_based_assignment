@@ -157,7 +157,7 @@ class ProductController
                 throw new Exception(implode(", ", $uploadErrors2));
             }
 
-            $success = generateQRCode($this->pdo, $productInformation['productId'], $productInformation['sizeId']);
+            $success = generateQRCode($this->pdo, $productInformation['productId'], $productInformation['sizeId'] , "puihy-wm24@student.tarc.edu.my");
             if (!$success) {
                 throw new Exception("Failed to generate QR Code.");
             }
