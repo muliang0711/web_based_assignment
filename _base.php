@@ -240,17 +240,7 @@ function error($key){
 function temp($key, $value = null) {
     if ($value !== null) {
         $_SESSION["temp_$key"] = $value;
-        echo '
-        <audio id="autoPlaySound" src="/sound/m4.mp3" preload="auto"></audio>
-        <script>
-          const audio = document.getElementById("autoPlaySound");
-          
-          // 当音频可以完整播放时再触发播放
-          audio.addEventListener("canplaythrough", function() {
-              audio.currentTime = 0; // 每次播放从头开始
-              audio.play();
-          });
-        </script>';
+       
     }
     else {
         $value = $_SESSION["temp_$key"] ?? null;
