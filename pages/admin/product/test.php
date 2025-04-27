@@ -14,9 +14,9 @@ function generateQRCode($pdo, $productID, $sizeID) {
         $checkSql = "SELECT qr_token FROM productstock WHERE productID = ? AND sizeID = ?";
         $stmt = $pdo->prepare($checkSql);
         $stmt->execute([$productID, $sizeID]);
-        $existing = $stmt->fetch(PDO::FETCH_ASSOC);  // ✅ 修正成 FETCH_ASSOC (array)
+        $existing = $stmt->fetch(PDO::FETCH_ASSOC);  
 
-        if ($existing && !empty($existing['qr_token'])) {  // ✅ 现在用 array取值，正确
+        if ($existing && !empty($existing['qr_token'])) {  
             return false;
         }
 
@@ -66,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $sql = "SELECT productID, sizeID FROM productstock WHERE qr_token IS NULL";
         $stmt = $_db->prepare($sql);
         $stmt->execute();
-        $products = $stmt->fetchAll(PDO::FETCH_ASSOC); // ✅ 这里也统一用 array
+        $products = $stmt->fetchAll(PDO::FETCH_ASSOC); 
 
         foreach ($products as $product) {
             generateQRCode($_db, $product['productID'], $product['sizeID']);
@@ -76,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } catch (Exception $e) {
         echo "❌ Failed to generate QR Codes: " . $e->getMessage();
     }
-    exit; // Only return text for AJAX
+    exit; 
 }
 ?>
 
@@ -100,7 +100,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 const response = await fetch('', { method: 'POST' });
                 const result = await response.text();
                 alert(result);
-                window.location.reload(); // 自动刷新页面
+                window.location.reload(); 
             } catch (error) {
                 alert('❌ Error generating QR codes!');
             } finally {
