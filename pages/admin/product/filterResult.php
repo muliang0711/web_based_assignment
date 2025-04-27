@@ -27,14 +27,35 @@ $totalPages     = ceil($totalProducts / $productsPerPage);
 
 // var_dump($filterResult);
 // handle error 
-if ($totalProducts === 0) {
-    echo "<p>No search results found.</p>";
+
+// handle error 
+if ($totalProducts === 0 || empty($filterResult)) {
+    ?>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>No Products Found</title>
+        <link rel="stylesheet" href="../../../css/main.css">
+        <link rel="stylesheet" href="css/filter.css">            
+    </head>
+    <body>
+
+        <div class="no-result-container">
+            <div class="no-result-card">
+                <h2><i class="fas fa-box-open"></i> No Products Found</h2>
+                <p>Sorry, we couldn't find any products matching your search.</p>
+                <a href="admin_product.php" class="back-btn">← Back to Product List</a>
+            </div>
+        </div>
+
+    </body>
+    </html>
+    <?php
     exit();
 }
-if (empty($filterResult)) {
-    echo "<p>No filter results found for: <strong>" . "</strong></p>";
-    exit();
-}
+
 
 ?>
 <!DOCTYPE html>
@@ -45,6 +66,7 @@ if (empty($filterResult)) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <body>
@@ -52,7 +74,7 @@ if (empty($filterResult)) {
     <div class="main-content ">
 
         <div class="container-table">
-
+        
             <div class="tb-title">
                 <h5 style="margin: 0;"><i class="fas fa-table"></i> Product You Search </h5>
             </div>

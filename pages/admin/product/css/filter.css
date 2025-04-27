@@ -1,0 +1,37 @@
+            /* 1. Style for No Result Page */
+            .no-result-container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                height: 80vh;
+                text-align: center;
+                padding: 2rem;
+            }
+            .no-result-card {
+                background-color: #f1f1f1;
+                padding: 2rem 3rem;
+                border-radius: 12px;
+                box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            }
+            .no-result-card h2 {
+                margin-bottom: 1rem;
+                color: #333;
+            }
+            .no-result-card p {
+                margin-bottom: 2rem;
+                color: #666;
+            }
+            .back-btn {
+                padding: 0.5rem 1.5rem;
+                background-color: #007bff;
+                color: white;
+                border: none;
+                border-radius: 6px;
+                cursor: pointer;
+                text-decoration: none;
+                font-size: 1rem;
+            }
+            .back-btn:hover {
+                background-color: #0056b3;
+            }

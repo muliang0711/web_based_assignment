@@ -27,6 +27,7 @@ class ProductController
             'filter'        => 'filterProducts',
             'search'        => 'searchProduct',
             'updateStatus'  => 'updateStatus',
+
         ];
 
         if (!array_key_exists($action, $allowedActions)) {

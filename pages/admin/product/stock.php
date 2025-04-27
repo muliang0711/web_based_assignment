@@ -161,6 +161,16 @@ $totalPages = ceil($totalProducts / $productsPerPage);
                             onclick="window.location='/pages/admin/product/sendSMS.php' ">
                     Send Sms
                 </button  >
+                    
+                                <!-- Restock Button -->
+                <button class="action-btn-restock" style="background-color:rgb(86, 155, 187); color: white; padding: 10px; border: none; border-radius: 5px;"
+                onclick="window.location='/pages/admin/product/restock_history.php' ">
+                    Restock History 
+                </button>
+    
+                <button>
+
+                </button>
                 <!-- QR Code Scanner -->
                 <div id="qr-wrapper" style="display: none; margin-top: 10px;">
                     <div id="qr-reader" style="width: 300px;"></div>
@@ -204,7 +214,7 @@ $totalPages = ceil($totalProducts / $productsPerPage);
                                     <td class="td"><?= htmlspecialchars($product->stock ?? '0') ?></td>
                                     <td class="td">
                                         <a href="change_low_stock_alert.php?productID=<?php echo $product->productID; ?>&sizeID=<?php echo $product->sizeID; ?>" class="action-btn-details">
-                                        <i class="fas fa-eye"></i>
+                                        <i class="fas fa-edit"></i>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
