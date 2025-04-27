@@ -198,6 +198,18 @@ input[type=file] {
     display: none;
 }
 
+/* Bio text field */
+.bio-container {
+    /* When user changes size of textarea#bio, .bio-container will grow and shrink as it, thus ensuring #charCount also stays on the bottom-right of textarea#bio */
+    width: fit-content; 
+}
+#bio {
+    width: 500px;
+    height: 100px;
+}
+#charCount {
+    width: 100%;
+}
 
 /* gender radio buttons */
 .gender span {

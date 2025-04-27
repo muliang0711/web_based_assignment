@@ -119,7 +119,7 @@ if (is_post()) {
         }
 
         // Validate bio
-        if (strlen($bio) > 160) {
+        if (strlen($bio) > 1000) {
             $_errors['bio'] = "Sorry, that's too long! We do appreciate your eagerness though 🫶";
         }
 
@@ -201,8 +201,10 @@ include 'profile_dynamic_navbar.php';
 
                 <div class="form-group">
                     <label class="label">Bio</label>
-                    <?= html_textarea('bio', 'placeholder="Tell us something interesting about yourself"') ?>
-                    <div id="charCount" style="text-align:right;padding:5px 10px;color:#888;"><span>0</span> / <span>0</span></div>
+                    <div class="bio-container">
+                        <?= html_textarea('bio', 'placeholder="Tell us something interesting about yourself"') ?>
+                        <div id="charCount" style="text-align:right;padding:5px 10px;color:#888;"><span>0</span> / <span>0</span></div>
+                    </div>
                     <br/>
                     <?= error('bio'); ?>
                 </div>
@@ -215,7 +217,7 @@ include 'profile_dynamic_navbar.php';
                     $('textarea#bio').on('input', e => {
                         $('textarea#bio ~ #charCount').css('display', 'block');
                         const length = e.target.value.length;
-                        const maxChars = 160;
+                        const maxChars = 1000;
                         const charsLeft = maxChars - length;
 
                         const spanCharsLeft = $(e.target).siblings('#charCount').children('span')[0];
