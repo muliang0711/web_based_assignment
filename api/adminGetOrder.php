@@ -49,6 +49,7 @@
                 <td class="td stat <?= $order->orderId ?>"><?= $order->status ?></td>
                 <td class="td action">
                     <i class="fa-solid fa-pen-to-square update" data-update="<?= $order->orderId ?>"></i>
+                    <a href="admin_orderDetails.php?id=<?= $order->orderId ?>"><i class="fas fa-eye" data-view="<?= $order->orderId ?>"></i></a>
                 </td>
             </tr>
 <?php endforeach ?>
