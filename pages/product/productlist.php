@@ -122,8 +122,7 @@ include '../../_head.php';
     // AND image_type = 'product' 
     // AND price BETWEEN $min_price AND $max_price 
     // ORDER BY price $order",
-        "SELECT *
-        FROM product p
+        "SELECT * FROM product p 
         JOIN (
           SELECT pi.* 
           FROM product_images pi
