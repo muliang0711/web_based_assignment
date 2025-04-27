@@ -273,12 +273,13 @@ include 'profile_dynamic_navbar.php';
     postcode.addEventListener("input", function(){
         let input = this.value;
         let validRange = postcodes[states.value];
-        //when user done entering 
+        //when user done entering
         if(input.length==5 || input.length==4){
             verifyPostcode(input,validRange);
         }
-        else if(input.length<4){
-            errmsg.setAttribute("hidden","true");
+        else{
+            errmsg.removeAttribute("hidden");
+            error = true;
         }
         
     });
@@ -368,7 +369,7 @@ include 'profile_dynamic_navbar.php';
             },
             success: function(res){
                 if(res=="success"){
-                    $(".delete[data-card]").parent("div").parent("div").remove();
+                    $(".delete[data-card]").closest(".card").remove();
                     showError("Address removed!");
                 }
             }
