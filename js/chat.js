@@ -25,6 +25,35 @@ $(()=>{
         });
     }
     getMaxMsgID();
+
+    function sendMSG(){
+        let msg = textArea.val();
+        if(msg.length>0){
+            $.ajax({
+                url: "/api/chatHandler.php",
+                type: "POST",
+                data: {
+                    message: msg
+                },
+                success: function(res){
+                    if(res!="error"){
+                        res=JSON.parse(res);
+                        lastMsgID = res.msgID;
+                        chatBody.append(res.response);
+                        chatBody.scrollTop(chatBody[0].scrollHeight);
+                        textArea.val("");
+                    }
+                }
+            });
+        }
+    }
+
+    textArea.on('keydown', function(e) {
+        if (e.key === "Enter" && !e.shiftKey) { // Enter without Shift
+            e.preventDefault(); // prevent adding a new line
+            sendMSG();          
+        }
+    });
     
     $(".supportButton").on("click",function(e){
         if(chatContainer.hasClass("show")){
@@ -48,27 +77,7 @@ $(()=>{
         
     })
 
-    send.on('click',function(e){
-        let msg = textArea.val();
-        if(msg.length>0){
-            $.ajax({
-                url: "/api/chatHandler.php",
-                type: "POST",
-                data: {
-                    message: msg
-                },
-                success: function(res){
-                    if(res!="error"){
-                        res=JSON.parse(res);
-                        lastMsgID = res.msgID;
-                        chatBody.append(res.response);
-                        chatBody.scrollTop(chatBody[0].scrollHeight);
-                        textArea.val("");
-                    }
-                }
-            });
-        }
-    })
+    send.on('click', sendMSG);
 
     function getNewMessage(){
         $.ajax({
