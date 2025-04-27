@@ -37,9 +37,9 @@
     <li>
       <a href="/pages/admin/admin_chat.php"><i class="fas fa-comments"></i> Chats </a>
     </li>
-    <li>
+    <!-- <li>
       <a href="#"><i class="fas fa-cog"></i> Settings</a>
-    </li>
+    </li> -->
     
   </ul>
 </div>
