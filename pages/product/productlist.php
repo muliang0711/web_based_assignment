@@ -133,7 +133,7 @@ include '../../_head.php';
         AND price BETWEEN $min_price AND $max_price 
         ORDER BY price $order",
         [],
-        "8", // Reminder: the `limit` parameter of the SimplePager constructor must be a string, e.g. "10". Can't pass an int due to the use of ctype_digit(). This behavior seems to be deliberate (look up the constructor definition), which makes it weirder. 
+        "6", // Reminder: the `limit` parameter of the SimplePager constructor must be a string, e.g. "10". Can't pass an int due to the use of ctype_digit(). This behavior seems to be deliberate (look up the constructor definition), which makes it weirder. 
         $page
       );
       $arr = $p->result;
