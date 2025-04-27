@@ -40,10 +40,29 @@ header.hovered {
     color: black;
 }
 
+.top-nav-store-logo {
+    color: #333;
+}
+/* Gradient of "Shuttle" when header background is transparent */
+.top-nav-store-logo > span {
+    background: linear-gradient(90deg, rgb(41, 41, 212), rgb(29, 170, 29)); /* Add gradient behind the text */
+    background-clip: text; /* Clip background to the shape of text */
+    -webkit-text-fill-color: transparent; /* Hide the real text so only the text-shaped background shows */
+}
+
 /* Give header opaque bg color when div.container scrolls up to the bottom of the topbar  */
 header.scrolled {
     background-color: #000c;
     color: #ddd;
+}
+header.scrolled .top-nav-store-logo {
+    color: #ddd;
+}
+/* Lighter gradient for "Shuttle" when header is dark */
+header.scrolled .top-nav-store-logo > span {
+    background: linear-gradient(90deg, rgb(122, 122, 255), rgb(148, 253, 148)); /* Add gradient behind the text */
+    background-clip: text; /* Clip background to the shape of text */
+    -webkit-text-fill-color: transparent; /* Hide the real text so only the text-shaped background shows */
 }
 
 /* The following header styles only apply to when header is not on "scrolled" mode. When it is on "scrolled" mode, it uses the header styles defined in app.css, which are designed for a dark background */
@@ -142,7 +161,10 @@ body, input, button {
 }
 
 .store-name {
-    color: #aaa;
+    color: #bbb;
+}
+.store-name span {
+    color: #999;
 }
 .welcome {
     margin-bottom: 10px;

@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- 主机： 127.0.0.1
--- 生成日期： 2025-04-27 08:50:38
--- 服务器版本： 10.4.32-MariaDB
--- PHP 版本： 8.0.30
+-- Host: 127.0.0.1
+-- Generation Time: Apr 27, 2025 at 09:27 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,15 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- 数据库： `web_based_assignment`
+-- Database: `web_based_assignment`
 --
+CREATE DATABASE IF NOT EXISTS `web_based_assignment` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `web_based_assignment`;
 
 -- --------------------------------------------------------
 
 --
--- 表的结构 `admin`
+-- Table structure for table `admin`
 --
 
 CREATE TABLE `admin` (
@@ -37,7 +39,7 @@ CREATE TABLE `admin` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- 转存表中的数据 `admin`
+-- Dumping data for table `admin`
 --
 
 INSERT INTO `admin` (`id`, `name`, `department`, `passwordHash`, `adminLevel`, `status`) VALUES
@@ -150,7 +152,7 @@ INSERT INTO `admin` (`id`, `name`, `department`, `passwordHash`, `adminLevel`, `
 -- --------------------------------------------------------
 
 --
--- 表的结构 `blockeduser`
+-- Table structure for table `blockeduser`
 --
 
 CREATE TABLE `blockeduser` (
@@ -161,7 +163,7 @@ CREATE TABLE `blockeduser` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- 转存表中的数据 `blockeduser`
+-- Dumping data for table `blockeduser`
 --
 
 INSERT INTO `blockeduser` (`blockedUserID`, `role`, `status`, `appealReason`) VALUES
@@ -238,7 +240,7 @@ INSERT INTO `blockeduser` (`blockedUserID`, `role`, `status`, `appealReason`) VA
 -- --------------------------------------------------------
 
 --
--- 表的结构 `cartitem`
+-- Table structure for table `cartitem`
 --
 
 CREATE TABLE `cartitem` (
@@ -249,7 +251,7 @@ CREATE TABLE `cartitem` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- 转存表中的数据 `cartitem`
+-- Dumping data for table `cartitem`
 --
 
 INSERT INTO `cartitem` (`userID`, `productID`, `sizeID`, `quantity`) VALUES
@@ -262,7 +264,7 @@ INSERT INTO `cartitem` (`userID`, `productID`, `sizeID`, `quantity`) VALUES
 -- --------------------------------------------------------
 
 --
--- 表的结构 `messages`
+-- Table structure for table `messages`
 --
 
 CREATE TABLE `messages` (
@@ -275,7 +277,7 @@ CREATE TABLE `messages` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- 转存表中的数据 `messages`
+-- Dumping data for table `messages`
 --
 
 INSERT INTO `messages` (`messageID`, `senderID`, `adminID`, `content`, `sent_at`, `userSent`) VALUES
@@ -291,7 +293,7 @@ INSERT INTO `messages` (`messageID`, `senderID`, `adminID`, `content`, `sent_at`
 -- --------------------------------------------------------
 
 --
--- 表的结构 `orders`
+-- Table structure for table `orders`
 --
 
 CREATE TABLE `orders` (
@@ -311,7 +313,7 @@ CREATE TABLE `orders` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- 转存表中的数据 `orders`
+-- Dumping data for table `orders`
 --
 
 INSERT INTO `orders` (`orderId`, `userId`, `orderDate`, `status`, `orderAddress`, `orderName`, `orderPhone`, `deliveryMethod`, `deliveredDate`, `tracking`, `discount`, `notify`, `cancel_reason`) VALUES
@@ -322,7 +324,7 @@ INSERT INTO `orders` (`orderId`, `userId`, `orderDate`, `status`, `orderAddress`
 -- --------------------------------------------------------
 
 --
--- 表的结构 `order_items`
+-- Table structure for table `order_items`
 --
 
 CREATE TABLE `order_items` (
@@ -334,7 +336,7 @@ CREATE TABLE `order_items` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- 转存表中的数据 `order_items`
+-- Dumping data for table `order_items`
 --
 
 INSERT INTO `order_items` (`orderId`, `productId`, `quantity`, `subtotal`, `gripSize`) VALUES
@@ -345,7 +347,7 @@ INSERT INTO `order_items` (`orderId`, `productId`, `quantity`, `subtotal`, `grip
 -- --------------------------------------------------------
 
 --
--- 表的结构 `product`
+-- Table structure for table `product`
 --
 
 CREATE TABLE `product` (
@@ -358,7 +360,7 @@ CREATE TABLE `product` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- 转存表中的数据 `product`
+-- Dumping data for table `product`
 --
 
 INSERT INTO `product` (`productID`, `productName`, `price`, `seriesID`, `introduction`, `playerInfo`) VALUES
@@ -466,7 +468,7 @@ INSERT INTO `product` (`productID`, `productName`, `price`, `seriesID`, `introdu
 -- --------------------------------------------------------
 
 --
--- 表的结构 `productstock`
+-- Table structure for table `productstock`
 --
 
 CREATE TABLE `productstock` (
@@ -480,7 +482,7 @@ CREATE TABLE `productstock` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- 转存表中的数据 `productstock`
+-- Dumping data for table `productstock`
 --
 
 INSERT INTO `productstock` (`productID`, `sizeID`, `stock`, `status`, `low_stock_threshold`, `alert_sent`, `qr_token`) VALUES
@@ -688,7 +690,7 @@ INSERT INTO `productstock` (`productID`, `sizeID`, `stock`, `status`, `low_stock
 -- --------------------------------------------------------
 
 --
--- 表的结构 `product_images`
+-- Table structure for table `product_images`
 --
 
 CREATE TABLE `product_images` (
@@ -700,7 +702,7 @@ CREATE TABLE `product_images` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- 转存表中的数据 `product_images`
+-- Dumping data for table `product_images`
 --
 
 INSERT INTO `product_images` (`id`, `productID`, `image_path`, `image_type`, `created_at`) VALUES
@@ -905,7 +907,7 @@ INSERT INTO `product_images` (`id`, `productID`, `image_path`, `image_type`, `cr
 -- --------------------------------------------------------
 
 --
--- 表的结构 `restock_history`
+-- Table structure for table `restock_history`
 --
 
 CREATE TABLE `restock_history` (
@@ -921,7 +923,7 @@ CREATE TABLE `restock_history` (
 -- --------------------------------------------------------
 
 --
--- 表的结构 `savedaddress`
+-- Table structure for table `savedaddress`
 --
 
 CREATE TABLE `savedaddress` (
@@ -934,7 +936,7 @@ CREATE TABLE `savedaddress` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- 转存表中的数据 `savedaddress`
+-- Dumping data for table `savedaddress`
 --
 
 INSERT INTO `savedaddress` (`userID`, `address`, `phoneNo`, `name`, `defaultAdd`, `addressIndex`) VALUES
@@ -944,7 +946,7 @@ INSERT INTO `savedaddress` (`userID`, `address`, `phoneNo`, `name`, `defaultAdd`
 -- --------------------------------------------------------
 
 --
--- 表的结构 `series`
+-- Table structure for table `series`
 --
 
 CREATE TABLE `series` (
@@ -953,7 +955,7 @@ CREATE TABLE `series` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- 转存表中的数据 `series`
+-- Dumping data for table `series`
 --
 
 INSERT INTO `series` (`seriesID`, `seriesName`) VALUES
@@ -966,7 +968,7 @@ INSERT INTO `series` (`seriesID`, `seriesName`) VALUES
 -- --------------------------------------------------------
 
 --
--- 表的结构 `token`
+-- Table structure for table `token`
 --
 
 CREATE TABLE `token` (
@@ -981,7 +983,7 @@ CREATE TABLE `token` (
 -- --------------------------------------------------------
 
 --
--- 表的结构 `user`
+-- Table structure for table `user`
 --
 
 CREATE TABLE `user` (
@@ -1001,69 +1003,69 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- 转存表中的数据 `user`
+-- Dumping data for table `user`
 --
 
 INSERT INTO `user` (`userID`, `username`, `passwordHash`, `address`, `birthdate`, `email`, `emailVerified`, `phoneNo`, `gender`, `profilePic`, `bio`, `memberStatus`, `isDeleted`) VALUES
-(1, 'cookie', '$2y$10$y9w5iLGDpKgYyStjoM1.G.sWRoSTKVHIZ/Tk125N7CIVdBZ/iITuC', NULL, NULL, 'cookie@mail.com', 0, '012-3456789', 'R', NULL, 'I love cookies, as you may have already guessed', 'Active', 1),
-(2, 'icecream', '$2y$10$HN1VCP3xMBQkkD4fsxUMUe4Ri/ujjDaoJ9u1vZTdibF8yyXjfQ3LG', NULL, NULL, 'icecream@mail.com', 0, '012-9876543', 'R', NULL, 'I love ice cream!', 'Active', 0),
-(4, 'cookie2', '$2y$10$j3VTdYyGhsqKo8f0Fn1NMe1lt2Kr9fLKJLEW.AXALN6J6EVqCTpFy', NULL, NULL, 'jasonlhtown@gmail.com', 0, NULL, 'R', NULL, NULL, 'Active', 0),
-(5, 'cookie', '$2y$10$8CTUED9iJRZu/B4rNLnVge75vzIivuBxiiOM2nNuV8LDQyO.SLrum', NULL, NULL, 'cookie@mail.com', 0, NULL, 'R', NULL, NULL, 'Active', 1),
-(6, 'cookie', '$2y$10$9NRvfqQwZ9276XmS1BYob.ZsLtRPZ8.2RAo4K.O8r2sWRGqJC0Nx6', NULL, NULL, 'cookie@mail.com', 0, NULL, 'R', NULL, NULL, 'Active', 0),
-(7, 'cookie3', '$2y$10$.zhdWmdm3mkXIwefOI.9IeHO1vrboeWbKDcYhob0lpwqAH6iluPaq', NULL, NULL, 'haha@mail.com', 0, NULL, 'R', NULL, NULL, 'Active', 0),
-(8, 'dlewis', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '2404 Vincent Lake Apt. 343, Lake Suzanne, MI 50120', '1992-09-10', 'anelson@hotmail.com', 1, '(262)205-8820', 'F', 'profPic3.jpg', 'Professional overthinker. I put the \"mental\" in \"fundamental\". Currently training my cat to bring me snacks - so far he just brings me dead bugs.', 'Blocked', 0),
-(9, 'eric36', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '66386 Murphy Garden Apt. 911, West Edgar, WA 26275', '1985-06-14', 'thomaspearson@gmail.com', 1, '(329)906-3769', 'F', 'profPic5.jpg', 'I\'m not weird, I\'m a limited edition. My hobbies include arguing with inanimate objects and pretending to remember people\'s names.', 'Blocked', 1),
-(10, 'lisa26', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '9676 Edwards Fork, Gregorytown, MD 02923', '1988-08-09', 'ruizmelissa@yahoo.com', 1, '001-504-468-814', 'R', 'profPic9.jpg', 'I\'m not short, I\'m concentrated awesome. My spirit animal is a disgruntled panda who just wants to eat bamboo in peace.', 'Blocked', 0),
-(11, 'omurray', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '969 Monica Wells Apt. 367, Port Rebecca, DE 41245', '1990-03-09', 'ksolis@yahoo.com', 0, '001-023-170-243', 'M', 'profPic6.jpg', 'I\'m not arguing, I\'m just passionately expressing my point of view while completely dismissing yours. Also, I can recite the entire script of The Princess Bride backwards.', 'Active', 0),
-(12, 'perezgloria', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '005 David Cliff, South Shelby, VT 49228', '2002-07-20', 'charlesbrown@rodriguez.com', 0, '(283)461-0606', 'F', 'profPic5.jpg', 'I\'m not a morning person, not an afternoon person, and definitely not an evening person. Basically, I\'m not a person until I\'ve had coffee.', 'Blocked', 0),
-(13, 'martinezdarryl', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '499 Rodriguez Brook, Tyroneburgh, RI 91186', '1992-10-19', 'sarahnelson@mccall-lopez.com', 0, '+1-000-962-1322', 'R', 'profPic5.jpg', 'I\'m not lazy, I\'m just on energy-saving mode. My spirit animal is a sloth riding a turtle while reading a \"Go Faster\" manual.', 'Blocked', 0),
-(14, 'brianmoore', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '128 Beasley Tunnel, Lake Rebeccaland, AK 42809', '1991-04-03', 'rgreen@gmail.com', 1, '479.858.7590', 'M', 'profPic3.jpg', 'I\'m not arguing, I\'m just explaining why I\'m right. Also, I can identify over 50 different species of dinosaurs but can\'t remember what I had for breakfast.', 'Blocked', 0),
-(15, 'travissmith', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '3346 King Ridges, Keithbury, IN 16341', '1992-10-21', 'jkelley@christensen.com', 1, '(741)317-4475x3', 'M', 'profPic7.jpg', 'I put the \"pro\" in procrastination. Currently writing a novel in my head - the hard part is transferring it to paper. Maybe tomorrow.', 'Active', 0),
-(16, 'maddenjordan', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '49087 Michael Mall, Bryanview, AZ 08019', '2005-12-22', 'zknapp@gmail.com', 0, '398-229-0996x32', 'R', 'profPic8.jpg', 'I\'m not short, I\'m fun-sized. My spirit animal is a raccoon who\'s just discovered espresso. I can quote entire episodes of The Office but can\'t remember my own phone number.', 'Blocked', 0),
-(17, 'wbaker', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '4376 Bailey Trail, Martinside, AZ 90015', '2005-03-26', 'twashington@sanchez.com', 0, '297.509.6645x65', 'M', 'profPic4.jpg', 'I\'m not arguing, I\'m just explaining why I\'m right in a loud voice. My hobbies include misplacing important items and finding them immediately after replacing them.', 'Blocked', 0),
-(18, 'adavis', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '15863 Wright Mission Apt. 422, Christopherport, HI 03357', '2003-08-22', 'houstongary@lloyd-jones.com', 0, '139.125.8003', 'R', 'profPic3.jpg', 'I\'m not weird, I\'m a limited edition. My brain has too many tabs open and they\'re all playing different songs at the same time.', 'Active', 1),
-(19, 'sjohnson', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '79042 David Green Apt. 431, Carloston, MI 74458', '1985-06-08', 'smithpatricia@hebert.com', 1, '201-566-6201', 'R', 'profPic5.jpg', 'I\'m not lazy, I\'m just in energy-saving mode. My spirit animal is a cat who knocks things off tables while maintaining intense eye contact.', 'Blocked', 0),
-(20, 'yvettechapman', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '2802 Walters Fort, Berryland, MT 04537', '1997-11-09', 'oholt@yahoo.com', 1, '868.997.0626x55', 'F', 'profPic3.jpg', 'I\'m 98% caffeine and 2% questionable decisions. My hobbies include starting books I\'ll never finish and finishing snacks I probably shouldn\'t have started.', 'Blocked', 0),
-(21, 'pollardjames', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '003 Tammy Glens Apt. 598, Feliciabury, NJ 03941', '1996-05-04', 'sarah43@hall.biz', 1, '(347)814-3533', 'M', 'profPic1.jpg', 'I\'m not arguing, I\'m just explaining why I\'m right in a louder voice. My spirit animal is a honey badger who\'s had too much coffee.', 'Active', 1),
-(22, 'helliott', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '63621 Figueroa Roads, Kevinview, SC 96900', '2005-09-06', 'brooke59@schwartz.com', 1, '+1-851-356-7855', 'F', 'profPic3.jpg', 'I\'m not short, I\'m concentrated awesome. My hobbies include correcting people\'s grammar and then immediately making typos in my own messages.', 'Active', 0),
-(23, 'kylegarrison', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '7880 Green Divide, Joshuaport, TN 37606', '1989-02-09', 'ayersbrandon@gmail.com', 0, '+1-661-839-2761', 'F', 'profPic4.jpg', 'I\'m not weird, I\'m a limited edition. My brain is like an internet browser: 20 tabs open, 3 are frozen, and I have no idea where the music is coming from.', 'Blocked', 0),
-(24, 'rebecca12', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '486 Flores Spurs, North Stephaniefort, NY 27735', '1993-08-31', 'lorimartin@fisher.com', 1, '+1-026-125-4810', 'F', 'profPic7.jpg', 'I\'m not lazy, I\'m just on energy-saving mode. My spirit animal is a sloth riding a turtle with a \"Go Faster\" bumper sticker.', 'Active', 0),
-(25, 'vowens', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '7895 Jesse Cliffs, Kellyburgh, FL 43772', '2004-12-15', 'barronadrian@tate.com', 1, '001-129-593-543', 'M', 'profPic2.jpg', 'I speak fluent sarcasm and bad decisions. Currently writing my autobiography: \"I Can\'t Believe It\'s Not Better\"', 'Active', 0),
-(26, 'brookehanson', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '668 Cruz Loop Apt. 558, Jenniferchester, IL 19115', '1986-05-27', 'arielallen@hotmail.com', 1, '1018329202', 'R', 'profPic6.jpg', 'I\'m 99% caffeine and 1% questionable life choices. My hobbies include starting projects with enthusiasm and finishing them with existential dread.', 'Active', 0),
-(27, 'lbell', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '533 Jones Loaf Apt. 979, Michaelberg, NH 82682', '2003-09-19', 'jennifer07@olson.com', 1, '(149)397-3244x8', 'M', 'profPic4.jpg', 'I\'m not arguing, I\'m just explaining why I\'m right in a louder voice while waving my hands dramatically. Also, I can recite the entire script of Monty Python and the Holy Grail.', 'Blocked', 0),
-(28, 'qhicks', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '158 Meredith Gateway, Georgeshire, MN 03325', '1993-06-14', 'alexander89@gmail.com', 0, '+1-800-991-0780', 'R', 'profPic5.jpg', 'I\'m not short, I\'m concentrated awesome. My spirit animal is a disgruntled raccoon who\'s judging your life choices from the dumpster.', 'Blocked', 0),
-(29, 'jonescarolyn', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '126 William Loop Apt. 535, Port Stephanieside, LA 12818', '1999-11-03', 'cgonzalez@gmail.com', 1, '984-698-1356x48', 'R', 'profPic6.jpg', 'I\'m not weird, I\'m a limited edition. My brain has too many tabs open and they\'re all playing different songs at the same time while buffering.', 'Active', 1),
-(30, 'westnancy', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '22470 Angela Canyon, Thomasside, DC 46664', '1988-10-25', 'toddmunoz@hotmail.com', 1, '001-984-016-964', 'F', 'profPic7.jpg', 'I\'m not lazy, I\'m just in energy-saving mode. My spirit animal is a panda who\'s given up on bamboo and is now mainlining espresso.', 'Blocked', 0),
-(31, 'larsenbrandon', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '2346 Nathan Stream, East Robert, DE 77107', '1994-07-10', 'ikirk@sparks-mason.com', 0, '+1-741-420-8183', 'R', 'profPic2.jpg', 'I\'m 98% caffeine and 2% questionable decisions. My hobbies include misplacing important items and finding them immediately after replacing them.', 'Active', 1),
-(32, 'hollandandrew', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '8184 Taylor River Suite 237, Port David, MN 95270', '1998-08-03', 'byrdstephanie@hotmail.com', 0, '(921)488-4421', 'M', 'profPic10.jpg', 'I\'m not arguing, I\'m just explaining why I\'m right in a louder voice while waving my hands dramatically. Also, I can identify every Pokemon but can\'t remember where I left my keys.', 'Blocked', 0),
-(33, 'fberry', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '5604 Diane Trail, Johnton, IA 68097', '1988-01-09', 'michael19@peters-jackson.com', 1, '001-409-737-704', 'R', 'profPic1.jpg', 'I\'m not short, I\'m fun-sized. My spirit animal is a sloth riding a turtle with a \"Go Faster\" bumper sticker while reading a self-help book.', 'Active', 0),
-(34, 'jenny91', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '98181 Calvin Falls Suite 559, Shafferview, VA 66824', '1991-05-30', 'claytonleslie@johnson.com', 0, '(456)796-5426x1', 'R', 'profPic5.jpg', 'I\'m not weird, I\'m a limited edition. My brain is like an internet browser: 20 tabs open, 3 are frozen, and I have no idea where the music is coming from.', 'Blocked', 0),
-(35, 'reyesstephanie', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '2932 Flynn Extensions, West Shannon, MA 71984', '1998-05-18', 'sandersjanet@gmail.com', 0, '491-354-4593x72', 'R', 'profPic4.jpg', 'I\'m not lazy, I\'m just in energy-saving mode. My hobbies include starting books I\'ll never finish and finishing snacks I probably shouldn\'t have started.', 'Blocked', 0),
-(36, 'katiemendoza', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '96580 Pitts Ways Apt. 582, South Brandonmouth, IA 01797', '2004-11-15', 'jenny34@klein.net', 1, '+1-158-550-3110', 'R', 'profPic2.jpg', 'I speak fluent sarcasm and bad decisions. Currently writing my autobiography: \"Oops: A Series of Unfortunate Events\"', 'Active', 0),
-(37, 'ibaker', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '64769 Eileen Lodge Suite 503, New Monica, AL 58284', '1989-06-15', 'jshah@gmail.com', 1, '+1-232-584-0674', 'F', 'profPic9.jpg', 'I\'m 99% caffeine and 1% questionable life choices. My spirit animal is a raccoon who\'s just stolen your leftovers and is judging your Netflix queue.', 'Active', 0),
-(38, 'bryan52', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '0992 Sanchez Inlet, Garciafort, ND 86825', '2004-07-09', 'martinezjeremy@gmail.com', 0, '(566)252-8665x7', 'F', 'profPic5.jpg', 'I\'m not arguing, I\'m just explaining why I\'m right in a louder voice. My hobbies include correcting people\'s grammar and then immediately making typos in my own messages.', 'Active', 0),
-(39, 'matthewwilson', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '78843 Harmon Row, Kochton, MO 41029', '2005-08-28', 'meghanbishop@yahoo.com', 1, '127.827.7407x81', 'M', 'profPic3.jpg', 'I\'m not weird, I\'m a limited edition. My brain has too many tabs open and they\'re all playing different songs at the same time while buffering.', 'Active', 0),
-(40, 'toddhopkins', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '94211 William Valleys, Kathleenfort, NH 66752', '2007-02-17', 'moralesdaniel@hotmail.com', 1, '+1-089-971-3863', 'F', 'profPic6.jpg', 'I\'m not lazy, I\'m just on energy-saving mode. My spirit animal is a sloth riding a turtle with a \"Go Faster\" bumper sticker while reading a self-help book.', 'Blocked', 0),
-(41, 'herbert35', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '95360 Wright Forges, East Karenland, WI 45002', '1989-06-23', 'danielle36@gmail.com', 1, '001-592-697-970', 'R', 'profPic7.jpg', 'I speak fluent sarcasm and bad decisions. Currently writing my memoir: \"The Art of Selective Listening (When I Feel Like It)\"', 'Blocked', 0),
-(42, 'zacharyeaton', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '99338 Williams Hill, Port Alexisbury, TN 95919', '1985-07-09', 'maria64@gmail.com', 0, '657.411.0943', 'R', 'profPic8.jpg', 'I\'m not short, I\'m concentrated awesome. My hobbies include starting projects with enthusiasm and finishing them with existential dread.', 'Active', 0),
-(43, 'jason31', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '2434 Warren Lock Apt. 786, West Michael, LA 99802', '2001-01-15', 'wattsevelyn@yahoo.com', 0, '3393153990', 'M', 'profPic1.jpg', 'I\'m 98% caffeine and 2% questionable decisions. My spirit animal is a honey badger who\'s had too much coffee and is now questioning all life choices.', 'Active', 1),
-(44, 'donaldarias', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '93793 Amanda Locks, Ortizhaven, AK 57544', '2006-05-02', 'ashleydaniel@hotmail.com', 0, '+1-389-272-9299', 'F', 'profPic7.jpg', 'I\'m not arguing, I\'m just explaining why I\'m right in a louder voice. My hobbies include misplacing important items and finding them immediately after replacing them.', 'Blocked', 0),
-(45, 'jennifer60', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '79216 Russell Summit Apt. 775, Linchester, OH 88895', '2000-07-22', 'richardsongloria@hotmail.com', 0, '(675)684-7044x5', 'M', 'profPic1.jpg', 'I\'m not weird, I\'m a limited edition. My brain is like an internet browser: 20 tabs open, 3 are frozen, and I have no idea where the music is coming from.', 'Blocked', 0),
-(46, 'brandyrichard', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '08546 Cohen Plain Apt. 027, Beckshire, NC 75899', '2000-01-08', 'contreraslisa@hotmail.com', 1, '382.734.3641x00', 'M', 'profPic1.jpg', 'I\'m not lazy, I\'m just in energy-saving mode. My spirit animal is a panda who\'s given up on bamboo and is now mainlining espresso.', 'Active', 0),
-(47, 'xwhite', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '05259 Christopher Heights Suite 197, Marcburgh, MA 98772', '1994-11-29', 'gainesryan@yahoo.com', 1, '045.079.7332x92', 'M', 'profPic3.jpg', 'I speak fluent sarcasm and bad decisions. Currently writing my autobiography: \"I Can\'t Believe It\'s Not Better: The Director\'s Cut\"', 'Blocked', 0),
-(48, 'carlsonsherri', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '509 Kristine Mission, Wilsonland, MI 40445', '1990-04-20', 'djones@gmail.com', 1, '962.076.7835x73', 'M', 'profPic1.jpg', 'I\'m not short, I\'m concentrated awesome. My hobbies include correcting people who use \"literally\" figuratively and pretending to understand blockchain.', 'Active', 0),
-(49, 'dianecasey', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '3806 Berry Trafficway, New Monicashire, WI 90514', '1998-02-02', 'dgonzalez@vang.biz', 1, '+1-697-839-5454', 'F', 'profPic5.jpg', 'I\'m 99% caffeine and 1% questionable life choices. My spirit animal is a raccoon who\'s just stolen your leftovers and is judging your Netflix queue.', 'Blocked', 0),
-(50, 'baileytiffany', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '811 Dunn Village, North Jessicaside, NY 44776', '1994-12-10', 'kevin05@yahoo.com', 0, '001-049-881-906', 'M', 'profPic4.jpg', 'I\'m not arguing, I\'m just explaining why I\'m right in a louder voice while waving my hands dramatically. Also, I can recite the entire script of The Princess Bride backwards.', 'Active', 0),
-(51, 'andrew13', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '86344 Sara Fort, Phillipsfurt, MS 83572', '1987-10-17', 'stevenjackson@sanders-trujillo.info', 1, '667-777-7507x60', 'M', 'profPic8.jpg', 'I\'m not weird, I\'m a limited edition. My brain has too many tabs open and they\'re all playing different songs at the same time while buffering.', 'Blocked', 0),
-(52, 'troymiller', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '0499 Brittney Rapid, Port Deborah, KY 85990', '2000-03-11', 'edward05@hansen-taylor.com', 1, '001-139-945-788', 'F', 'profPic4.jpg', 'I\'m not lazy, I\'m just on energy-saving mode. My spirit animal is a sloth riding a turtle with a \"Go Faster\" bumper sticker while reading a self-help book.', 'Active', 1),
-(53, 'huberanita', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '3117 Julia Land, Patrickstad, CO 19181', '1999-06-15', 'rodney78@franklin.info', 0, '+1-350-380-0853', 'M', 'profPic2.jpg', 'I speak fluent sarcasm and bad decisions. Currently writing my autobiography: \"Oops: A Series of Unfortunate Events\"', 'Blocked', 0),
-(54, 'duane14', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '6193 Dennis Junctions, Jamesland, MA 15603', '1989-01-14', 'nathanjames@hotmail.com', 0, '6909842246', 'M', 'profPic8.jpg', 'I\'m not short, I\'m concentrated awesome. My hobbies include starting books I\'ll never finish and finishing snacks I probably shouldn\'t have started.', 'Active', 0),
-(55, 'wayne', '$2y$10$bRT7HgBLMQLkOBkTvSApee3CDGcqV/KV4f1rJIoby59YzZu7bVkPC', NULL, NULL, 'waynegyw-wm24@student.tarc.edu.my', 0, NULL, 'R', NULL, NULL, 'Active', 0);
+(1, 'cookie', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', NULL, NULL, 'cookie@mail.com', 0, '012-3456789', 'R', NULL, 'I love cookies, as you may have already guessed', 'Active', 1),
+(2, 'icecream', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', NULL, NULL, 'icecream@mail.com', 0, '012-9876543', 'R', NULL, 'I love ice cream!', 'Active', 0),
+(4, 'cookie2', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', NULL, NULL, 'jasonlhtown@gmail.com', 0, NULL, 'R', NULL, NULL, 'Active', 0),
+(5, 'cookie', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', NULL, NULL, 'cookie@mail.com', 0, NULL, 'R', NULL, NULL, 'Active', 1),
+(6, 'cookie', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', NULL, NULL, 'cookie@mail.com', 0, NULL, 'R', NULL, NULL, 'Active', 0),
+(7, 'cookie3', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', NULL, NULL, 'haha@mail.com', 0, NULL, 'R', NULL, NULL, 'Active', 0),
+(8, 'dlewis', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '2404 Vincent Lake Apt. 343, Lake Suzanne, MI 50120', '1992-09-10', 'anelson@hotmail.com', 1, '(262)205-8820', 'F', 'profPic3.jpg', 'Professional overthinker. I put the \"mental\" in \"fundamental\". Currently training my cat to bring me snacks - so far he just brings me dead bugs.', 'Blocked', 0),
+(9, 'eric36', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '66386 Murphy Garden Apt. 911, West Edgar, WA 26275', '1985-06-14', 'thomaspearson@gmail.com', 1, '(329)906-3769', 'F', 'profPic5.jpg', 'I\'m not weird, I\'m a limited edition. My hobbies include arguing with inanimate objects and pretending to remember people\'s names.', 'Blocked', 1),
+(10, 'lisa26', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '9676 Edwards Fork, Gregorytown, MD 02923', '1988-08-09', 'ruizmelissa@yahoo.com', 1, '001-504-468-814', 'R', 'profPic9.jpg', 'I\'m not short, I\'m concentrated awesome. My spirit animal is a disgruntled panda who just wants to eat bamboo in peace.', 'Blocked', 0),
+(11, 'omurray', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '969 Monica Wells Apt. 367, Port Rebecca, DE 41245', '1990-03-09', 'ksolis@yahoo.com', 0, '001-023-170-243', 'M', 'profPic6.jpg', 'I\'m not arguing, I\'m just passionately expressing my point of view while completely dismissing yours. Also, I can recite the entire script of The Princess Bride backwards.', 'Active', 0),
+(12, 'perezgloria', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '005 David Cliff, South Shelby, VT 49228', '2002-07-20', 'charlesbrown@rodriguez.com', 0, '(283)461-0606', 'F', 'profPic5.jpg', 'I\'m not a morning person, not an afternoon person, and definitely not an evening person. Basically, I\'m not a person until I\'ve had coffee.', 'Blocked', 0),
+(13, 'martinezdarryl', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '499 Rodriguez Brook, Tyroneburgh, RI 91186', '1992-10-19', 'sarahnelson@mccall-lopez.com', 0, '+1-000-962-1322', 'R', 'profPic5.jpg', 'I\'m not lazy, I\'m just on energy-saving mode. My spirit animal is a sloth riding a turtle while reading a \"Go Faster\" manual.', 'Blocked', 0),
+(14, 'brianmoore', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '128 Beasley Tunnel, Lake Rebeccaland, AK 42809', '1991-04-03', 'rgreen@gmail.com', 1, '479.858.7590', 'M', 'profPic3.jpg', 'I\'m not arguing, I\'m just explaining why I\'m right. Also, I can identify over 50 different species of dinosaurs but can\'t remember what I had for breakfast.', 'Blocked', 0),
+(15, 'travissmith', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '3346 King Ridges, Keithbury, IN 16341', '1992-10-21', 'jkelley@christensen.com', 1, '(741)317-4475x3', 'M', 'profPic7.jpg', 'I put the \"pro\" in procrastination. Currently writing a novel in my head - the hard part is transferring it to paper. Maybe tomorrow.', 'Active', 0),
+(16, 'maddenjordan', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '49087 Michael Mall, Bryanview, AZ 08019', '2005-12-22', 'zknapp@gmail.com', 0, '398-229-0996x32', 'R', 'profPic8.jpg', 'I\'m not short, I\'m fun-sized. My spirit animal is a raccoon who\'s just discovered espresso. I can quote entire episodes of The Office but can\'t remember my own phone number.', 'Blocked', 0),
+(17, 'wbaker', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '4376 Bailey Trail, Martinside, AZ 90015', '2005-03-26', 'twashington@sanchez.com', 0, '297.509.6645x65', 'M', 'profPic4.jpg', 'I\'m not arguing, I\'m just explaining why I\'m right in a loud voice. My hobbies include misplacing important items and finding them immediately after replacing them.', 'Blocked', 0),
+(18, 'adavis', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '15863 Wright Mission Apt. 422, Christopherport, HI 03357', '2003-08-22', 'houstongary@lloyd-jones.com', 0, '139.125.8003', 'R', 'profPic3.jpg', 'I\'m not weird, I\'m a limited edition. My brain has too many tabs open and they\'re all playing different songs at the same time.', 'Active', 1),
+(19, 'sjohnson', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '79042 David Green Apt. 431, Carloston, MI 74458', '1985-06-08', 'smithpatricia@hebert.com', 1, '201-566-6201', 'R', 'profPic5.jpg', 'I\'m not lazy, I\'m just in energy-saving mode. My spirit animal is a cat who knocks things off tables while maintaining intense eye contact.', 'Blocked', 0),
+(20, 'yvettechapman', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '2802 Walters Fort, Berryland, MT 04537', '1997-11-09', 'oholt@yahoo.com', 1, '868.997.0626x55', 'F', 'profPic3.jpg', 'I\'m 98% caffeine and 2% questionable decisions. My hobbies include starting books I\'ll never finish and finishing snacks I probably shouldn\'t have started.', 'Blocked', 0),
+(21, 'pollardjames', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '003 Tammy Glens Apt. 598, Feliciabury, NJ 03941', '1996-05-04', 'sarah43@hall.biz', 1, '(347)814-3533', 'M', 'profPic1.jpg', 'I\'m not arguing, I\'m just explaining why I\'m right in a louder voice. My spirit animal is a honey badger who\'s had too much coffee.', 'Active', 1),
+(22, 'helliott', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '63621 Figueroa Roads, Kevinview, SC 96900', '2005-09-06', 'brooke59@schwartz.com', 1, '+1-851-356-7855', 'F', 'profPic3.jpg', 'I\'m not short, I\'m concentrated awesome. My hobbies include correcting people\'s grammar and then immediately making typos in my own messages.', 'Active', 0),
+(23, 'kylegarrison', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '7880 Green Divide, Joshuaport, TN 37606', '1989-02-09', 'ayersbrandon@gmail.com', 0, '+1-661-839-2761', 'F', 'profPic4.jpg', 'I\'m not weird, I\'m a limited edition. My brain is like an internet browser: 20 tabs open, 3 are frozen, and I have no idea where the music is coming from.', 'Blocked', 0),
+(24, 'rebecca12', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '486 Flores Spurs, North Stephaniefort, NY 27735', '1993-08-31', 'lorimartin@fisher.com', 1, '+1-026-125-4810', 'F', 'profPic7.jpg', 'I\'m not lazy, I\'m just on energy-saving mode. My spirit animal is a sloth riding a turtle with a \"Go Faster\" bumper sticker.', 'Active', 0),
+(25, 'vowens', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '7895 Jesse Cliffs, Kellyburgh, FL 43772', '2004-12-15', 'barronadrian@tate.com', 1, '001-129-593-543', 'M', 'profPic2.jpg', 'I speak fluent sarcasm and bad decisions. Currently writing my autobiography: \"I Can\'t Believe It\'s Not Better\"', 'Active', 0),
+(26, 'brookehanson', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '668 Cruz Loop Apt. 558, Jenniferchester, IL 19115', '1986-05-27', 'arielallen@hotmail.com', 1, '1018329202', 'R', 'profPic6.jpg', 'I\'m 99% caffeine and 1% questionable life choices. My hobbies include starting projects with enthusiasm and finishing them with existential dread.', 'Active', 0),
+(27, 'lbell', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '533 Jones Loaf Apt. 979, Michaelberg, NH 82682', '2003-09-19', 'jennifer07@olson.com', 1, '(149)397-3244x8', 'M', 'profPic4.jpg', 'I\'m not arguing, I\'m just explaining why I\'m right in a louder voice while waving my hands dramatically. Also, I can recite the entire script of Monty Python and the Holy Grail.', 'Blocked', 0),
+(28, 'qhicks', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '158 Meredith Gateway, Georgeshire, MN 03325', '1993-06-14', 'alexander89@gmail.com', 0, '+1-800-991-0780', 'R', 'profPic5.jpg', 'I\'m not short, I\'m concentrated awesome. My spirit animal is a disgruntled raccoon who\'s judging your life choices from the dumpster.', 'Blocked', 0),
+(29, 'jonescarolyn', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '126 William Loop Apt. 535, Port Stephanieside, LA 12818', '1999-11-03', 'cgonzalez@gmail.com', 1, '984-698-1356x48', 'R', 'profPic6.jpg', 'I\'m not weird, I\'m a limited edition. My brain has too many tabs open and they\'re all playing different songs at the same time while buffering.', 'Active', 1),
+(30, 'westnancy', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '22470 Angela Canyon, Thomasside, DC 46664', '1988-10-25', 'toddmunoz@hotmail.com', 1, '001-984-016-964', 'F', 'profPic7.jpg', 'I\'m not lazy, I\'m just in energy-saving mode. My spirit animal is a panda who\'s given up on bamboo and is now mainlining espresso.', 'Blocked', 0),
+(31, 'larsenbrandon', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '2346 Nathan Stream, East Robert, DE 77107', '1994-07-10', 'ikirk@sparks-mason.com', 0, '+1-741-420-8183', 'R', 'profPic2.jpg', 'I\'m 98% caffeine and 2% questionable decisions. My hobbies include misplacing important items and finding them immediately after replacing them.', 'Active', 1),
+(32, 'hollandandrew', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '8184 Taylor River Suite 237, Port David, MN 95270', '1998-08-03', 'byrdstephanie@hotmail.com', 0, '(921)488-4421', 'M', 'profPic10.jpg', 'I\'m not arguing, I\'m just explaining why I\'m right in a louder voice while waving my hands dramatically. Also, I can identify every Pokemon but can\'t remember where I left my keys.', 'Blocked', 0),
+(33, 'fberry', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '5604 Diane Trail, Johnton, IA 68097', '1988-01-09', 'michael19@peters-jackson.com', 1, '001-409-737-704', 'R', 'profPic1.jpg', 'I\'m not short, I\'m fun-sized. My spirit animal is a sloth riding a turtle with a \"Go Faster\" bumper sticker while reading a self-help book.', 'Active', 0),
+(34, 'jenny91', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '98181 Calvin Falls Suite 559, Shafferview, VA 66824', '1991-05-30', 'claytonleslie@johnson.com', 0, '(456)796-5426x1', 'R', 'profPic5.jpg', 'I\'m not weird, I\'m a limited edition. My brain is like an internet browser: 20 tabs open, 3 are frozen, and I have no idea where the music is coming from.', 'Blocked', 0),
+(35, 'reyesstephanie', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '2932 Flynn Extensions, West Shannon, MA 71984', '1998-05-18', 'sandersjanet@gmail.com', 0, '491-354-4593x72', 'R', 'profPic4.jpg', 'I\'m not lazy, I\'m just in energy-saving mode. My hobbies include starting books I\'ll never finish and finishing snacks I probably shouldn\'t have started.', 'Blocked', 0),
+(36, 'katiemendoza', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '96580 Pitts Ways Apt. 582, South Brandonmouth, IA 01797', '2004-11-15', 'jenny34@klein.net', 1, '+1-158-550-3110', 'R', 'profPic2.jpg', 'I speak fluent sarcasm and bad decisions. Currently writing my autobiography: \"Oops: A Series of Unfortunate Events\"', 'Active', 0),
+(37, 'ibaker', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '64769 Eileen Lodge Suite 503, New Monica, AL 58284', '1989-06-15', 'jshah@gmail.com', 1, '+1-232-584-0674', 'F', 'profPic9.jpg', 'I\'m 99% caffeine and 1% questionable life choices. My spirit animal is a raccoon who\'s just stolen your leftovers and is judging your Netflix queue.', 'Active', 0),
+(38, 'bryan52', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '0992 Sanchez Inlet, Garciafort, ND 86825', '2004-07-09', 'martinezjeremy@gmail.com', 0, '(566)252-8665x7', 'F', 'profPic5.jpg', 'I\'m not arguing, I\'m just explaining why I\'m right in a louder voice. My hobbies include correcting people\'s grammar and then immediately making typos in my own messages.', 'Active', 0),
+(39, 'matthewwilson', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '78843 Harmon Row, Kochton, MO 41029', '2005-08-28', 'meghanbishop@yahoo.com', 1, '127.827.7407x81', 'M', 'profPic3.jpg', 'I\'m not weird, I\'m a limited edition. My brain has too many tabs open and they\'re all playing different songs at the same time while buffering.', 'Active', 0),
+(40, 'toddhopkins', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '94211 William Valleys, Kathleenfort, NH 66752', '2007-02-17', 'moralesdaniel@hotmail.com', 1, '+1-089-971-3863', 'F', 'profPic6.jpg', 'I\'m not lazy, I\'m just on energy-saving mode. My spirit animal is a sloth riding a turtle with a \"Go Faster\" bumper sticker while reading a self-help book.', 'Blocked', 0),
+(41, 'herbert35', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '95360 Wright Forges, East Karenland, WI 45002', '1989-06-23', 'danielle36@gmail.com', 1, '001-592-697-970', 'R', 'profPic7.jpg', 'I speak fluent sarcasm and bad decisions. Currently writing my memoir: \"The Art of Selective Listening (When I Feel Like It)\"', 'Blocked', 0),
+(42, 'zacharyeaton', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '99338 Williams Hill, Port Alexisbury, TN 95919', '1985-07-09', 'maria64@gmail.com', 0, '657.411.0943', 'R', 'profPic8.jpg', 'I\'m not short, I\'m concentrated awesome. My hobbies include starting projects with enthusiasm and finishing them with existential dread.', 'Active', 0),
+(43, 'jason31', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '2434 Warren Lock Apt. 786, West Michael, LA 99802', '2001-01-15', 'wattsevelyn@yahoo.com', 0, '3393153990', 'M', 'profPic1.jpg', 'I\'m 98% caffeine and 2% questionable decisions. My spirit animal is a honey badger who\'s had too much coffee and is now questioning all life choices.', 'Active', 1),
+(44, 'donaldarias', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '93793 Amanda Locks, Ortizhaven, AK 57544', '2006-05-02', 'ashleydaniel@hotmail.com', 0, '+1-389-272-9299', 'F', 'profPic7.jpg', 'I\'m not arguing, I\'m just explaining why I\'m right in a louder voice. My hobbies include misplacing important items and finding them immediately after replacing them.', 'Blocked', 0),
+(45, 'jennifer60', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '79216 Russell Summit Apt. 775, Linchester, OH 88895', '2000-07-22', 'richardsongloria@hotmail.com', 0, '(675)684-7044x5', 'M', 'profPic1.jpg', 'I\'m not weird, I\'m a limited edition. My brain is like an internet browser: 20 tabs open, 3 are frozen, and I have no idea where the music is coming from.', 'Blocked', 0),
+(46, 'brandyrichard', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '08546 Cohen Plain Apt. 027, Beckshire, NC 75899', '2000-01-08', 'contreraslisa@hotmail.com', 1, '382.734.3641x00', 'M', 'profPic1.jpg', 'I\'m not lazy, I\'m just in energy-saving mode. My spirit animal is a panda who\'s given up on bamboo and is now mainlining espresso.', 'Active', 0),
+(47, 'xwhite', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '05259 Christopher Heights Suite 197, Marcburgh, MA 98772', '1994-11-29', 'gainesryan@yahoo.com', 1, '045.079.7332x92', 'M', 'profPic3.jpg', 'I speak fluent sarcasm and bad decisions. Currently writing my autobiography: \"I Can\'t Believe It\'s Not Better: The Director\'s Cut\"', 'Blocked', 0),
+(48, 'carlsonsherri', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '509 Kristine Mission, Wilsonland, MI 40445', '1990-04-20', 'djones@gmail.com', 1, '962.076.7835x73', 'M', 'profPic1.jpg', 'I\'m not short, I\'m concentrated awesome. My hobbies include correcting people who use \"literally\" figuratively and pretending to understand blockchain.', 'Active', 0),
+(49, 'dianecasey', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '3806 Berry Trafficway, New Monicashire, WI 90514', '1998-02-02', 'dgonzalez@vang.biz', 1, '+1-697-839-5454', 'F', 'profPic5.jpg', 'I\'m 99% caffeine and 1% questionable life choices. My spirit animal is a raccoon who\'s just stolen your leftovers and is judging your Netflix queue.', 'Blocked', 0),
+(50, 'baileytiffany', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '811 Dunn Village, North Jessicaside, NY 44776', '1994-12-10', 'kevin05@yahoo.com', 0, '001-049-881-906', 'M', 'profPic4.jpg', 'I\'m not arguing, I\'m just explaining why I\'m right in a louder voice while waving my hands dramatically. Also, I can recite the entire script of The Princess Bride backwards.', 'Active', 0),
+(51, 'andrew13', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '86344 Sara Fort, Phillipsfurt, MS 83572', '1987-10-17', 'stevenjackson@sanders-trujillo.info', 1, '667-777-7507x60', 'M', 'profPic8.jpg', 'I\'m not weird, I\'m a limited edition. My brain has too many tabs open and they\'re all playing different songs at the same time while buffering.', 'Blocked', 0),
+(52, 'troymiller', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '0499 Brittney Rapid, Port Deborah, KY 85990', '2000-03-11', 'edward05@hansen-taylor.com', 1, '001-139-945-788', 'F', 'profPic4.jpg', 'I\'m not lazy, I\'m just on energy-saving mode. My spirit animal is a sloth riding a turtle with a \"Go Faster\" bumper sticker while reading a self-help book.', 'Active', 1),
+(53, 'huberanita', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '3117 Julia Land, Patrickstad, CO 19181', '1999-06-15', 'rodney78@franklin.info', 0, '+1-350-380-0853', 'M', 'profPic2.jpg', 'I speak fluent sarcasm and bad decisions. Currently writing my autobiography: \"Oops: A Series of Unfortunate Events\"', 'Blocked', 0),
+(54, 'duane14', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '6193 Dennis Junctions, Jamesland, MA 15603', '1989-01-14', 'nathanjames@hotmail.com', 0, '6909842246', 'M', 'profPic8.jpg', 'I\'m not short, I\'m concentrated awesome. My hobbies include starting books I\'ll never finish and finishing snacks I probably shouldn\'t have started.', 'Active', 0),
+(55, 'wayne', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', NULL, NULL, 'waynegyw-wm24@student.tarc.edu.my', 0, NULL, 'R', NULL, NULL, 'Active', 0);
 
 -- --------------------------------------------------------
 
 --
--- 表的结构 `vouchers`
+-- Table structure for table `vouchers`
 --
 
 CREATE TABLE `vouchers` (
@@ -1075,37 +1077,37 @@ CREATE TABLE `vouchers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- 转存表中的数据 `vouchers`
+-- Dumping data for table `vouchers`
 --
 
 INSERT INTO `vouchers` (`voucherCode`, `amount`, `issuedBy`, `allowedUsage`, `totalUsage`) VALUES
 ('TEST123', 30, 'A003', 10, 0);
 
 --
--- 转储表的索引
+-- Indexes for dumped tables
 --
 
 --
--- 表的索引 `admin`
+-- Indexes for table `admin`
 --
 ALTER TABLE `admin`
   ADD PRIMARY KEY (`id`);
 
 --
--- 表的索引 `blockeduser`
+-- Indexes for table `blockeduser`
 --
 ALTER TABLE `blockeduser`
   ADD PRIMARY KEY (`blockedUserID`);
 
 --
--- 表的索引 `cartitem`
+-- Indexes for table `cartitem`
 --
 ALTER TABLE `cartitem`
   ADD PRIMARY KEY (`userID`,`productID`,`sizeID`),
   ADD KEY `productID` (`productID`,`sizeID`);
 
 --
--- 表的索引 `messages`
+-- Indexes for table `messages`
 --
 ALTER TABLE `messages`
   ADD PRIMARY KEY (`messageID`),
@@ -1113,14 +1115,14 @@ ALTER TABLE `messages`
   ADD KEY `senderID` (`senderID`);
 
 --
--- 表的索引 `orders`
+-- Indexes for table `orders`
 --
 ALTER TABLE `orders`
   ADD PRIMARY KEY (`orderId`),
   ADD KEY `userId` (`userId`);
 
 --
--- 表的索引 `order_items`
+-- Indexes for table `order_items`
 --
 ALTER TABLE `order_items`
   ADD PRIMARY KEY (`orderId`,`productId`,`gripSize`),
@@ -1128,55 +1130,55 @@ ALTER TABLE `order_items`
   ADD KEY `order_items_ibfk_2` (`productId`,`gripSize`);
 
 --
--- 表的索引 `product`
+-- Indexes for table `product`
 --
 ALTER TABLE `product`
   ADD PRIMARY KEY (`productID`),
   ADD KEY `seriesID` (`seriesID`);
 
 --
--- 表的索引 `productstock`
+-- Indexes for table `productstock`
 --
 ALTER TABLE `productstock`
   ADD PRIMARY KEY (`productID`,`sizeID`),
   ADD UNIQUE KEY `qr_token` (`qr_token`);
 
 --
--- 表的索引 `product_images`
+-- Indexes for table `product_images`
 --
 ALTER TABLE `product_images`
   ADD PRIMARY KEY (`id`),
   ADD KEY `productID` (`productID`);
 
 --
--- 表的索引 `restock_history`
+-- Indexes for table `restock_history`
 --
 ALTER TABLE `restock_history`
   ADD PRIMARY KEY (`restockID`),
   ADD KEY `productID` (`productID`,`sizeID`);
 
 --
--- 表的索引 `savedaddress`
+-- Indexes for table `savedaddress`
 --
 ALTER TABLE `savedaddress`
   ADD PRIMARY KEY (`addressIndex`),
   ADD KEY `userID` (`userID`);
 
 --
--- 表的索引 `series`
+-- Indexes for table `series`
 --
 ALTER TABLE `series`
   ADD PRIMARY KEY (`seriesID`);
 
 --
--- 表的索引 `token`
+-- Indexes for table `token`
 --
 ALTER TABLE `token`
   ADD PRIMARY KEY (`id`),
   ADD KEY `userID-fk` (`userID`);
 
 --
--- 表的索引 `user`
+-- Indexes for table `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`userID`),
@@ -1184,128 +1186,128 @@ ALTER TABLE `user`
   ADD KEY `username` (`username`);
 
 --
--- 表的索引 `vouchers`
+-- Indexes for table `vouchers`
 --
 ALTER TABLE `vouchers`
   ADD PRIMARY KEY (`voucherCode`),
   ADD KEY `issuedBy` (`issuedBy`);
 
 --
--- 在导出的表使用AUTO_INCREMENT
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- 使用表AUTO_INCREMENT `messages`
+-- AUTO_INCREMENT for table `messages`
 --
 ALTER TABLE `messages`
   MODIFY `messageID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
 
 --
--- 使用表AUTO_INCREMENT `orders`
+-- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
   MODIFY `orderId` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12355;
 
 --
--- 使用表AUTO_INCREMENT `product_images`
+-- AUTO_INCREMENT for table `product_images`
 --
 ALTER TABLE `product_images`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=212;
 
 --
--- 使用表AUTO_INCREMENT `restock_history`
+-- AUTO_INCREMENT for table `restock_history`
 --
 ALTER TABLE `restock_history`
   MODIFY `restockID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- 使用表AUTO_INCREMENT `savedaddress`
+-- AUTO_INCREMENT for table `savedaddress`
 --
 ALTER TABLE `savedaddress`
   MODIFY `addressIndex` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- 使用表AUTO_INCREMENT `token`
+-- AUTO_INCREMENT for table `token`
 --
 ALTER TABLE `token`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
--- 使用表AUTO_INCREMENT `user`
+-- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
   MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
--- 限制导出的表
+-- Constraints for dumped tables
 --
 
 --
--- 限制表 `cartitem`
+-- Constraints for table `cartitem`
 --
 ALTER TABLE `cartitem`
   ADD CONSTRAINT `cartitem_ibfk_1` FOREIGN KEY (`productID`,`sizeID`) REFERENCES `productstock` (`productID`, `sizeID`),
   ADD CONSTRAINT `userid_fk` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`) ON DELETE CASCADE;
 
 --
--- 限制表 `messages`
+-- Constraints for table `messages`
 --
 ALTER TABLE `messages`
   ADD CONSTRAINT `messages_ibfk_1` FOREIGN KEY (`adminID`) REFERENCES `admin` (`id`),
   ADD CONSTRAINT `messages_ibfk_2` FOREIGN KEY (`senderID`) REFERENCES `user` (`userID`);
 
 --
--- 限制表 `orders`
+-- Constraints for table `orders`
 --
 ALTER TABLE `orders`
   ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `user` (`userID`) ON DELETE CASCADE;
 
 --
--- 限制表 `order_items`
+-- Constraints for table `order_items`
 --
 ALTER TABLE `order_items`
   ADD CONSTRAINT `order_items_ibfk_1` FOREIGN KEY (`orderId`) REFERENCES `orders` (`orderId`),
   ADD CONSTRAINT `order_items_ibfk_2` FOREIGN KEY (`productId`,`gripSize`) REFERENCES `productstock` (`productID`, `sizeID`);
 
 --
--- 限制表 `product`
+-- Constraints for table `product`
 --
 ALTER TABLE `product`
   ADD CONSTRAINT `product_ibfk_1` FOREIGN KEY (`seriesID`) REFERENCES `series` (`seriesID`);
 
 --
--- 限制表 `productstock`
+-- Constraints for table `productstock`
 --
 ALTER TABLE `productstock`
   ADD CONSTRAINT `productStock_ibfk_1` FOREIGN KEY (`productID`) REFERENCES `product` (`productID`);
 
 --
--- 限制表 `product_images`
+-- Constraints for table `product_images`
 --
 ALTER TABLE `product_images`
   ADD CONSTRAINT `product_images_ibfk_1` FOREIGN KEY (`productID`) REFERENCES `product` (`productID`) ON DELETE CASCADE;
 
 --
--- 限制表 `restock_history`
+-- Constraints for table `restock_history`
 --
 ALTER TABLE `restock_history`
   ADD CONSTRAINT `restock_history_ibfk_1` FOREIGN KEY (`productID`) REFERENCES `product` (`productID`),
   ADD CONSTRAINT `restock_history_ibfk_2` FOREIGN KEY (`productID`,`sizeID`) REFERENCES `productstock` (`productID`, `sizeID`);
 
 --
--- 限制表 `savedaddress`
+-- Constraints for table `savedaddress`
 --
 ALTER TABLE `savedaddress`
   ADD CONSTRAINT `savedaddress_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`) ON DELETE CASCADE;
 
 --
--- 限制表 `token`
+-- Constraints for table `token`
 --
 ALTER TABLE `token`
   ADD CONSTRAINT `userID-fk` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`) ON DELETE CASCADE;
 
 --
--- 限制表 `vouchers`
+-- Constraints for table `vouchers`
 --
 ALTER TABLE `vouchers`
   ADD CONSTRAINT `vouchers_ibfk_1` FOREIGN KEY (`issuedBy`) REFERENCES `admin` (`id`);

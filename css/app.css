@@ -71,8 +71,24 @@ header {
 }
 
 .top-nav-store-logo {
-    width: 125px;
+    /* width: 125px; */
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #ddd;
 }
+
+.top-nav-store-logo > span {
+    background: linear-gradient(90deg, rgb(122, 122, 255), rgb(148, 253, 148)); /* Add gradient behind the text */
+    background-clip: text; /* Clip background to the shape of text */
+    -webkit-text-fill-color: transparent; /* Hide the real text so only the text-shaped background shows */
+}
+
+.top-nav-store-logo > svg {
+    fill: currentColor;
+    height:1em;
+    transform:rotate(45deg);
+}
+
 
 header nav {
     display: flex;

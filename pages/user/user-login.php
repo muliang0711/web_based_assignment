@@ -133,7 +133,7 @@ include '../../_head.php';
 
 <div class="container">
     <h2 class="store-name">
-        The Shuttle Store
+        The<span>Shuttle</span>Store
         <img src="../../assets/img/shuttlecock.svg" style="height:1em;transform:rotate(45deg);color:inherit;"/>
     </h2>
     <h1 class="welcome">Welcome</h1>
