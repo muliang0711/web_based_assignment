@@ -67,7 +67,7 @@ $p = new Pager("SELECT * FROM blockeduser WHERE role ='staff' AND status='reques
 
                         <button onclick="playSoundB()" class="action-btn-delete" data-post="/pages/admin/rejectUnblock.php?blockedUserID=<?= $a->blockedUserID ?>&role=<?= $a->role ?>" 
                         data-confirm="Are you sure you want to reject unblock this user?"><i class="fa-solid fa-xmark"></i></button>
-                        <audio id="clickSoundB" src="../../sound/error.mp3"></audio>
+                        <audio id="clickSoundB" src="../../sound/m5.mp3"></audio>
                     </td>
 
                     </tr>
