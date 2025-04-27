@@ -13,6 +13,11 @@ $_db = new PDO('mysql:dbname=web_based_assignment', 'root', '', [
   PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
 ]);
 
+$search = req('racket');
+if(!$search){
+  redirect('http://localhost:8000/pages/product/productlist.php');
+}
+
 // SQL query
 $statement = $_db->prepare("SELECT * FROM product WHERE productID = ?");
 $statement->execute([$productID]);
