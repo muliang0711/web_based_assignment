@@ -2,6 +2,7 @@
     display: inline-table;
     padding: 20px 50px;
     margin: 20px;
+    
     height: 10vh;
     width: 15vw;
     border: none;
@@ -56,3 +57,23 @@ padding:20px;
     transform-origin:center;  */
 
 }
+.ranking{
+    margin-left: 30%;
+}
+
+
+  .th{
+    padding: 0.75rem; 
+
+  }
+  .td{
+    padding: 0.75rem; 
+    border:none;
+
+  
+  }
+  .th:hover{
+background-color: rgb(183, 221, 255);
+    
+  
+  }
