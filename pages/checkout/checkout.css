@@ -203,13 +203,14 @@ main {
     display: grid;
     margin-bottom: 10px;
     grid-template-columns: 70px auto 50px 120px;
-    grid-template-rows: 0.3fr 0.1fr;
+    /* grid-template-rows: 0.3fr 0.1fr; */
+    grid-template-rows: auto 1fr; /* 1st row: as small as it needs to be for its own content; 2nd row: stretches to fit whatever's left, including the image */
 
     > img {
         grid-row: span 2;
         border-radius: 5px;
-        width: 70px;
-        height: 100px;
+        width: 100%; /* Fits the defined width of its column */
+        height: auto;
     }
 
     > span:nth-child(-n+4){
