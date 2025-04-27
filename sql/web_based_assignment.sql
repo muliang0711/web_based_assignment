@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Apr 27, 2025 at 09:27 AM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- 主机： 127.0.0.1
+-- 生成日期： 2025-04-27 11:41:11
+-- 服务器版本： 10.4.32-MariaDB
+-- PHP 版本： 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `web_based_assignment`
+-- 数据库： `web_based_assignment`
 --
 CREATE DATABASE IF NOT EXISTS `web_based_assignment` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 USE `web_based_assignment`;
@@ -26,9 +26,10 @@ USE `web_based_assignment`;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `admin`
+-- 表的结构 `admin`
 --
 
+DROP TABLE IF EXISTS `admin`;
 CREATE TABLE `admin` (
   `id` varchar(10) NOT NULL,
   `name` varchar(30) NOT NULL,
@@ -39,7 +40,7 @@ CREATE TABLE `admin` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `admin`
+-- 转存表中的数据 `admin`
 --
 
 INSERT INTO `admin` (`id`, `name`, `department`, `passwordHash`, `adminLevel`, `status`) VALUES
@@ -152,9 +153,10 @@ INSERT INTO `admin` (`id`, `name`, `department`, `passwordHash`, `adminLevel`, `
 -- --------------------------------------------------------
 
 --
--- Table structure for table `blockeduser`
+-- 表的结构 `blockeduser`
 --
 
+DROP TABLE IF EXISTS `blockeduser`;
 CREATE TABLE `blockeduser` (
   `blockedUserID` varchar(15) NOT NULL,
   `role` enum('user','staff') NOT NULL,
@@ -163,7 +165,7 @@ CREATE TABLE `blockeduser` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `blockeduser`
+-- 转存表中的数据 `blockeduser`
 --
 
 INSERT INTO `blockeduser` (`blockedUserID`, `role`, `status`, `appealReason`) VALUES
@@ -240,9 +242,10 @@ INSERT INTO `blockeduser` (`blockedUserID`, `role`, `status`, `appealReason`) VA
 -- --------------------------------------------------------
 
 --
--- Table structure for table `cartitem`
+-- 表的结构 `cartitem`
 --
 
+DROP TABLE IF EXISTS `cartitem`;
 CREATE TABLE `cartitem` (
   `userID` int(11) NOT NULL,
   `productID` varchar(5) NOT NULL,
@@ -251,7 +254,7 @@ CREATE TABLE `cartitem` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `cartitem`
+-- 转存表中的数据 `cartitem`
 --
 
 INSERT INTO `cartitem` (`userID`, `productID`, `sizeID`, `quantity`) VALUES
@@ -264,9 +267,10 @@ INSERT INTO `cartitem` (`userID`, `productID`, `sizeID`, `quantity`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `messages`
+-- 表的结构 `messages`
 --
 
+DROP TABLE IF EXISTS `messages`;
 CREATE TABLE `messages` (
   `messageID` bigint(20) NOT NULL,
   `senderID` int(11) NOT NULL,
@@ -277,7 +281,7 @@ CREATE TABLE `messages` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `messages`
+-- 转存表中的数据 `messages`
 --
 
 INSERT INTO `messages` (`messageID`, `senderID`, `adminID`, `content`, `sent_at`, `userSent`) VALUES
@@ -293,9 +297,10 @@ INSERT INTO `messages` (`messageID`, `senderID`, `adminID`, `content`, `sent_at`
 -- --------------------------------------------------------
 
 --
--- Table structure for table `orders`
+-- 表的结构 `orders`
 --
 
+DROP TABLE IF EXISTS `orders`;
 CREATE TABLE `orders` (
   `orderId` int(5) NOT NULL,
   `userId` int(11) NOT NULL,
@@ -313,7 +318,7 @@ CREATE TABLE `orders` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `orders`
+-- 转存表中的数据 `orders`
 --
 
 INSERT INTO `orders` (`orderId`, `userId`, `orderDate`, `status`, `orderAddress`, `orderName`, `orderPhone`, `deliveryMethod`, `deliveredDate`, `tracking`, `discount`, `notify`, `cancel_reason`) VALUES
@@ -324,9 +329,10 @@ INSERT INTO `orders` (`orderId`, `userId`, `orderDate`, `status`, `orderAddress`
 -- --------------------------------------------------------
 
 --
--- Table structure for table `order_items`
+-- 表的结构 `order_items`
 --
 
+DROP TABLE IF EXISTS `order_items`;
 CREATE TABLE `order_items` (
   `orderId` int(5) NOT NULL,
   `productId` varchar(5) NOT NULL,
@@ -336,7 +342,7 @@ CREATE TABLE `order_items` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `order_items`
+-- 转存表中的数据 `order_items`
 --
 
 INSERT INTO `order_items` (`orderId`, `productId`, `quantity`, `subtotal`, `gripSize`) VALUES
@@ -347,9 +353,10 @@ INSERT INTO `order_items` (`orderId`, `productId`, `quantity`, `subtotal`, `grip
 -- --------------------------------------------------------
 
 --
--- Table structure for table `product`
+-- 表的结构 `product`
 --
 
+DROP TABLE IF EXISTS `product`;
 CREATE TABLE `product` (
   `productID` varchar(5) NOT NULL,
   `productName` varchar(100) NOT NULL,
@@ -360,7 +367,7 @@ CREATE TABLE `product` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `product`
+-- 转存表中的数据 `product`
 --
 
 INSERT INTO `product` (`productID`, `productName`, `price`, `seriesID`, `introduction`, `playerInfo`) VALUES
@@ -463,14 +470,17 @@ INSERT INTO `product` (`productID`, `productName`, `price`, `seriesID`, `introdu
 ('R0097', 'Shadow Base', 199.00, 'SHD', 'Starter Shadow model built for entry-level agility and touch.', 'Camryn Lee. Fast feet, big dreams.'),
 ('R0098', 'Phantom Loop', 269.00, 'PHM', 'With spin-boost strings and counter-drag design, the Loop brings deceptive rally control.', 'Tariq Amin. Loves to grind out points with spin and placement.'),
 ('R0099', 'AeroSharp Neo', 289.00, 'AS', 'Sharp feel and nimble handling for advancing players.', 'Mina Kwon. Clean strokes and growing confidence.'),
-('R0100', 'Phantom Rise', 319.00, 'PHM', 'Lightweight Phantom tuned for beginners ready to level up.', 'Jake Fields. Learning to rise, one swing at a time.');
+('R0100', 'Phantom Rise', 319.00, 'PHM', 'Lightweight Phantom tuned for beginners ready to level up.', 'Jake Fields. Learning to rise, one swing at a time.'),
+('xx25', 'xx1', 0.00, 'xx1', 'dqwdq', 'dqwdq'),
+('xx27', 'xx1', 123.00, 'xx1', 'dqdw', 'dqdq');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `productstock`
+-- 表的结构 `productstock`
 --
 
+DROP TABLE IF EXISTS `productstock`;
 CREATE TABLE `productstock` (
   `productID` varchar(5) NOT NULL,
   `sizeID` varchar(4) NOT NULL,
@@ -482,217 +492,218 @@ CREATE TABLE `productstock` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `productstock`
+-- 转存表中的数据 `productstock`
 --
 
 INSERT INTO `productstock` (`productID`, `sizeID`, `stock`, `status`, `low_stock_threshold`, `alert_sent`, `qr_token`) VALUES
-('R0001', '3UG5', 4, 'onsales', 5, 1, NULL),
-('R0001', '4UG5', 1, 'onsales', 5, 1, '9e22411d04b7c9b04584a1339265e142'),
-('R0002', '3UG5', 5, 'onsales', 5, 1, NULL),
-('R0002', '4UG5', 6, 'onsales', 5, 0, NULL),
-('R0003', '3UG5', 2, 'onsales', 5, 1, 'f76d3e735389999bf414f1ca64b081bd'),
-('R0003', '4UG5', 3, 'onsales', 5, 1, NULL),
-('R0004', '3UG5', 4, 'onsales', 5, 1, NULL),
-('R0004', '4UG5', 5, 'onsales', 5, 1, NULL),
-('R0005', '3UG5', 5, 'onsales', 5, 1, NULL),
-('R0005', '4UG5', 6, 'onsales', 5, 0, NULL),
-('R0006', '3UG5', 2, 'onsales', 5, 1, NULL),
-('R0006', '4UG5', 3, 'onsales', 5, 1, NULL),
-('R0007', '3UG5', 4, 'onsales', 5, 1, NULL),
-('R0007', '4UG5', 5, 'onsales', 5, 0, NULL),
-('R0008', '3UG5', 3, 'onsales', 5, 1, NULL),
-('R0008', '4UG5', 4, 'onsales', 5, 1, NULL),
-('R0009', '3UG5', 5, 'onsales', 5, 0, NULL),
-('R0009', '4UG5', 6, 'onsales', 5, 0, NULL),
-('R0010', '3UG5', 2, 'onsales', 5, 1, NULL),
-('R0010', '4UG5', 3, 'onsales', 5, 1, NULL),
-('R0011', '3UG5', 4, 'onsales', 5, 1, NULL),
-('R0011', '4UG5', 5, 'onsales', 5, 0, NULL),
-('R0012', '3UG5', 3, 'onsales', 5, 1, NULL),
-('R0012', '4UG5', 4, 'onsales', 5, 1, NULL),
-('R0013', '3UG5', 4, 'onsales', 5, 1, NULL),
+('R0001', '3UG5', 6, 'onsales', 5, 0, NULL),
+('R0001', '4UG5', 5, 'onsales', 5, 0, NULL),
+('R0002', '3UG5', 10, 'onsales', 5, 0, NULL),
+('R0002', '4UG5', 8, 'onsales', 5, 0, NULL),
+('R0003', '3UG5', 10, 'onsales', 5, 0, NULL),
+('R0003', '4UG5', 12, 'onsales', 5, 0, NULL),
+('R0004', '3UG5', 5, 'onsales', 5, 0, NULL),
+('R0004', '4UG5', 11, 'onsales', 5, 0, NULL),
+('R0005', '3UG5', 7, 'onsales', 5, 0, NULL),
+('R0005', '4UG5', 13, 'onsales', 5, 0, NULL),
+('R0006', '3UG5', 6, 'onsales', 5, 0, NULL),
+('R0006', '4UG5', 12, 'onsales', 5, 0, NULL),
+('R0007', '3UG5', 12, 'onsales', 5, 0, NULL),
+('R0007', '4UG5', 13, 'onsales', 5, 0, NULL),
+('R0008', '3UG5', 9, 'onsales', 5, 0, NULL),
+('R0008', '4UG5', 11, 'onsales', 5, 0, NULL),
+('R0009', '3UG5', 6, 'onsales', 5, 0, NULL),
+('R0009', '4UG5', 14, 'onsales', 5, 0, NULL),
+('R0010', '3UG5', 8, 'onsales', 0, 0, NULL),
+('R0010', '4UG5', 10, 'onsales', 5, 0, NULL),
+('R0011', '3UG5', 12, 'onsales', 5, 0, NULL),
+('R0011', '4UG5', 12, 'onsales', 5, 0, NULL),
+('R0012', '3UG5', 7, 'onsales', 5, 0, NULL),
+('R0012', '4UG5', 10, 'onsales', 5, 0, NULL),
+('R0013', '3UG5', 6, 'onsales', 5, 0, NULL),
 ('R0013', '4UG5', 5, 'onsales', 5, 0, NULL),
-('R0014', '3UG5', 2, 'onsales', 5, 1, NULL),
-('R0014', '4UG5', 3, 'onsales', 5, 1, NULL),
-('R0015', '3UG5', 5, 'onsales', 5, 0, NULL),
-('R0015', '4UG5', 6, 'onsales', 5, 0, NULL),
-('R0016', '3UG5', 3, 'onsales', 5, 1, NULL),
-('R0016', '4UG5', 4, 'onsales', 5, 1, NULL),
-('R0017', '3UG5', 4, 'onsales', 5, 1, NULL),
-('R0017', '4UG5', 1, 'onsales', 5, 1, NULL),
-('R0018', '3UG5', 5, 'onsales', 5, 1, NULL),
+('R0014', '3UG5', 13, 'onsales', 5, 0, NULL),
+('R0014', '4UG5', 8, 'onsales', 5, 0, NULL),
+('R0015', '3UG5', 9, 'onsales', 5, 0, NULL),
+('R0015', '4UG5', 5, 'onsales', 5, 0, NULL),
+('R0016', '3UG5', 7, 'onsales', 5, 0, NULL),
+('R0016', '4UG5', 11, 'onsales', 5, 0, NULL),
+('R0017', '3UG5', 14, 'onsales', 5, 0, NULL),
+('R0017', '4UG5', 5, 'onsales', 5, 0, NULL),
+('R0018', '3UG5', 15, 'onsales', 5, 0, NULL),
 ('R0018', '4UG5', 6, 'onsales', 5, 0, NULL),
-('R0019', '3UG5', 2, 'onsales', 5, 1, NULL),
-('R0019', '4UG5', 3, 'onsales', 5, 1, NULL),
-('R0020', '3UG5', 4, 'onsales', 5, 1, NULL),
-('R0020', '4UG5', 5, 'onsales', 5, 1, NULL),
-('R0021', '3UG5', 5, 'onsales', 5, 0, NULL),
-('R0021', '4UG5', 6, 'onsales', 5, 0, NULL),
-('R0022', '3UG5', 2, 'onsales', 5, 1, NULL),
-('R0022', '4UG5', 3, 'onsales', 5, 1, NULL),
-('R0023', '3UG5', 4, 'onsales', 5, 1, NULL),
-('R0023', '4UG5', 5, 'onsales', 5, 0, NULL),
-('R0024', '3UG5', 3, 'onsales', 5, 1, NULL),
-('R0024', '4UG5', 4, 'onsales', 5, 1, NULL),
-('R0025', '3UG5', 4, 'onsales', 5, 1, NULL),
-('R0025', '4UG5', 5, 'onsales', 5, 0, NULL),
-('R0026', '3UG5', 2, 'onsales', 5, 1, NULL),
-('R0026', '4UG5', 3, 'onsales', 5, 1, NULL),
-('R0027', '3UG5', 5, 'onsales', 5, 0, NULL),
-('R0027', '4UG5', 6, 'onsales', 5, 0, NULL),
-('R0028', '3UG5', 3, 'onsales', 5, 1, NULL),
-('R0028', '4UG5', 4, 'onsales', 5, 1, NULL),
-('R0029', '3UG5', 4, 'onsales', 5, 1, NULL),
-('R0029', '4UG5', 1, 'onsales', 5, 1, NULL),
-('R0030', '3UG5', 5, 'onsales', 5, 1, NULL),
-('R0030', '4UG5', 6, 'onsales', 5, 0, NULL),
-('R0031', '3UG5', 2, 'onsales', 5, 1, NULL),
-('R0031', '4UG5', 3, 'onsales', 5, 1, NULL),
-('R0032', '3UG5', 4, 'onsales', 5, 1, NULL),
-('R0032', '4UG5', 5, 'onsales', 5, 1, NULL),
-('R0033', '3UG5', 5, 'onsales', 5, 0, NULL),
-('R0033', '4UG5', 6, 'onsales', 5, 0, NULL),
-('R0034', '3UG5', 2, 'onsales', 5, 1, NULL),
-('R0034', '4UG5', 3, 'onsales', 5, 1, NULL),
-('R0035', '3UG5', 4, 'onsales', 5, 1, NULL),
-('R0035', '4UG5', 5, 'onsales', 5, 0, NULL),
-('R0036', '3UG5', 3, 'onsales', 5, 1, NULL),
-('R0036', '4UG5', 4, 'onsales', 5, 1, NULL),
-('R0037', '3UG5', 4, 'onsales', 5, 1, NULL),
-('R0037', '4UG5', 5, 'onsales', 5, 0, NULL),
-('R0038', '3UG5', 2, 'onsales', 5, 1, NULL),
-('R0038', '4UG5', 3, 'onsales', 5, 1, NULL),
+('R0019', '3UG5', 13, 'onsales', 5, 0, NULL),
+('R0019', '4UG5', 12, 'onsales', 5, 0, NULL),
+('R0020', '3UG5', 15, 'onsales', 5, 0, NULL),
+('R0020', '4UG5', 12, 'onsales', 5, 0, NULL),
+('R0021', '3UG5', 14, 'onsales', 5, 0, NULL),
+('R0021', '4UG5', 14, 'onsales', 5, 0, NULL),
+('R0022', '3UG5', 9, 'onsales', 5, 0, NULL),
+('R0022', '4UG5', 14, 'onsales', 5, 0, NULL),
+('R0023', '3UG5', 15, 'onsales', 5, 0, NULL),
+('R0023', '4UG5', 14, 'onsales', 5, 0, NULL),
+('R0024', '3UG5', 8, 'onsales', 5, 0, NULL),
+('R0024', '4UG5', 9, 'onsales', 5, 0, NULL),
+('R0025', '3UG5', 14, 'onsales', 5, 0, NULL),
+('R0025', '4UG5', 11, 'onsales', 5, 0, NULL),
+('R0026', '3UG5', 9, 'onsales', 5, 0, NULL),
+('R0026', '4UG5', 11, 'onsales', 5, 0, NULL),
+('R0027', '3UG5', 9, 'onsales', 5, 0, NULL),
+('R0027', '4UG5', 13, 'onsales', 5, 0, NULL),
+('R0028', '3UG5', 6, 'onsales', 5, 0, NULL),
+('R0028', '4UG5', 14, 'onsales', 5, 0, NULL),
+('R0029', '3UG5', 13, 'onsales', 5, 0, NULL),
+('R0029', '4UG5', 15, 'onsales', 5, 0, NULL),
+('R0030', '3UG5', 15, 'onsales', 5, 0, NULL),
+('R0030', '4UG5', 7, 'onsales', 5, 0, NULL),
+('R0031', '3UG5', 15, 'onsales', 5, 0, NULL),
+('R0031', '4UG5', 13, 'onsales', 5, 0, NULL),
+('R0032', '3UG5', 6, 'onsales', 5, 0, NULL),
+('R0032', '4UG5', 6, 'onsales', 5, 0, NULL),
+('R0033', '3UG5', 6, 'onsales', 5, 0, NULL),
+('R0033', '4UG5', 11, 'onsales', 5, 0, NULL),
+('R0034', '3UG5', 5, 'onsales', 5, 0, NULL),
+('R0034', '4UG5', 12, 'onsales', 5, 0, NULL),
+('R0035', '3UG5', 10, 'onsales', 5, 0, NULL),
+('R0035', '4UG5', 11, 'onsales', 5, 0, NULL),
+('R0036', '3UG5', 6, 'onsales', 5, 0, NULL),
+('R0036', '4UG5', 9, 'onsales', 5, 0, NULL),
+('R0037', '3UG5', 13, 'onsales', 5, 0, NULL),
+('R0037', '4UG5', 15, 'onsales', 5, 0, NULL),
+('R0038', '3UG5', 12, 'onsales', 5, 0, NULL),
+('R0038', '4UG5', 9, 'onsales', 5, 0, NULL),
 ('R0039', '3UG5', 5, 'onsales', 5, 0, NULL),
-('R0039', '4UG5', 6, 'onsales', 5, 0, NULL),
-('R0040', '3UG5', 3, 'onsales', 5, 1, NULL),
-('R0040', '4UG5', 4, 'onsales', 5, 1, NULL),
-('R0041', '3UG5', 4, 'onsales', 5, 1, NULL),
-('R0041', '4UG5', 1, 'onsales', 5, 1, NULL),
-('R0042', '3UG5', 5, 'onsales', 5, 1, NULL),
-('R0042', '4UG5', 6, 'onsales', 5, 0, NULL),
-('R0043', '3UG5', 2, 'onsales', 5, 1, NULL),
-('R0043', '4UG5', 3, 'onsales', 5, 1, NULL),
-('R0044', '3UG5', 4, 'onsales', 5, 1, NULL),
-('R0044', '4UG5', 5, 'onsales', 5, 1, NULL),
-('R0045', '3UG5', 5, 'onsales', 5, 0, NULL),
-('R0045', '4UG5', 6, 'onsales', 5, 0, NULL),
-('R0046', '3UG5', 2, 'onsales', 5, 1, NULL),
-('R0046', '4UG5', 3, 'onsales', 5, 1, NULL),
-('R0047', '3UG5', 4, 'onsales', 5, 1, NULL),
-('R0047', '4UG5', 5, 'onsales', 5, 0, NULL),
-('R0048', '3UG5', 3, 'onsales', 5, 1, NULL),
-('R0048', '4UG5', 4, 'onsales', 5, 1, NULL),
-('R0049', '3UG5', 4, 'onsales', 5, 1, NULL),
-('R0049', '4UG5', 5, 'onsales', 5, 0, NULL),
-('R0050', '3UG5', 2, 'onsales', 5, 1, NULL),
-('R0050', '4UG5', 3, 'onsales', 5, 1, NULL),
-('R0051', '3UG5', 5, 'onsales', 5, 0, NULL),
-('R0051', '4UG5', 6, 'onsales', 5, 0, NULL),
-('R0052', '3UG5', 3, 'onsales', 5, 1, NULL),
-('R0052', '4UG5', 4, 'onsales', 5, 1, NULL),
-('R0053', '3UG5', 4, 'onsales', 5, 1, NULL),
-('R0053', '4UG5', 1, 'onsales', 5, 1, NULL),
-('R0054', '3UG5', 5, 'onsales', 5, 1, NULL),
-('R0054', '4UG5', 6, 'onsales', 5, 0, NULL),
-('R0055', '3UG5', 2, 'onsales', 5, 1, NULL),
-('R0055', '4UG5', 3, 'onsales', 5, 1, NULL),
-('R0056', '3UG5', 4, 'onsales', 5, 1, NULL),
-('R0056', '4UG5', 5, 'onsales', 5, 1, NULL),
-('R0057', '3UG5', 5, 'onsales', 5, 0, NULL),
-('R0057', '4UG5', 6, 'onsales', 5, 0, NULL),
-('R0058', '3UG5', 2, 'onsales', 5, 1, NULL),
-('R0058', '4UG5', 3, 'onsales', 5, 1, NULL),
-('R0059', '3UG5', 4, 'onsales', 5, 1, NULL),
-('R0059', '4UG5', 5, 'onsales', 5, 0, NULL),
-('R0060', '3UG5', 3, 'onsales', 5, 1, NULL),
-('R0060', '4UG5', 4, 'onsales', 5, 1, NULL),
-('R0061', '3UG5', 4, 'onsales', 5, 1, NULL),
-('R0061', '4UG5', 5, 'onsales', 5, 0, NULL),
-('R0062', '3UG5', 2, 'onsales', 5, 1, NULL),
-('R0062', '4UG5', 3, 'onsales', 5, 1, NULL),
-('R0063', '3UG5', 5, 'onsales', 5, 0, NULL),
-('R0063', '4UG5', 6, 'onsales', 5, 0, NULL),
-('R0064', '3UG5', 3, 'onsales', 5, 1, NULL),
-('R0064', '4UG5', 4, 'onsales', 5, 1, NULL),
-('R0065', '3UG5', 4, 'onsales', 5, 1, NULL),
-('R0065', '4UG5', 1, 'onsales', 5, 1, NULL),
-('R0066', '3UG5', 5, 'onsales', 5, 1, NULL),
-('R0066', '4UG5', 6, 'onsales', 5, 0, NULL),
-('R0067', '3UG5', 2, 'onsales', 5, 1, NULL),
-('R0067', '4UG5', 3, 'onsales', 5, 1, NULL),
-('R0068', '3UG5', 4, 'onsales', 5, 1, NULL),
-('R0068', '4UG5', 5, 'onsales', 5, 1, NULL),
-('R0069', '3UG5', 5, 'onsales', 5, 0, NULL),
-('R0069', '4UG5', 6, 'onsales', 5, 0, NULL),
-('R0070', '3UG5', 1, 'onsales', 5, 1, NULL),
-('R0070', '4UG5', 3, 'onsales', 5, 1, NULL),
-('R0071', '3UG5', 4, 'onsales', 5, 1, NULL),
-('R0071', '4UG5', 5, 'onsales', 5, 0, NULL),
-('R0072', '3UG5', 3, 'onsales', 5, 1, NULL),
-('R0072', '4UG5', 4, 'onsales', 5, 1, NULL),
-('R0073', '3UG5', 4, 'onsales', 5, 1, NULL),
+('R0039', '4UG5', 12, 'onsales', 5, 0, NULL),
+('R0040', '3UG5', 13, 'onsales', 5, 0, NULL),
+('R0040', '4UG5', 8, 'onsales', 5, 0, NULL),
+('R0041', '3UG5', 11, 'onsales', 5, 0, NULL),
+('R0041', '4UG5', 14, 'onsales', 5, 0, NULL),
+('R0042', '3UG5', 10, 'onsales', 5, 0, NULL),
+('R0042', '4UG5', 15, 'onsales', 5, 0, NULL),
+('R0043', '3UG5', 12, 'onsales', 5, 0, NULL),
+('R0043', '4UG5', 15, 'onsales', 5, 0, NULL),
+('R0044', '3UG5', 10, 'onsales', 5, 0, NULL),
+('R0044', '4UG5', 6, 'onsales', 5, 0, NULL),
+('R0045', '3UG5', 6, 'onsales', 5, 0, NULL),
+('R0045', '4UG5', 9, 'onsales', 5, 0, NULL),
+('R0046', '3UG5', 9, 'onsales', 5, 0, NULL),
+('R0046', '4UG5', 12, 'onsales', 5, 0, NULL),
+('R0047', '3UG5', 7, 'onsales', 5, 0, NULL),
+('R0047', '4UG5', 15, 'onsales', 5, 0, NULL),
+('R0048', '3UG5', 6, 'onsales', 5, 0, NULL),
+('R0048', '4UG5', 7, 'onsales', 5, 0, NULL),
+('R0049', '3UG5', 14, 'onsales', 5, 0, NULL),
+('R0049', '4UG5', 13, 'onsales', 5, 0, NULL),
+('R0050', '3UG5', 6, 'onsales', 5, 0, NULL),
+('R0050', '4UG5', 15, 'onsales', 5, 0, NULL),
+('R0051', '3UG5', 10, 'onsales', 5, 0, NULL),
+('R0051', '4UG5', 8, 'onsales', 5, 0, NULL),
+('R0052', '3UG5', 9, 'onsales', 5, 0, NULL),
+('R0052', '4UG5', 6, 'onsales', 5, 0, NULL),
+('R0053', '3UG5', 8, 'onsales', 5, 0, NULL),
+('R0053', '4UG5', 8, 'onsales', 5, 0, NULL),
+('R0054', '3UG5', 8, 'onsales', 5, 0, NULL),
+('R0054', '4UG5', 14, 'onsales', 5, 0, NULL),
+('R0055', '3UG5', 11, 'onsales', 5, 0, NULL),
+('R0055', '4UG5', 10, 'onsales', 5, 0, NULL),
+('R0056', '3UG5', 12, 'onsales', 5, 0, NULL),
+('R0056', '4UG5', 5, 'onsales', 5, 0, NULL),
+('R0057', '3UG5', 6, 'onsales', 5, 0, NULL),
+('R0057', '4UG5', 11, 'onsales', 5, 0, NULL),
+('R0058', '3UG5', 12, 'onsales', 5, 0, NULL),
+('R0058', '4UG5', 15, 'onsales', 5, 0, NULL),
+('R0059', '3UG5', 10, 'onsales', 5, 0, NULL),
+('R0059', '4UG5', 10, 'onsales', 5, 0, NULL),
+('R0060', '3UG5', 11, 'onsales', 5, 0, NULL),
+('R0060', '4UG5', 5, 'onsales', 5, 0, NULL),
+('R0061', '3UG5', 12, 'onsales', 5, 0, NULL),
+('R0061', '4UG5', 10, 'onsales', 5, 0, NULL),
+('R0062', '3UG5', 11, 'onsales', 5, 0, NULL),
+('R0062', '4UG5', 11, 'onsales', 5, 0, NULL),
+('R0063', '3UG5', 8, 'onsales', 5, 0, NULL),
+('R0063', '4UG5', 7, 'onsales', 5, 0, NULL),
+('R0064', '3UG5', 10, 'onsales', 5, 0, NULL),
+('R0064', '4UG5', 10, 'onsales', 5, 0, NULL),
+('R0065', '3UG5', 14, 'onsales', 5, 0, NULL),
+('R0065', '4UG5', 6, 'onsales', 5, 0, NULL),
+('R0066', '3UG5', 8, 'onsales', 5, 0, NULL),
+('R0066', '4UG5', 8, 'onsales', 5, 0, NULL),
+('R0067', '3UG5', 8, 'onsales', 5, 0, NULL),
+('R0067', '4UG5', 14, 'onsales', 5, 0, NULL),
+('R0068', '3UG5', 8, 'onsales', 5, 0, NULL),
+('R0068', '4UG5', 9, 'onsales', 5, 0, NULL),
+('R0069', '3UG5', 7, 'onsales', 5, 0, NULL),
+('R0069', '4UG5', 8, 'onsales', 5, 0, NULL),
+('R0070', '3UG5', 15, 'onsales', 5, 0, NULL),
+('R0070', '4UG5', 7, 'onsales', 5, 0, NULL),
+('R0071', '3UG5', 8, 'onsales', 5, 0, NULL),
+('R0071', '4UG5', 7, 'onsales', 5, 0, NULL),
+('R0072', '3UG5', 8, 'onsales', 5, 0, NULL),
+('R0072', '4UG5', 5, 'onsales', 5, 0, NULL),
+('R0073', '3UG5', 10, 'onsales', 5, 0, NULL),
 ('R0073', '4UG5', 5, 'onsales', 5, 0, NULL),
-('R0074', '3UG5', 2, 'onsales', 5, 1, NULL),
-('R0074', '4UG5', 3, 'onsales', 5, 1, NULL),
-('R0075', '3UG5', 5, 'onsales', 5, 0, NULL),
-('R0075', '4UG5', 6, 'onsales', 5, 0, NULL),
-('R0076', '3UG5', 3, 'onsales', 5, 1, NULL),
-('R0076', '4UG5', 4, 'onsales', 5, 1, NULL),
-('R0077', '3UG5', 4, 'onsales', 5, 1, NULL),
-('R0077', '4UG5', 1, 'onsales', 5, 1, NULL),
-('R0078', '3UG5', 5, 'onsales', 5, 1, NULL),
-('R0078', '4UG5', 6, 'onsales', 5, 0, NULL),
-('R0079', '3UG5', 2, 'onsales', 5, 1, NULL),
-('R0079', '4UG5', 3, 'onsales', 5, 1, NULL),
-('R0080', '3UG5', 4, 'onsales', 5, 1, NULL),
-('R0080', '4UG5', 5, 'onsales', 5, 1, NULL),
-('R0081', '3UG5', 5, 'onsales', 5, 0, NULL),
-('R0081', '4UG5', 6, 'onsales', 5, 0, NULL),
-('R0082', '3UG5', 2, 'onsales', 5, 1, NULL),
-('R0082', '4UG5', 3, 'onsales', 5, 1, NULL),
-('R0083', '3UG5', 4, 'onsales', 5, 1, NULL),
-('R0083', '4UG5', 5, 'onsales', 5, 0, NULL),
-('R0084', '3UG5', 3, 'onsales', 5, 1, NULL),
-('R0084', '4UG5', 4, 'onsales', 5, 1, NULL),
-('R0085', '3UG5', 4, 'onsales', 5, 1, NULL),
-('R0085', '4UG5', 5, 'onsales', 5, 0, NULL),
-('R0086', '3UG5', 2, 'onsales', 5, 1, NULL),
-('R0086', '4UG5', 3, 'onsales', 5, 1, NULL),
-('R0087', '3UG5', 5, 'onsales', 5, 0, NULL),
-('R0087', '4UG5', 6, 'onsales', 5, 0, NULL),
-('R0088', '3UG5', 3, 'onsales', 5, 1, NULL),
-('R0088', '4UG5', 4, 'onsales', 5, 1, NULL),
-('R0089', '3UG5', 4, 'onsales', 5, 1, NULL),
-('R0089', '4UG5', 1, 'onsales', 5, 1, NULL),
-('R0090', '3UG5', 5, 'onsales', 5, 1, NULL),
+('R0074', '3UG5', 14, 'onsales', 5, 0, NULL),
+('R0074', '4UG5', 11, 'onsales', 5, 0, NULL),
+('R0075', '3UG5', 10, 'onsales', 5, 0, NULL),
+('R0075', '4UG5', 12, 'onsales', 5, 0, NULL),
+('R0076', '3UG5', 6, 'onsales', 5, 0, NULL),
+('R0076', '4UG5', 12, 'onsales', 5, 0, NULL),
+('R0077', '3UG5', 12, 'onsales', 5, 0, NULL),
+('R0077', '4UG5', 6, 'onsales', 5, 0, NULL),
+('R0078', '3UG5', 10, 'onsales', 5, 0, NULL),
+('R0078', '4UG5', 7, 'onsales', 5, 0, NULL),
+('R0079', '3UG5', 9, 'onsales', 5, 0, NULL),
+('R0079', '4UG5', 8, 'onsales', 5, 0, NULL),
+('R0080', '3UG5', 12, 'onsales', 5, 0, NULL),
+('R0080', '4UG5', 8, 'onsales', 5, 0, NULL),
+('R0081', '3UG5', 12, 'onsales', 5, 0, NULL),
+('R0081', '4UG5', 12, 'onsales', 5, 0, NULL),
+('R0082', '3UG5', 13, 'onsales', 5, 0, NULL),
+('R0082', '4UG5', 5, 'onsales', 5, 0, NULL),
+('R0083', '3UG5', 13, 'onsales', 5, 0, NULL),
+('R0083', '4UG5', 9, 'onsales', 5, 0, NULL),
+('R0084', '3UG5', 14, 'onsales', 5, 0, NULL),
+('R0084', '4UG5', 5, 'onsales', 5, 0, NULL),
+('R0085', '3UG5', 5, 'onsales', 5, 0, NULL),
+('R0085', '4UG5', 11, 'onsales', 5, 0, NULL),
+('R0086', '3UG5', 13, 'onsales', 5, 0, NULL),
+('R0086', '4UG5', 12, 'onsales', 5, 0, NULL),
+('R0087', '3UG5', 11, 'onsales', 5, 0, NULL),
+('R0087', '4UG5', 5, 'onsales', 5, 0, NULL),
+('R0088', '3UG5', 5, 'onsales', 5, 0, NULL),
+('R0088', '4UG5', 12, 'onsales', 5, 0, NULL),
+('R0089', '3UG5', 5, 'onsales', 5, 0, NULL),
+('R0089', '4UG5', 13, 'onsales', 5, 0, NULL),
+('R0090', '3UG5', 13, 'onsales', 5, 0, NULL),
 ('R0090', '4UG5', 6, 'onsales', 5, 0, NULL),
-('R0091', '3UG5', 2, 'onsales', 5, 1, NULL),
-('R0091', '4UG5', 3, 'onsales', 5, 1, NULL),
-('R0092', '3UG5', 4, 'onsales', 5, 1, NULL),
-('R0092', '4UG5', 5, 'onsales', 5, 1, NULL),
-('R0093', '3UG5', 5, 'onsales', 5, 0, NULL),
-('R0093', '4UG5', 6, 'onsales', 5, 0, NULL),
-('R0094', '3UG5', 2, 'onsales', 5, 1, NULL),
-('R0094', '4UG5', 3, 'onsales', 5, 1, NULL),
-('R0095', '3UG5', 4, 'onsales', 5, 1, NULL),
-('R0095', '4UG5', 5, 'onsales', 5, 0, NULL),
-('R0096', '3UG5', 3, 'onsales', 5, 1, NULL),
-('R0096', '4UG5', 4, 'onsales', 5, 1, NULL),
-('R0097', '3UG5', 4, 'onsales', 5, 1, NULL),
-('R0097', '4UG5', 5, 'onsales', 5, 0, NULL),
-('R0098', '3UG5', 2, 'onsales', 5, 1, NULL),
-('R0098', '4UG5', 3, 'onsales', 5, 1, NULL),
-('R0099', '3UG5', 5, 'onsales', 5, 0, NULL),
-('R0099', '4UG5', 6, 'onsales', 5, 0, NULL),
-('R0100', '3UG5', 3, 'onsales', 5, 1, NULL),
-('R0100', '4UG5', 4, 'onsales', 5, 1, NULL);
+('R0091', '3UG5', 14, 'onsales', 5, 0, NULL),
+('R0091', '4UG5', 8, 'onsales', 5, 0, NULL),
+('R0092', '3UG5', 15, 'onsales', 5, 0, NULL),
+('R0092', '4UG5', 9, 'onsales', 5, 0, NULL),
+('R0093', '3UG5', 10, 'onsales', 5, 0, NULL),
+('R0093', '4UG5', 8, 'onsales', 5, 0, NULL),
+('R0094', '3UG5', 11, 'onsales', 5, 0, NULL),
+('R0094', '4UG5', 12, 'onsales', 5, 0, NULL),
+('R0095', '3UG5', 15, 'onsales', 5, 0, NULL),
+('R0095', '4UG5', 14, 'onsales', 5, 0, NULL),
+('R0096', '3UG5', 14, 'onsales', 5, 0, NULL),
+('R0096', '4UG5', 12, 'onsales', 5, 0, NULL),
+('R0097', '3UG5', 6, 'onsales', 5, 0, NULL),
+('R0097', '4UG5', 11, 'onsales', 5, 0, NULL),
+('R0098', '3UG5', 9, 'onsales', 5, 0, NULL),
+('R0098', '4UG5', 5, 'onsales', 5, 0, NULL),
+('R0099', '3UG5', 9, 'onsales', 5, 0, NULL),
+('R0099', '4UG5', 7, 'onsales', 5, 0, NULL),
+('R0100', '3UG5', 15, 'onsales', 5, 0, NULL),
+('R0100', '4UG5', 10, 'onsales', 5, 0, NULL);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `product_images`
+-- 表的结构 `product_images`
 --
 
+DROP TABLE IF EXISTS `product_images`;
 CREATE TABLE `product_images` (
   `id` int(11) NOT NULL,
   `productID` varchar(50) DEFAULT NULL,
@@ -702,12 +713,10 @@ CREATE TABLE `product_images` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `product_images`
+-- 转存表中的数据 `product_images`
 --
 
 INSERT INTO `product_images` (`id`, `productID`, `image_path`, `image_type`, `created_at`) VALUES
-(1, 'R0001', 'product_R0001_1745508667.png', 'product', '2025-04-18 14:30:37'),
-(2, 'R0001', 'player_R0001_1745508667.png', 'player', '2025-04-18 14:30:37'),
 (3, 'R0002', 'product_R0002_1743343876.png', 'product', '2025-03-30 14:11:16'),
 (4, 'R0002', 'player_R0002_1743343876.png', 'player', '2025-03-30 14:11:16'),
 (5, 'R0003', 'product_R0003_1743343896.png', 'product', '2025-03-30 14:11:36'),
@@ -902,14 +911,18 @@ INSERT INTO `product_images` (`id`, `productID`, `image_path`, `image_type`, `cr
 (208, 'R0099', 'product_R0099_1744989696.png', 'product', '2025-04-18 15:21:36'),
 (209, 'R0099', 'player_R0099_1744989696.png', 'player', '2025-04-18 15:21:36'),
 (210, 'R0100', 'product_R0100_1744989707.png', 'product', '2025-04-18 15:21:47'),
-(211, 'R0100', 'player_R0100_1744989707.png', 'player', '2025-04-18 15:21:47');
+(211, 'R0100', 'player_R0100_1744989707.png', 'player', '2025-04-18 15:21:47'),
+(212, 'R0001', 'product_R0001_17457382930.png', 'product', '2025-04-27 07:18:13'),
+(213, 'R0001', 'product_R0001_17457382931.png', 'product', '2025-04-27 07:18:13'),
+(214, 'R0001', 'product_R0001_17457382932.png', 'product', '2025-04-27 07:18:13');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `restock_history`
+-- 表的结构 `restock_history`
 --
 
+DROP TABLE IF EXISTS `restock_history`;
 CREATE TABLE `restock_history` (
   `restockID` int(11) NOT NULL,
   `productID` varchar(20) NOT NULL,
@@ -920,12 +933,219 @@ CREATE TABLE `restock_history` (
   `restock_time` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- 转存表中的数据 `restock_history`
+--
+
+INSERT INTO `restock_history` (`restockID`, `productID`, `sizeID`, `restock_quantity`, `restock_price`, `restocked_by`, `restock_time`) VALUES
+(103, 'R0001', '3UG5', 12, 298.94, 'admin003', '2024-12-06 01:34:59'),
+(104, 'R0001', '4UG5', 10, 271.10, 'admin002', '2024-11-16 01:34:59'),
+(105, 'R0002', '3UG5', 12, 179.04, 'admin001', '2023-12-27 01:34:59'),
+(106, 'R0002', '4UG5', 8, 161.91, 'admin002', '2024-06-21 01:34:59'),
+(107, 'R0003', '3UG5', 7, 250.44, 'admin003', '2024-11-25 01:34:59'),
+(108, 'R0003', '4UG5', 7, 184.71, 'admin002', '2023-06-20 01:34:59'),
+(109, 'R0004', '3UG5', 6, 247.45, 'admin002', '2023-10-30 01:34:59'),
+(110, 'R0004', '4UG5', 12, 221.77, 'admin003', '2024-01-30 01:34:59'),
+(111, 'R0005', '3UG5', 7, 171.23, 'admin003', '2024-06-25 01:34:59'),
+(112, 'R0005', '4UG5', 13, 231.32, 'admin003', '2024-03-29 01:34:59'),
+(113, 'R0006', '3UG5', 13, 193.00, 'admin001', '2025-03-16 01:34:59'),
+(114, 'R0006', '4UG5', 12, 119.68, 'admin003', '2023-05-29 01:34:59'),
+(115, 'R0007', '3UG5', 6, 191.66, 'admin003', '2025-01-07 01:34:59'),
+(116, 'R0007', '4UG5', 15, 170.66, 'admin003', '2023-11-20 01:34:59'),
+(117, 'R0008', '3UG5', 11, 198.83, 'admin003', '2023-06-22 01:34:59'),
+(118, 'R0008', '4UG5', 15, 205.67, 'admin001', '2024-07-12 01:34:59'),
+(119, 'R0009', '3UG5', 10, 103.99, 'admin001', '2024-03-12 01:34:59'),
+(120, 'R0009', '4UG5', 7, 185.58, 'admin001', '2024-11-14 01:34:59'),
+(121, 'R0010', '3UG5', 15, 193.22, 'admin001', '2023-09-16 01:34:59'),
+(122, 'R0010', '4UG5', 6, 212.19, 'admin003', '2023-07-02 01:34:59'),
+(123, 'R0011', '3UG5', 7, 272.79, 'admin002', '2024-04-11 01:34:59'),
+(124, 'R0011', '4UG5', 11, 158.76, 'admin003', '2025-04-01 01:34:59'),
+(125, 'R0012', '3UG5', 15, 113.43, 'admin003', '2025-04-09 01:34:59'),
+(126, 'R0012', '4UG5', 6, 296.50, 'admin002', '2025-01-26 01:34:59'),
+(127, 'R0013', '3UG5', 14, 266.59, 'admin002', '2024-01-20 01:34:59'),
+(128, 'R0013', '4UG5', 5, 191.03, 'admin002', '2025-02-25 01:34:59'),
+(129, 'R0014', '3UG5', 9, 201.03, 'admin001', '2025-02-06 01:34:59'),
+(130, 'R0014', '4UG5', 8, 264.98, 'admin002', '2024-07-17 01:34:59'),
+(131, 'R0015', '3UG5', 14, 209.14, 'admin001', '2025-03-07 01:34:59'),
+(132, 'R0015', '4UG5', 6, 127.83, 'admin003', '2023-11-19 01:34:59'),
+(133, 'R0016', '3UG5', 6, 165.26, 'admin002', '2023-05-28 01:34:59'),
+(134, 'R0016', '4UG5', 8, 200.77, 'admin001', '2024-06-24 01:34:59'),
+(135, 'R0017', '3UG5', 11, 265.30, 'admin002', '2024-02-29 01:34:59'),
+(136, 'R0017', '4UG5', 9, 119.34, 'admin003', '2025-01-11 01:34:59'),
+(137, 'R0018', '3UG5', 15, 148.84, 'admin002', '2023-11-25 01:34:59'),
+(138, 'R0018', '4UG5', 15, 168.39, 'admin003', '2023-12-17 01:34:59'),
+(139, 'R0019', '3UG5', 5, 274.43, 'admin003', '2024-06-26 01:34:59'),
+(140, 'R0019', '4UG5', 13, 105.56, 'admin003', '2024-10-21 01:34:59'),
+(141, 'R0020', '3UG5', 8, 276.66, 'admin003', '2024-07-24 01:34:59'),
+(142, 'R0020', '4UG5', 5, 225.29, 'admin003', '2024-02-29 01:34:59'),
+(143, 'R0021', '3UG5', 5, 168.21, 'admin002', '2024-03-20 01:34:59'),
+(144, 'R0021', '4UG5', 10, 258.57, 'admin003', '2025-01-03 01:34:59'),
+(145, 'R0022', '3UG5', 13, 156.93, 'admin002', '2023-12-15 01:34:59'),
+(146, 'R0022', '4UG5', 13, 169.60, 'admin001', '2023-09-25 01:34:59'),
+(147, 'R0023', '3UG5', 12, 199.99, 'admin002', '2023-10-11 01:34:59'),
+(148, 'R0023', '4UG5', 12, 270.64, 'admin002', '2024-11-20 01:34:59'),
+(149, 'R0024', '3UG5', 6, 162.36, 'admin002', '2025-02-05 01:34:59'),
+(150, 'R0024', '4UG5', 13, 244.69, 'admin003', '2024-03-29 01:34:59'),
+(151, 'R0025', '3UG5', 12, 146.47, 'admin003', '2025-01-01 01:34:59'),
+(152, 'R0025', '4UG5', 7, 176.77, 'admin002', '2024-04-07 01:34:59'),
+(153, 'R0026', '3UG5', 13, 112.67, 'admin002', '2025-01-06 01:34:59'),
+(154, 'R0026', '4UG5', 6, 237.60, 'admin003', '2024-02-10 01:34:59'),
+(155, 'R0027', '3UG5', 11, 262.95, 'admin001', '2024-05-27 01:34:59'),
+(156, 'R0027', '4UG5', 10, 157.27, 'admin003', '2023-07-16 01:34:59'),
+(157, 'R0028', '3UG5', 12, 115.98, 'admin001', '2024-09-17 01:34:59'),
+(158, 'R0028', '4UG5', 6, 203.17, 'admin003', '2023-08-30 01:34:59'),
+(159, 'R0029', '3UG5', 10, 128.32, 'admin002', '2024-12-23 01:34:59'),
+(160, 'R0029', '4UG5', 11, 255.20, 'admin001', '2025-04-20 01:34:59'),
+(161, 'R0030', '3UG5', 15, 158.55, 'admin003', '2024-04-14 01:34:59'),
+(162, 'R0030', '4UG5', 6, 100.38, 'admin003', '2024-11-13 01:34:59'),
+(163, 'R0031', '3UG5', 11, 175.71, 'admin002', '2024-09-16 01:34:59'),
+(164, 'R0031', '4UG5', 15, 180.96, 'admin001', '2024-02-09 01:34:59'),
+(165, 'R0032', '3UG5', 11, 242.65, 'admin001', '2024-04-27 01:34:59'),
+(166, 'R0032', '4UG5', 6, 148.72, 'admin001', '2024-08-08 01:34:59'),
+(167, 'R0033', '3UG5', 14, 253.68, 'admin002', '2024-06-17 01:34:59'),
+(168, 'R0033', '4UG5', 12, 106.68, 'admin001', '2025-03-11 01:34:59'),
+(169, 'R0034', '3UG5', 14, 250.44, 'admin003', '2025-03-14 01:34:59'),
+(170, 'R0034', '4UG5', 6, 193.28, 'admin002', '2024-09-23 01:34:59'),
+(171, 'R0035', '3UG5', 12, 282.67, 'admin001', '2024-05-11 01:34:59'),
+(172, 'R0035', '4UG5', 15, 285.65, 'admin003', '2023-09-12 01:34:59'),
+(173, 'R0036', '3UG5', 7, 197.10, 'admin002', '2024-01-13 01:34:59'),
+(174, 'R0036', '4UG5', 15, 297.85, 'admin001', '2024-07-01 01:34:59'),
+(175, 'R0037', '3UG5', 12, 143.49, 'admin001', '2024-11-13 01:34:59'),
+(176, 'R0037', '4UG5', 9, 232.32, 'admin002', '2023-11-02 01:34:59'),
+(177, 'R0038', '3UG5', 5, 250.07, 'admin003', '2023-10-14 01:34:59'),
+(178, 'R0038', '4UG5', 14, 245.81, 'admin001', '2024-05-28 01:34:59'),
+(179, 'R0039', '3UG5', 10, 267.85, 'admin002', '2024-10-05 01:34:59'),
+(180, 'R0039', '4UG5', 12, 197.03, 'admin002', '2024-07-14 01:34:59'),
+(181, 'R0040', '3UG5', 13, 225.79, 'admin002', '2023-05-31 01:34:59'),
+(182, 'R0040', '4UG5', 5, 291.69, 'admin003', '2023-05-18 01:34:59'),
+(183, 'R0041', '3UG5', 10, 248.81, 'admin002', '2025-03-08 01:34:59'),
+(184, 'R0041', '4UG5', 10, 139.28, 'admin003', '2024-05-09 01:34:59'),
+(185, 'R0042', '3UG5', 5, 237.12, 'admin003', '2023-10-19 01:34:59'),
+(186, 'R0042', '4UG5', 13, 164.41, 'admin002', '2023-11-02 01:34:59'),
+(187, 'R0043', '3UG5', 10, 216.14, 'admin001', '2025-03-26 01:34:59'),
+(188, 'R0043', '4UG5', 13, 148.55, 'admin001', '2025-01-20 01:34:59'),
+(189, 'R0044', '3UG5', 10, 117.20, 'admin002', '2024-07-28 01:34:59'),
+(190, 'R0044', '4UG5', 10, 131.44, 'admin003', '2023-07-30 01:34:59'),
+(191, 'R0045', '3UG5', 6, 258.22, 'admin001', '2023-08-10 01:34:59'),
+(192, 'R0045', '4UG5', 13, 196.44, 'admin001', '2023-12-15 01:34:59'),
+(193, 'R0046', '3UG5', 13, 161.80, 'admin003', '2024-08-06 01:34:59'),
+(194, 'R0046', '4UG5', 7, 216.06, 'admin001', '2024-07-11 01:34:59'),
+(195, 'R0047', '3UG5', 5, 254.87, 'admin001', '2023-11-17 01:34:59'),
+(196, 'R0047', '4UG5', 5, 280.00, 'admin001', '2023-10-28 01:34:59'),
+(197, 'R0048', '3UG5', 7, 220.64, 'admin003', '2024-05-16 01:34:59'),
+(198, 'R0048', '4UG5', 9, 203.79, 'admin003', '2024-01-31 01:34:59'),
+(199, 'R0049', '3UG5', 9, 219.12, 'admin003', '2023-05-24 01:34:59'),
+(200, 'R0049', '4UG5', 5, 263.83, 'admin002', '2024-02-24 01:34:59'),
+(201, 'R0050', '3UG5', 7, 120.55, 'admin002', '2024-10-10 01:34:59'),
+(202, 'R0050', '4UG5', 15, 165.37, 'admin002', '2023-08-18 01:34:59'),
+(203, 'R0051', '3UG5', 13, 233.86, 'admin002', '2023-10-15 01:34:59'),
+(204, 'R0051', '4UG5', 15, 273.54, 'admin002', '2023-12-19 01:34:59'),
+(205, 'R0052', '3UG5', 14, 222.37, 'admin002', '2025-02-08 01:34:59'),
+(206, 'R0052', '4UG5', 9, 213.60, 'admin003', '2023-09-04 01:34:59'),
+(207, 'R0053', '3UG5', 10, 175.01, 'admin001', '2023-06-08 01:34:59'),
+(208, 'R0053', '4UG5', 5, 274.10, 'admin001', '2023-11-17 01:34:59'),
+(209, 'R0054', '3UG5', 10, 209.18, 'admin001', '2023-10-03 01:34:59'),
+(210, 'R0054', '4UG5', 11, 139.63, 'admin003', '2024-12-28 01:34:59'),
+(211, 'R0055', '3UG5', 10, 202.04, 'admin003', '2024-09-27 01:34:59'),
+(212, 'R0055', '4UG5', 5, 130.95, 'admin002', '2023-04-30 01:34:59'),
+(213, 'R0056', '3UG5', 14, 161.03, 'admin003', '2024-02-10 01:34:59'),
+(214, 'R0056', '4UG5', 8, 257.78, 'admin002', '2023-08-25 01:34:59'),
+(215, 'R0057', '3UG5', 12, 272.35, 'admin001', '2024-06-06 01:34:59'),
+(216, 'R0057', '4UG5', 7, 105.35, 'admin002', '2024-03-31 01:34:59'),
+(217, 'R0058', '3UG5', 8, 228.42, 'admin001', '2024-02-04 01:34:59'),
+(218, 'R0058', '4UG5', 14, 190.47, 'admin003', '2023-11-05 01:34:59'),
+(219, 'R0059', '3UG5', 15, 158.26, 'admin003', '2024-04-05 01:34:59'),
+(220, 'R0059', '4UG5', 14, 130.25, 'admin001', '2024-06-28 01:34:59'),
+(221, 'R0060', '3UG5', 11, 238.31, 'admin003', '2025-03-04 01:34:59'),
+(222, 'R0060', '4UG5', 14, 218.06, 'admin002', '2023-07-12 01:34:59'),
+(223, 'R0061', '3UG5', 8, 162.03, 'admin003', '2023-06-19 01:34:59'),
+(224, 'R0061', '4UG5', 9, 289.38, 'admin002', '2024-11-22 01:34:59'),
+(225, 'R0062', '3UG5', 14, 224.14, 'admin002', '2024-10-01 01:34:59'),
+(226, 'R0062', '4UG5', 15, 154.19, 'admin002', '2025-02-23 01:34:59'),
+(227, 'R0063', '3UG5', 10, 208.62, 'admin002', '2024-04-16 01:34:59'),
+(228, 'R0063', '4UG5', 6, 233.18, 'admin002', '2024-02-13 01:34:59'),
+(229, 'R0064', '3UG5', 8, 112.61, 'admin002', '2025-04-20 01:34:59'),
+(230, 'R0064', '4UG5', 13, 112.70, 'admin002', '2024-02-18 01:34:59'),
+(231, 'R0065', '3UG5', 15, 261.62, 'admin002', '2024-08-06 01:34:59'),
+(232, 'R0065', '4UG5', 8, 228.77, 'admin002', '2025-04-12 01:34:59'),
+(233, 'R0066', '3UG5', 5, 191.55, 'admin001', '2024-09-26 01:34:59'),
+(234, 'R0066', '4UG5', 8, 210.75, 'admin003', '2024-10-20 01:34:59'),
+(235, 'R0067', '3UG5', 11, 107.67, 'admin003', '2024-10-29 01:34:59'),
+(236, 'R0067', '4UG5', 11, 106.19, 'admin001', '2024-01-24 01:34:59'),
+(237, 'R0068', '3UG5', 11, 160.18, 'admin001', '2025-01-31 01:34:59'),
+(238, 'R0068', '4UG5', 6, 195.74, 'admin001', '2023-05-12 01:34:59'),
+(239, 'R0069', '3UG5', 7, 145.20, 'admin001', '2023-09-07 01:34:59'),
+(240, 'R0069', '4UG5', 12, 299.11, 'admin003', '2023-10-15 01:34:59'),
+(241, 'R0070', '3UG5', 14, 102.16, 'admin002', '2024-12-06 01:34:59'),
+(242, 'R0070', '4UG5', 12, 298.99, 'admin001', '2025-04-03 01:34:59'),
+(243, 'R0071', '3UG5', 13, 225.06, 'admin001', '2023-05-14 01:34:59'),
+(244, 'R0071', '4UG5', 9, 177.46, 'admin001', '2024-09-22 01:34:59'),
+(245, 'R0072', '3UG5', 13, 230.47, 'admin001', '2024-05-25 01:34:59'),
+(246, 'R0072', '4UG5', 13, 121.47, 'admin003', '2023-08-08 01:34:59'),
+(247, 'R0073', '3UG5', 10, 163.20, 'admin002', '2023-10-29 01:34:59'),
+(248, 'R0073', '4UG5', 10, 104.12, 'admin003', '2023-11-19 01:34:59'),
+(249, 'R0074', '3UG5', 9, 209.37, 'admin002', '2025-04-24 01:34:59'),
+(250, 'R0074', '4UG5', 8, 260.18, 'admin001', '2023-10-16 01:34:59'),
+(251, 'R0075', '3UG5', 14, 192.97, 'admin003', '2025-01-04 01:34:59'),
+(252, 'R0075', '4UG5', 13, 106.71, 'admin003', '2024-07-27 01:34:59'),
+(253, 'R0076', '3UG5', 15, 268.72, 'admin003', '2023-08-06 01:34:59'),
+(254, 'R0076', '4UG5', 7, 116.13, 'admin001', '2024-02-29 01:34:59'),
+(255, 'R0077', '3UG5', 12, 296.65, 'admin003', '2024-12-15 01:34:59'),
+(256, 'R0077', '4UG5', 15, 175.26, 'admin003', '2025-02-15 01:34:59'),
+(257, 'R0078', '3UG5', 5, 274.47, 'admin001', '2024-05-20 01:34:59'),
+(258, 'R0078', '4UG5', 7, 274.30, 'admin001', '2023-08-26 01:34:59'),
+(259, 'R0079', '3UG5', 9, 266.39, 'admin002', '2023-10-30 01:34:59'),
+(260, 'R0079', '4UG5', 14, 196.08, 'admin003', '2025-01-17 01:34:59'),
+(261, 'R0080', '3UG5', 6, 250.68, 'admin001', '2024-01-06 01:34:59'),
+(262, 'R0080', '4UG5', 8, 203.04, 'admin001', '2025-01-19 01:34:59'),
+(263, 'R0081', '3UG5', 11, 255.31, 'admin003', '2023-05-05 01:34:59'),
+(264, 'R0081', '4UG5', 14, 292.55, 'admin001', '2024-05-22 01:34:59'),
+(265, 'R0082', '3UG5', 9, 191.79, 'admin001', '2023-05-26 01:34:59'),
+(266, 'R0082', '4UG5', 14, 115.95, 'admin002', '2024-04-17 01:34:59'),
+(267, 'R0083', '3UG5', 15, 183.51, 'admin001', '2023-05-21 01:34:59'),
+(268, 'R0083', '4UG5', 5, 223.01, 'admin001', '2025-02-03 01:34:59'),
+(269, 'R0084', '3UG5', 13, 163.18, 'admin003', '2024-02-19 01:34:59'),
+(270, 'R0084', '4UG5', 10, 216.09, 'admin003', '2024-09-29 01:34:59'),
+(271, 'R0085', '3UG5', 10, 198.11, 'admin002', '2024-11-12 01:34:59'),
+(272, 'R0085', '4UG5', 13, 167.35, 'admin003', '2023-11-07 01:34:59'),
+(273, 'R0086', '3UG5', 7, 136.95, 'admin001', '2024-05-27 01:34:59'),
+(274, 'R0086', '4UG5', 9, 209.60, 'admin001', '2023-12-21 01:34:59'),
+(275, 'R0087', '3UG5', 15, 130.44, 'admin001', '2024-02-14 01:34:59'),
+(276, 'R0087', '4UG5', 6, 130.48, 'admin002', '2024-12-30 01:34:59'),
+(277, 'R0088', '3UG5', 7, 271.42, 'admin002', '2023-10-25 01:34:59'),
+(278, 'R0088', '4UG5', 12, 191.21, 'admin003', '2023-10-26 01:34:59'),
+(279, 'R0089', '3UG5', 15, 272.71, 'admin001', '2023-07-14 01:34:59'),
+(280, 'R0089', '4UG5', 12, 150.06, 'admin002', '2024-09-06 01:34:59'),
+(281, 'R0090', '3UG5', 11, 167.54, 'admin002', '2024-05-23 01:34:59'),
+(282, 'R0090', '4UG5', 15, 256.35, 'admin001', '2025-03-10 01:34:59'),
+(283, 'R0091', '3UG5', 9, 221.43, 'admin001', '2024-03-21 01:34:59'),
+(284, 'R0091', '4UG5', 5, 112.20, 'admin003', '2024-07-10 01:34:59'),
+(285, 'R0092', '3UG5', 15, 125.62, 'admin003', '2024-03-07 01:34:59'),
+(286, 'R0092', '4UG5', 11, 294.94, 'admin001', '2024-08-15 01:34:59'),
+(287, 'R0093', '3UG5', 10, 156.57, 'admin003', '2023-07-19 01:34:59'),
+(288, 'R0093', '4UG5', 7, 252.88, 'admin003', '2024-02-27 01:34:59'),
+(289, 'R0094', '3UG5', 9, 127.45, 'admin003', '2023-06-27 01:34:59'),
+(290, 'R0094', '4UG5', 7, 176.99, 'admin001', '2025-01-31 01:34:59'),
+(291, 'R0095', '3UG5', 12, 288.13, 'admin001', '2024-09-30 01:34:59'),
+(292, 'R0095', '4UG5', 7, 193.89, 'admin003', '2024-12-27 01:34:59'),
+(293, 'R0096', '3UG5', 9, 290.10, 'admin002', '2023-10-04 01:34:59'),
+(294, 'R0096', '4UG5', 10, 202.01, 'admin002', '2024-12-04 01:34:59'),
+(295, 'R0097', '3UG5', 9, 242.53, 'admin002', '2024-09-26 01:34:59'),
+(296, 'R0097', '4UG5', 10, 203.76, 'admin003', '2024-12-29 01:34:59'),
+(297, 'R0098', '3UG5', 5, 135.25, 'admin002', '2023-12-12 01:34:59'),
+(298, 'R0098', '4UG5', 10, 184.59, 'admin003', '2023-12-31 01:34:59'),
+(299, 'R0099', '3UG5', 10, 168.32, 'admin002', '2024-09-03 01:34:59'),
+(300, 'R0099', '4UG5', 11, 259.41, 'admin002', '2025-03-26 01:34:59'),
+(301, 'R0100', '3UG5', 14, 137.35, 'admin001', '2025-02-11 01:34:59'),
+(302, 'R0100', '4UG5', 11, 255.27, 'admin003', '2023-08-01 01:34:59');
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `savedaddress`
+-- 表的结构 `savedaddress`
 --
 
+DROP TABLE IF EXISTS `savedaddress`;
 CREATE TABLE `savedaddress` (
   `userID` int(11) NOT NULL,
   `address` varchar(200) NOT NULL,
@@ -936,7 +1156,7 @@ CREATE TABLE `savedaddress` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `savedaddress`
+-- 转存表中的数据 `savedaddress`
 --
 
 INSERT INTO `savedaddress` (`userID`, `address`, `phoneNo`, `name`, `defaultAdd`, `addressIndex`) VALUES
@@ -946,16 +1166,17 @@ INSERT INTO `savedaddress` (`userID`, `address`, `phoneNo`, `name`, `defaultAdd`
 -- --------------------------------------------------------
 
 --
--- Table structure for table `series`
+-- 表的结构 `series`
 --
 
+DROP TABLE IF EXISTS `series`;
 CREATE TABLE `series` (
   `seriesID` varchar(3) NOT NULL,
   `seriesName` varchar(15) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `series`
+-- 转存表中的数据 `series`
 --
 
 INSERT INTO `series` (`seriesID`, `seriesName`) VALUES
@@ -963,14 +1184,16 @@ INSERT INTO `series` (`seriesID`, `seriesName`) VALUES
 ('PHM', 'Phantom'),
 ('SHD', 'Shadow'),
 ('TSM', 'TurboSmash'),
-('TST', 'ThunderStrike');
+('TST', 'ThunderStrike'),
+('xx1', 'xx1');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `token`
+-- 表的结构 `token`
 --
 
+DROP TABLE IF EXISTS `token`;
 CREATE TABLE `token` (
   `id` int(11) NOT NULL,
   `type` enum('verify-email','change-password','remember-user') NOT NULL,
@@ -983,9 +1206,10 @@ CREATE TABLE `token` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user`
+-- 表的结构 `user`
 --
 
+DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `userID` int(11) NOT NULL,
   `username` varchar(255) NOT NULL,
@@ -1003,71 +1227,72 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `user`
+-- 转存表中的数据 `user`
 --
 
 INSERT INTO `user` (`userID`, `username`, `passwordHash`, `address`, `birthdate`, `email`, `emailVerified`, `phoneNo`, `gender`, `profilePic`, `bio`, `memberStatus`, `isDeleted`) VALUES
-(1, 'cookie', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', NULL, NULL, 'cookie@mail.com', 0, '012-3456789', 'R', NULL, 'I love cookies, as you may have already guessed', 'Active', 1),
-(2, 'icecream', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', NULL, NULL, 'icecream@mail.com', 0, '012-9876543', 'R', NULL, 'I love ice cream!', 'Active', 0),
-(4, 'cookie2', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', NULL, NULL, 'jasonlhtown@gmail.com', 0, NULL, 'R', NULL, NULL, 'Active', 0),
-(5, 'cookie', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', NULL, NULL, 'cookie@mail.com', 0, NULL, 'R', NULL, NULL, 'Active', 1),
-(6, 'cookie', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', NULL, NULL, 'cookie@mail.com', 0, NULL, 'R', NULL, NULL, 'Active', 0),
-(7, 'cookie3', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', NULL, NULL, 'haha@mail.com', 0, NULL, 'R', NULL, NULL, 'Active', 0),
-(8, 'dlewis', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '2404 Vincent Lake Apt. 343, Lake Suzanne, MI 50120', '1992-09-10', 'anelson@hotmail.com', 1, '(262)205-8820', 'F', 'profPic3.jpg', 'Professional overthinker. I put the \"mental\" in \"fundamental\". Currently training my cat to bring me snacks - so far he just brings me dead bugs.', 'Blocked', 0),
-(9, 'eric36', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '66386 Murphy Garden Apt. 911, West Edgar, WA 26275', '1985-06-14', 'thomaspearson@gmail.com', 1, '(329)906-3769', 'F', 'profPic5.jpg', 'I\'m not weird, I\'m a limited edition. My hobbies include arguing with inanimate objects and pretending to remember people\'s names.', 'Blocked', 1),
-(10, 'lisa26', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '9676 Edwards Fork, Gregorytown, MD 02923', '1988-08-09', 'ruizmelissa@yahoo.com', 1, '001-504-468-814', 'R', 'profPic9.jpg', 'I\'m not short, I\'m concentrated awesome. My spirit animal is a disgruntled panda who just wants to eat bamboo in peace.', 'Blocked', 0),
-(11, 'omurray', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '969 Monica Wells Apt. 367, Port Rebecca, DE 41245', '1990-03-09', 'ksolis@yahoo.com', 0, '001-023-170-243', 'M', 'profPic6.jpg', 'I\'m not arguing, I\'m just passionately expressing my point of view while completely dismissing yours. Also, I can recite the entire script of The Princess Bride backwards.', 'Active', 0),
-(12, 'perezgloria', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '005 David Cliff, South Shelby, VT 49228', '2002-07-20', 'charlesbrown@rodriguez.com', 0, '(283)461-0606', 'F', 'profPic5.jpg', 'I\'m not a morning person, not an afternoon person, and definitely not an evening person. Basically, I\'m not a person until I\'ve had coffee.', 'Blocked', 0),
-(13, 'martinezdarryl', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '499 Rodriguez Brook, Tyroneburgh, RI 91186', '1992-10-19', 'sarahnelson@mccall-lopez.com', 0, '+1-000-962-1322', 'R', 'profPic5.jpg', 'I\'m not lazy, I\'m just on energy-saving mode. My spirit animal is a sloth riding a turtle while reading a \"Go Faster\" manual.', 'Blocked', 0),
-(14, 'brianmoore', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '128 Beasley Tunnel, Lake Rebeccaland, AK 42809', '1991-04-03', 'rgreen@gmail.com', 1, '479.858.7590', 'M', 'profPic3.jpg', 'I\'m not arguing, I\'m just explaining why I\'m right. Also, I can identify over 50 different species of dinosaurs but can\'t remember what I had for breakfast.', 'Blocked', 0),
-(15, 'travissmith', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '3346 King Ridges, Keithbury, IN 16341', '1992-10-21', 'jkelley@christensen.com', 1, '(741)317-4475x3', 'M', 'profPic7.jpg', 'I put the \"pro\" in procrastination. Currently writing a novel in my head - the hard part is transferring it to paper. Maybe tomorrow.', 'Active', 0),
-(16, 'maddenjordan', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '49087 Michael Mall, Bryanview, AZ 08019', '2005-12-22', 'zknapp@gmail.com', 0, '398-229-0996x32', 'R', 'profPic8.jpg', 'I\'m not short, I\'m fun-sized. My spirit animal is a raccoon who\'s just discovered espresso. I can quote entire episodes of The Office but can\'t remember my own phone number.', 'Blocked', 0),
-(17, 'wbaker', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '4376 Bailey Trail, Martinside, AZ 90015', '2005-03-26', 'twashington@sanchez.com', 0, '297.509.6645x65', 'M', 'profPic4.jpg', 'I\'m not arguing, I\'m just explaining why I\'m right in a loud voice. My hobbies include misplacing important items and finding them immediately after replacing them.', 'Blocked', 0),
-(18, 'adavis', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '15863 Wright Mission Apt. 422, Christopherport, HI 03357', '2003-08-22', 'houstongary@lloyd-jones.com', 0, '139.125.8003', 'R', 'profPic3.jpg', 'I\'m not weird, I\'m a limited edition. My brain has too many tabs open and they\'re all playing different songs at the same time.', 'Active', 1),
-(19, 'sjohnson', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '79042 David Green Apt. 431, Carloston, MI 74458', '1985-06-08', 'smithpatricia@hebert.com', 1, '201-566-6201', 'R', 'profPic5.jpg', 'I\'m not lazy, I\'m just in energy-saving mode. My spirit animal is a cat who knocks things off tables while maintaining intense eye contact.', 'Blocked', 0),
-(20, 'yvettechapman', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '2802 Walters Fort, Berryland, MT 04537', '1997-11-09', 'oholt@yahoo.com', 1, '868.997.0626x55', 'F', 'profPic3.jpg', 'I\'m 98% caffeine and 2% questionable decisions. My hobbies include starting books I\'ll never finish and finishing snacks I probably shouldn\'t have started.', 'Blocked', 0),
-(21, 'pollardjames', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '003 Tammy Glens Apt. 598, Feliciabury, NJ 03941', '1996-05-04', 'sarah43@hall.biz', 1, '(347)814-3533', 'M', 'profPic1.jpg', 'I\'m not arguing, I\'m just explaining why I\'m right in a louder voice. My spirit animal is a honey badger who\'s had too much coffee.', 'Active', 1),
-(22, 'helliott', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '63621 Figueroa Roads, Kevinview, SC 96900', '2005-09-06', 'brooke59@schwartz.com', 1, '+1-851-356-7855', 'F', 'profPic3.jpg', 'I\'m not short, I\'m concentrated awesome. My hobbies include correcting people\'s grammar and then immediately making typos in my own messages.', 'Active', 0),
-(23, 'kylegarrison', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '7880 Green Divide, Joshuaport, TN 37606', '1989-02-09', 'ayersbrandon@gmail.com', 0, '+1-661-839-2761', 'F', 'profPic4.jpg', 'I\'m not weird, I\'m a limited edition. My brain is like an internet browser: 20 tabs open, 3 are frozen, and I have no idea where the music is coming from.', 'Blocked', 0),
-(24, 'rebecca12', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '486 Flores Spurs, North Stephaniefort, NY 27735', '1993-08-31', 'lorimartin@fisher.com', 1, '+1-026-125-4810', 'F', 'profPic7.jpg', 'I\'m not lazy, I\'m just on energy-saving mode. My spirit animal is a sloth riding a turtle with a \"Go Faster\" bumper sticker.', 'Active', 0),
-(25, 'vowens', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '7895 Jesse Cliffs, Kellyburgh, FL 43772', '2004-12-15', 'barronadrian@tate.com', 1, '001-129-593-543', 'M', 'profPic2.jpg', 'I speak fluent sarcasm and bad decisions. Currently writing my autobiography: \"I Can\'t Believe It\'s Not Better\"', 'Active', 0),
-(26, 'brookehanson', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '668 Cruz Loop Apt. 558, Jenniferchester, IL 19115', '1986-05-27', 'arielallen@hotmail.com', 1, '1018329202', 'R', 'profPic6.jpg', 'I\'m 99% caffeine and 1% questionable life choices. My hobbies include starting projects with enthusiasm and finishing them with existential dread.', 'Active', 0),
-(27, 'lbell', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '533 Jones Loaf Apt. 979, Michaelberg, NH 82682', '2003-09-19', 'jennifer07@olson.com', 1, '(149)397-3244x8', 'M', 'profPic4.jpg', 'I\'m not arguing, I\'m just explaining why I\'m right in a louder voice while waving my hands dramatically. Also, I can recite the entire script of Monty Python and the Holy Grail.', 'Blocked', 0),
-(28, 'qhicks', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '158 Meredith Gateway, Georgeshire, MN 03325', '1993-06-14', 'alexander89@gmail.com', 0, '+1-800-991-0780', 'R', 'profPic5.jpg', 'I\'m not short, I\'m concentrated awesome. My spirit animal is a disgruntled raccoon who\'s judging your life choices from the dumpster.', 'Blocked', 0),
-(29, 'jonescarolyn', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '126 William Loop Apt. 535, Port Stephanieside, LA 12818', '1999-11-03', 'cgonzalez@gmail.com', 1, '984-698-1356x48', 'R', 'profPic6.jpg', 'I\'m not weird, I\'m a limited edition. My brain has too many tabs open and they\'re all playing different songs at the same time while buffering.', 'Active', 1),
-(30, 'westnancy', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '22470 Angela Canyon, Thomasside, DC 46664', '1988-10-25', 'toddmunoz@hotmail.com', 1, '001-984-016-964', 'F', 'profPic7.jpg', 'I\'m not lazy, I\'m just in energy-saving mode. My spirit animal is a panda who\'s given up on bamboo and is now mainlining espresso.', 'Blocked', 0),
-(31, 'larsenbrandon', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '2346 Nathan Stream, East Robert, DE 77107', '1994-07-10', 'ikirk@sparks-mason.com', 0, '+1-741-420-8183', 'R', 'profPic2.jpg', 'I\'m 98% caffeine and 2% questionable decisions. My hobbies include misplacing important items and finding them immediately after replacing them.', 'Active', 1),
-(32, 'hollandandrew', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '8184 Taylor River Suite 237, Port David, MN 95270', '1998-08-03', 'byrdstephanie@hotmail.com', 0, '(921)488-4421', 'M', 'profPic10.jpg', 'I\'m not arguing, I\'m just explaining why I\'m right in a louder voice while waving my hands dramatically. Also, I can identify every Pokemon but can\'t remember where I left my keys.', 'Blocked', 0),
-(33, 'fberry', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '5604 Diane Trail, Johnton, IA 68097', '1988-01-09', 'michael19@peters-jackson.com', 1, '001-409-737-704', 'R', 'profPic1.jpg', 'I\'m not short, I\'m fun-sized. My spirit animal is a sloth riding a turtle with a \"Go Faster\" bumper sticker while reading a self-help book.', 'Active', 0),
-(34, 'jenny91', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '98181 Calvin Falls Suite 559, Shafferview, VA 66824', '1991-05-30', 'claytonleslie@johnson.com', 0, '(456)796-5426x1', 'R', 'profPic5.jpg', 'I\'m not weird, I\'m a limited edition. My brain is like an internet browser: 20 tabs open, 3 are frozen, and I have no idea where the music is coming from.', 'Blocked', 0),
-(35, 'reyesstephanie', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '2932 Flynn Extensions, West Shannon, MA 71984', '1998-05-18', 'sandersjanet@gmail.com', 0, '491-354-4593x72', 'R', 'profPic4.jpg', 'I\'m not lazy, I\'m just in energy-saving mode. My hobbies include starting books I\'ll never finish and finishing snacks I probably shouldn\'t have started.', 'Blocked', 0),
-(36, 'katiemendoza', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '96580 Pitts Ways Apt. 582, South Brandonmouth, IA 01797', '2004-11-15', 'jenny34@klein.net', 1, '+1-158-550-3110', 'R', 'profPic2.jpg', 'I speak fluent sarcasm and bad decisions. Currently writing my autobiography: \"Oops: A Series of Unfortunate Events\"', 'Active', 0),
-(37, 'ibaker', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '64769 Eileen Lodge Suite 503, New Monica, AL 58284', '1989-06-15', 'jshah@gmail.com', 1, '+1-232-584-0674', 'F', 'profPic9.jpg', 'I\'m 99% caffeine and 1% questionable life choices. My spirit animal is a raccoon who\'s just stolen your leftovers and is judging your Netflix queue.', 'Active', 0),
-(38, 'bryan52', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '0992 Sanchez Inlet, Garciafort, ND 86825', '2004-07-09', 'martinezjeremy@gmail.com', 0, '(566)252-8665x7', 'F', 'profPic5.jpg', 'I\'m not arguing, I\'m just explaining why I\'m right in a louder voice. My hobbies include correcting people\'s grammar and then immediately making typos in my own messages.', 'Active', 0),
-(39, 'matthewwilson', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '78843 Harmon Row, Kochton, MO 41029', '2005-08-28', 'meghanbishop@yahoo.com', 1, '127.827.7407x81', 'M', 'profPic3.jpg', 'I\'m not weird, I\'m a limited edition. My brain has too many tabs open and they\'re all playing different songs at the same time while buffering.', 'Active', 0),
-(40, 'toddhopkins', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '94211 William Valleys, Kathleenfort, NH 66752', '2007-02-17', 'moralesdaniel@hotmail.com', 1, '+1-089-971-3863', 'F', 'profPic6.jpg', 'I\'m not lazy, I\'m just on energy-saving mode. My spirit animal is a sloth riding a turtle with a \"Go Faster\" bumper sticker while reading a self-help book.', 'Blocked', 0),
-(41, 'herbert35', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '95360 Wright Forges, East Karenland, WI 45002', '1989-06-23', 'danielle36@gmail.com', 1, '001-592-697-970', 'R', 'profPic7.jpg', 'I speak fluent sarcasm and bad decisions. Currently writing my memoir: \"The Art of Selective Listening (When I Feel Like It)\"', 'Blocked', 0),
-(42, 'zacharyeaton', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '99338 Williams Hill, Port Alexisbury, TN 95919', '1985-07-09', 'maria64@gmail.com', 0, '657.411.0943', 'R', 'profPic8.jpg', 'I\'m not short, I\'m concentrated awesome. My hobbies include starting projects with enthusiasm and finishing them with existential dread.', 'Active', 0),
-(43, 'jason31', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '2434 Warren Lock Apt. 786, West Michael, LA 99802', '2001-01-15', 'wattsevelyn@yahoo.com', 0, '3393153990', 'M', 'profPic1.jpg', 'I\'m 98% caffeine and 2% questionable decisions. My spirit animal is a honey badger who\'s had too much coffee and is now questioning all life choices.', 'Active', 1),
-(44, 'donaldarias', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '93793 Amanda Locks, Ortizhaven, AK 57544', '2006-05-02', 'ashleydaniel@hotmail.com', 0, '+1-389-272-9299', 'F', 'profPic7.jpg', 'I\'m not arguing, I\'m just explaining why I\'m right in a louder voice. My hobbies include misplacing important items and finding them immediately after replacing them.', 'Blocked', 0),
-(45, 'jennifer60', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '79216 Russell Summit Apt. 775, Linchester, OH 88895', '2000-07-22', 'richardsongloria@hotmail.com', 0, '(675)684-7044x5', 'M', 'profPic1.jpg', 'I\'m not weird, I\'m a limited edition. My brain is like an internet browser: 20 tabs open, 3 are frozen, and I have no idea where the music is coming from.', 'Blocked', 0),
-(46, 'brandyrichard', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '08546 Cohen Plain Apt. 027, Beckshire, NC 75899', '2000-01-08', 'contreraslisa@hotmail.com', 1, '382.734.3641x00', 'M', 'profPic1.jpg', 'I\'m not lazy, I\'m just in energy-saving mode. My spirit animal is a panda who\'s given up on bamboo and is now mainlining espresso.', 'Active', 0),
-(47, 'xwhite', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '05259 Christopher Heights Suite 197, Marcburgh, MA 98772', '1994-11-29', 'gainesryan@yahoo.com', 1, '045.079.7332x92', 'M', 'profPic3.jpg', 'I speak fluent sarcasm and bad decisions. Currently writing my autobiography: \"I Can\'t Believe It\'s Not Better: The Director\'s Cut\"', 'Blocked', 0),
-(48, 'carlsonsherri', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '509 Kristine Mission, Wilsonland, MI 40445', '1990-04-20', 'djones@gmail.com', 1, '962.076.7835x73', 'M', 'profPic1.jpg', 'I\'m not short, I\'m concentrated awesome. My hobbies include correcting people who use \"literally\" figuratively and pretending to understand blockchain.', 'Active', 0),
-(49, 'dianecasey', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '3806 Berry Trafficway, New Monicashire, WI 90514', '1998-02-02', 'dgonzalez@vang.biz', 1, '+1-697-839-5454', 'F', 'profPic5.jpg', 'I\'m 99% caffeine and 1% questionable life choices. My spirit animal is a raccoon who\'s just stolen your leftovers and is judging your Netflix queue.', 'Blocked', 0),
-(50, 'baileytiffany', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '811 Dunn Village, North Jessicaside, NY 44776', '1994-12-10', 'kevin05@yahoo.com', 0, '001-049-881-906', 'M', 'profPic4.jpg', 'I\'m not arguing, I\'m just explaining why I\'m right in a louder voice while waving my hands dramatically. Also, I can recite the entire script of The Princess Bride backwards.', 'Active', 0),
-(51, 'andrew13', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '86344 Sara Fort, Phillipsfurt, MS 83572', '1987-10-17', 'stevenjackson@sanders-trujillo.info', 1, '667-777-7507x60', 'M', 'profPic8.jpg', 'I\'m not weird, I\'m a limited edition. My brain has too many tabs open and they\'re all playing different songs at the same time while buffering.', 'Blocked', 0),
-(52, 'troymiller', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '0499 Brittney Rapid, Port Deborah, KY 85990', '2000-03-11', 'edward05@hansen-taylor.com', 1, '001-139-945-788', 'F', 'profPic4.jpg', 'I\'m not lazy, I\'m just on energy-saving mode. My spirit animal is a sloth riding a turtle with a \"Go Faster\" bumper sticker while reading a self-help book.', 'Active', 1),
-(53, 'huberanita', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '3117 Julia Land, Patrickstad, CO 19181', '1999-06-15', 'rodney78@franklin.info', 0, '+1-350-380-0853', 'M', 'profPic2.jpg', 'I speak fluent sarcasm and bad decisions. Currently writing my autobiography: \"Oops: A Series of Unfortunate Events\"', 'Blocked', 0),
-(54, 'duane14', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', '6193 Dennis Junctions, Jamesland, MA 15603', '1989-01-14', 'nathanjames@hotmail.com', 0, '6909842246', 'M', 'profPic8.jpg', 'I\'m not short, I\'m concentrated awesome. My hobbies include starting books I\'ll never finish and finishing snacks I probably shouldn\'t have started.', 'Active', 0),
-(55, 'wayne', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', NULL, NULL, 'waynegyw-wm24@student.tarc.edu.my', 0, NULL, 'R', NULL, NULL, 'Active', 0);
+(1, 'cookie', '$2y$10$y9w5iLGDpKgYyStjoM1.G.sWRoSTKVHIZ/Tk125N7CIVdBZ/iITuC', NULL, NULL, 'cookie@mail.com', 0, '012-3456789', 'R', NULL, 'I love cookies, as you may have already guessed', 'Active', 1),
+(2, 'icecream', '$2y$10$HN1VCP3xMBQkkD4fsxUMUe4Ri/ujjDaoJ9u1vZTdibF8yyXjfQ3LG', NULL, NULL, 'icecream@mail.com', 0, '012-9876543', 'R', NULL, 'I love ice cream!', 'Active', 0),
+(4, 'cookie2', '$2y$10$j3VTdYyGhsqKo8f0Fn1NMe1lt2Kr9fLKJLEW.AXALN6J6EVqCTpFy', NULL, NULL, 'jasonlhtown@gmail.com', 0, NULL, 'R', NULL, NULL, 'Active', 0),
+(5, 'cookie', '$2y$10$8CTUED9iJRZu/B4rNLnVge75vzIivuBxiiOM2nNuV8LDQyO.SLrum', NULL, NULL, 'cookie@mail.com', 0, NULL, 'R', NULL, NULL, 'Active', 1),
+(6, 'cookie', '$2y$10$9NRvfqQwZ9276XmS1BYob.ZsLtRPZ8.2RAo4K.O8r2sWRGqJC0Nx6', NULL, NULL, 'cookie@mail.com', 0, NULL, 'R', NULL, NULL, 'Active', 0),
+(7, 'cookie3', '$2y$10$.zhdWmdm3mkXIwefOI.9IeHO1vrboeWbKDcYhob0lpwqAH6iluPaq', NULL, NULL, 'haha@mail.com', 0, NULL, 'R', NULL, NULL, 'Active', 0),
+(8, 'dlewis', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '2404 Vincent Lake Apt. 343, Lake Suzanne, MI 50120', '1992-09-10', 'anelson@hotmail.com', 1, '(262)205-8820', 'F', 'profPic3.jpg', 'Professional overthinker. I put the \"mental\" in \"fundamental\". Currently training my cat to bring me snacks - so far he just brings me dead bugs.', 'Blocked', 0),
+(9, 'eric36', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '66386 Murphy Garden Apt. 911, West Edgar, WA 26275', '1985-06-14', 'thomaspearson@gmail.com', 1, '(329)906-3769', 'F', 'profPic5.jpg', 'I\'m not weird, I\'m a limited edition. My hobbies include arguing with inanimate objects and pretending to remember people\'s names.', 'Blocked', 1),
+(10, 'lisa26', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '9676 Edwards Fork, Gregorytown, MD 02923', '1988-08-09', 'ruizmelissa@yahoo.com', 1, '001-504-468-814', 'R', 'profPic9.jpg', 'I\'m not short, I\'m concentrated awesome. My spirit animal is a disgruntled panda who just wants to eat bamboo in peace.', 'Blocked', 0),
+(11, 'omurray', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '969 Monica Wells Apt. 367, Port Rebecca, DE 41245', '1990-03-09', 'ksolis@yahoo.com', 0, '001-023-170-243', 'M', 'profPic6.jpg', 'I\'m not arguing, I\'m just passionately expressing my point of view while completely dismissing yours. Also, I can recite the entire script of The Princess Bride backwards.', 'Active', 0),
+(12, 'perezgloria', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '005 David Cliff, South Shelby, VT 49228', '2002-07-20', 'charlesbrown@rodriguez.com', 0, '(283)461-0606', 'F', 'profPic5.jpg', 'I\'m not a morning person, not an afternoon person, and definitely not an evening person. Basically, I\'m not a person until I\'ve had coffee.', 'Blocked', 0),
+(13, 'martinezdarryl', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '499 Rodriguez Brook, Tyroneburgh, RI 91186', '1992-10-19', 'sarahnelson@mccall-lopez.com', 0, '+1-000-962-1322', 'R', 'profPic5.jpg', 'I\'m not lazy, I\'m just on energy-saving mode. My spirit animal is a sloth riding a turtle while reading a \"Go Faster\" manual.', 'Blocked', 0),
+(14, 'brianmoore', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '128 Beasley Tunnel, Lake Rebeccaland, AK 42809', '1991-04-03', 'rgreen@gmail.com', 1, '479.858.7590', 'M', 'profPic3.jpg', 'I\'m not arguing, I\'m just explaining why I\'m right. Also, I can identify over 50 different species of dinosaurs but can\'t remember what I had for breakfast.', 'Blocked', 0),
+(15, 'travissmith', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '3346 King Ridges, Keithbury, IN 16341', '1992-10-21', 'jkelley@christensen.com', 1, '(741)317-4475x3', 'M', 'profPic7.jpg', 'I put the \"pro\" in procrastination. Currently writing a novel in my head - the hard part is transferring it to paper. Maybe tomorrow.', 'Active', 0),
+(16, 'maddenjordan', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '49087 Michael Mall, Bryanview, AZ 08019', '2005-12-22', 'zknapp@gmail.com', 0, '398-229-0996x32', 'R', 'profPic8.jpg', 'I\'m not short, I\'m fun-sized. My spirit animal is a raccoon who\'s just discovered espresso. I can quote entire episodes of The Office but can\'t remember my own phone number.', 'Blocked', 0),
+(17, 'wbaker', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '4376 Bailey Trail, Martinside, AZ 90015', '2005-03-26', 'twashington@sanchez.com', 0, '297.509.6645x65', 'M', 'profPic4.jpg', 'I\'m not arguing, I\'m just explaining why I\'m right in a loud voice. My hobbies include misplacing important items and finding them immediately after replacing them.', 'Blocked', 0),
+(18, 'adavis', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '15863 Wright Mission Apt. 422, Christopherport, HI 03357', '2003-08-22', 'houstongary@lloyd-jones.com', 0, '139.125.8003', 'R', 'profPic3.jpg', 'I\'m not weird, I\'m a limited edition. My brain has too many tabs open and they\'re all playing different songs at the same time.', 'Active', 1),
+(19, 'sjohnson', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '79042 David Green Apt. 431, Carloston, MI 74458', '1985-06-08', 'smithpatricia@hebert.com', 1, '201-566-6201', 'R', 'profPic5.jpg', 'I\'m not lazy, I\'m just in energy-saving mode. My spirit animal is a cat who knocks things off tables while maintaining intense eye contact.', 'Blocked', 0),
+(20, 'yvettechapman', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '2802 Walters Fort, Berryland, MT 04537', '1997-11-09', 'oholt@yahoo.com', 1, '868.997.0626x55', 'F', 'profPic3.jpg', 'I\'m 98% caffeine and 2% questionable decisions. My hobbies include starting books I\'ll never finish and finishing snacks I probably shouldn\'t have started.', 'Blocked', 0),
+(21, 'pollardjames', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '003 Tammy Glens Apt. 598, Feliciabury, NJ 03941', '1996-05-04', 'sarah43@hall.biz', 1, '(347)814-3533', 'M', 'profPic1.jpg', 'I\'m not arguing, I\'m just explaining why I\'m right in a louder voice. My spirit animal is a honey badger who\'s had too much coffee.', 'Active', 1),
+(22, 'helliott', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '63621 Figueroa Roads, Kevinview, SC 96900', '2005-09-06', 'brooke59@schwartz.com', 1, '+1-851-356-7855', 'F', 'profPic3.jpg', 'I\'m not short, I\'m concentrated awesome. My hobbies include correcting people\'s grammar and then immediately making typos in my own messages.', 'Active', 0),
+(23, 'kylegarrison', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '7880 Green Divide, Joshuaport, TN 37606', '1989-02-09', 'ayersbrandon@gmail.com', 0, '+1-661-839-2761', 'F', 'profPic4.jpg', 'I\'m not weird, I\'m a limited edition. My brain is like an internet browser: 20 tabs open, 3 are frozen, and I have no idea where the music is coming from.', 'Blocked', 0),
+(24, 'rebecca12', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '486 Flores Spurs, North Stephaniefort, NY 27735', '1993-08-31', 'lorimartin@fisher.com', 1, '+1-026-125-4810', 'F', 'profPic7.jpg', 'I\'m not lazy, I\'m just on energy-saving mode. My spirit animal is a sloth riding a turtle with a \"Go Faster\" bumper sticker.', 'Active', 0),
+(25, 'vowens', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '7895 Jesse Cliffs, Kellyburgh, FL 43772', '2004-12-15', 'barronadrian@tate.com', 1, '001-129-593-543', 'M', 'profPic2.jpg', 'I speak fluent sarcasm and bad decisions. Currently writing my autobiography: \"I Can\'t Believe It\'s Not Better\"', 'Active', 0),
+(26, 'brookehanson', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '668 Cruz Loop Apt. 558, Jenniferchester, IL 19115', '1986-05-27', 'arielallen@hotmail.com', 1, '1018329202', 'R', 'profPic6.jpg', 'I\'m 99% caffeine and 1% questionable life choices. My hobbies include starting projects with enthusiasm and finishing them with existential dread.', 'Active', 0),
+(27, 'lbell', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '533 Jones Loaf Apt. 979, Michaelberg, NH 82682', '2003-09-19', 'jennifer07@olson.com', 1, '(149)397-3244x8', 'M', 'profPic4.jpg', 'I\'m not arguing, I\'m just explaining why I\'m right in a louder voice while waving my hands dramatically. Also, I can recite the entire script of Monty Python and the Holy Grail.', 'Blocked', 0),
+(28, 'qhicks', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '158 Meredith Gateway, Georgeshire, MN 03325', '1993-06-14', 'alexander89@gmail.com', 0, '+1-800-991-0780', 'R', 'profPic5.jpg', 'I\'m not short, I\'m concentrated awesome. My spirit animal is a disgruntled raccoon who\'s judging your life choices from the dumpster.', 'Blocked', 0),
+(29, 'jonescarolyn', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '126 William Loop Apt. 535, Port Stephanieside, LA 12818', '1999-11-03', 'cgonzalez@gmail.com', 1, '984-698-1356x48', 'R', 'profPic6.jpg', 'I\'m not weird, I\'m a limited edition. My brain has too many tabs open and they\'re all playing different songs at the same time while buffering.', 'Active', 1),
+(30, 'westnancy', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '22470 Angela Canyon, Thomasside, DC 46664', '1988-10-25', 'toddmunoz@hotmail.com', 1, '001-984-016-964', 'F', 'profPic7.jpg', 'I\'m not lazy, I\'m just in energy-saving mode. My spirit animal is a panda who\'s given up on bamboo and is now mainlining espresso.', 'Blocked', 0),
+(31, 'larsenbrandon', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '2346 Nathan Stream, East Robert, DE 77107', '1994-07-10', 'ikirk@sparks-mason.com', 0, '+1-741-420-8183', 'R', 'profPic2.jpg', 'I\'m 98% caffeine and 2% questionable decisions. My hobbies include misplacing important items and finding them immediately after replacing them.', 'Active', 1),
+(32, 'hollandandrew', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '8184 Taylor River Suite 237, Port David, MN 95270', '1998-08-03', 'byrdstephanie@hotmail.com', 0, '(921)488-4421', 'M', 'profPic10.jpg', 'I\'m not arguing, I\'m just explaining why I\'m right in a louder voice while waving my hands dramatically. Also, I can identify every Pokemon but can\'t remember where I left my keys.', 'Blocked', 0),
+(33, 'fberry', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '5604 Diane Trail, Johnton, IA 68097', '1988-01-09', 'michael19@peters-jackson.com', 1, '001-409-737-704', 'R', 'profPic1.jpg', 'I\'m not short, I\'m fun-sized. My spirit animal is a sloth riding a turtle with a \"Go Faster\" bumper sticker while reading a self-help book.', 'Active', 0),
+(34, 'jenny91', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '98181 Calvin Falls Suite 559, Shafferview, VA 66824', '1991-05-30', 'claytonleslie@johnson.com', 0, '(456)796-5426x1', 'R', 'profPic5.jpg', 'I\'m not weird, I\'m a limited edition. My brain is like an internet browser: 20 tabs open, 3 are frozen, and I have no idea where the music is coming from.', 'Blocked', 0),
+(35, 'reyesstephanie', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '2932 Flynn Extensions, West Shannon, MA 71984', '1998-05-18', 'sandersjanet@gmail.com', 0, '491-354-4593x72', 'R', 'profPic4.jpg', 'I\'m not lazy, I\'m just in energy-saving mode. My hobbies include starting books I\'ll never finish and finishing snacks I probably shouldn\'t have started.', 'Blocked', 0),
+(36, 'katiemendoza', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '96580 Pitts Ways Apt. 582, South Brandonmouth, IA 01797', '2004-11-15', 'jenny34@klein.net', 1, '+1-158-550-3110', 'R', 'profPic2.jpg', 'I speak fluent sarcasm and bad decisions. Currently writing my autobiography: \"Oops: A Series of Unfortunate Events\"', 'Active', 0),
+(37, 'ibaker', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '64769 Eileen Lodge Suite 503, New Monica, AL 58284', '1989-06-15', 'jshah@gmail.com', 1, '+1-232-584-0674', 'F', 'profPic9.jpg', 'I\'m 99% caffeine and 1% questionable life choices. My spirit animal is a raccoon who\'s just stolen your leftovers and is judging your Netflix queue.', 'Active', 0),
+(38, 'bryan52', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '0992 Sanchez Inlet, Garciafort, ND 86825', '2004-07-09', 'martinezjeremy@gmail.com', 0, '(566)252-8665x7', 'F', 'profPic5.jpg', 'I\'m not arguing, I\'m just explaining why I\'m right in a louder voice. My hobbies include correcting people\'s grammar and then immediately making typos in my own messages.', 'Active', 0),
+(39, 'matthewwilson', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '78843 Harmon Row, Kochton, MO 41029', '2005-08-28', 'meghanbishop@yahoo.com', 1, '127.827.7407x81', 'M', 'profPic3.jpg', 'I\'m not weird, I\'m a limited edition. My brain has too many tabs open and they\'re all playing different songs at the same time while buffering.', 'Active', 0),
+(40, 'toddhopkins', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '94211 William Valleys, Kathleenfort, NH 66752', '2007-02-17', 'moralesdaniel@hotmail.com', 1, '+1-089-971-3863', 'F', 'profPic6.jpg', 'I\'m not lazy, I\'m just on energy-saving mode. My spirit animal is a sloth riding a turtle with a \"Go Faster\" bumper sticker while reading a self-help book.', 'Blocked', 0),
+(41, 'herbert35', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '95360 Wright Forges, East Karenland, WI 45002', '1989-06-23', 'danielle36@gmail.com', 1, '001-592-697-970', 'R', 'profPic7.jpg', 'I speak fluent sarcasm and bad decisions. Currently writing my memoir: \"The Art of Selective Listening (When I Feel Like It)\"', 'Blocked', 0),
+(42, 'zacharyeaton', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '99338 Williams Hill, Port Alexisbury, TN 95919', '1985-07-09', 'maria64@gmail.com', 0, '657.411.0943', 'R', 'profPic8.jpg', 'I\'m not short, I\'m concentrated awesome. My hobbies include starting projects with enthusiasm and finishing them with existential dread.', 'Active', 0),
+(43, 'jason31', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '2434 Warren Lock Apt. 786, West Michael, LA 99802', '2001-01-15', 'wattsevelyn@yahoo.com', 0, '3393153990', 'M', 'profPic1.jpg', 'I\'m 98% caffeine and 2% questionable decisions. My spirit animal is a honey badger who\'s had too much coffee and is now questioning all life choices.', 'Active', 1),
+(44, 'donaldarias', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '93793 Amanda Locks, Ortizhaven, AK 57544', '2006-05-02', 'ashleydaniel@hotmail.com', 0, '+1-389-272-9299', 'F', 'profPic7.jpg', 'I\'m not arguing, I\'m just explaining why I\'m right in a louder voice. My hobbies include misplacing important items and finding them immediately after replacing them.', 'Blocked', 0),
+(45, 'jennifer60', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '79216 Russell Summit Apt. 775, Linchester, OH 88895', '2000-07-22', 'richardsongloria@hotmail.com', 0, '(675)684-7044x5', 'M', 'profPic1.jpg', 'I\'m not weird, I\'m a limited edition. My brain is like an internet browser: 20 tabs open, 3 are frozen, and I have no idea where the music is coming from.', 'Blocked', 0),
+(46, 'brandyrichard', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '08546 Cohen Plain Apt. 027, Beckshire, NC 75899', '2000-01-08', 'contreraslisa@hotmail.com', 1, '382.734.3641x00', 'M', 'profPic1.jpg', 'I\'m not lazy, I\'m just in energy-saving mode. My spirit animal is a panda who\'s given up on bamboo and is now mainlining espresso.', 'Active', 0),
+(47, 'xwhite', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '05259 Christopher Heights Suite 197, Marcburgh, MA 98772', '1994-11-29', 'gainesryan@yahoo.com', 1, '045.079.7332x92', 'M', 'profPic3.jpg', 'I speak fluent sarcasm and bad decisions. Currently writing my autobiography: \"I Can\'t Believe It\'s Not Better: The Director\'s Cut\"', 'Blocked', 0),
+(48, 'carlsonsherri', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '509 Kristine Mission, Wilsonland, MI 40445', '1990-04-20', 'djones@gmail.com', 1, '962.076.7835x73', 'M', 'profPic1.jpg', 'I\'m not short, I\'m concentrated awesome. My hobbies include correcting people who use \"literally\" figuratively and pretending to understand blockchain.', 'Active', 0),
+(49, 'dianecasey', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '3806 Berry Trafficway, New Monicashire, WI 90514', '1998-02-02', 'dgonzalez@vang.biz', 1, '+1-697-839-5454', 'F', 'profPic5.jpg', 'I\'m 99% caffeine and 1% questionable life choices. My spirit animal is a raccoon who\'s just stolen your leftovers and is judging your Netflix queue.', 'Blocked', 0),
+(50, 'baileytiffany', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '811 Dunn Village, North Jessicaside, NY 44776', '1994-12-10', 'kevin05@yahoo.com', 0, '001-049-881-906', 'M', 'profPic4.jpg', 'I\'m not arguing, I\'m just explaining why I\'m right in a louder voice while waving my hands dramatically. Also, I can recite the entire script of The Princess Bride backwards.', 'Active', 0),
+(51, 'andrew13', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '86344 Sara Fort, Phillipsfurt, MS 83572', '1987-10-17', 'stevenjackson@sanders-trujillo.info', 1, '667-777-7507x60', 'M', 'profPic8.jpg', 'I\'m not weird, I\'m a limited edition. My brain has too many tabs open and they\'re all playing different songs at the same time while buffering.', 'Blocked', 0),
+(52, 'troymiller', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '0499 Brittney Rapid, Port Deborah, KY 85990', '2000-03-11', 'edward05@hansen-taylor.com', 1, '001-139-945-788', 'F', 'profPic4.jpg', 'I\'m not lazy, I\'m just on energy-saving mode. My spirit animal is a sloth riding a turtle with a \"Go Faster\" bumper sticker while reading a self-help book.', 'Active', 1),
+(53, 'huberanita', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '3117 Julia Land, Patrickstad, CO 19181', '1999-06-15', 'rodney78@franklin.info', 0, '+1-350-380-0853', 'M', 'profPic2.jpg', 'I speak fluent sarcasm and bad decisions. Currently writing my autobiography: \"Oops: A Series of Unfortunate Events\"', 'Blocked', 0),
+(54, 'duane14', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '6193 Dennis Junctions, Jamesland, MA 15603', '1989-01-14', 'nathanjames@hotmail.com', 0, '6909842246', 'M', 'profPic8.jpg', 'I\'m not short, I\'m concentrated awesome. My hobbies include starting books I\'ll never finish and finishing snacks I probably shouldn\'t have started.', 'Active', 0),
+(55, 'wayne', '$2y$10$bRT7HgBLMQLkOBkTvSApee3CDGcqV/KV4f1rJIoby59YzZu7bVkPC', NULL, NULL, 'waynegyw-wm24@student.tarc.edu.my', 0, NULL, 'R', NULL, NULL, 'Active', 0);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `vouchers`
+-- 表的结构 `vouchers`
 --
 
+DROP TABLE IF EXISTS `vouchers`;
 CREATE TABLE `vouchers` (
   `voucherCode` varchar(15) NOT NULL,
   `amount` int(3) NOT NULL,
@@ -1077,37 +1302,37 @@ CREATE TABLE `vouchers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `vouchers`
+-- 转存表中的数据 `vouchers`
 --
 
 INSERT INTO `vouchers` (`voucherCode`, `amount`, `issuedBy`, `allowedUsage`, `totalUsage`) VALUES
 ('TEST123', 30, 'A003', 10, 0);
 
 --
--- Indexes for dumped tables
+-- 转储表的索引
 --
 
 --
--- Indexes for table `admin`
+-- 表的索引 `admin`
 --
 ALTER TABLE `admin`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `blockeduser`
+-- 表的索引 `blockeduser`
 --
 ALTER TABLE `blockeduser`
   ADD PRIMARY KEY (`blockedUserID`);
 
 --
--- Indexes for table `cartitem`
+-- 表的索引 `cartitem`
 --
 ALTER TABLE `cartitem`
   ADD PRIMARY KEY (`userID`,`productID`,`sizeID`),
   ADD KEY `productID` (`productID`,`sizeID`);
 
 --
--- Indexes for table `messages`
+-- 表的索引 `messages`
 --
 ALTER TABLE `messages`
   ADD PRIMARY KEY (`messageID`),
@@ -1115,14 +1340,14 @@ ALTER TABLE `messages`
   ADD KEY `senderID` (`senderID`);
 
 --
--- Indexes for table `orders`
+-- 表的索引 `orders`
 --
 ALTER TABLE `orders`
   ADD PRIMARY KEY (`orderId`),
   ADD KEY `userId` (`userId`);
 
 --
--- Indexes for table `order_items`
+-- 表的索引 `order_items`
 --
 ALTER TABLE `order_items`
   ADD PRIMARY KEY (`orderId`,`productId`,`gripSize`),
@@ -1130,55 +1355,55 @@ ALTER TABLE `order_items`
   ADD KEY `order_items_ibfk_2` (`productId`,`gripSize`);
 
 --
--- Indexes for table `product`
+-- 表的索引 `product`
 --
 ALTER TABLE `product`
   ADD PRIMARY KEY (`productID`),
   ADD KEY `seriesID` (`seriesID`);
 
 --
--- Indexes for table `productstock`
+-- 表的索引 `productstock`
 --
 ALTER TABLE `productstock`
   ADD PRIMARY KEY (`productID`,`sizeID`),
   ADD UNIQUE KEY `qr_token` (`qr_token`);
 
 --
--- Indexes for table `product_images`
+-- 表的索引 `product_images`
 --
 ALTER TABLE `product_images`
   ADD PRIMARY KEY (`id`),
   ADD KEY `productID` (`productID`);
 
 --
--- Indexes for table `restock_history`
+-- 表的索引 `restock_history`
 --
 ALTER TABLE `restock_history`
   ADD PRIMARY KEY (`restockID`),
   ADD KEY `productID` (`productID`,`sizeID`);
 
 --
--- Indexes for table `savedaddress`
+-- 表的索引 `savedaddress`
 --
 ALTER TABLE `savedaddress`
   ADD PRIMARY KEY (`addressIndex`),
   ADD KEY `userID` (`userID`);
 
 --
--- Indexes for table `series`
+-- 表的索引 `series`
 --
 ALTER TABLE `series`
   ADD PRIMARY KEY (`seriesID`);
 
 --
--- Indexes for table `token`
+-- 表的索引 `token`
 --
 ALTER TABLE `token`
   ADD PRIMARY KEY (`id`),
   ADD KEY `userID-fk` (`userID`);
 
 --
--- Indexes for table `user`
+-- 表的索引 `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`userID`),
@@ -1186,128 +1411,128 @@ ALTER TABLE `user`
   ADD KEY `username` (`username`);
 
 --
--- Indexes for table `vouchers`
+-- 表的索引 `vouchers`
 --
 ALTER TABLE `vouchers`
   ADD PRIMARY KEY (`voucherCode`),
   ADD KEY `issuedBy` (`issuedBy`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- 在导出的表使用AUTO_INCREMENT
 --
 
 --
--- AUTO_INCREMENT for table `messages`
+-- 使用表AUTO_INCREMENT `messages`
 --
 ALTER TABLE `messages`
   MODIFY `messageID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
 
 --
--- AUTO_INCREMENT for table `orders`
+-- 使用表AUTO_INCREMENT `orders`
 --
 ALTER TABLE `orders`
   MODIFY `orderId` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12355;
 
 --
--- AUTO_INCREMENT for table `product_images`
+-- 使用表AUTO_INCREMENT `product_images`
 --
 ALTER TABLE `product_images`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=212;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=215;
 
 --
--- AUTO_INCREMENT for table `restock_history`
+-- 使用表AUTO_INCREMENT `restock_history`
 --
 ALTER TABLE `restock_history`
-  MODIFY `restockID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `restockID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=303;
 
 --
--- AUTO_INCREMENT for table `savedaddress`
+-- 使用表AUTO_INCREMENT `savedaddress`
 --
 ALTER TABLE `savedaddress`
   MODIFY `addressIndex` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- AUTO_INCREMENT for table `token`
+-- 使用表AUTO_INCREMENT `token`
 --
 ALTER TABLE `token`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
--- AUTO_INCREMENT for table `user`
+-- 使用表AUTO_INCREMENT `user`
 --
 ALTER TABLE `user`
   MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
--- Constraints for dumped tables
+-- 限制导出的表
 --
 
 --
--- Constraints for table `cartitem`
+-- 限制表 `cartitem`
 --
 ALTER TABLE `cartitem`
   ADD CONSTRAINT `cartitem_ibfk_1` FOREIGN KEY (`productID`,`sizeID`) REFERENCES `productstock` (`productID`, `sizeID`),
   ADD CONSTRAINT `userid_fk` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`) ON DELETE CASCADE;
 
 --
--- Constraints for table `messages`
+-- 限制表 `messages`
 --
 ALTER TABLE `messages`
   ADD CONSTRAINT `messages_ibfk_1` FOREIGN KEY (`adminID`) REFERENCES `admin` (`id`),
   ADD CONSTRAINT `messages_ibfk_2` FOREIGN KEY (`senderID`) REFERENCES `user` (`userID`);
 
 --
--- Constraints for table `orders`
+-- 限制表 `orders`
 --
 ALTER TABLE `orders`
   ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `user` (`userID`) ON DELETE CASCADE;
 
 --
--- Constraints for table `order_items`
+-- 限制表 `order_items`
 --
 ALTER TABLE `order_items`
   ADD CONSTRAINT `order_items_ibfk_1` FOREIGN KEY (`orderId`) REFERENCES `orders` (`orderId`),
   ADD CONSTRAINT `order_items_ibfk_2` FOREIGN KEY (`productId`,`gripSize`) REFERENCES `productstock` (`productID`, `sizeID`);
 
 --
--- Constraints for table `product`
+-- 限制表 `product`
 --
 ALTER TABLE `product`
   ADD CONSTRAINT `product_ibfk_1` FOREIGN KEY (`seriesID`) REFERENCES `series` (`seriesID`);
 
 --
--- Constraints for table `productstock`
+-- 限制表 `productstock`
 --
 ALTER TABLE `productstock`
   ADD CONSTRAINT `productStock_ibfk_1` FOREIGN KEY (`productID`) REFERENCES `product` (`productID`);
 
 --
--- Constraints for table `product_images`
+-- 限制表 `product_images`
 --
 ALTER TABLE `product_images`
   ADD CONSTRAINT `product_images_ibfk_1` FOREIGN KEY (`productID`) REFERENCES `product` (`productID`) ON DELETE CASCADE;
 
 --
--- Constraints for table `restock_history`
+-- 限制表 `restock_history`
 --
 ALTER TABLE `restock_history`
   ADD CONSTRAINT `restock_history_ibfk_1` FOREIGN KEY (`productID`) REFERENCES `product` (`productID`),
   ADD CONSTRAINT `restock_history_ibfk_2` FOREIGN KEY (`productID`,`sizeID`) REFERENCES `productstock` (`productID`, `sizeID`);
 
 --
--- Constraints for table `savedaddress`
+-- 限制表 `savedaddress`
 --
 ALTER TABLE `savedaddress`
   ADD CONSTRAINT `savedaddress_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`) ON DELETE CASCADE;
 
 --
--- Constraints for table `token`
+-- 限制表 `token`
 --
 ALTER TABLE `token`
   ADD CONSTRAINT `userID-fk` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`) ON DELETE CASCADE;
 
 --
--- Constraints for table `vouchers`
+-- 限制表 `vouchers`
 --
 ALTER TABLE `vouchers`
   ADD CONSTRAINT `vouchers_ibfk_1` FOREIGN KEY (`issuedBy`) REFERENCES `admin` (`id`);
