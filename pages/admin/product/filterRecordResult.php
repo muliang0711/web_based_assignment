@@ -1,6 +1,8 @@
 <?php
 require_once "../../../db/productStock.php";
-session_start();
+require_once "../../../_base.php";      
+include '../../../admin_login_guard.php';
+
 
 $restockRecordsList = $_SESSION['filterRecordResult'] ?? [];
 

@@ -1,4 +1,8 @@
-<?include_once __DIR__ . "/../../../admin_login_guard.php";?>
+<?
+
+require_once "../../../_base.php";      
+include '../../../admin_login_guard.php';?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
