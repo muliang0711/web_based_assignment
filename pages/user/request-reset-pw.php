@@ -1,6 +1,12 @@
 <?php
 include '../../_base.php';
 
+// This page is meant for those who have forgotten their password.
+// If they're already logged in, redirect them to home.
+if (is_logged_in('user')) {
+    redirect('/');
+}
+
 // ----------------------------------------------------------------------------
 
 if (is_post()) {
