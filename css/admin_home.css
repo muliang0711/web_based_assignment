@@ -55,8 +55,8 @@ padding:20px;
 .pie{
     /* transform: scale(0.8); 
     transform-origin:center;  */
-    width: 600px;  /* 宽度600px */
-    height: 600px; /* 高度600px */
+    width: 500px;  /* 宽度600px */
+    height: 500px; /* 高度600px */
     margin: auto;  /* 居中显示 */
 
 }
