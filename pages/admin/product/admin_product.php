@@ -79,7 +79,7 @@ unset($_SESSION['Delete_ErrorMsg']);
     <!-- Filter Section -->
     <div class="filter-section">
       <form class="filter-form" method="POST" action="/controller/productManager.php">
-        <input type="hidden" name="action" value="filterRecord">
+        <input type="hidden" name="action" value="filter">
 
         <label for="productID">Product ID</label>
         <select name="productID" id="productID">
@@ -297,7 +297,6 @@ unset($_SESSION['Delete_ErrorMsg']);
 include "../../../admin_foot.php"
 ?>
 
-<script src="/js/product.js"></script>
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     console.log("product.js loaded!");
