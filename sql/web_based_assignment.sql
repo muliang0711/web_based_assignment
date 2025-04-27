@@ -1424,7 +1424,7 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`userID`, `username`, `passwordHash`, `address`, `birthdate`, `email`, `emailVerified`, `phoneNo`, `gender`, `profilePic`, `bio`, `memberStatus`, `isDeleted`) VALUES
 (1, 'cookie', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', NULL, NULL, 'cookie@mail.com', 0, '012-3456789', 'R', NULL, 'I love cookies, as you may have already guessed', 'Active', 1),
-(2, 'icecream', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', NULL, NULL, 'icecream@mail.com', 0, '012-9876543', 'R', NULL, 'I love ice cream!', 'Active', 0),
+(2, 'icecream', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', NULL, NULL, 'limlh-wm24@student.tarc.edu.my', 0, '012-9876543', 'R', NULL, 'I love ice cream!', 'Active', 0),
 (4, 'cookie2', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', NULL, NULL, 'temp@gmail.com', 0, NULL, 'R', NULL, NULL, 'Active', 0),
 (5, 'cookie', '$2b$12$GfMuQQ3OHGAPguL0crPMCOdSzr59oeSSPDmBz2OyeWNs2jTaT.sWO', NULL, NULL, 'cookie@mail.com', 0, NULL, 'R', NULL, NULL, 'Active', 1),
 (6, 'cookie', '$2y$10$YTSZBJIgWnE0RfwMBfNxYupOa9c6XMojxBSU3F5CChmyeqztLaLO6', NULL, NULL, 'jasonlhtown@gmail.com', 1, NULL, 'R', '680e2946ba3e3.jpg', '', 'Active', 0),
