@@ -575,11 +575,23 @@ footer a:hover {
     margin-bottom: 10px;
 }
 
+.account .profile-pic-circle {
+    position: relative;
+    width: 45px;
+    height: 45px;
+}
 .account .profile-pic {
     width: 45px;
     height: 45px;
     border-radius: 50%;
 }
+.verified-user-badge {
+    position: absolute;
+    bottom: -4%;
+    right: -4%;
+    width: 36%;
+}
+
 .account .username {
     font-size: 18px;
     font-weight: bold;

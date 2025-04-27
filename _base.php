@@ -654,7 +654,7 @@ function verify_remember_me_cookie() {
 
     // Get remember-me token from DB with selector from cookie
     global $_db;
-    $stmt = $_db->prepare("SELECT * FROM token WHERE `type` = 'remember-user' AND selector = :selector AND expire >= NOW()");
+    $stmt = $_db->prepare("SELECT * FROM token WHERE `type` = 'remember-user' AND id = :selector AND expire >= NOW()");
     $stmt->execute(['selector' => $selector]);
     $token = $stmt->fetch();
     // echo '$token: ';
@@ -673,7 +673,7 @@ function verify_remember_me_cookie() {
         $new_expires = date('Y-m-d H:i:s', time() + 60 * 60 * 24 * 30);
 
         // Store new one
-        $stmt = $_db->prepare("INSERT INTO token (userID, selector, hashedValidator, expire, `type`)
+        $stmt = $_db->prepare("INSERT INTO token (userID, id, hashedValidator, expire, `type`)
                                         VALUES (:userID, :selector, :hashedValidator, :expire, 'remember-user')");
         $stmt->execute([
             'userID' => $token->userID,
@@ -683,7 +683,7 @@ function verify_remember_me_cookie() {
         ]);
 
         // Delete old one
-        $stmt = $_db->prepare("DELETE FROM token WHERE type = 'remember-user' AND selector = :selector");
+        $stmt = $_db->prepare("DELETE FROM token WHERE type = 'remember-user' AND id = :selector");
         $stmt->execute(['selector' => $selector]);
 
         // var_dump($new_selector);

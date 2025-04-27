@@ -49,7 +49,7 @@ if (is_post()) {
     $stm->execute(['userID' => $tokenObj->userID]);
     $user = $stm->fetch();
 
-    var_dump($user);
+    // var_dump($user);
 
     // Validate: new password
     if ($newPassword == '') {
