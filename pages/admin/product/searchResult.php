@@ -33,12 +33,61 @@ $totalPages = ceil($totalProducts / $productsPerPage);
 
 // var_dump($searchResult);
     // handle error 
+?>
+
+<?php
 if (empty($searchResult)) {
-    echo "<p>No search results found for: <strong>" . htmlspecialchars($searchText) . "</strong></p>";
+?>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>No Results Found</title>
+        <link rel="stylesheet" href="../../../css/main.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <style>
+            .no-results-container {
+                text-align: center;
+                padding: 50px 20px;
+            }
+            .no-results-container h1 {
+                font-size: 2rem;
+                margin-bottom: 20px;
+            }
+            .no-results-container p {
+                font-size: 1.2rem;
+                margin-bottom: 30px;
+            }
+            .back-btn {
+                background-color: #3a7ff5;
+                color: white;
+                padding: 10px 20px;
+                border: none;
+                border-radius: 8px;
+                font-size: 1rem;
+                cursor: pointer;
+                transition: background-color 0.3s;
+            }
+            .back-btn:hover {
+                background-color: #2d6cd0;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="no-results-container">
+            <h1><i class="fas fa-search"></i> No Results Found</h1>
+            <p>Sorry, we couldn't find anything for "<strong><?php echo htmlspecialchars($searchText); ?></strong>".</p>
+            <button type="button" class="back-btn" onclick="window.location.href='admin_product.php'">← Back to Product Menu</button>
+        </div>
+    </body>
+    </html>
+
+<?php
     exit();
 }
-
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
