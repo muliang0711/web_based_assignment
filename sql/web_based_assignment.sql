@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 26, 2025 at 11:10 PM
+-- Generation Time: Apr 27, 2025 at 03:02 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -286,10 +286,14 @@ CREATE TABLE `messages` (
 --
 
 INSERT INTO `messages` (`messageID`, `senderID`, `adminID`, `content`, `sent_at`, `userSent`) VALUES
-(1, 6, 'A001', 'hiii', '2025-04-26 21:04:35', 1),
-(2, 6, 'A001', '😂 How are you', '2025-04-26 21:05:00', 1),
-(3, 6, 'A001', 'its working babehhhh! 🤔', '2025-04-26 21:06:14', 1),
-(4, 6, 'A001', 'hiiii', '2025-04-26 21:08:10', 1);
+(55, 6, 'A001', 'i wanna know how', '2025-04-27 00:58:28', 1),
+(56, 6, 'A001', 'wdym', '2025-04-27 00:58:40', 0),
+(57, 55, 'A001', 'just wanted to ask something', '2025-04-27 01:00:06', 1),
+(58, 55, 'A001', 'alright no problem! 🥰', '2025-04-27 01:00:40', 0),
+(59, 55, 'A001', 'gotcha! 😁', '2025-04-27 01:00:56', 1),
+(60, 6, 'A001', 'nothing much', '2025-04-27 01:01:38', 1),
+(61, 6, 'A001', 'ok i see whatchu mean', '2025-04-27 01:01:51', 0),
+(62, 6, 'A001', 'your price is too high 😢', '2025-04-27 01:02:04', 1);
 
 -- --------------------------------------------------------
 
@@ -1069,7 +1073,8 @@ INSERT INTO `user` (`userID`, `username`, `passwordHash`, `address`, `birthdate`
 (51, 'andrew13', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '86344 Sara Fort, Phillipsfurt, MS 83572', '1987-10-17', 'stevenjackson@sanders-trujillo.info', 1, '667-777-7507x60', 'M', 'profPic8.jpg', 'I\'m not weird, I\'m a limited edition. My brain has too many tabs open and they\'re all playing different songs at the same time while buffering.', 'Blocked', 0),
 (52, 'troymiller', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '0499 Brittney Rapid, Port Deborah, KY 85990', '2000-03-11', 'edward05@hansen-taylor.com', 1, '001-139-945-788', 'F', 'profPic4.jpg', 'I\'m not lazy, I\'m just on energy-saving mode. My spirit animal is a sloth riding a turtle with a \"Go Faster\" bumper sticker while reading a self-help book.', 'Active', 1),
 (53, 'huberanita', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '3117 Julia Land, Patrickstad, CO 19181', '1999-06-15', 'rodney78@franklin.info', 0, '+1-350-380-0853', 'M', 'profPic2.jpg', 'I speak fluent sarcasm and bad decisions. Currently writing my autobiography: \"Oops: A Series of Unfortunate Events\"', 'Blocked', 0),
-(54, 'duane14', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '6193 Dennis Junctions, Jamesland, MA 15603', '1989-01-14', 'nathanjames@hotmail.com', 0, '6909842246', 'M', 'profPic8.jpg', 'I\'m not short, I\'m concentrated awesome. My hobbies include starting books I\'ll never finish and finishing snacks I probably shouldn\'t have started.', 'Active', 0);
+(54, 'duane14', '$2b$12$qCB5Ixo.GRiJ3YvSQWxbiuBUXTI.wIc.E/Z1NAGOuvU2AC4ul.mHq', '6193 Dennis Junctions, Jamesland, MA 15603', '1989-01-14', 'nathanjames@hotmail.com', 0, '6909842246', 'M', 'profPic8.jpg', 'I\'m not short, I\'m concentrated awesome. My hobbies include starting books I\'ll never finish and finishing snacks I probably shouldn\'t have started.', 'Active', 0),
+(55, 'wayne', '$2y$10$bRT7HgBLMQLkOBkTvSApee3CDGcqV/KV4f1rJIoby59YzZu7bVkPC', NULL, NULL, 'waynegyw-wm24@student.tarc.edu.my', 0, NULL, 'R', NULL, NULL, 'Active', 0);
 
 -- --------------------------------------------------------
 
@@ -1210,7 +1215,7 @@ ALTER TABLE `vouchers`
 -- AUTO_INCREMENT for table `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `messageID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `messageID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
 
 --
 -- AUTO_INCREMENT for table `orders`
@@ -1246,7 +1251,7 @@ ALTER TABLE `token`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
+  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
 -- Constraints for dumped tables

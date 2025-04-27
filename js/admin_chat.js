@@ -1,12 +1,13 @@
 $(()=>{
-    const chatContainer =  $(".chatContainer");
-    const chatBody = $(".chatBody");
-    const supportButton = $(".supportButton");
     const emojiButton = $("#emojiBtn");
     const emojiDiv = $("#emojiPicker");
     const send = $(".send");
     const textArea = $("#textarealol");
-    var lastMsgID;
+    const chat = $(".chat");
+    const chatBody = $(".chatBody");
+    var userID;
+    var lastMsgID=0;
+    var intervalID;
 
 
     function getMaxMsgID(){
@@ -15,7 +16,8 @@ $(()=>{
             url: "/api/chatHandler.php",
             type: "POST",
             data: {
-                task: "getMaxUser"
+                task: "getMaxAdmin",
+                userid: userID
             },
             success: function(res){
                 if(res!="error"){
@@ -24,42 +26,54 @@ $(()=>{
             }
         });
     }
-    getMaxMsgID();
     
-    $(".supportButton").on("click",function(e){
-        if(chatContainer.hasClass("show")){
-            chatContainer.animate({
-                opacity: 0,
-                marginBottom: "100px"
-            }, 500, function(){
-                chatContainer.removeClass("show");
-                chatContainer.css("margin-bottom" ,"0");
-                chatContainer.css("opacity" ,"1");
-                document.body.style.overflow = ''; //renable scrolling of background
-            });
-            
-            
-        }
-        else{
-            chatContainer.addClass("show");
-            chatBody.scrollTop(chatBody[0].scrollHeight);
-            document.body.style.overflow = 'hidden'; //disable background scrolling
-        }
-        
+
+    $("[data-id]").on("click", function(e){
+        userID = this.dataset.id;
+        clearInterval(intervalID);
+        //remove all other selected then add to this chat
+        $(".chat").removeClass("selected");
+        $(this).addClass("selected");
+
+        //getting messages
+        $.ajax({
+            url:"/api/chatHandler.php",
+            type:"POST",
+            data: {
+                id: userID,
+                task: "loadMessage"
+            },
+            success: function(res){
+                    if(res!="error"){
+                        chatBody.html(res);
+                        chatBody.scrollTop(chatBody[0].scrollHeight);
+                        getMaxMsgID();
+                        intervalID = setInterval(getNewMessage, 300);
+                    }
+            }
+        });
     })
 
+
     send.on('click',function(e){
+        if(userID == null){
+            return;
+        }
         let msg = textArea.val();
         if(msg.length>0){
             $.ajax({
                 url: "/api/chatHandler.php",
                 type: "POST",
                 data: {
-                    message: msg
+                    userid: userID,
+                    message: msg,
+                    task: "adminSend"
+                    
                 },
                 success: function(res){
                     if(res!="error"){
                         res=JSON.parse(res);
+                        console.log(res);
                         lastMsgID = res.msgID;
                         chatBody.append(res.response);
                         chatBody.scrollTop(chatBody[0].scrollHeight);
@@ -70,19 +84,22 @@ $(()=>{
         }
     })
 
+
     function getNewMessage(){
         $.ajax({
             url: "/api/chatHandler.php",
             type: "POST",
             data: {
+                userid: userID,
                 lastID: lastMsgID,
-                task: "userGetMessage"
+                task: "adminGetMessage"
             },
             success: function(res){
                 if(res!="error"){
                     res=JSON.parse(res);
                     lastMsgID = res.msgID;
                     chatBody.append(res.response);
+                    console.log(res);
                     chatBody.scrollTop(chatBody[0].scrollHeight);
                 }
             }
@@ -100,5 +117,4 @@ $(()=>{
         emojiDiv.toggleClass("show");
     })
 
-    setInterval(getNewMessage, 300);
 })
