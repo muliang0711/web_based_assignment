@@ -47,6 +47,8 @@ if(is_post()){
     $stm = $_db->prepare("INSERT into savedaddress(userID,address,phoneNo,name,defaultAdd) VALUES(?,?,?,?,?)")
     ->execute([$userID, $address, $number, $name, $default]);
     temp('info', "Address added!");
+    header("Location: " . $_SERVER['REQUEST_URI']); //prevcnt form resubmission
+    exit;
 }
 
 //get list of saved addrsses
@@ -361,6 +363,7 @@ include 'profile_dynamic_navbar.php';
 
     $(".delete[data-card]").on("click", function(e){
         let addressIndex = this.dataset.card;
+        let button = $(this);
         $.ajax({
             url: "deleteaddress.php",
             type: "POST",
@@ -369,7 +372,8 @@ include 'profile_dynamic_navbar.php';
             },
             success: function(res){
                 if(res=="success"){
-                    $(".delete[data-card]").closest(".card").remove();
+                    console.log($(this).closest(".card"));
+                    button.closest(".card").remove();
                     showError("Address removed!");
                 }
             }
