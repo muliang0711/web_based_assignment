@@ -9,6 +9,38 @@ $(()=>{
     var lastMsgID=0;
     var intervalID;
 
+    function sendMSG(){
+        if(userID == null){
+            return;
+        }
+        let msg = textArea.val();
+        if(msg.length>0){
+            $.ajax({
+                url: "/api/chatHandler.php",
+                type: "POST",
+                data: {
+                    userid: userID,
+                    message: msg,
+                    task: "adminSend"
+                    
+                },
+                success: function(res){
+                    if(res!="error"){
+                        res=JSON.parse(res);
+                        console.log(res);
+                        lastMsgID = res.msgID;
+                        chatBody.append(res.response);
+                        chatBody.scrollTop(chatBody[0].scrollHeight);
+                        textArea.val("");
+                        
+                        var tempDiv = $("<div>").html(res.response);
+                        var onlyText = tempDiv.text();
+                        $(".selected").find("div span:last").text(onlyText);
+                    }
+                }
+            });
+        }
+    }
 
     function getMaxMsgID(){
         lastMsgID = 0;
@@ -27,6 +59,13 @@ $(()=>{
         });
     }
     
+
+    textArea.on('keydown', function(e) {
+        if (e.key === "Enter" && !e.shiftKey) { // Enter without Shift
+            e.preventDefault(); // prevent adding a new line
+            sendMSG();          
+        }
+    });
 
     $("[data-id]").on("click", function(e){
         userID = this.dataset.id;
@@ -55,34 +94,7 @@ $(()=>{
     })
 
 
-    send.on('click',function(e){
-        if(userID == null){
-            return;
-        }
-        let msg = textArea.val();
-        if(msg.length>0){
-            $.ajax({
-                url: "/api/chatHandler.php",
-                type: "POST",
-                data: {
-                    userid: userID,
-                    message: msg,
-                    task: "adminSend"
-                    
-                },
-                success: function(res){
-                    if(res!="error"){
-                        res=JSON.parse(res);
-                        console.log(res);
-                        lastMsgID = res.msgID;
-                        chatBody.append(res.response);
-                        chatBody.scrollTop(chatBody[0].scrollHeight);
-                        textArea.val("");
-                    }
-                }
-            });
-        }
-    })
+    send.on('click',sendMSG);
 
 
     function getNewMessage(){
@@ -99,8 +111,12 @@ $(()=>{
                     res=JSON.parse(res);
                     lastMsgID = res.msgID;
                     chatBody.append(res.response);
-                    console.log(res);
                     chatBody.scrollTop(chatBody[0].scrollHeight);
+
+                    //updating the span at the sidebar as well
+                    var tempDiv = $("<div>").html(res.response);
+                    var onlyText = tempDiv.text();
+                    $(".selected").find("div span:last").text(onlyText);
                 }
             }
         });
