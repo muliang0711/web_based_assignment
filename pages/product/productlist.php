@@ -115,13 +115,20 @@ include '../../_head.php';
       // Reminder: the `limit` parameter of the SimplePager constructor must be a string, e.g. "10". Can't pass an int due to the use of ctype_digit(). This behavior seems to be deliberate (look up the constructor definition), which makes it weirder. 
       // I see.
       $p = new SimplePager(
-        "SELECT * FROM product 
-    JOIN product_images 
-    USING (productID) 
-    WHERE (SELECT image_path FROM product_images GROUP BY productID)
-    AND image_type = 'product' 
-    AND price BETWEEN $min_price AND $max_price 
-    ORDER BY price $order",
+    //     "SELECT * FROM product 
+    // JOIN product_images 
+    // USING (productID) 
+    // WHERE (SELECT image_path FROM product_images GROUP BY productID)
+    // AND image_type = 'product' 
+    // AND price BETWEEN $min_price AND $max_price 
+    // ORDER BY price $order",
+        "SELECT p.*,
+          (SELECT pi.image_path
+           FROM product_images pi
+           WHERE pi.productID = p.productID
+           LIMIT 1
+          ) AS image_path
+        FROM product p",
         [],
         "8", // Reminder: the `limit` parameter of the SimplePager constructor must be a string, e.g. "10". Can't pass an int due to the use of ctype_digit(). This behavior seems to be deliberate (look up the constructor definition), which makes it weirder. 
         $page
