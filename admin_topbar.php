@@ -10,7 +10,7 @@
 <body>
 
 <div class="topbar">
-  <h3>Dashboard</h3>
+  <h3>Admin</h3>
   <div class="topbar-right">
     <!-- User Dropdown -->
     <div class="dropdown">
