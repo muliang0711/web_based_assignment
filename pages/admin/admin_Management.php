@@ -52,16 +52,31 @@ $resultA = $stmA->fetch();
     <div class="searchBar" style="display:flex;">
         <!-- <div> -->
             <div>
-<form class="search-box" method="get">
+<form class="search-box" method="get" action="admin_Management.php">>
 
-    <?= html_search('name', 'Search admin name...', 'padding: 6px; border-radius: 4px; border: 1px solid #ccc; width: 300px;') ?>
-
-
+    <!-- ?= html_search('name', 'Search admin name...', 'padding: 6px; border-radius: 4px; border: 1px solid #ccc; width: 300px;') ?> -->
       <!-- <input type="text" name="searchText" placeholder="Search..." required> -->
+      <input type="hidden" name="action" value="search">
+    <input 
+    $value ="<?= htmlentities($_GET[$name] ?? '', ENT_QUOTES, 'UTF-8');?>"
+        type="text" 
+        name="name" 
+        placeholder="Search admin name..." 
+        style="padding: 6px; border-radius: 4px; border: 1px solid #ccc; width: 300px;"
+        required >
 
-      
-      <button  type="submit">Search</button>
 
+      <button onclick="playSoundx()" type="submit">Search</button>
+    
+    <audio id="clickSoundx" src="../../../sound/success.mp3"></audio>
+
+  <script>
+  function playSoundx() {
+      const audio = document.getElementById("clickSoundx");
+      audio.currentTime = 0; // 每次点击从头播放
+      audio.play();
+}
+</script>
     </form>
 
 </div>  

@@ -6,6 +6,5 @@
     </footer>
 </body>
 <script src="/js/app.js"></script>
-<script src="/js/chat.js"></script>
 <?php link_script($scriptArray ?? ''); ?>
 </html>

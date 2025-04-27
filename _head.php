@@ -284,5 +284,6 @@ if (is_post()) {
                     </div>
                 </div>
             ';
+            echo '<script src="/js/chat.js"></script>';
         }
         ?>
