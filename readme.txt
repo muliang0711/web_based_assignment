@@ -4,8 +4,10 @@ Main admin
 Staff admin
 	Admin ID:A002
 	Password :itpass
-User: cookie
-	password:1234Abcd!
+User: 
+	Username: - cookie
+			  - icecream
+	password: 1234Abcd!
 
 Home page
 http://localhost:8000/
@@ -30,6 +32,7 @@ https://wbproject.local/pages/admin/product/admin_product.php
 
 restock history page 
 https://wbproject.local/pages/admin/product/restock_history.php
+
 Admin Login
 	http://localhost:8000/pages/admin/admin_login.php
 Admin Home
@@ -52,6 +55,16 @@ View Customer Detail
 	http://localhost:8000/pages/admin/customer_detail.php?userID=1
 Admin Change Password
 	http://localhost:8000/pages/admin/admin_change_password.php
+
+Customer Login
+	http://localhost:8000/pages/user/user-login.php
+Customer Sign Up
+	http://localhost:8000/pages/user/user-signup.php
+
+Customer Profile Settings
+	http://localhost:8000/pages/user/settings/profile.php
+Customer Account Settings
+	http://localhost:8000/pages/user/settings/account.php
 	
 
 	
