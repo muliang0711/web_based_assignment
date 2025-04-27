@@ -93,7 +93,17 @@ $currentPage = req('page', 1);
       require_once __DIR__ . '\SimplePager.php';
       $page = req('page', 1);
       // Reminder: the `limit` parameter of the SimplePager constructor must be a string, e.g. "10". Can't pass an int due to the use of ctype_digit(). This behavior seems to be deliberate (look up the constructor definition), which makes it weirder. 
-      $p = new SimplePager("SELECT * FROM product JOIN product_images USING (productID) WHERE image_type = 'product' AND productName LIKE '%$search%' AND price BETWEEN $min_price AND $max_price ORDER BY price $order", [], "8", $page);
+      $p = new SimplePager("SELECT *
+        FROM product p
+        JOIN (
+          SELECT pi.* 
+          FROM product_images pi
+            GROUP BY pi.productID
+        ) pi_subquery USING (productID) 
+        WHERE image_type = 'product' 
+        AND productName LIKE '%$search%' 
+        AND price BETWEEN $min_price AND $max_price 
+        ORDER BY price $order", [], "6", $page);
       /*$statement->execute(["%$search%"]);
    $productObjectArray = $statement->fetchAll();*/
       $arr = $p->result;
