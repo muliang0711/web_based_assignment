@@ -2,7 +2,7 @@
 require_once "../../../_base.php";
 include "../main.php";
 require_once "../../../db_connection.php";
-
+include_once __DIR__ . "/../../../admin_login_guard.php";
 $stylesheetArray = ['../../../css/adminProductAnlysis.css'];
 link_stylesheet($stylesheetArray);
 ?>

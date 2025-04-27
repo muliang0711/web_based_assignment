@@ -30,7 +30,7 @@ logout_and_redirect_if_blocked();
 
 if ($_user) {
     $userID = $_user->userID;
-    
+
     $stm = $_db->prepare('SELECT SUM(quantity) AS total FROM cartitem WHERE userID = ?');
     $stm->execute([$userID]);
     $total = $stm->fetch();
@@ -49,7 +49,7 @@ if (is_post()) {
     if ($logout) { // If $logout has a truthy value (e.g. non-empty string, non-null values)
         logout('user');
         header('Location: /');
-    }    
+    }
 }
 ?>
 
@@ -69,7 +69,20 @@ if (is_post()) {
 
 <body>
     <header>
-        <a href="/" class="logo"><img src="/assets/img/logo.jpg" class="top-nav-store-logo" alt="(Store logo)" /></a>
+        <a href="/" class="logo">
+            <div class="top-nav-store-logo">
+                The<span>Shuttle</span>Store
+                <svg fill="#aaa" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                    <g id="SVGRepo_iconCarrier">
+                        <path d="M18.034,1a3.964,3.964,0,0,0-2.975,1.349c-.007-.008-.011-.017-.018-.025A3.984,3.984,0,0,0,12.071,1h-.142a3.984,3.984,0,0,0-2.97,1.324c-.007.008-.011.017-.018.025a3.974,3.974,0,0,0-6.208.3,3.854,3.854,0,0,0-.524,3.52L6.01,17.2a5.993,5.993,0,0,0,11.98,0l3.8-11.031a3.851,3.851,0,0,0-.526-3.514A3.986,3.986,0,0,0,18.034,1ZM10.451,3.657a2.143,2.143,0,0,1,3.1,0,1.868,1.868,0,0,1,.473,1.474L13.1,13.352,12.8,16H11.2l-.3-2.648L9.978,5.131A1.868,1.868,0,0,1,10.451,3.657ZM7.713,16,4.1,5.524a1.87,1.87,0,0,1,.256-1.707,1.976,1.976,0,0,1,3.559.894L9.19,16ZM12,21a4.008,4.008,0,0,1-3.874-3h7.748A4.008,4.008,0,0,1,12,21ZM19.9,5.519,16.287,16H14.81L16.083,4.711a1.976,1.976,0,0,1,3.559-.894A1.869,1.869,0,0,1,19.9,5.519Z"></path>
+                    </g>
+                </svg>
+                <!-- <img src="../../assets/img/shuttlecock.svg" style="height:1em;transform:rotate(45deg);fill:currentColor;" /> -->
+            </div>
+        </a>
+        <!-- <a href="/" class="logo"><img src="/assets/img/logo.jpg" class="top-nav-store-logo" alt="(Store logo)" /></a> -->
         <button class="hamburger" aria-label="Toggle Menu">☰</button>
         <nav>
             <!-- <a href="/pages/template/template.php">(dev only) Template page</a> -->
@@ -85,15 +98,15 @@ if (is_post()) {
                         <img src="/assets/img/icon-cart.png" alt="Cart" title="Cart" />
                         <div class="itemCount"><?php echo $totalItem ?></div>
                     </a>
-                </div> 
+                </div>
 
                 <div class="account dropdown">
                     <div class="dropdown-label with-dropdown-icon">
-                        <img class="account-icon" src="<?= $_user->profilePic ? "/File/user-profile-pics/{$_user->profilePic}" : '/assets/img/profile-default-icon-dark.svg'?>" alt="Account" title="Account" />
+                        <img class="account-icon" src="<?= $_user->profilePic ? "/File/user-profile-pics/{$_user->profilePic}" : '/assets/img/profile-default-icon-dark.svg' ?>" alt="Account" title="Account" />
                     </div>
                     <div class="dropdown-content">
                         <div class="dropdown-header">
-                            <img class="profile-pic" src="<?= $_user->profilePic ? "/File/user-profile-pics/{$_user->profilePic}" : '/assets/img/profile-default-icon-dark.svg'?>" alt="Account" title="Account" />
+                            <img class="profile-pic" src="<?= $_user->profilePic ? "/File/user-profile-pics/{$_user->profilePic}" : '/assets/img/profile-default-icon-dark.svg' ?>" alt="Account" title="Account" />
                             <div class="username"><?= $_user->username ?></div>
                         </div>
                         <div class="dropdown-main">
@@ -105,13 +118,13 @@ if (is_post()) {
                                 <span>
                                     <svg style="vertical-align:text-bottom;transform:scale(1.15);transform-origin:center;" width="20px" height="20px" viewBox="-2 0 26 24" fill="black" stroke="white" stroke-width="1.5" xmlns="http://www.w3.org/2000/svg">
                                         <rect x="2" y="5" width="14" height="17" rx="2" fill="none" />
-                                        <path d="M6 9.5H12" stroke-linecap="round"/>
-                                        <path d="M6 13.5H12" stroke-linecap="round"/>
-                                        <path d="M6 17.5H10" stroke-linecap="round"/>
-                                        <circle cx="16" cy="8" r="8" stroke="black"/>
-                                        <circle cx="16" cy="8" r="6"/>
-                                        <line x1="16" y1="8" x2="16" y2="5" stroke-linecap="round"/>
-                                        <line x1="16" y1="8" x2="18" y2="10" stroke-linecap="round"/>
+                                        <path d="M6 9.5H12" stroke-linecap="round" />
+                                        <path d="M6 13.5H12" stroke-linecap="round" />
+                                        <path d="M6 17.5H10" stroke-linecap="round" />
+                                        <circle cx="16" cy="8" r="8" stroke="black" />
+                                        <circle cx="16" cy="8" r="6" />
+                                        <line x1="16" y1="8" x2="16" y2="5" stroke-linecap="round" />
+                                        <line x1="16" y1="8" x2="18" y2="10" stroke-linecap="round" />
                                     </svg>
                                 </span>
                                 <div>Order history</div>
@@ -123,19 +136,19 @@ if (is_post()) {
                         </div>
                     </div>
                 </div>
-<!--
+                <!--
                 <div class="cart-popup">
                     <div class="content">
                         <span class="close-popup">&times;</span>
                         <h2>Shopping Cart</h2>
                                     -->
-                       <?php 
-                        $userID = $_user->userID;
-                        $statement = $_db->prepare('SELECT * FROM cartitem JOIN product USING (productID) WHERE userID = ?');
-                        $statement->execute([$userID]);
-                        $cartItemArray = $statement->fetchAll();
-                        ?>
-                        <?php /*if ($cartItemArray): ?>
+                <?php
+                $userID = $_user->userID;
+                $statement = $_db->prepare('SELECT * FROM cartitem JOIN product USING (productID) WHERE userID = ?');
+                $statement->execute([$userID]);
+                $cartItemArray = $statement->fetchAll();
+                ?>
+                <?php /*if ($cartItemArray): ?>
                             <?php $status = 0 ?>
 
                             <table>
@@ -209,7 +222,7 @@ if (is_post()) {
                         <?php endif ?>
                     </div>
                 </div> */ ?>
-                        
+
             <?php else: ?>
 
                 <a href="/pages/user/user-login.php?fromPage=<?= $_SERVER['REQUEST_URI'] ?>">Log in</a>
@@ -224,7 +237,7 @@ if (is_post()) {
             <div class="progress-bar"></div>
             <span class="info-text"><?= temp('info') ?></span>
         </div>
-        
+
         <div class="info-container error-toast">
             <div class="progress-bar"></div>
             <span class="info-text"><?= temp('error') ?></span>
@@ -235,8 +248,8 @@ if (is_post()) {
             <span class="info-text"><?= temp('warn') ?></span>
         </div>
 
-        <?php 
-        if(is_logged_in('user')){
+        <?php
+        if (is_logged_in('user')) {
             echo '
                 <div class="supportButton">
                     <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="rgb(0,0,0)"><path d="M440-120v-80h320v-284q0-117-81.5-198.5T480-764q-117 0-198.5 81.5T200-484v244h-40q-33 0-56.5-23.5T80-320v-80q0-21 10.5-39.5T120-469l3-53q8-68 39.5-126t79-101q47.5-43 109-67T480-840q68 0 129 24t109 66.5Q766-707 797-649t40 126l3 52q19 9 29.5 27t10.5 38v92q0 20-10.5 38T840-249v49q0 33-23.5 56.5T760-120H440Zm-80-280q-17 0-28.5-11.5T320-440q0-17 11.5-28.5T360-480q17 0 28.5 11.5T400-440q0 17-11.5 28.5T360-400Zm240 0q-17 0-28.5-11.5T560-440q0-17 11.5-28.5T600-480q17 0 28.5 11.5T640-440q0 17-11.5 28.5T600-400Zm-359-62q-7-106 64-182t177-76q89 0 156.5 56.5T720-519q-91-1-167.5-49T435-698q-16 80-67.5 142.5T241-462Z"/></svg>
@@ -248,13 +261,12 @@ if (is_post()) {
                             Hello, How may I assist you today? 😃
                         </div>
                     ';
-            foreach($messageHistory as $m){
-                if($m->userSent=="1"){
+            foreach ($messageHistory as $m) {
+                if ($m->userSent == "1") {
                     echo "<div class='user'>
                             $m->content
                         </div>";
-                }
-                else{
+                } else {
                     echo "<div class='admin'>
                             $m->content
                         </div>";
@@ -272,5 +284,6 @@ if (is_post()) {
                     </div>
                 </div>
             ';
+            echo '<script src="/js/chat.js"></script>';
         }
         ?>

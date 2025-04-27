@@ -2,17 +2,17 @@
 require_once __DIR__ . '/../../../db_connection.php';
 require_once __DIR__ . '/../../../controller/stockManager.php';
 
+
 $productID = $_GET['productID'] ?? null;
 $sizeID = $_GET['sizeID'] ?? null;
 
 if (!$productID || !$sizeID) die("Missing parameters.");
+
 $productManager = new ProductManager($_db);
 
 $product = $productManager->getProductInfo($productID, $sizeID);
 if (!$product) die("Product not found.");
-
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -25,9 +25,25 @@ if (!$product) die("Product not found.");
 
 <div class="form-box">
     <h2>Update Stock</h2>
-    <?php echo $message; ?>
-    <form method="post" action="/controller/stockManager.php">
-        <input type="hidden " name="action" value="updateStock">
+
+    <!-- 3. Display success or error messages -->
+    <?php
+    if (isset($_SESSION['successupdate'])) {
+        echo "<div class='success-message'>" . htmlspecialchars($_SESSION['successupdate']) . "</div>";
+        unset($_SESSION['successupdate']);
+    }
+
+    if (isset($_SESSION['failedupdate'])) {
+        echo "<div class='error-message'>" . htmlspecialchars($_SESSION['failedupdate']) . "</div>";
+        unset($_SESSION['failedupdate']);
+    }
+    ?>
+
+    <form method="post" action="/controller/stockManager.php?action=updateStock">
+        <!-- Hidden fields must be added -->
+        <input type="hidden" name="productID" value="<?= htmlspecialchars($productID) ?>">
+        <input type="hidden" name="sizeID" value="<?= htmlspecialchars($sizeID) ?>">
+        
         <label>Product Name</label>
         <input type="text" value="<?= htmlspecialchars($product['productName']) ?>" readonly>
 
@@ -36,7 +52,7 @@ if (!$product) die("Product not found.");
 
         <label>Current Stock</label>
         <input type="text" value="<?= htmlspecialchars($product['stock']) ?>" readonly>
-        
+            
         <label>Restock Quantity</label>
         <input type="number" name="quantity" min="1" required>
 
@@ -44,12 +60,15 @@ if (!$product) die("Product not found.");
         <input type="number" id="restock_price" name="restock_price" min="0" step="0.01" required>
 
         <button type="submit">Update Stock</button>
-
-        <a href="stock.php" style="display: block; text-align: center; margin-top: 10px; text-decoration: none;">
-        <button type="button" style="background-color: #888;">Back to Menu</button>
-        </a>
     </form>
+
+    <!-- 4. Back to Menu Button -->
+    <div class="back-button">
+        <a href="stock.php">
+            <button type="button" style="background-color: #888; color: white; padding: 10px 20px; border: none; border-radius: 5px;">Back to Menu</button>
+        </a>
+    </div>
 </div>
 
 </body>
-</html>  
+</html>

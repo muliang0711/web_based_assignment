@@ -114,7 +114,7 @@ else if(is_post() && isset($_POST["task"])){
             exit;
         }
         else{
-            echo "error";
+            echo "noNewChat";
             exit;
         }
         

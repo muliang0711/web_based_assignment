@@ -35,7 +35,7 @@ ORDER BY o.orderDate $sort;");
 $ordersStmt->execute([$userId]);
 $orders = $ordersStmt->fetchAll(PDO::FETCH_OBJ);
 
-// 获取订单商品信息
+// 获取订单product信息
 $order_itemsStmt = $_db->prepare("SELECT oi.*, p.productName 
 FROM order_items oi 
 JOIN product p ON (oi.productId = p.productID) 

@@ -71,17 +71,29 @@ include 'profile_dynamic_navbar.php';
     </section> -->
 
     <?php if (!is_email_verified()): ?>
+    <!-- Verify Email Banner -->
     <section class="info-banner">
         <h2 class="info-banner-heading">Verify your email</h2>
         <div>We'll send a <b>verification link</b> straight to your mailbox, and all you have to do is click on the link. Simple as that.</div>
-        <button data-real-post="verify-email.php" class="btn-simple" style="background-color:#cb3816;color:white;margin-top:20px;">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <rect x="2" y="4" width="20" height="16" rx="2" />
-                <path d="M22 7L12 14L2 7" />
-            </svg>
-            Verify now
-        </button>
+        <form id="verifyEmailForm" action="verify-email.php" method="post">
+            <button class="btn-simple submit-btn">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="2" y="4" width="20" height="16" rx="2" />
+                    <path d="M22 7L12 14L2 7" />
+                </svg>
+                Verify now
+            </button>
+        </form>
     </section>
+
+    <script>
+        $('#verifyEmailForm').on('submit', e => {
+            e.preventDefault();
+
+            $(e.target).children('.submit-btn').addClass('disabled').html('Sending email...');
+            e.target.submit();
+        });
+    </script>
     <?php endif ?>
 
     <h1 class="heading">Personal details</h1>

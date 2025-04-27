@@ -38,15 +38,46 @@ margin-top: 50px;
 padding: 1rem;">
 <div class="searchBar" style="display:flex;">
     <div>
-<form class="search-box" method="get">
+<!-- <form class="search-box" method="get">
 
-    <?= html_search('username', 'Search customer name...', 'padding: 6px; border-radius: 4px; border: 1px solid #ccc; width: 200px;') ?>
+    ?= html_search('username', 'Search customer name...', 'padding: 6px; border-radius: 4px; border: 1px solid #ccc; width: 200px;') ?>
 
       
     <button  type="submit">Search</button>
      
 
-    </form>
+    </form> -->
+
+
+    <form class="search-box" method="get" action="view_customer.php">>
+
+<!-- ?= html_search('name', 'Search admin name...', 'padding: 6px; border-radius: 4px; border: 1px solid #ccc; width: 300px;') ?> -->
+  <!-- <input type="text" name="searchText" placeholder="Search..." required> -->
+  <input type="hidden" name="action" value="search">
+<input 
+$value ="<?= htmlentities($_GET[$username] ?? '', ENT_QUOTES, 'UTF-8');?>"
+    type="text" 
+    name="username" 
+    placeholder="Search customer name..." 
+    style="padding: 6px; border-radius: 4px; border: 1px solid #ccc; width: 300px;"
+    required >
+
+
+  <button onclick="playSoundx()" type="submit">Search</button>
+
+<audio id="clickSoundx" src="../../../sound/success.mp3"></audio>
+
+<script>
+function playSoundx() {
+  const audio = document.getElementById("clickSoundx");
+  audio.currentTime = 0; // 每次点击从头播放
+  audio.play();
+}
+</script>
+</form>
+
+
+
     </div>
     <div style="position: absolute; right: 0;">
     <a href="/pages/admin/view_customer_request.php" class="btn-add"><i class="fa-solid fa-envelope-open-text"></i> Request <?= htmlspecialchars($resultA->TotalRequest) ?></a>

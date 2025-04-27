@@ -89,7 +89,7 @@ $(()=>{
                 task: "userGetMessage"
             },
             success: function(res){
-                if(res!="error"){
+                if(res!="noNewChat"){
                     res=JSON.parse(res);
                     lastMsgID = res.msgID;
                     chatBody.append(res.response);
