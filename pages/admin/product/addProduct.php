@@ -47,7 +47,7 @@ link_stylesheet($stylesheetArray);
       </div>
 
       <div class="form-group">
-        <label for="stock">Stock</label>
+        
         <input type="number" id="stock" name="stock" value="0" hidden>
       </div>
       
