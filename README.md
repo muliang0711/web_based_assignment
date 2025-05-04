@@ -35,6 +35,9 @@ the Sign Up page. However this is only applicable for customer accounts. To
 create new admin accounts, you'll have to manually insert new records into the `admin`
 table in the database. The customer account records are stored in the `user` table.
 
+Database operations can be done by typing SQL directly into phpMyAdmin. 
+Google how that works if you're not familiar with phpMyAdmin.
+
 ### Main admin
 
 - Admin ID: `A001`
