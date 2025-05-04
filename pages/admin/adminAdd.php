@@ -52,9 +52,6 @@ $_departments = [
     'FI' => 'Finance Department'
 ];
 
-
-
-
 // Handle POST request
 if (is_post()) {
     // handle random id and password generation

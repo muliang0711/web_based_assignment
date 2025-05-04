@@ -53,7 +53,7 @@ if (is_post()) {
         // (5) Send email
         $m = get_mail();
         $m->addAddress($u->email, $u->username);
-        $m->addEmbeddedImage("../../assets/img/logo.jpg", 'logo'); // add store logo image in email
+        // $m->addEmbeddedImage("../../assets/img/logo.jpg", 'logo'); // add store logo image in email
         $m->isHTML(true); 
         $m->Subject = 'Reset Password';
         $m->Body = get_reset_pw_email_body($u->username, $u->email, $home_url, $reset_pw_url);
